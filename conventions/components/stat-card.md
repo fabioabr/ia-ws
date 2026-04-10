@@ -1,3 +1,19 @@
+---
+title: Stat Card Component
+description: Estilização padrão para cards de estatísticas e métricas com ícone e valor.
+project-name: global
+version: 01.00.000
+status: ativo
+author: claude-code
+category: convention
+area: design
+tags:
+  - componente
+  - stat-card
+  - metrica
+created: 2026-04-10 12:00
+---
+
 # Stat Card Component
 
 Standard styling for statistic/metric cards.

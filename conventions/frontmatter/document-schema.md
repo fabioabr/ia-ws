@@ -1,3 +1,16 @@
+---
+title: "Document Schema"
+description: "Campos obrigatorios de frontmatter para todos os documentos"
+project-name: "global"
+version: "01.00.000"
+status: "ativo"
+author: "claude-code"
+category: "convention"
+area: "tecnologia"
+tags: [frontmatter, esquema, documento, metadado]
+created: "2026-04-10 12:00"
+---
+
 # Document Schema
 
 Mandatory frontmatter fields for all documents.

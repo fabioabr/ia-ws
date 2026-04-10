@@ -1,3 +1,16 @@
+---
+title: "Table Component"
+description: "Padrao de estilizacao para tabelas de dados em componentes UI"
+project-name: "global"
+version: "01.00.000"
+status: "ativo"
+author: "claude-code"
+category: "convention"
+area: "tecnologia"
+tags: [componente, tabela, estilizacao, ui]
+created: "2026-04-10 12:00"
+---
+
 # Table Component
 
 Standard styling for data tables.

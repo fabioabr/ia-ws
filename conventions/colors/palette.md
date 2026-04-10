@@ -1,3 +1,20 @@
+---
+title: Color Palette
+description: Tokens de cor principais para todos os componentes de interface.
+project-name: global
+version: 01.00.000
+status: ativo
+author: claude-code
+category: convention
+area: design
+tags:
+  - cor
+  - paleta
+  - token
+  - tema
+created: 2026-04-10 12:00
+---
+
 # Color Palette
 
 Core color tokens for all UI components.

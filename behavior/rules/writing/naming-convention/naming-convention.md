@@ -32,7 +32,7 @@ O padrão de nomenclatura se aplica a **todos** os artefatos criados ou mantidos
 - 📁 Pastas
 - ⚡ Skills
 - 🤖 Agents
-- 🏷️ Tags (exceção: português sem acentos, conforme [[core/taxonomy-and-tags/taxonomy-and-tags]])
+- 🏷️ Tags (exceção: português sem acentos, conforme [[organization/taxonomy-and-tags/taxonomy-and-tags]])
 
 Ao nomear qualquer artefato, aplique a convenção definida em:
 
@@ -41,14 +41,14 @@ Ao nomear qualquer artefato, aplique a convenção definida em:
 | Formato, idioma e exemplos de nomenclatura | `conventions/naming/file-naming.md` |
 
 > [!warning] Atenção
-> O **conteúdo** dos documentos continua em **português (pt-BR)** conforme [[core/markdown-writing/markdown-writing]]. Apenas os **nomes** (arquivos, pastas, skills, agents) são em inglês.
+> O **conteúdo** dos documentos continua em **português (pt-BR)** conforme [[writing/markdown-writing/markdown-writing]]. Apenas os **nomes** (arquivos, pastas, skills, agents) são em inglês.
 
 ---
 
 ## 🔗 Documentos Relacionados
 
-- [[core/behavior-principles/behavior-principles]] — Princípios fundamentais do behavior
-- [[core/markdown-writing/markdown-writing]] — Regras de escrita onde o conteúdo permanece em pt-BR
+- [[foundations/behavior-principles/behavior-principles]] — Princípios fundamentais do behavior
+- [[writing/markdown-writing/markdown-writing]] — Regras de escrita onde o conteúdo permanece em pt-BR
 
 ## 📜 Histórico de Alterações
 

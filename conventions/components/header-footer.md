@@ -1,3 +1,20 @@
+---
+title: Header & Footer
+description: Estilização padrão para header e footer de página com gradiente e temas.
+project-name: global
+version: 01.00.000
+status: ativo
+author: claude-code
+category: convention
+area: design
+tags:
+  - componente
+  - header
+  - footer
+  - layout
+created: 2026-04-10 12:00
+---
+
 # Header & Footer
 
 Standard styling for page header and footer.

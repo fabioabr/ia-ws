@@ -27,10 +27,10 @@ Princípios fundamentais e invioláveis que regem toda a base de conhecimento e 
 
 ### 📌 O que isso significa
 
-- ✅ Todo documento `.md` segue as regras definidas em [[core/markdown-writing/markdown-writing]]
-- ✅ Toda tag segue as convenções de [[core/taxonomy-and-tags/taxonomy-and-tags]]
-- ✅ Todo índice e backlink segue [[core/index-and-navigation/index-and-navigation]]
-- ✅ Todo ciclo de vida segue [[core/document-management/document-management]]
+- ✅ Todo documento `.md` segue as regras definidas em [[writing/markdown-writing/markdown-writing]]
+- ✅ Toda tag segue as convenções de [[organization/taxonomy-and-tags/taxonomy-and-tags]]
+- ✅ Todo índice e backlink segue [[organization/index-and-navigation/index-and-navigation]]
+- ✅ Todo ciclo de vida segue [[organization/document-management/document-management]]
 - ✅ Se uma regra não existe para um cenário, **a regra deve ser criada primeiro**
 - ❌ Apesar da IA poder sugerir melhorias, na prática **nunca** aplica essas melhorias sem que estejam nos padrões.
 - ❌ A IA **nunca** infere regras — na dúvida, **pergunta**
@@ -93,11 +93,11 @@ Todo documento que contenha um desvio de behavior deve incluir uma seção **⚠
 
 ## 🔗 Documentos Relacionados
 
-- [[core/markdown-writing/markdown-writing]] — Regras de formatação que todo documento deve seguir
-- [[core/taxonomy-and-tags/taxonomy-and-tags]] — Convenções de categorização governadas por este princípio
-- [[core/index-and-navigation/index-and-navigation]] — Regras de navegação governadas por este princípio
-- [[core/document-management/document-management]] — Ciclo de vida dos documentos, incluindo registro prático de desvios
-- [[core/project-boundaries/project-boundaries]] — Fronteiras absolutas governadas pelos princípios do behavior
+- [[writing/markdown-writing/markdown-writing]] — Regras de formatação que todo documento deve seguir
+- [[organization/taxonomy-and-tags/taxonomy-and-tags]] — Convenções de categorização governadas por este princípio
+- [[organization/index-and-navigation/index-and-navigation]] — Regras de navegação governadas por este princípio
+- [[organization/document-management/document-management]] — Ciclo de vida dos documentos, incluindo registro prático de desvios
+- [[foundations/project-boundaries/project-boundaries]] — Fronteiras absolutas governadas pelos princípios do behavior
 
 ## 📜 Histórico de Alterações
 

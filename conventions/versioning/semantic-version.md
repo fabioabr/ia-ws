@@ -1,3 +1,19 @@
+---
+title: Semantic Version
+description: Formato de versionamento para documentos e artefatos.
+project-name: global
+version: 01.00.000
+status: ativo
+author: claude-code
+category: convention
+area: tecnologia
+tags:
+  - versionamento
+  - padrao
+  - documentacao
+created: 2026-04-10 12:00
+---
+
 # Semantic Version
 
 Versioning format for documents and artifacts.

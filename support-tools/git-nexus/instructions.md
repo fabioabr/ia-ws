@@ -1,3 +1,19 @@
+---
+title: GitNexus
+description: Knowledge graph para codebase que dá consciência arquitetural a agentes de IA via MCP
+project-name: global
+version: 01.00.000
+status: ativo
+author: claude-code
+category: ferramenta
+area: tecnologia
+tags:
+  - ferramenta
+  - grafo
+  - indexacao
+created: 2026-04-10 12:00
+---
+
 # GitNexus
 
 Sistema de indexação por knowledge graph que constrói um grafo completo de relacionamentos do codebase, dando a agentes de IA consciência arquitetural profunda antes de realizar mudanças.
@@ -38,7 +54,7 @@ npx gitnexus clean             # Deletar índice
 
 | Ferramenta | O que faz |
 |------------|-----------|
-| `query` | Busca híbrida (BM25 + semântica) com agrupamento por processo |
+| `query` | Busca híbrida (Best Match 25 (BM25) + semântica) com agrupamento por processo |
 | `context` | Visão 360° de um símbolo com referências |
 | `impact` | Raio de impacto com agrupamento por profundidade |
 | `detect_changes` | Mapeamento de impacto a partir de git diff |

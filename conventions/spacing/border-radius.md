@@ -1,3 +1,19 @@
+---
+title: Border Radius
+description: Tokens de raio para bordas arredondadas.
+project-name: global
+version: 01.00.000
+status: ativo
+author: claude-code
+category: convention
+area: design
+tags:
+  - espacamento
+  - token
+  - borda
+created: 2026-04-10 12:00
+---
+
 # Border Radius
 
 Radius tokens for rounded corners.

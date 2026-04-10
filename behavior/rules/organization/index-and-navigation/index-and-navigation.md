@@ -21,7 +21,7 @@ Regra comportamental para garantir que **todo conteúdo do workspace seja locali
 
 ---
 
-## Convenções aplicáveis
+## 📋 Convenções aplicáveis
 
 | Convenção | Referência |
 | --------- | ---------- |
@@ -32,7 +32,7 @@ A IA deve aplicar as convenções acima ao criar ou manter índices e links entr
 
 ---
 
-## Índices
+## 📚 Índices
 
 > [!danger] Obrigatório
 > Toda área que agrupe documentos **deve ter um `index.md`** como ponto de entrada.
@@ -45,7 +45,7 @@ A IA deve aplicar as convenções acima ao criar ou manter índices e links entr
 
 ---
 
-## Backlinks
+## 🔗 Backlinks
 
 > [!warning] Obrigatório
 > Todo documento deve referenciar **documentos relacionados** via wikilinks, criando uma rede de navegação entre conteúdos.
@@ -59,7 +59,7 @@ A IA deve aplicar as convenções acima ao criar ou manter índices e links entr
 
 ---
 
-## Manutenção pela IA
+## 🤖 Manutenção pela IA
 
 > [!danger] Obrigatório
 > Ao **criar, renomear ou remover** um documento, a IA **deve obrigatoriamente** atualizar todos os índices e backlinks afetados.
@@ -88,14 +88,14 @@ Sempre que um documento for **renomeado**:
 
 ---
 
-## Documentos Relacionados
+## 🔗 Documentos Relacionados
 
-- [[core/behavior-principles/behavior-principles]] — Princípios fundamentais que governam o behavior e o registro de desvios
-- [[core/markdown-writing/markdown-writing]] — Regras de formatação e estrutura que os índices devem seguir
-- [[core/taxonomy-and-tags/taxonomy-and-tags]] — Tags de categorização que complementam a navegação por índice
-- [[core/document-management/document-management]] — Regras de ciclo de vida que afetam a manutenção dos índices
+- [[foundations/behavior-principles/behavior-principles]] — Princípios fundamentais que governam o behavior e o registro de desvios
+- [[writing/markdown-writing/markdown-writing]] — Regras de formatação e estrutura que os índices devem seguir
+- [[organization/taxonomy-and-tags/taxonomy-and-tags]] — Tags de categorização que complementam a navegação por índice
+- [[organization/document-management/document-management]] — Regras de ciclo de vida que afetam a manutenção dos índices
 
-## Histórico de Alterações
+## 📜 Histórico de Alterações
 
 | Versão    | Timestamp        | Descrição                                                        |
 | --------- | ---------------- | ---------------------------------------------------------------- |

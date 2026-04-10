@@ -1,3 +1,19 @@
+---
+title: Chart.js Configuration
+description: Configuração padrão de gráficos Chart.js incluindo tooltip, grid, legenda e tipos de gráfico.
+project-name: global
+version: 01.00.000
+status: ativo
+author: claude-code
+category: convention
+area: tecnologia
+tags:
+  - chartjs
+  - grafico
+  - visualizacao
+created: 2026-04-10 12:00
+---
+
 # Chart.js Configuration
 
 Standard configuration for Chart.js charts.

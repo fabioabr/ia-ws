@@ -1,3 +1,16 @@
+---
+title: "Index Structure"
+description: "Formato padrao para arquivos index.md em cada area"
+project-name: "global"
+version: "01.00.000"
+status: "ativo"
+author: "claude-code"
+category: "convention"
+area: "tecnologia"
+tags: [indice, estrutura, navegacao, arquivo]
+created: "2026-04-10 12:00"
+---
+
 # Index Structure
 
 Standard format for index.md files.

@@ -1,3 +1,16 @@
+---
+title: "Headings"
+description: "Regras de hierarquia de headings para documentos Markdown"
+project-name: "global"
+version: "01.00.000"
+status: "ativo"
+author: "claude-code"
+category: "convention"
+area: "tecnologia"
+tags: [heading, hierarquia, markdown, estrutura]
+created: "2026-04-10 12:00"
+---
+
 # Headings
 
 Heading hierarchy rules for Markdown documents.

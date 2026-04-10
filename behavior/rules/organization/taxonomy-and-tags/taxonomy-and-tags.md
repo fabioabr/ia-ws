@@ -20,7 +20,7 @@ Regra comportamental que garante que **toda a base de conhecimento seja pesquis�
 
 ---
 
-## Convenções aplicáveis
+## 📋 Convenções aplicáveis
 
 | Convenção | Referência |
 | --------- | ---------- |
@@ -30,7 +30,7 @@ A IA deve aplicar a convenção acima ao criar ou editar tags em qualquer docume
 
 ---
 
-## Comportamento obrigatório
+## 📏 Comportamento obrigatório
 
 > [!danger] Obrigatório
 > Tags são **obrigatórias** em todo documento da base de conhecimento. Nenhum documento pode existir sem tags no frontmatter.
@@ -54,14 +54,14 @@ A IA deve aplicar a convenção acima ao criar ou editar tags em qualquer docume
 
 ---
 
-## Documentos Relacionados
+## 🔗 Documentos Relacionados
 
-- [[core/behavior-principles/behavior-principles]] — Princípios fundamentais que governam todas as regras incluindo taxonomia
-- [[core/markdown-writing/markdown-writing]] — Regras de formatação que definem o uso de tags no frontmatter
-- [[core/index-and-navigation/index-and-navigation]] — Regras de navegabilidade que complementam a categorização por tags
-- [[core/document-management/document-management]] — Ciclo de vida dos documentos onde as tags ajudam a identificar o estado
+- [[foundations/behavior-principles/behavior-principles]] — Princípios fundamentais que governam todas as regras incluindo taxonomia
+- [[writing/markdown-writing/markdown-writing]] — Regras de formatação que definem o uso de tags no frontmatter
+- [[organization/index-and-navigation/index-and-navigation]] — Regras de navegabilidade que complementam a categorização por tags
+- [[organization/document-management/document-management]] — Ciclo de vida dos documentos onde as tags ajudam a identificar o estado
 
-## Histórico de Alterações
+## 📜 Histórico de Alterações
 
 | Versão    | Timestamp        | Descrição                                                        |
 | --------- | ---------------- | ---------------------------------------------------------------- |

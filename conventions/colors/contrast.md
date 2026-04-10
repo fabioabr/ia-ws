@@ -1,3 +1,19 @@
+---
+title: Color Contrast Rules
+description: Regras de pareamento de cor de texto e fundo para contraste acessível.
+project-name: global
+version: 01.00.000
+status: ativo
+author: claude-code
+category: convention
+area: design
+tags:
+  - cor
+  - contraste
+  - acessibilidade
+created: 2026-04-10 12:00
+---
+
 # Color Contrast Rules
 
 Text color pairing rules for accessible contrast.

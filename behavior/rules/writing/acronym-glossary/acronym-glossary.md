@@ -9,13 +9,11 @@ category: rule
 area: tecnologia
 tags:
   - rule
-  - core
   - acronym
   - glossary
   - html
   - markdown
-  - accessibility
-created: 2026-04-10
+created: 2026-04-10 12:00
 ---
 
 # Acronym Glossary — Regra Mandatória
@@ -25,7 +23,7 @@ created: 2026-04-10
 
 ---
 
-## 1. O que é uma sigla
+## 📏 1. O que é uma sigla
 
 Qualquer palavra formada por iniciais ou abreviação que **não seja autoexplicativa** para um leitor generalista.
 
@@ -34,7 +32,7 @@ Qualquer palavra formada por iniciais ou abreviação que **não seja autoexplic
 
 ---
 
-## 2. Convenções Aplicáveis
+## 📋 2. Convenções Aplicáveis
 
 Ao gerar qualquer documento, aplique o tratamento de siglas conforme o formato do artefato:
 
@@ -46,7 +44,7 @@ Ao gerar qualquer documento, aplique o tratamento de siglas conforme o formato d
 
 ---
 
-## 3. Processo de coleta de siglas
+## 🔄 3. Processo de coleta de siglas
 
 O agente ou skill que gera o documento deve:
 
@@ -63,7 +61,7 @@ O agente ou skill que gera o documento deve:
 
 ---
 
-## Changelog
+## 📜 Histórico de Alterações
 
 | Versão | Data | Descrição |
 |---|---|---|

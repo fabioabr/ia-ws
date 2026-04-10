@@ -86,7 +86,7 @@ Paleta obrigatória de 4 cores para todos os elementos sequenciais em reports HT
 
 ## 🔗 Documentos Relacionados
 
-- [[core/acronym-glossary/acronym-glossary]] — Tratamento de siglas nos mesmos reports
+- [[behavior/rules/writing/acronym-glossary/acronym-glossary]] — Tratamento de siglas nos mesmos reports
 
 ## 📜 Histórico de Alterações
 

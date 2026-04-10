@@ -1,3 +1,19 @@
+---
+title: Tag Taxonomy
+description: Padrao para criacao e aplicacao de tags em documentos.
+project-name: global
+version: 01.00.000
+status: ativo
+author: claude-code
+category: convention
+area: tecnologia
+tags:
+  - taxonomia
+  - tag
+  - organizacao
+created: 2026-04-10 12:00
+---
+
 # Tag Taxonomy
 
 Standard for creating and applying tags to documents.

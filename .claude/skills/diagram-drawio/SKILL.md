@@ -1,16 +1,21 @@
 ---
 name: diagram-drawio
+title: diagram-drawio
 description: "Cria diagramas profissionais em XML compatível com draw.io (diagrams.net). Trigger: diagrama, drawio, draw.io, flowchart, fluxograma, arquitetura, C4, ER, pipeline, organograma."
+project-name: global
 version: 01.00.000
 author: claude-code
+license: MIT
 status: ativo
 category: utility
+area: tecnologia
 tags:
   - diagram
   - drawio
   - xml
   - flowchart
   - architecture
+created: 2026-04-10 12:00
 inputs:
   - name: request
     type: string
@@ -46,7 +51,7 @@ Antes de gerar o diagrama, carregue as convenções abaixo para obter tokens e d
 > A paleta das convenções e uma sugestao. O usuario pode pedir cores diferentes, identidade visual corporativa, tema dark, ou qualquer outra personalizacao. Adapte sem restricao.
 
 
-## Instructions
+## 📋 Instructions
 
 ### 1. Entender o pedido
 
@@ -231,7 +236,7 @@ Sempre escape: `<` → `&lt;`, `>` → `&gt;`, `"` → `&quot;`, `&` → `&amp;`
 - Nome do arquivo em **ingles, kebab-case**: `pipeline-overview.drawio`, `architecture-c4.drawio`
 - O XML deve ser **valido e pronto para abrir** no draw.io sem erros
 
-## Examples
+## 📄 Examples
 
 ### Exemplo 1 — Fluxograma simples
 
@@ -243,7 +248,7 @@ Sempre escape: `<` → `&lt;`, `>` → `&gt;`, `"` → `&quot;`, `&` → `&amp;`
 **Input:** `/diagram-drawio E:\projetos\alpha\docs\architecture.md`
 **Output:** Arquivo `architecture-c4.drawio` gerado em `E:\projetos\alpha\docs\`. Múltiplas páginas: Página 1 com visão geral de sistemas (containers com swimlanes), Página 2 com detalhamento de componentes internos. Cores semânticas para sistemas externos (dashed), APIs (hexágono purple), bancos (cylinder teal).
 
-## Constraints
+## 🚫 Constraints
 
 - Acentuação pt-BR é obrigatória em labels em português
 - Layout organizado: shapes alinhados em grid, setas com roteamento ortogonal (`edgeStyle=orthogonalEdgeStyle`), sem sobreposições
@@ -253,7 +258,7 @@ Sempre escape: `<` → `&lt;`, `>` → `&gt;`, `"` → `&quot;`, `&` → `&amp;`
 - A paleta padrão é flexível — o usuário pode pedir qualquer identidade visual
 - Nome do arquivo de saída em inglês, kebab-case
 
-## claude-code
+## 🔧 claude-code
 
 ### Trigger
 Keywords no `description` do frontmatter: diagrama, drawio, draw.io, flowchart, fluxograma, arquitetura, C4, ER, pipeline, organograma. O Claude Code usa o campo `description` para decidir quando invocar a skill automaticamente.
@@ -266,3 +271,17 @@ Usar `$ARGUMENTS` no corpo para capturar a descrição do diagrama ou caminho de
 - file-read: true
 - file-write: true
 - web-fetch: false
+
+## 🔗 Documentos Relacionados
+
+- `conventions/frontmatter/document-schema.md` — Schema de frontmatter para documentos
+- `conventions/frontmatter/skill-schema.md` — Schema de frontmatter para skills
+- `conventions/colors/palette.md` — Tokens de cor (primary, success, warning, danger, etc.)
+- `conventions/typography/scale.md` — Escala tipográfica, famílias de fonte, pesos
+- `conventions/spacing/tokens.md` — Tokens de espaçamento
+
+## 📜 Histórico de Alterações
+
+| Versão | Data | Descrição |
+|--------|------|-----------|
+| 01.00.000 | 2026-04-10 | Adequação ao skill-schema com herança de document-schema; adição de campos title, project-name, area, created, license; emojis em H2; seções Documentos Relacionados e Histórico |

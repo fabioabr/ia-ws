@@ -1,3 +1,16 @@
+---
+title: "Document Sections"
+description: "Secoes padrao e ciclo de vida para documentos"
+project-name: "global"
+version: "01.00.000"
+status: "ativo"
+author: "claude-code"
+category: "convention"
+area: "tecnologia"
+tags: [documento, secao, ciclo-de-vida, estrutura]
+created: "2026-04-10 12:00"
+---
+
 # Document Sections
 
 Standard sections and lifecycle for documents.

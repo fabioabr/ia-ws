@@ -1,3 +1,19 @@
+---
+title: Acronym Treatment in Markdown
+description: Regras de uso e expansão de siglas em documentos Markdown.
+project-name: global
+version: 01.00.000
+status: ativo
+author: claude-code
+category: convention
+area: tecnologia
+tags:
+  - sigla
+  - markdown
+  - glossario
+created: 2026-04-10 12:00
+---
+
 # Acronym Treatment in Markdown
 
 How to handle acronyms in Markdown documents.
@@ -12,7 +28,7 @@ How to handle acronyms in Markdown documents.
 
 | Sigla | Significado | Contexto |
 |-------|-------------|----------|
-| API | Application Programming Interface | Integracao de sistemas |
+| API | Application Programming Interface | Integração de sistemas |
 | CLI | Command-Line Interface | Ferramentas de terminal |
 
 ### Exempt Acronyms
@@ -23,4 +39,4 @@ These are universally known and never need expansion:
 
 ## Example
 
-> O sistema utiliza uma Interface de Programacao de Aplicacoes (API) para comunicacao. A API expoe endpoints REST.
+> O sistema utiliza uma Interface de Programação de Aplicações (API) para comunicação. A API expõe endpoints REST.

@@ -1,3 +1,19 @@
+---
+title: Skill Body Structure
+description: Ordem padrao de secoes para arquivos de definicao de skills.
+project-name: global
+version: 01.00.000
+status: ativo
+author: claude-code
+category: convention
+area: tecnologia
+tags:
+  - skill
+  - estrutura
+  - padrao
+created: 2026-04-10 12:00
+---
+
 # Skill Body Structure
 
 Standard section order for skill definition files.

@@ -1,3 +1,19 @@
+---
+title: Sequential Color Palette
+description: Sequência fixa de 4 cores para elementos ordenados de interface.
+project-name: global
+version: 01.00.000
+status: ativo
+author: claude-code
+category: convention
+area: design
+tags:
+  - cor
+  - paleta
+  - sequencia
+created: 2026-04-10 12:00
+---
+
 # Sequential Color Palette
 
 Fixed 4-color sequence for ordered UI elements.

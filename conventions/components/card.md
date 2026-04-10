@@ -1,3 +1,19 @@
+---
+title: Card Component
+description: Estilização padrão para componentes de card incluindo header e body.
+project-name: global
+version: 01.00.000
+status: ativo
+author: claude-code
+category: convention
+area: design
+tags:
+  - componente
+  - card
+  - layout
+created: 2026-04-10 12:00
+---
+
 # Card Component
 
 Standard styling for card components.

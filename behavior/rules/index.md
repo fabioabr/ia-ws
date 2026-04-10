@@ -91,7 +91,7 @@ Categorias reservadas para expansão conforme o workspace evolui:
 | 01.06.000 | 2026-04-04 | Adição de [[core/iteration-loop/iteration-loop]] ao core — conceito de iterações incrementais do pipeline |
 | 01.07.000 | 2026-04-05 10:00 | Adição de [[core/hallucination-guard/hallucination-guard]], correção 7 etapas no creation-flow, correções do challenger report |
 | 01.08.000 | 2026-04-05 | Correção terminologia: "3 níveis" → "3 sub-etapas com mini-ciclos" na descrição de discovery |
-| 01.09.000 | 2026-04-09 | Adição de report-html-bar-colors (movido para assets/ui_ux/) |
+| 01.09.000 | 2026-04-09 | Adição de report-html-bar-colors (movido para assets/ui-ux/) |
 | 01.10.000 | 2026-04-09 | Remoção da categoria document-creation (creation-flow e bar-colors movidos/excluídos) |
 | 01.11.000 | 2026-04-09 | Movidas 6 regras de discovery para projects/discovery-to-go/rules/ |
 | 02.00.000 | 2026-04-09 | Reorganização: core/ → 3 categorias (foundations, writing, organization) + categorias futuras |

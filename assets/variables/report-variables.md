@@ -1,3 +1,19 @@
+---
+title: Report Variables
+description: Variáveis padrão usadas em templates de relatórios HTML
+project-name: global
+version: 01.00.000
+status: ativo
+author: claude-code
+category: asset
+area: tecnologia
+tags:
+  - variavel
+  - relatorio
+  - template
+created: 2026-04-10 12:00
+---
+
 # Report Variables
 
 Standard variables used across report templates.

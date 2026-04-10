@@ -91,7 +91,7 @@ Ao revisar qualquer documento, verificar:
 
 ## 🔗 Documentos Relacionados
 
-- [[core/behavior-principles/behavior-principles]] — Princípios de transparência e rastreabilidade
+- [[foundations/behavior-principles/behavior-principles]] — Princípios de transparência e rastreabilidade
 
 ## 📜 Histórico de Alterações
 

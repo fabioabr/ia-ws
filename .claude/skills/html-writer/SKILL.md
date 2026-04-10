@@ -1,15 +1,20 @@
 ---
 name: html-writer
+title: html-writer
 description: "Converte documentos .md em relatórios HTML auto-contidos seguindo o Design System. Trigger: html-writer, report, relatório, HTML, converter md, gerar relatório, gerar HTML."
+project-name: global
 version: 01.01.000
 author: claude-code
+license: MIT
 status: ativo
 category: report
+area: tecnologia
 tags:
   - report
   - html
   - design-system
   - relatorio
+created: 2026-04-10 12:00
 inputs:
   - name: source
     type: file-path
@@ -43,11 +48,11 @@ Antes de gerar o HTML, carregue as convenções abaixo para obter tokens e defin
 | Cores | `conventions/colors/palette.md` | Tokens de cor (primary, success, warning, danger, info, etc.) |
 | Componentes | `conventions/components/*.md` | Card, alerts, badge, table, stat-card, header-footer, tabs |
 
-## Instructions
+## 📋 Instructions
 
 ### 1. Preparação — Carregar referências
 
-> [!danger] Regra de prioridade para assets (variables, logos, ui_ux)
+> [!danger] Regra de prioridade para assets (variables, logos, ui-ux)
 > A caracterização visual do **projeto** tem prioridade sobre o Workspace global. Para **todo asset** (variables, logos, design system, playground), aplicar:
 >
 > 1. **Primeiro:** procurar em `{pasta-base-do-projeto}/assets/`
@@ -60,8 +65,8 @@ Leia obrigatoriamente (respeitando a prioridade acima):
 
 | Asset | Caminho relativo dentro de `assets/` | Uso |
 | ----- | ------------------------------------- | --- |
-| Design System | `ui_ux/design_system.md` | Tokens de cor, tipografia, componentes, regras de contraste |
-| Playground | `ui_ux/playground.html` | Modelo HTML de referência (estrutura, CSS, JS, i18n) |
+| Design System | `ui-ux/design-system.md` | Tokens de cor, tipografia, componentes, regras de contraste |
+| Playground | `ui-ux/playground.html` | Modelo HTML de referência (estrutura, CSS, JS, i18n) |
 | Variáveis | `variables.md` | Variáveis para rodapé e header |
 | Logo dark | `logos/dark.png` | Logo para tema escuro (converter para base64) |
 | Logo light | `logos/light.png` | Logo para tema claro (converter para base64) |
@@ -202,7 +207,7 @@ Preencher com variáveis carregadas na etapa de Preparação (respeitando a orde
 
 Aplicar os breakpoints e container definidos em `conventions/responsive/breakpoints.md`. O relatório deve ser **legível em tela e imprimível** (considerar `@media print`).
 
-## Examples
+## 📄 Examples
 
 ### Exemplo 1 — Conversão simples de um único .md
 
@@ -214,7 +219,7 @@ Aplicar os breakpoints e container definidos em `conventions/responsive/breakpoi
 **Input:** `/report-maker E:\temp\notas\analise.md`
 **Output:** Arquivo `E:\temp\notas\analise.html` gerado. Como não foi possível identificar uma raiz de projeto com assets próprios, utilizou fallback global (`E:\Workspace\assets\`) para Design System, playground, variáveis e logos. Conteúdo em pt-BR com acentuação correta, KPI cards gerados a partir de tabelas com métricas percentuais.
 
-## Constraints
+## 🚫 Constraints
 
 - Nunca omitir seções, tabelas ou informações do `.md` fonte — todo conteúdo deve estar no HTML
 - Usar exclusivamente cores, tipografia e componentes do Design System carregado — não inventar estilos
@@ -225,7 +230,7 @@ Aplicar os breakpoints e container definidos em `conventions/responsive/breakpoi
 - Assets do projeto sempre têm prioridade sobre os globais
 - Na dúvida sobre como renderizar um componente, consultar o playground.html
 
-## claude-code
+## 🔧 claude-code
 
 ### Trigger
 Keywords no `description` do frontmatter: report, relatório, HTML, converter md, gerar relatório. O Claude Code usa o campo `description` para decidir quando invocar a skill automaticamente.
@@ -238,3 +243,18 @@ Usar `$ARGUMENTS` no corpo para capturar o caminho do(s) arquivo(s) .md passados
 - file-read: true
 - file-write: true
 - web-fetch: false
+
+## 🔗 Documentos Relacionados
+
+- `conventions/frontmatter/document-schema.md` — Schema de frontmatter para documentos
+- `conventions/frontmatter/skill-schema.md` — Schema de frontmatter para skills
+- `conventions/markdown/callouts.md` — Tipos de callout Obsidian e sintaxe
+- `conventions/responsive/breakpoints.md` — Breakpoints e container responsivo
+- `conventions/colors/palette.md` — Tokens de cor do Design System
+- `conventions/components/*.md` — Componentes do Design System (card, alerts, badge, table, etc.)
+
+## 📜 Histórico de Alterações
+
+| Versão | Data | Descrição |
+|--------|------|-----------|
+| 01.01.000 | 2026-04-10 | Adequação ao skill-schema com herança de document-schema; adição de campos title, project-name, area, created, license; emojis em H2; seções Documentos Relacionados e Histórico |

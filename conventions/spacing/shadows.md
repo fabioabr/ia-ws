@@ -1,3 +1,19 @@
+---
+title: Box Shadows
+description: Tokens de sombra para elevacao por tema.
+project-name: global
+version: 01.00.000
+status: ativo
+author: claude-code
+category: convention
+area: design
+tags:
+  - sombra
+  - token
+  - tema
+created: 2026-04-10 12:00
+---
+
 # Box Shadows
 
 Elevation shadow tokens per theme.

@@ -1,3 +1,19 @@
+---
+title: Alerts Component
+description: Estilização padrão para mensagens de alerta em suas variantes.
+project-name: global
+version: 01.00.000
+status: ativo
+author: claude-code
+category: convention
+area: design
+tags:
+  - componente
+  - alerta
+  - estilo
+created: 2026-04-10 12:00
+---
+
 # Alerts Component
 
 Standard styling for alert messages.

@@ -1,3 +1,19 @@
+---
+title: Typography Scale
+description: Tokens de escala tipografica para todos os elementos de texto.
+project-name: global
+version: 01.00.000
+status: ativo
+author: claude-code
+category: convention
+area: design
+tags:
+  - tipografia
+  - token
+  - escala
+created: 2026-04-10 12:00
+---
+
 # Typography Scale
 
 Type scale tokens for all text elements.

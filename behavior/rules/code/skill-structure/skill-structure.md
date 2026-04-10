@@ -23,7 +23,7 @@ Regra comportamental que define a estrutura obrigatória para todo arquivo `SKIL
 
 ---
 
-## Convenções aplicáveis
+## 📋 Convenções aplicáveis
 
 | Convenção | Referência |
 | --------- | ---------- |
@@ -34,7 +34,7 @@ A IA deve aplicar as convenções acima ao criar ou editar qualquer SKILL.md.
 
 ---
 
-## Regras comportamentais
+## 📏 Regras comportamentais
 
 ### Estrutura de arquivos
 
@@ -60,12 +60,12 @@ A IA deve aplicar as convenções acima ao criar ou editar qualquer SKILL.md.
 
 ---
 
-## Documentos Relacionados
+## 🔗 Documentos Relacionados
 
 - [[writing/naming-convention/naming-convention]] — Nomenclatura em inglês para skills
 - [[writing/acronym-glossary/acronym-glossary]] — Tratamento de siglas no corpo da skill
 
-## Histórico de Alterações
+## 📜 Histórico de Alterações
 
 | Versão    | Data       | Descrição |
 |-----------|------------|-----------|

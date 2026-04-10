@@ -60,7 +60,7 @@ projeto/
 
 - 📁 A pasta **deve** ser `docs/2-boundaries/`
 - 📑 **Deve** ter um `index.md` que lista todas as fronteiras
-- 📄 Cada arquivo segue as regras de [[core/markdown-writing/markdown-writing]] (frontmatter, visual, etc.)
+- 📄 Cada arquivo segue as regras de [[writing/markdown-writing/markdown-writing]] (frontmatter, visual, etc.)
 - 🏷️ Cada fronteira deve ter **título claro**, **descrição** e **exemplos** do que é permitido e proibido
 - ➕ O projeto pode ter **quantos arquivos** de fronteira precisar
 
@@ -82,7 +82,7 @@ tags:
 created: 2026-04-03 11:30
 ---
 
-# 💻 Fronteiras de Tecnologia
+## 💻 Fronteiras de Tecnologia
 
 ## 🌐 Web
 - ✅ Permitido: Blazor, .NET
@@ -214,9 +214,9 @@ Fronteiras de projeto **podem customizar** regras do behavior global para melhor
 
 ## 🔗 Documentos Relacionados
 
-- [[core/behavior-principles/behavior-principles]] — Princípios fundamentais que governam o comportamento da IA, incluindo fronteiras
-- [[core/document-management/document-management]] — Ciclo de vida aplicável aos arquivos de fronteira
-- [[core/markdown-writing/markdown-writing]] — Regras de formatação que os arquivos de fronteira devem seguir
+- [[foundations/behavior-principles/behavior-principles]] — Princípios fundamentais que governam o comportamento da IA, incluindo fronteiras
+- [[organization/document-management/document-management]] — Ciclo de vida aplicável aos arquivos de fronteira
+- [[writing/markdown-writing/markdown-writing]] — Regras de formatação que os arquivos de fronteira devem seguir
 
 ## 📜 Histórico de Alterações
 

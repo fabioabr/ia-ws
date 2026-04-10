@@ -21,7 +21,7 @@ Regra comportamental que define o **ciclo de vida** de todo documento no workspa
 
 ---
 
-## Convenções aplicáveis
+## 📋 Convenções aplicáveis
 
 | Convenção | Referência |
 | --------- | ---------- |
@@ -32,7 +32,7 @@ A IA deve aplicar as convenções acima ao criar, atualizar ou transicionar docu
 
 ---
 
-## Transições de Status
+## 🔄 Transições de Status
 
 > [!danger] Regra fundamental
 > **Documentos nunca são excluídos.** O histórico é sempre preservado. Documentos que não são mais úteis devem ter seu status alterado para `arquivado` ou `obsoleto`.
@@ -57,7 +57,7 @@ A IA deve aplicar as convenções acima ao criar, atualizar ou transicionar docu
 
 ---
 
-## Quando Criar um Novo Documento
+## 📄 Quando Criar um Novo Documento
 
 Criar um **novo** documento quando:
 
@@ -70,7 +70,7 @@ Criar um **novo** documento quando:
 
 ---
 
-## Detecção de Conteúdo Duplicado
+## 🔍 Detecção de Conteúdo Duplicado
 
 > [!danger] Regra fundamental
 > A IA **nunca deve criar um documento novo** sem antes verificar se já existe conteúdo semelhante na base de conhecimento.
@@ -102,14 +102,14 @@ A IA deve apresentar o(s) documento(s) encontrado(s) e conduzir um questionário
 > A IA **apresenta a sugestão com justificativa**, mas a decisão final é **sempre do usuário**. Se o usuário insistir em criar novo documento mesmo com sobreposição, a IA deve acatar e garantir que os backlinks entre os documentos sejam criados.
 
 > [!danger] Desvio de Behavior
-> Se o usuário optar por **não seguir a sugestão da IA**, o desvio **deve ser registrado** no documento criado, conforme definido em [[core/behavior-principles/behavior-principles|Princípio #2 — Desvios São Registrados]]. A IA deve perguntar o motivo para registrar a justificativa.
+> Se o usuário optar por **não seguir a sugestão da IA**, o desvio **deve ser registrado** no documento criado, conforme definido em [[foundations/behavior-principles/behavior-principles|Princípio #2 — Desvios São Registrados]]. A IA deve perguntar o motivo para registrar a justificativa.
 
 > [!info] Profundidade da análise
 > A IA deve ir além de uma busca superficial — analisar o **conteúdo real** dos documentos encontrados, comparar seções, e apresentar uma visão clara de onde há sobreposição e onde há diferença.
 
 ---
 
-## Quando Atualizar um Documento Existente
+## ✏️ Quando Atualizar um Documento Existente
 
 Atualizar o documento quando:
 
@@ -126,7 +126,7 @@ Atualizar o documento quando:
 
 ---
 
-## Quando Arquivar
+## 📦 Quando Arquivar
 
 Mover para `arquivado` quando:
 
@@ -139,7 +139,7 @@ Mover para `arquivado` quando:
 
 ---
 
-## Quando Marcar como Obsoleto
+## ❌ Quando Marcar como Obsoleto
 
 Mover para `obsoleto` quando:
 
@@ -157,7 +157,7 @@ Mover para `obsoleto` quando:
 
 ---
 
-## Papel da IA
+## 🤖 Papel da IA
 
 A IA deve **sugerir proativamente** mudanças de status quando identificar:
 
@@ -171,14 +171,14 @@ A IA deve **sugerir proativamente** mudanças de status quando identificar:
 
 ---
 
-## Documentos Relacionados
+## 🔗 Documentos Relacionados
 
-- [[core/behavior-principles/behavior-principles]] — Princípios fundamentais que regem o behavior, incluindo registro de desvios
-- [[core/markdown-writing/markdown-writing]] — Regras de formatação, frontmatter e versionamento que todo documento deve seguir
-- [[core/taxonomy-and-tags/taxonomy-and-tags]] — Convenções de tags usadas para categorizar documentos
-- [[core/index-and-navigation/index-and-navigation]] — Regras de índice e backlinks afetados por transições de status
+- [[foundations/behavior-principles/behavior-principles]] — Princípios fundamentais que regem o behavior, incluindo registro de desvios
+- [[writing/markdown-writing/markdown-writing]] — Regras de formatação, frontmatter e versionamento que todo documento deve seguir
+- [[organization/taxonomy-and-tags/taxonomy-and-tags]] — Convenções de tags usadas para categorizar documentos
+- [[organization/index-and-navigation/index-and-navigation]] — Regras de índice e backlinks afetados por transições de status
 
-## Histórico de Alterações
+## 📜 Histórico de Alterações
 
 | Versão    | Timestamp        | Descrição                                                                      |
 | --------- | ---------------- | ------------------------------------------------------------------------------ |

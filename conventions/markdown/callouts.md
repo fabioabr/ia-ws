@@ -1,3 +1,16 @@
+---
+title: "Callouts"
+description: "Tipos e sintaxe de callouts padrao para documentos Obsidian"
+project-name: "global"
+version: "01.00.000"
+status: "ativo"
+author: "claude-code"
+category: "convention"
+area: "tecnologia"
+tags: [callout, markdown, obsidian, sintaxe]
+created: "2026-04-10 12:00"
+---
+
 # Callouts
 
 Obsidian callout types and syntax.

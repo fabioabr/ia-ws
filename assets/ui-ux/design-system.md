@@ -18,7 +18,7 @@ updated_at: 2026-03-26
 
 Este documento define os padrões visuais e de interface para todos os produtos, documentos e aplicações. Serve como referência única para garantir consistência visual entre equipes e projetos.
 
-> **Referência visual:** O playground de componentes (`.claude/behavior/ui_ux/playground.html`) é o modelo interativo oficial. Este documento descreve os tokens e regras; o playground os demonstra.
+> **Referência visual:** O playground de componentes (`.claude/behavior/ui-ux/playground.html`) é o modelo interativo oficial. Este documento descreve os tokens e regras; o playground os demonstra.
 
 ---
 

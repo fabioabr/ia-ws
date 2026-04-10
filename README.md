@@ -1,3 +1,19 @@
+---
+title: ia-ws
+description: Workspace global de regras, convenções, design system e skills para assistentes de IA
+project-name: global
+version: 01.00.000
+status: ativo
+author: claude-code
+category: documentacao
+area: tecnologia
+tags:
+  - workspace
+  - documentacao
+  - ia
+created: 2026-04-10 12:00
+---
+
 # ia-ws
 
 Workspace compartilhado e agnóstico a projetos que centraliza regras de comportamento, convenções, design system e skills para assistentes de IA (Claude Code, OpenCode, Antigravity). Qualquer projeto pode herdar este workspace via template de dependência.
@@ -31,7 +47,7 @@ ia-ws/
 ├── assets/                   Assets globais compartilhados
 │   ├── icons/                Icon packs
 │   ├── logos/                Logos dark/light + base64
-│   ├── ui_ux/                Design system, playground, paleta de barras
+│   ├── ui-ux/                Design system, playground, paleta de barras
 │   └── variables/            Variáveis de reports
 ├── .claude/skills/           Skills globais para Claude Code
 │   ├── md-writer/            Formata qualquer .md seguindo convenções

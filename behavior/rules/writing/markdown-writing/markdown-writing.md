@@ -111,10 +111,10 @@ Todo arquivo `.md` deve conter uma seção de histórico como **última seção*
 
 ## 🔗 Documentos Relacionados
 
-- [[core/behavior-principles/behavior-principles]] — Princípios fundamentais que regem o formato e comportamento deste documento
-- [[core/taxonomy-and-tags/taxonomy-and-tags]] — Convenções de tags usadas no frontmatter
-- [[core/index-and-navigation/index-and-navigation]] — Regras de índice e backlinks que todo documento deve seguir
-- [[core/document-management/document-management]] — Ciclo de vida e transições de status definidos no frontmatter
+- [[foundations/behavior-principles/behavior-principles]] — Princípios fundamentais que regem o formato e comportamento deste documento
+- [[organization/taxonomy-and-tags/taxonomy-and-tags]] — Convenções de tags usadas no frontmatter
+- [[organization/index-and-navigation/index-and-navigation]] — Regras de índice e backlinks que todo documento deve seguir
+- [[organization/document-management/document-management]] — Ciclo de vida e transições de status definidos no frontmatter
 
 ## 📜 Histórico de Alterações
 

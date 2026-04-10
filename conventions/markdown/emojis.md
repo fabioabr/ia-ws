@@ -1,3 +1,16 @@
+---
+title: "Semantic Emojis"
+description: "Emojis com funcao semantica para headings e destaques em documentos"
+project-name: "global"
+version: "01.00.000"
+status: "ativo"
+author: "claude-code"
+category: "convention"
+area: "tecnologia"
+tags: [emoji, semantica, heading, markdown]
+created: "2026-04-10 12:00"
+---
+
 # Semantic Emojis
 
 Emojis com função semântica para headings e destaques em documentos .md e relatórios HTML.
@@ -15,9 +28,9 @@ Emojis com função semântica para headings e destaques em documentos .md e rel
 | 📜 | Histórico de Alterações | Changelog (sempre última seção) |
 | 🏗️ | Arquitetura | Seções técnicas de arquitetura |
 | 🔒 | Segurança | Privacidade, compliance, LGPD |
-| 📊 | Métricas / Dados | Dashboards, KPIs, analytics |
+| 📊 | Métricas / Dados | Dashboards, Key Performance Indicators (KPIs), analytics |
 | 📅 | Cronograma / Prazo | Timelines, deadlines |
-| 💰 | Custo / TCO | Seções financeiras |
+| 💰 | Custo / Total Cost of Ownership (TCO) | Seções financeiras |
 | 🏛️ | Princípio / Fundamento | Regras fundamentais |
 | 🔍 | Revisão / Auditoria | Seções de validação |
 | 📄 | Documento | Referência a arquivo |

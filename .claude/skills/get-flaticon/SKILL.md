@@ -1,16 +1,21 @@
 ---
 name: get-flaticon
+title: get-flaticon
 description: "Baixa em lote ícones PNG 128px de um pack do Flaticon para uma pasta local usando Playwright stealth. Trigger: flaticon, ícones, icons, scraper, download icons."
+project-name: global
 version: 01.01.000
 author: claude-code
+license: MIT
 status: ativo
 category: utility
+area: tecnologia
 tags:
   - scraping
   - flaticon
   - download
   - icons
   - playwright
+created: 2026-04-10 12:00
 inputs:
   - name: url
     type: string
@@ -42,7 +47,7 @@ Se **qualquer** argumento estiver faltando, **pergunte ao usuário** antes de co
 
 ---
 
-## Instructions
+## 📋 Instructions
 
 ### 0. Pré-requisitos
 
@@ -195,7 +200,7 @@ Apresente, de forma compacta:
 - ⏭️ **Pulados (já existiam):** N
 - ❌ **Erros:** N (listar URLs que falharam, se houver)
 
-## Examples
+## 📄 Examples
 
 ### Exemplo 1 — Download de pack completo (primeira execução)
 
@@ -224,7 +229,7 @@ erros           : 0
 ```
 Todos os 40 ícones já existiam na pasta — nenhum re-download realizado.
 
-## Constraints
+## 🚫 Constraints
 
 - Nunca inferir argumentos — se `url` ou `base-folder` não vierem em `$ARGUMENTS`, perguntar ao usuário
 - A URL deve começar com `https://www.flaticon.com/` — rejeitar qualquer outra
@@ -237,7 +242,7 @@ Todos os 40 ícones já existiam na pasta — nenhum re-download realizado.
 - Download dos PNGs usa `urllib` normal (CDN não tem WAF) — Playwright só para a página de listagem
 - Conteúdo em pt-BR com acentuação correta em toda comunicação com o usuário
 
-## claude-code
+## 🔧 claude-code
 
 ### Trigger
 Keywords no `description` do frontmatter: flaticon, ícones, icons, scraper, download icons. O Claude Code usa o campo `description` para decidir quando invocar a skill automaticamente.
@@ -250,3 +255,14 @@ Usar `$ARGUMENTS` no corpo para capturar os parâmetros passados pelo usuário v
 - file-read: true
 - file-write: true
 - web-fetch: false
+
+## 🔗 Documentos Relacionados
+
+- `conventions/frontmatter/document-schema.md` — Schema de frontmatter para documentos
+- `conventions/frontmatter/skill-schema.md` — Schema de frontmatter para skills
+
+## 📜 Histórico de Alterações
+
+| Versão | Data | Descrição |
+|--------|------|-----------|
+| 01.01.000 | 2026-04-10 | Adequação ao skill-schema com herança de document-schema; adição de campos title, project-name, area, created, license; emojis em H2; seções Documentos Relacionados e Histórico |

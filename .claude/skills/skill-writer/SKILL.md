@@ -1,16 +1,20 @@
 ---
 name: skill-writer
+title: skill-writer
 description: "Cria e formata arquivos SKILL.md seguindo a regra skill-structure (behavior/rules/code/) e todas as regras de escrita do behavior global (markdown-writing, naming-convention, taxonomy-and-tags, acronym-glossary, hallucination-guard, document-management, index-and-navigation). Gera skills compatíveis com Obsidian, Claude Code, OpenCode e Antigravity. Trigger keywords: skill-writer, criar skill, nova skill, SKILL.md, criar agente, novo agente."
+project-name: global
 version: 01.00.000
 author: claude-code
 license: MIT
 status: ativo
 category: utility
+area: tecnologia
 tags:
   - skill
   - writer
   - generator
   - utility
+created: 2026-04-10 12:00
 inputs:
   - name: skill-name
     type: string
@@ -45,7 +49,7 @@ Você é o **skill-writer** — responsável por criar e formatar arquivos `SKIL
 
 Se nenhum argumento for informado, pergunte o nome e a descrição da skill.
 
-## Instructions
+## 📋 Instructions
 
 ### 1. Regras obrigatórias
 
@@ -126,7 +130,7 @@ Valida conformidade sem alterar o arquivo:
 - Não gera SKILL.md sem inputs/outputs no frontmatter
 - Não ignora as regras de escrita (siglas, headings, naming)
 
-## Examples
+## 📄 Examples
 
 ### Exemplo 1 — Criar skill nova (mode: create)
 
@@ -178,7 +182,7 @@ ESCRITA (via headings + markdown-treatment)
 - Seções antigravity e open-code adicionadas (conforme **body-structure**)
 - Sigla "XML" tratada na primeira ocorrência (conforme **markdown-treatment**)
 
-## Constraints
+## 🚫 Constraints
 
 - Toda skill gerada DEVE seguir a regra `skill-structure` em `behavior/rules/code/`
 - Toda skill gerada DEVE seguir as 7 regras de escrita do behavior global (mesmas do md-writer)
@@ -190,7 +194,7 @@ ESCRITA (via headings + markdown-treatment)
 - Consultar `behavior/rules/writing/acronym-glossary/assets/acronym-bank.md` para siglas
 - Não inventar funcionalidades — perguntar ao usuário se algo não está claro
 
-## claude-code
+## 🔧 claude-code
 
 ### Trigger
 Keywords no `description`: skill-writer, criar skill, nova skill, SKILL.md, criar agente, novo agente.
@@ -205,3 +209,17 @@ Keywords no `description`: skill-writer, criar skill, nova skill, SKILL.md, cria
 - file-write: true
 - file-read: true
 - web-fetch: false
+
+## 🔗 Documentos Relacionados
+
+- `conventions/frontmatter/skill-schema.md` — Schema de frontmatter para skills
+- `conventions/frontmatter/document-schema.md` — Schema de frontmatter para documentos
+- `conventions/skills/body-structure.md` — Estrutura do corpo de SKILL.md
+- `conventions/markdown/headings.md` — Hierarquia de headings H1-H4
+- `conventions/acronyms/markdown-treatment.md` — Tratamento de siglas
+
+## 📜 Histórico de Alterações
+
+| Versão | Data | Descrição |
+|--------|------|-----------|
+| 01.00.000 | 2026-04-10 | Adequação ao skill-schema com herança de document-schema; adição de campos title, project-name, area, created; emojis em H2; seções Documentos Relacionados e Histórico |

@@ -1,16 +1,20 @@
 ---
 name: md-writer
+title: md-writer
 description: "Formatador de markdown que materializa conteúdo em arquivos .md polidos seguindo as convenções centralizadas do workspace. Trigger keywords: md-writer, markdown writer, formatar md, gerar markdown, materializar documento, polir documento."
+project-name: global
 version: 01.01.000
 author: claude-code
 license: MIT
 status: ativo
 category: utility
+area: tecnologia
 tags:
   - markdown
   - formatter
   - writer
   - utility
+created: 2026-04-10 12:00
 inputs:
   - name: source
     type: file-path
@@ -40,7 +44,7 @@ Você é o **md-writer** — formatador de markdown que materializa conteúdo em
 
 Se nenhum argumento for informado, pergunte qual conteúdo formatar.
 
-## Instructions
+## 📋 Instructions
 
 ### 1. Leitura obrigatória antes de começar
 
@@ -115,7 +119,7 @@ Sinalize ao usuário se durante a formatação detectar:
 - **Não reescreve teses** — ajusta formatação, não reformula argumentos
 - **Não decide arquitetura de documentos** — se receber múltiplos inputs, pergunte como organizar
 
-## Examples
+## 📄 Examples
 
 ### Exemplo 1 — Reformatar .md existente (mode: format)
 
@@ -160,7 +164,7 @@ Arquivo bem estruturado mas com 3 siglas soltas e um wikilink quebrado.
 - Glossário adicionado (conforme markdown-treatment: 3 siglas)
 - Nenhuma outra alteração (documento já estava bem formatado)
 
-## Constraints
+## 🚫 Constraints
 
 - Nunca inventar fatos ou dados que não estão no conteúdo fonte
 - Nunca reescrever argumentos técnicos — apenas formatar
@@ -169,7 +173,7 @@ Arquivo bem estruturado mas com 3 siglas soltas e um wikilink quebrado.
 - Dados não verificáveis devem ser sinalizados com callout warning
 - Nomes de arquivo em inglês, kebab-case
 
-## claude-code
+## 🔧 claude-code
 
 ### Trigger
 Keywords no `description`: md-writer, markdown writer, formatar md, gerar markdown, materializar documento, polir documento.
@@ -184,3 +188,22 @@ Keywords no `description`: md-writer, markdown writer, formatar md, gerar markdo
 - file-write: true
 - file-read: true
 - web-fetch: false
+
+## 🔗 Documentos Relacionados
+
+- `conventions/frontmatter/document-schema.md` — Schema de frontmatter para documentos
+- `conventions/frontmatter/skill-schema.md` — Schema de frontmatter para skills
+- `conventions/markdown/headings.md` — Hierarquia de headings H1-H4
+- `conventions/markdown/callouts.md` — Tipos de callout Obsidian e sintaxe
+- `conventions/markdown/diagrams.md` — Diagramas Mermaid
+- `conventions/markdown/wikilinks.md` — Sintaxe de wikilinks
+- `conventions/markdown/section-order.md` — Ordem de seções
+- `conventions/markdown/emojis.md` — Emojis semânticos em headings
+- `conventions/acronyms/markdown-treatment.md` — Tratamento de siglas
+- `conventions/acronyms/acronym-bank.md` — Banco de siglas
+
+## 📜 Histórico de Alterações
+
+| Versão | Data | Descrição |
+|--------|------|-----------|
+| 01.01.000 | 2026-04-10 | Adequação ao skill-schema com herança de document-schema; adição de campos title, project-name, area, created; emojis em H2; seções Documentos Relacionados e Histórico |
