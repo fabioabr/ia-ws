@@ -23,6 +23,7 @@ Global skills available via `/skill-name`:
 | Skill | Purpose |
 |-------|---------|
 | md-writer | Formats any .md following all conventions |
+| md-validator | Validates .md files against workspace conventions |
 | skill-writer | Creates/formats SKILL.md (Obsidian + Claude + OpenCode + Antigravity) |
 | html-writer | Converts .md to self-contained HTML reports |
 | diagram-drawio | Generates draw.io diagrams |
@@ -34,7 +35,7 @@ Project dependency template at [setup/dependency.md](setup/dependency.md) — co
 
 ## Support Tools
 
-External tools documentation at [support-tools/](support-tools/).
+External tools catalog at [support-tools/catalog.md](support-tools/catalog.md).
 
 <!-- gitnexus:start -->
 # GitNexus — Code Intelligence

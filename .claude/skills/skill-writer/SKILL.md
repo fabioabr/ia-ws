@@ -1,5 +1,6 @@
 ---
 name: skill-writer
+argument-hint: "<skill-name> [--mode create|format|audit]"
 title: skill-writer
 description: "Cria e formata arquivos SKILL.md seguindo a regra skill-structure (behavior/rules/code/) e todas as regras de escrita do behavior global (markdown-writing, naming-convention, taxonomy-and-tags, acronym-glossary, hallucination-guard, document-management, index-and-navigation). Gera skills compatíveis com Obsidian, Claude Code, OpenCode e Antigravity. Trigger keywords: skill-writer, criar skill, nova skill, SKILL.md, criar agente, novo agente."
 project-name: global

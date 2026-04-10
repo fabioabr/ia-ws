@@ -2,7 +2,7 @@
 title: Skill Structure
 description: Estrutura obrigatória do SKILL.md — formato universal compatível com Obsidian, Claude Code, OpenCode e Antigravity
 project-name: global
-version: 01.01.000
+version: 01.02.000
 status: ativo
 author: claude-code
 category: code
@@ -49,14 +49,15 @@ A IA deve aplicar as convenções acima ao criar ou editar qualquer SKILL.md.
 ### Frontmatter
 
 5. **Frontmatter nunca vazio** — no mínimo os campos obrigatórios definidos na convenção `conventions/frontmatter/skill-schema.md`
+6. **`argument-hint` obrigatório** — todo SKILL.md deve incluir o campo `argument-hint` no frontmatter com a sintaxe dos parâmetros aceitos. Usar `<required>` para obrigatórios e `[optional]` para opcionais. Exemplo: `argument-hint: "<path> [--mode format|create] [--output path]"`. Este campo aparece no autocomplete do Claude Code ao digitar `/skill-name`
 
 ### Inputs e Outputs
 
-6. **inputs/outputs são documentação** — plataformas que não suportam ignoram silenciosamente; o objetivo é documentar o contrato da skill para humanos e orquestradores
+7. **inputs/outputs são documentação** — plataformas que não suportam ignoram silenciosamente; o objetivo é documentar o contrato da skill para humanos e orquestradores
 
 ### Seções de plataforma
 
-7. **Seções de plataforma são opcionais** — a skill funciona sem elas; cada engine lê apenas a sua
+8. **Seções de plataforma são opcionais** — a skill funciona sem elas; cada engine lê apenas a sua
 
 ---
 
@@ -71,3 +72,4 @@ A IA deve aplicar as convenções acima ao criar ou editar qualquer SKILL.md.
 |-----------|------------|-----------|
 | 01.00.000 | 2026-04-09 | Criação — formato universal compatível com Obsidian, Claude Code, OpenCode e Antigravity |
 | 01.01.000 | 2026-04-10 | Refatoração: schema do frontmatter, inputs/outputs, corpo e templates extraídos para conventions/; regra mantém apenas instruções comportamentais |
+| 01.02.000 | 2026-04-10 | Adicionada regra 6: campo argument-hint obrigatório no frontmatter para exibir hints no autocomplete do Claude Code |

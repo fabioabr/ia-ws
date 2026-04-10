@@ -1,5 +1,6 @@
 ---
 name: html-writer
+argument-hint: "<source.md> [--output path] [--template name]"
 title: html-writer
 description: "Converte documentos .md em relatórios HTML auto-contidos seguindo o Design System. Trigger: html-writer, report, relatório, HTML, converter md, gerar relatório, gerar HTML."
 project-name: global

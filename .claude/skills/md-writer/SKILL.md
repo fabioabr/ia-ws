@@ -1,5 +1,6 @@
 ---
 name: md-writer
+argument-hint: "<file-or-content> [--mode format|create|polish] [--output path]"
 title: md-writer
 description: "Formatador de markdown que materializa conteúdo em arquivos .md polidos seguindo as convenções centralizadas do workspace. Trigger keywords: md-writer, markdown writer, formatar md, gerar markdown, materializar documento, polir documento."
 project-name: global

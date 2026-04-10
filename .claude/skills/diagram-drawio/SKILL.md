@@ -1,5 +1,6 @@
 ---
 name: diagram-drawio
+argument-hint: "<description-or-file> [--type flowchart|C4|ER|sequence]"
 title: diagram-drawio
 description: "Cria diagramas profissionais em XML compatível com draw.io (diagrams.net). Trigger: diagrama, drawio, draw.io, flowchart, fluxograma, arquitetura, C4, ER, pipeline, organograma."
 project-name: global

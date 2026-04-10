@@ -2,7 +2,7 @@
 title: Skill Schema
 description: Esquema de frontmatter para arquivos SKILL.md — herda todos os campos do document-schema e adiciona campos específicos de skills
 project-name: global
-version: 02.00.000
+version: 02.01.000
 status: ativo
 author: claude-code
 category: convention
@@ -45,6 +45,7 @@ Além da base herdada, SKILL.md tem campos específicos:
 | Campo | Tipo | Descrição |
 |-------|------|-----------|
 | `name` | string | Identificador único da skill (kebab-case, inglês, = nome da pasta) |
+| `argument-hint` | string | Hint de parâmetros exibido no autocomplete (ex: `<path> [--mode format\|create]`) |
 | `inputs` | list | Parâmetros que a skill aceita |
 | `outputs` | list | Formatos de resposta que a skill retorna |
 
@@ -83,6 +84,7 @@ Cada item de `outputs` é um objeto com:
 ```yaml
 ---
 name: validate-doc
+argument-hint: "<file> [--format json|text]"
 title: Validate Doc
 description: "Valida documento contra o schema de frontmatter. Trigger: validate, validar, schema, frontmatter."
 project-name: global

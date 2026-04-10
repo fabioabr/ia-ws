@@ -1,5 +1,6 @@
 ---
 name: get-flaticon
+argument-hint: "<pack-url> <output-folder>"
 title: get-flaticon
 description: "Baixa em lote ícones PNG 128px de um pack do Flaticon para uma pasta local usando Playwright stealth. Trigger: flaticon, ícones, icons, scraper, download icons."
 project-name: global
