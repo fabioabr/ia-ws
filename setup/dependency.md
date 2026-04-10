@@ -117,6 +117,22 @@ Se ambos existirem, assets do projeto **sobrescrevem** os globais.
 
 Skills do projeto estendem ou substituem as globais.
 
+### Knowledge Packs (com extensão local)
+
+| Prioridade | Caminho |
+|------------|---------|
+| 1. Projeto (local) | `{pasta-do-projeto}/knowledge/` |
+| 2. Global (fallback) | `knowledge/` (relativo ao WS_BASE) |
+
+Domínios tecnológicos com `context.md` (concerns + perguntas) e `specialists.md` (catálogo de especialistas). Projetos podem criar packs locais ou customizar cópias dos globais.
+
+| Domínio | Caminho relativo em `knowledge/` |
+|---------|----------------------------------|
+| SaaS | `saas/context.md` + `saas/specialists.md` |
+| Datalake Ingestion | `datalake-ingestion/context.md` + `datalake-ingestion/specialists.md` |
+| Process Documentation | `process-documentation/context.md` + `process-documentation/specialists.md` |
+| Web Microservices | `web-microservices/context.md` + `web-microservices/specialists.md` |
+
 ### Referências rápidas
 
 | Recurso | Caminho relativo |

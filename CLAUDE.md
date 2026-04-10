@@ -28,6 +28,15 @@ Global skills available via `/skill-name`:
 | html-writer | Converts .md to self-contained HTML reports |
 | diagram-drawio | Generates draw.io diagrams |
 | get-flaticon | Downloads icons from Flaticon |
+| po | Product analysis — vision, personas, value, organization |
+| solution-architect | Technical analysis — architecture, TCO, Build vs Buy |
+| cyber-security-architect | Privacy and security analysis — LGPD, GDPR, compliance |
+| 10th-man | Devil's advocate — challenges assumptions, divergent validation |
+| custom-specialist | On-demand domain expertise for any technical domain |
+
+## Knowledge
+
+Global technology domain packs at [knowledge/](knowledge/). Each domain has `context.md` (concerns + questions) and `specialists.md` (custom-specialist catalog). Any project can use them.
 
 ## Setup
 
