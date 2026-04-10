@@ -83,4 +83,7 @@ Assets do projeto sobrescrevem os globais (logos, design system, variáveis).
 | Claude Code | Skills via `.claude/skills/`, rules via `CLAUDE.md` |
 | OpenCode | Skills com seção `## open-code` |
 | Antigravity | Skills com seção `## antigravity` |
-| Obsidian | Navegação via wikilinks, frontmatter, callouts |
+| Obsidian | Leitura e navegação nativa (wikilinks, frontmatter, callouts) |
+| Qualquer editor | Todos os `.md` seguem convenções universais de Markdown |
+
+> As convenções de escrita (headings, callouts, wikilinks, frontmatter, emojis, section-order) se aplicam a **todo arquivo .md** do workspace — não são exclusivas do Obsidian. O Obsidian é apenas uma das ferramentas compatíveis.
