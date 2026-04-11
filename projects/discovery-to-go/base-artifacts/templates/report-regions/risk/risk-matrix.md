@@ -38,3 +38,27 @@ risk_matrix:
 | RISK-03 | Vazamento de dados financeiros | 2 | 5 | 10 | Medio | Criptografia at-rest/in-transit + pentest trimestral | Security |
 | RISK-04 | Atraso na aprovacao da App Store | 2 | 3 | 6 | Medio | Submissao antecipada + PWA como fallback | Mobile Lead |
 | RISK-05 | Turnover de desenvolvedor-chave | 2 | 2 | 4 | Baixo | Documentacao de decisoes + pair programming | Engineering Manager |
+
+## Representação Visual
+
+### Dados de amostra
+
+| ID | Risco | Probabilidade | Impacto | Score | Severidade |
+|----|-------|--------------|---------|-------|------------|
+| RISK-01 | Integração Open Finance instável | 4 | 5 | 20 | Crítico |
+| RISK-02 | Churn acima de 5% no primeiro trimestre | 3 | 4 | 12 | Alto |
+| RISK-03 | Vazamento de dados financeiros | 2 | 5 | 10 | Médio |
+| RISK-04 | Atraso na aprovação da App Store | 2 | 3 | 6 | Médio |
+| RISK-05 | Turnover de desenvolvedor-chave | 2 | 2 | 4 | Baixo |
+
+### Formatos de exibição possíveis
+
+| Formato | Descrição | Quando usar |
+|---------|-----------|-------------|
+| Texto corrido | Narrativa descrevendo os riscos mais críticos, suas inter-relações e as estratégias de mitigação priorizadas | Comunicação executiva onde o contexto qualitativo dos riscos é mais importante que a classificação numérica |
+| Tabela | Matriz completa com probabilidade, impacto, score, severidade, mitigação e dono, como no exemplo acima | Quando o leitor precisa de todos os detalhes para acompanhamento e gestão dos riscos |
+| Bubble chart (probabilidade x impacto) | Gráfico de bolhas com eixo X = probabilidade, eixo Y = impacto, tamanho da bolha = score, cor = severidade | Visualizar a distribuição dos riscos no espaço probabilidade-impacto e identificar clusters de risco |
+| 5x5 heatmap grid | Grid 5x5 com probabilidade nas colunas e impacto nas linhas, cada célula colorida por severidade, riscos posicionados na célula correspondente | Representação clássica de risk matrix — permite identificação visual imediata das zonas críticas |
+
+> [!info] Avaliação pendente
+> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.

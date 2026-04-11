@@ -38,3 +38,28 @@ Mapeamento visual da jornada de cada persona ao longo do processo que o produto 
 | 5. Revisão | Envia para Juliana (controller) revisar e aprovar | Email + Excel | Expectativa | Se houver erro, volta para a etapa 2 — retrabalho de 4-6h | Alertas de inconsistência pré-revisão |
 | 6. Entrega | Juliana aprova e repassa ao CFO | Email + PowerPoint | Alívio | Formatting manual para a apresentação ao conselho | Geração automática de relatório executivo |
 ```
+
+## Representação Visual
+
+### Dados de amostra
+
+| Etapa | Ação | Touchpoint | Emoção | Tem dor? | Tem oportunidade? |
+|-------|------|------------|--------|----------|-------------------|
+| 1. Coleta | Exporta relatório de cada SAP | Email + SAP GUI | Frustração | Sim | Sim |
+| 2. Normalização | Converte para formato padrão | Excel | Tédio | Sim | Sim |
+| 3. Eliminação | Aplica regras intercompany | Excel | Ansiedade | Sim | Sim |
+| 4. Consolidação | Soma e gera P&L consolidado | Excel | Concentração | Sim | Sim |
+| 5. Revisão | Envia para controller revisar | Email + Excel | Expectativa | Sim | Sim |
+| 6. Entrega | Controller aprova e repassa ao CFO | Email + PowerPoint | Alívio | Sim | Sim |
+
+### Formatos de exibição possíveis
+
+| Formato | Descrição | Quando usar |
+|---------|-----------|-------------|
+| Texto corrido | Narrativa sequencial descrevendo cada passo da jornada com contexto e dores | Quando o leitor precisa entender o fluxo completo com nuances |
+| Tabela | Matriz com etapas nas linhas e dimensões (ação, touchpoint, emoção, dor) nas colunas | Para análise comparativa entre etapas |
+| Stepped timeline / flowchart | Diagrama de fluxo horizontal com etapas sequenciais, ícones de emoção e marcadores de dor/oportunidade | Para apresentações e comunicação visual da jornada completa |
+| Swimlane diagram | Raias por persona/sistema mostrando interações e handoffs entre atores | Para evidenciar dependências e gargalos entre personas |
+
+> [!info] Avaliação pendente
+> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.

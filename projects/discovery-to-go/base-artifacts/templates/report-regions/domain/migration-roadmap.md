@@ -36,3 +36,33 @@ migration_roadmap:
 | 2 | Core Migration | 8 semanas | Modulos core + banco de dados | Todos os testes E2E passando; latencia < 200ms |
 | 3 | Full Cutover | 2 semanas | Desligar sistema legado | 2 semanas de operacao paralela sem incidentes |
 | 4 | Decommission | 4 semanas | Remover infraestrutura antiga | Backup final arquivado; custos legado zerados |
+
+## Representacao Visual
+
+### Dados de amostra
+
+```
+Semana:  1---4   5---------12   13--14   15-------18
+         |       |              |         |
+Phase 1: Pilot   |              |         |
+         [====]  |              |         |
+                 Phase 2: Core  |         |
+                 [==============]         |
+                 Go/No-Go ----> *         |
+                                Phase 3:  |
+                                [====]    |
+                                Go/No-Go -> *
+                                          Phase 4: Decommission
+                                          [========]
+```
+
+### Formatos de exibicao possiveis
+
+| Formato | Descricao | Quando usar |
+|---------|-----------|-------------|
+| Texto corrido | Descricao narrativa de cada fase com escopo, duracao e criterios de go/no-go | Documentos de planejamento, business cases |
+| Tabela | Tabela com fases, duracao, escopo e criterios de sucesso | Referencia rapida, atas de reuniao |
+| Grafico de Gantt/Timeline | Diagrama temporal mostrando fases em sequencia com checkpoints de go/no-go entre cada uma | Apresentacoes para stakeholders, gestao de programa, acompanhamento de progresso |
+
+> [!info] Avaliacao pendente
+> Um especialista em visualizacao de dados deve avaliar qual formato grafico melhor representa esta informacao, considerando o publico-alvo e o contexto de uso.

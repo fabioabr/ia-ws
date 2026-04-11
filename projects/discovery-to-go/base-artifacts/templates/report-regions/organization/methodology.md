@@ -40,3 +40,33 @@ Descreve o framework de trabalho adotado, a cadência de entregas e as cerimôni
 - **Comunicação:** Slack (canal #fintrack-pro-delivery)
 - **Documentação:** Confluence + repositório Git
 - **Design:** Figma (protótipos e handoff)
+
+## Representação Visual
+
+### Dados de amostra
+
+**Framework:** Scrum adaptado + Kanban
+
+**Cadência do sprint (2 semanas):**
+
+| Dia | Cerimônia | Duração | Participantes |
+|-----|-----------|---------|---------------|
+| Seg (Semana 1) | Sprint Planning | 1h | Time completo |
+| Diário | Daily Standup | 15min | Time completo |
+| Qua (Semana 1) | Refinamento | 1h | PO, Tech Lead, Dev |
+| Sex (Semana 2) | Sprint Review | 1h | Time + Stakeholders |
+| Sex (Semana 2) | Retrospectiva | 45min | Time interno |
+
+**Stack de ferramentas:** Jira (gestão), Slack (comunicação), Confluence + Git (documentação), Figma (design)
+
+### Formatos de exibição possíveis
+
+| Formato | Descrição | Quando usar |
+|---------|-----------|-------------|
+| Texto corrido | Narrativa descritiva do framework, cadência, cerimônias e ferramentas adotadas | Propostas comerciais, documentos executivos ou onboarding de novos membros |
+| Tabela | Tabela de cerimônias com dia, duração e participantes | Referência rápida para o time sobre a agenda recorrente do sprint |
+| Card / ficha resumo | Blocos visuais organizados por categoria (framework, cadência, cerimônias, ferramentas) | Dashboards de projeto, wikis ou painéis de onboarding visual |
+| Diagrama de fluxo do sprint | Fluxo visual mostrando a sequência de cerimônias ao longo das 2 semanas | Apresentações de kickoff para alinhar o ritmo do projeto com todos os envolvidos |
+
+> [!info] Avaliação pendente
+> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.

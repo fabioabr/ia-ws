@@ -39,3 +39,28 @@ targets_per_phase:
 | Scale | 6 meses | MRR | >= R$ 50.000 | business |
 | Scale | 6 meses | Latencia P95 | < 200ms | technical |
 | Scale | 6 meses | Churn | < 3% | business |
+
+## Representacao Visual
+
+### Dados de amostra
+
+```
+MVP (4 meses)          v1.1 (2 meses)         Scale (6 meses)
+────●──────────────────────●───────────────────────●────────
+  Epicos: 3/3             Clientes: >= 100        MRR: >= R$ 50k
+  Testes: >= 80%          Uptime: >= 99.5%        Latencia: < 200ms
+  Usuarios beta: >= 50    NPS beta: >= 40         Churn: < 3%
+```
+
+### Formatos de exibicao possiveis
+
+| Formato | Descricao | Quando usar |
+|---------|-----------|-------------|
+| Texto corrido | Paragrafo descritivo com fases e metas destacadas por periodo | Relatorios narrativos, sumarios executivos |
+| Tabela | Tabela estruturada com colunas Fase, Duracao, Metrica, Target, Tipo | Referencia completa, comparacao detalhada entre fases |
+| Timeline com markers | Linha do tempo horizontal com marcadores por fase e metas associadas | Apresentacoes de roadmap, alinhamento de stakeholders |
+| Timeline vertical com agrupamento | Linha do tempo vertical agrupando metricas por fase, com indicadores de tipo | Relatorios detalhados, acompanhamento de progresso por fase |
+| Timeline + cards | Linha do tempo com cards expandiveis contendo metricas de cada fase | Dashboards interativos, planejamento de projeto |
+
+> [!info] Avaliacao pendente
+> Um especialista em visualizacao de dados deve avaliar qual formato grafico melhor representa esta informacao, considerando o publico-alvo e o contexto de uso.

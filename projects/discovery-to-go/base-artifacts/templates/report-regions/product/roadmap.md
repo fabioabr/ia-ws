@@ -76,3 +76,25 @@ Visão de faseamento do produto ao longo do tempo, mostrando a progressão do MV
 - Épico 12: Alertas e anomaly detection
 - Épico 13: API para integração com BI externo
 ```
+
+## Representação Visual
+
+### Dados de amostra
+
+| Fase | Período | Duração | Épicos | Marco de decisão |
+|------|---------|---------|--------|-----------------|
+| Fase 0 — Sprint 0 | Mai/2026 | 2 semanas | 3 atividades | PoC aprovada |
+| Fase 1 — MVP | Jun-Set/2026 | 16 semanas | 5 épicos | 3 fechamentos sem erro |
+| Fase 2 — Escala | Out-Dez/2026 | 12 semanas | 4 épicos | 12 filiais + auditoria OK |
+| Fase 3 — Maturidade | Q1/2027 | 8 semanas | 4 épicos | — |
+
+### Formatos de exibição possíveis
+
+| Formato | Descrição | Quando usar |
+|---------|-----------|-------------|
+| Texto corrido | Narrativa de cada fase com objetivo, épicos e marcos de decisão | Quando o leitor precisa de contexto sobre dependências e justificativas de faseamento |
+| Tabela | Matriz com fases, períodos, épicos e marcos em colunas | Para referência rápida e comparação entre fases |
+| Timeline horizontal | Diagrama de linha do tempo com fases como blocos coloridos, épicos como sub-itens e marcos como diamantes | Para apresentações executivas e comunicação de roadmap |
+
+> [!info] Avaliação pendente
+> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.

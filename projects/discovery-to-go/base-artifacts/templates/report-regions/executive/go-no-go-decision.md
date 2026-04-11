@@ -54,3 +54,30 @@ O discovery confirma que o problema é real, urgente e mensurável. A solução 
 - Mudanças regulatórias IFRS 16 previstas para Q1 2027 podem impactar regras de consolidação
 - Equipe de sustentação pós-MVP ainda não definida — escalar discussão com RH na Fase 1
 ```
+
+## Representação Visual
+
+### Dados de amostra
+
+| Dimensão | Status | Risco residual |
+|----------|--------|----------------|
+| Value | Verde | Baixo |
+| Usability | Amarelo | Médio |
+| Feasibility | Amarelo | Médio-alto |
+| Viability | Verde | Baixo |
+
+**Veredicto:** PROSSEGUIR
+**Condições obrigatórias:** 3
+**Ressalvas:** 2
+
+### Formatos de exibição possíveis
+
+| Formato | Descrição | Quando usar |
+|---------|-----------|-------------|
+| Texto corrido | Narrativa com veredicto, justificativa e listas de condições/ressalvas | Quando o público precisa do contexto completo e da argumentação detalhada |
+| Tabela | Grid de dimensões com status, evidência e risco residual | Quando o foco é a comparação rápida entre as 4 dimensões de risco |
+| Semáforo (status badges) | Cards com indicador verde/amarelo/vermelho por dimensão + badge de veredicto | Quando o público é executivo e precisa de leitura instantânea do status |
+| Radar chart | Gráfico radar com as 4 dimensões pontuadas (ex: verde=3, amarelo=2, vermelho=1) | Quando se deseja visualizar o equilíbrio entre dimensões de risco de forma sintética |
+
+> [!info] Avaliação pendente
+> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.

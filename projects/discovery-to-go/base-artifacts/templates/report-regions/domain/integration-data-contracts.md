@@ -34,3 +34,25 @@ data_contracts:
 | Webhooks Stripe | JSON Schema | Header (Stripe-Version) | Stripe (externo) | Stripe mantem backward compatibility |
 | Eventos internos (Kafka) | Avro + Schema Registry | Schema evolution (backward) | Time que publica | Apenas adicao de campos opcionais |
 | Open Finance | OpenAPI (BACEN) | URL path | BACEN (externo) | Seguir calendario do BACEN |
+
+## Representacao Visual
+
+### Dados de amostra
+
+| Integracao | Formato | Versao Atual | Status | Owner |
+|-----------|---------|-------------|--------|-------|
+| API Publica FinTrack | OpenAPI 3.1 | v2 | `Ativa` | Backend |
+| Webhooks Stripe | JSON Schema | 2024-01-01 | `Ativa` | Stripe |
+| Eventos Kafka | Avro | 3.2.0 | `Ativa` | Publisher |
+| Open Finance | OpenAPI | v1 | `Em migracao` | BACEN |
+
+### Formatos de exibicao possiveis
+
+| Formato | Descricao | Quando usar |
+|---------|-----------|-------------|
+| Texto corrido | Descricao narrativa de cada contrato com formato, versionamento e politicas | ADRs, documentacao de governanca de APIs |
+| Tabela com badges de versao | Tabela com integracoes, formato, versao atual (badge), status e owner | Catalogo de contratos, dashboards de integracao, portais de API |
+| Matriz de compatibilidade | Grid mostrando compatibilidade entre versoes de contratos e sistemas consumidores | Planejamento de deprecacao, analise de impacto de breaking changes |
+
+> [!info] Avaliacao pendente
+> Um especialista em visualizacao de dados deve avaliar qual formato grafico melhor representa esta informacao, considerando o publico-alvo e o contexto de uso.

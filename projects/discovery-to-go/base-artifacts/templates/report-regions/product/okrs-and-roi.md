@@ -72,3 +72,31 @@ Objetivos e resultados-chave (OKRs) que definem o sucesso do produto em termos m
 - [ ] Fechamento mensal em D+3 ou menos
 - [ ] NPS dos analistas ≥ 40
 ```
+
+## Representação Visual
+
+### Dados de amostra
+
+| Métrica | Baseline | Target | Tipo |
+|---------|----------|--------|------|
+| Erros materiais/semestre | 3 | 0 | OKR |
+| Rastreabilidade | 0% | 100% | OKR |
+| Tempo de fechamento | D+8 | D+2 | OKR |
+| Horas semanais/analista | 12h | 2h | OKR |
+| Investimento (3 anos) | — | R$ 2,1M-2,8M | ROI |
+| Economia anual | — | R$ 500K-700K | ROI |
+| Payback | — | 14 meses | ROI |
+| ROI 3 anos | — | 75%-100% | ROI |
+
+### Formatos de exibição possíveis
+
+| Formato | Descrição | Quando usar |
+|---------|-----------|-------------|
+| Texto corrido | Narrativa descrevendo objetivos, metas e análise de ROI em prosa | Quando o leitor precisa de contexto e premissas detalhadas |
+| Tabela | Matrizes separadas para OKRs (baseline vs target) e ROI (investimento vs retorno) | Para consulta rápida de metas e valores |
+| Gráfico de barras | Barras comparando baseline vs target por KR, evidenciando a magnitude da melhoria | Para comunicação visual do impacto esperado |
+| Gauge / velocímetro | Indicadores de progresso circular por KR mostrando % de avanço em relação ao target | Para dashboards de acompanhamento pós-lançamento |
+| Gráfico de payback | Linha acumulada de investimento vs economia ao longo do tempo, com ponto de breakeven | Para justificar investimento a stakeholders financeiros |
+
+> [!info] Avaliação pendente
+> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.

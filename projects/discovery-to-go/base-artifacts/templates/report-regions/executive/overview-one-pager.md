@@ -72,3 +72,27 @@ Plataforma SaaS de consolidação financeira automatizada (FinTrack Pro) que cen
 
 Aprovar orçamento da Fase 1 (MVP) e iniciar Sprint 0 com PoC de integração SAP — responsável: Ana Costa, prazo: 15/05/2026.
 ```
+
+## Representação Visual
+
+### Dados de amostra
+
+**Problema:** Consolidação manual de 12 filiais, 12h/semana, 3 erros em 2 trimestres
+**Proposta:** FinTrack Pro — consolidação financeira automatizada (SaaS)
+**Stakeholders:** 3 (CFO, Controller, Head de Engenharia)
+**Decisões técnicas:** 4 (multi-tenant, API-first, AWS/IaC, SSO)
+**TCO 3 anos:** R$ 2,1M — R$ 2,8M (confiança média-alta)
+**Top riscos:** Integração SAP (Alta), Regulação IFRS (Média), Adoção (Média)
+**Build vs Buy:** Build customizado
+**Próximo passo:** Aprovar Fase 1 + Sprint 0 (PoC SAP)
+
+### Formatos de exibição possíveis
+
+| Formato | Descrição | Quando usar |
+|---------|-----------|-------------|
+| Texto corrido | Narrativa estruturada em seções com parágrafos, bullets e destaques em negrito | Formato padrão — quando o público precisa ler o contexto completo e a argumentação de cada seção |
+| Tabela | Grid resumindo campos-chave (problema, proposta, TCO, riscos, veredicto) em formato compacto | Quando o one-pager será comparado lado a lado com outros projetos em reunião de portfólio |
+| Callout cards | Cards visuais agrupados por seção (problema, proposta, riscos, recomendação) com ícones e destaques | Quando apresentado em tela (slide ou dashboard) e o público precisa absorver visualmente as seções-chave |
+
+> [!info] Avaliação pendente
+> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.

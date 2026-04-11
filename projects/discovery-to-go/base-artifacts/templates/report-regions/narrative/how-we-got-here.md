@@ -54,3 +54,34 @@ how_we_got_here:
    - *Tipo: convergence*
 
 **Resumo:** O discovery convergiu em 2 iteracoes. A principal correcao foi a inclusao de custos operacionais no TCO, identificada pelo auditor. As questoes abertas do 10th-man foram documentadas como hipoteses a validar.
+
+## Representacao Visual
+
+### Dados de amostra
+
+```
+  Dia 1  ●  Execucao inicial (Fase 1)
+         │  Blocos #1 a #8 executados
+         │
+  Dia 2  ●  Auditoria e 10th-man (Fase 2)
+         │  Bloco #8 reprovado (nota 6.5/10)
+         │
+  Dia 2  ●  Segunda iteracao
+         │  TCO revisado — aprovado (nota 7.8/10)
+         │
+  Dia 3  ●  Consolidacao e convergencia
+            Relatorio final gerado
+```
+
+### Formatos de exibicao possiveis
+
+| Formato | Descricao | Quando usar |
+|---------|-----------|-------------|
+| Texto corrido | Narrativa cronologica com marcos destacados em negrito | Relatorios executivos, contexto detalhado do processo |
+| Tabela | Tabela com colunas Data, Evento, Tipo, Detalhes | Referencia rapida, rastreabilidade de decisoes |
+| Timeline vertical | Linha do tempo vertical com nos coloridos por tipo (execucao, rejeicao, aprovacao, convergencia) | Apresentacoes de processo, visao geral do discovery |
+| Timeline vertical com detalhes expandiveis | Timeline com cards laterais contendo detalhes de cada etapa | Relatorios detalhados, retrospectivas de processo |
+| Timeline vertical com status icons | Timeline com icones indicando tipo de evento (check, alerta, reprocesso) | Dashboards de acompanhamento de pipeline |
+
+> [!info] Avaliacao pendente
+> Um especialista em visualizacao de dados deve avaliar qual formato grafico melhor representa esta informacao, considerando o publico-alvo e o contexto de uso.

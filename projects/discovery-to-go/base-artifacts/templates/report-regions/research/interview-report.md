@@ -79,3 +79,24 @@ Relatório estruturado das entrevistas realizadas durante o discovery, cobrindo 
 2. **CFO quer predição, não só consolidação:** "eu quero saber o resultado antes do fechamento oficial" — escopo além do MVP, mas sinaliza direção de produto
 3. **Analistas já têm workarounds sofisticados:** macros, scripts Python informais, validações cruzadas — indicando alta capacidade técnica e potencial para adoção rápida
 ```
+
+## Representação Visual
+
+### Dados de amostra
+
+- **Metodologia:** Entrevista semiestruturada, 6 sessões, 8 participantes, 90 min/sessão
+- **Perfis:** CFO (1), Controller (1), Analista financeiro (4), Gerente de TI (1), Auditor interno (1)
+- **Temas principais:** Processo de consolidação (8/8), Qualidade e confiança nos dados (7/8), Ferramentas e tecnologia (6/8)
+- **Padrões:** Unanimidade sobre a dor, desconfiança no processo, demanda por rastreabilidade
+- **Surpresas:** Filiais TOTVS como maior risco, CFO quer predição, analistas com workarounds sofisticados
+
+### Formatos de exibição possíveis
+
+| Formato | Descrição | Quando usar |
+|---------|-----------|-------------|
+| Texto corrido | Narrativa estruturada com seções e bullet points descrevendo metodologia, achados e padrões | Quando o leitor precisa absorver o contexto completo e as nuances das entrevistas |
+| Tabela | Tabelas para perfis entrevistados, frequência de temas e cruzamento tema × entrevistado | Quando é necessário comparar dados entre perfis ou temas de forma rápida |
+| Accordion | Seções colapsáveis por tema, expandindo para revelar achados detalhados, padrões e surpresas | Quando há muitos temas e o leitor quer navegar seletivamente sem sobrecarga visual |
+
+> [!info] Avaliação pendente
+> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.

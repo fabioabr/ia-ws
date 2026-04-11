@@ -62,3 +62,23 @@ Construir o MVP do FinTrack Pro que automatize a consolidação financeira de 3 
 | Satisfação dos analistas (NPS) | ≥ 40 |
 | Integração SAP estável | Uptime ≥ 99% no período |
 ```
+
+## Representação Visual
+
+### Dados de amostra
+
+- **Dentro do escopo:** 5 itens (integração SAP 3 filiais, engine eliminação, consolidação P&L, dashboard executivo, trilha de auditoria)
+- **Fora do escopo:** 4 itens (filiais internacionais, balanço patrimonial, app mobile, relatórios customizáveis)
+- **Hipótese central:** Automatizar coleta + eliminação de 3 filiais reduz fechamento de D+8 para D+3 com zero erros
+- **Critérios go/no-go:** 4 condições mensuráveis
+
+### Formatos de exibição possíveis
+
+| Formato | Descrição | Quando usar |
+|---------|-----------|-------------|
+| Texto corrido | Narrativa do objetivo, hipótese e justificativas de inclusão/exclusão | Quando o leitor precisa entender o raciocínio por trás das decisões de escopo |
+| Tabela | Matrizes separadas para dentro/fora do escopo e critérios go/no-go | Para referência rápida e checklist de escopo |
+| Split card (in/out) | Card dividido em duas colunas — verde (dentro) e vermelho (fora) — com ícones de check/x | Para comunicação visual imediata do que está e não está no escopo |
+
+> [!info] Avaliação pendente
+> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.

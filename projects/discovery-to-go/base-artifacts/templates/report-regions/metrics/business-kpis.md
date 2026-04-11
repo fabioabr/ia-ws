@@ -37,3 +37,29 @@ business_kpis:
 | BK-04 | NPS (Net Promoter Score) | N/A | >= 50 | Mes 6 pos-lancamento | up |
 | BK-05 | CAC (Custo de Aquisicao de Cliente) | N/A | < R$ 200 | Mes 9 | down |
 | BK-06 | LTV/CAC ratio | N/A | >= 3:1 | Mes 12 | up |
+
+## Representacao Visual
+
+### Dados de amostra
+
+```
+MRR:        R$ 0 → R$ 50.000 (Mes 12)         ████░░░░░░ 0%
+Clientes:   0 → 300 (Mes 12)                   ████░░░░░░ 0%
+Churn:      N/A → < 3% (Mes 6 pos-lancamento)  ░░░░░░░░░░ N/A
+NPS:        N/A → >= 50 (Mes 6 pos-lancamento)  ░░░░░░░░░░ N/A
+CAC:        N/A → < R$ 200 (Mes 9)             ░░░░░░░░░░ N/A
+LTV/CAC:    N/A → >= 3:1 (Mes 12)              ░░░░░░░░░░ N/A
+```
+
+### Formatos de exibicao possiveis
+
+| Formato | Descricao | Quando usar |
+|---------|-----------|-------------|
+| Texto corrido | Paragrafo descritivo com os KPIs destacados em negrito | Relatorios textuais simples, contexto narrativo |
+| Tabela | Tabela estruturada com colunas ID, KPI, Valor Atual, Target, Prazo, Direcao | Visao completa e comparativa de todos os KPIs |
+| Stat cards com sparklines | Cards individuais por KPI mostrando valor atual, target e tendencia ao longo do tempo | Dashboards executivos, acompanhamento periodico |
+| Gauge (velocimetro) | Indicador circular mostrando progresso percentual em direcao ao target | Apresentacoes de status, visao rapida de progresso individual |
+| Stat cards + gauge combinado | Cards com valor numerico e gauge embutido para cada KPI | Relatorios visuais ricos, paineis de acompanhamento |
+
+> [!info] Avaliacao pendente
+> Um especialista em visualizacao de dados deve avaliar qual formato grafico melhor representa esta informacao, considerando o publico-alvo e o contexto de uso.

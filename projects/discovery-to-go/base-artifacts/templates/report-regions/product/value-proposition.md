@@ -51,3 +51,23 @@ Declaração clara e concisa do valor que o produto entrega, usando o formato de
 4. **Transparência radical** — todo cálculo visível, toda transformação logada
 5. **Escala sem complexidade** — adicionar uma filial deve levar horas, não semanas
 ```
+
+## Representação Visual
+
+### Dados de amostra
+
+- **Elevator pitch:** Plataforma de consolidação financeira automatizada para equipes de controladoria multi-filial
+- **Diferenciais:** 5 itens (integração multi-ERP, regras no-code, custo 40% menor, trilha de auditoria, time-to-value 8 semanas)
+- **Princípios:** 5 itens (automatizar vs digitalizar, confiança, controller no controle, transparência, escala)
+- **Comparativo implícito:** FinTrack Pro vs Oracle HFM vs planilhas manuais
+
+### Formatos de exibição possíveis
+
+| Formato | Descrição | Quando usar |
+|---------|-----------|-------------|
+| Texto corrido | Narrativa completa com elevator pitch, diferenciais e princípios em prosa | Quando o leitor precisa absorver a proposta de valor com contexto |
+| Tabela | Matriz comparativa de diferenciais vs concorrentes (FinTrack vs Oracle HFM vs manual) | Para posicionamento competitivo claro |
+| Highlight card | Card visual com elevator pitch em destaque, diferenciais como ícones/badges e princípios listados | Para apresentações executivas e pitch decks |
+
+> [!info] Avaliação pendente
+> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.

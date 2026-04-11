@@ -83,3 +83,24 @@ graph TD
 | Dashboard com drill-down | Médio | Alto | Wireframe + teste de usabilidade com controller — 1 semana |
 | Workflow de aprovação digital | Baixo | Médio | Protótipo em Figma — 3 dias |
 ```
+
+## Representação Visual
+
+### Dados de amostra
+
+- **Objetivo:** Reduzir fechamento de D+8 para D+2
+- **3 oportunidades:** Automatizar coleta de dados, Eliminar erros de consolidação, Acelerar revisão e aprovação
+- **7 soluções** distribuídas entre as oportunidades (API SAP, MuleSoft, RPA, Engine de eliminação, Validação cruzada, Dashboard drill-down, Workflow aprovação)
+- **4 experimentos** vinculados às soluções com prazos de 3 dias a 3 semanas
+- **Classificação esforço/impacto:** Alto/Alto, Médio/Médio, Baixo/Baixo, Baixo/Médio
+
+### Formatos de exibição possíveis
+
+| Formato | Descrição | Quando usar |
+|---------|-----------|-------------|
+| Texto corrido | Narrativa hierárquica descrevendo objetivo, oportunidades, soluções e experimentos em seções aninhadas | Quando o leitor precisa entender a lógica e evidências por trás de cada ramificação |
+| Tabela | Tabela cruzando oportunidades × soluções com colunas de esforço, impacto e experimento | Quando stakeholders precisam comparar soluções lado a lado para priorização |
+| Tree diagram | Diagrama em árvore (Mermaid/draw.io) mostrando a hierarquia Objetivo > Oportunidades > Soluções > Experimentos | Quando é necessário visualizar o espaço de solução completo e as relações hierárquicas de forma intuitiva |
+
+> [!info] Avaliação pendente
+> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.

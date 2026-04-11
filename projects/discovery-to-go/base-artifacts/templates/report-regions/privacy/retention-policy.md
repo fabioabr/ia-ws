@@ -31,3 +31,35 @@ Define por quanto tempo cada tipo de dado é mantido no sistema e qual processo 
 | Logs de auditoria | 5 anos | Armazenamento em S3 Glacier; exclusão automática após expiração |
 | Cookies de sessão | 15 minutos (TTL Redis) | Expiração automática pelo Redis |
 | Backups de banco de dados | 30 dias (rolling) | Exclusão automática pela política de retenção do RDS |
+
+## Representação Visual
+
+### Dados de amostra
+
+A política de retenção pode ser representada como texto corrido resumindo a estratégia, complementado por uma tabela detalhada e uma timeline de retenção.
+
+**Texto corrido:** "O FinTrack Pro aplica prazos de retenção diferenciados por tipo de dado, variando de 15 minutos (cookies de sessão) a 5 anos (transações financeiras e logs de auditoria, por exigência regulatória). Dados cadastrais são mantidos enquanto a conta estiver ativa, com anonimização automática 6 meses após o cancelamento. Todos os processos de descarte são automatizados."
+
+**Tabela/Timeline de retenção:**
+
+| Dado | Retenção | Processo de Descarte | Tipo |
+|------|----------|---------------------|------|
+| Cookies de sessão | 15 minutos | Expiração automática (Redis TTL) | Automático |
+| Logs de acesso | 90 dias | Exclusão automática (Datadog) | Automático |
+| Backups de banco | 30 dias (rolling) | Exclusão automática (RDS) | Automático |
+| Dados cadastrais | Conta ativa + 6 meses | Anonimização via job agendado | Automático |
+| Transações financeiras | 5 anos | Migração para cold storage anonimizado | Regulatório |
+| Logs de auditoria | 5 anos | S3 Glacier → exclusão automática | Regulatório |
+
+### Formatos de exibição possíveis
+
+| Formato | Descrição | Quando usar |
+|---------|-----------|-------------|
+| Texto corrido | Parágrafo narrativo descrevendo a estratégia de retenção e os princípios aplicados | Para contexto em documentos de governança e relatórios ao DPO |
+| Tabela detalhada | Tabela com dado, prazo de retenção, processo de descarte e tipo de automação | Para documentação de compliance e referência operacional |
+| Timeline horizontal | Linha do tempo mostrando os diferentes prazos de retenção em escala (minutos → anos) | Para visualização comparativa dos prazos e identificação de outliers |
+| Gantt chart | Barras horizontais representando o ciclo de vida de cada tipo de dado | Para apresentações que precisam mostrar sobreposição de prazos e janelas de descarte |
+| Diagrama de ciclo de vida | Fluxo mostrando criação → armazenamento → retenção → descarte para cada tipo de dado | Para documentação técnica e treinamento de equipes |
+
+> [!info] Avaliação pendente
+> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.

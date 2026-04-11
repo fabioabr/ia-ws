@@ -52,3 +52,43 @@ high_level_stories:
   - Lista com vencimento, valor e status (pago, pendente, atrasado)
   - Ordenacao por data de vencimento
   - Alerta visual para contas atrasadas
+
+## Representacao Visual
+
+### Dados de amostra
+
+```yaml
+high_level_stories:
+  epics:
+    - epic_id: "EP-01"
+      epic_name: "Onboarding e Auth"
+      stories:
+        - id: "US-01"
+          title: "Como novo usuario, quero me cadastrar usando meu email ou conta Google"
+          acceptance_criteria_count: 3
+        - id: "US-02"
+          title: "Como usuario cadastrado, quero configurar minha empresa no primeiro acesso"
+          acceptance_criteria_count: 3
+    - epic_id: "EP-02"
+      epic_name: "Dashboard Financeiro"
+      stories:
+        - id: "US-03"
+          title: "Como gestor financeiro, quero ver meu fluxo de caixa dos ultimos 30 dias"
+          acceptance_criteria_count: 3
+        - id: "US-04"
+          title: "Como gestor financeiro, quero ver contas a pagar e receber"
+          acceptance_criteria_count: 3
+```
+
+### Formatos de exibicao possiveis
+
+| Formato | Descricao | Quando usar |
+|---------|-----------|-------------|
+| Texto corrido | Paragrafo narrativo descrevendo as stories por epico, com resumo dos criterios de aceite mais relevantes | Documentos de visao, comunicacao com stakeholders nao tecnicos |
+| Tabela | Tabela com colunas Epico, ID, Story, Criterios de Aceite | Revisao tecnica, refinamento de backlog |
+| Lista agrupada / accordion por epico | Stories organizadas sob cabecalhos de epico, com criterios de aceite expansiveis em cada story | Documentacao de backlog, wikis de projeto, consulta durante refinamento |
+| Treemap | Blocos por epico (area proporcional ao numero de stories), subdivididos por story | Visao de distribuicao de escopo entre epicos, identificar epicos com muitas stories |
+| Story map | Eixo horizontal com epicos, eixo vertical com stories ordenadas por prioridade dentro de cada epico | Planejamento de releases, workshops de story mapping |
+
+> [!info] Avaliacao pendente
+> Um especialista em visualizacao de dados deve avaliar qual formato grafico melhor representa esta informacao, considerando o publico-alvo e o contexto de uso.

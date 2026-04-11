@@ -53,3 +53,25 @@ O processo de consolidação é inteiramente manual: analistas financeiros expor
 
 Considerando o custo médio por hora dos analistas (R$ 120/h), o desperdício direto é de ~R$ 300K/ano. Somando o risco reputacional das reapresentações e o custo de oportunidade do fechamento tardio, o impacto total estimado é de R$ 500K-700K/ano.
 ```
+
+## Representação Visual
+
+### Dados de amostra
+
+- **Horas desperdiçadas:** 2.500 horas/ano em consolidação manual
+- **Reapresentações ao conselho:** 3 nos últimos 6 meses
+- **Tempo de fechamento:** D+8 (benchmark de mercado: D+2 a D+3)
+- **Impacto financeiro:** R$ 500K-700K/ano (direto + risco + custo de oportunidade)
+- **Perfis afetados:** 4 analistas (12h/semana cada), 1 controller, 1 CFO, auditores
+
+### Formatos de exibição possíveis
+
+| Formato | Descrição | Quando usar |
+|---------|-----------|-------------|
+| Texto corrido | Narrativa contextual com parágrafos descrevendo problema, quem sofre e tamanho do impacto | Quando o leitor precisa de contexto completo e nuances qualitativas |
+| Tabela | Matriz resumindo perfis afetados, tipo de impacto e métrica por perfil | Para comparação rápida entre perfis afetados |
+| Metric callout | Destaque visual de 3-4 KPIs do problema (horas, reapresentações, D+N, custo) em cards grandes | Para comunicação executiva e resumo de impacto em apresentações |
+| Gráfico de barras | Comparação entre estado atual vs. desejado (ex: D+8 vs D+2, 12h vs 2h) | Para evidenciar a magnitude do gap a ser resolvido |
+
+> [!info] Avaliação pendente
+> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.

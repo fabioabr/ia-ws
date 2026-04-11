@@ -35,3 +35,30 @@ Consolida os requisitos não funcionais que direcionam decisões de arquitetura 
 | Segurança | Cobertura de vulnerabilidades críticas | Patch em até 48h | SLA de segurança |
 | Recuperação | RPO (Recovery Point Objective) | < 1 hora | — |
 | Recuperação | RTO (Recovery Time Objective) | < 4 horas | — |
+
+## Representação Visual
+
+### Dados de amostra
+
+| Categoria | Requisito | Valor | SLA |
+|-----------|-----------|-------|-----|
+| Performance | Tempo de resposta de APIs críticas | p95 < 200ms | 99% das requisições |
+| Performance | Tempo de carregamento do dashboard | < 2s (FCP) | — |
+| Disponibilidade | Uptime da plataforma | 99.9% | Mensal |
+| Escalabilidade | Usuários simultâneos | Até 5.000 | Sem degradação |
+| Escalabilidade | Crescimento de dados | 10x em 2 anos | — |
+| Segurança | Sessão ociosa máxima | 15 minutos | Logout automático |
+| Segurança | Vulnerabilidades críticas | Patch em 48h | SLA de segurança |
+| Recuperação | RPO | < 1 hora | — |
+| Recuperação | RTO | < 4 horas | — |
+
+### Formatos de exibição possíveis
+
+| Formato | Descrição | Quando usar |
+|---------|-----------|-------------|
+| Texto corrido | Narrativa descritiva organizando os requisitos por categoria, explicando metas, SLAs e impacto nas decisões de arquitetura | Sempre — serve como base textual acessível para qualquer público |
+| Tabela | Tabela estruturada com colunas Categoria, Requisito, Valor e SLA, com badges de severidade | Sempre — permite consulta rápida e comparação objetiva entre requisitos |
+| Gauge charts por categoria | Gráficos do tipo gauge (velocímetro) agrupados por categoria (Performance, Disponibilidade, Escalabilidade, Segurança, Recuperação), mostrando o valor-alvo em relação a faixas de referência (crítico, aceitável, ideal) | Quando é necessário comunicar visualmente o nível de exigência de cada categoria para stakeholders técnicos e executivos, facilitando a identificação de áreas mais restritivas |
+
+> [!info] Avaliação pendente
+> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.

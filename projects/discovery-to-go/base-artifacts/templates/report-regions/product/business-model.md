@@ -57,3 +57,34 @@ SaaS B2B com pricing por filial consolidada. Receita recorrente mensal (MRR) com
 | Churn mensal | < 2% |
 | LTV/CAC | 13x |
 ```
+
+## Representação Visual
+
+### Dados de amostra
+
+| Plano | Preço/mês | Filiais | Usuários |
+|-------|-----------|---------|----------|
+| Starter | R$ 2.500 | Até 5 | 3 |
+| Pro | R$ 6.500 | Até 20 | 10 |
+| Enterprise | Sob consulta | Ilimitado | Ilimitado |
+
+| Métrica SaaS | Target 12 meses |
+|-------------- |-----------------|
+| MRR | R$ 120K |
+| ARR | R$ 1,44M |
+| LTV médio | R$ 234K |
+| CAC médio | R$ 18K |
+| Churn mensal | < 2% |
+| LTV/CAC | 13x |
+
+### Formatos de exibição possíveis
+
+| Formato | Descrição | Quando usar |
+|---------|-----------|-------------|
+| Texto corrido | Narrativa do modelo de negócio com detalhamento de canais e estratégia de pricing | Quando o leitor precisa entender a lógica por trás do modelo |
+| Tabela | Matrizes separadas para planos (features por tier) e métricas SaaS | Para comparação direta entre planos e consulta de métricas |
+| Pricing table | Cards lado a lado por plano com preço, features incluídas e CTA, estilo página de pricing | Para apresentações comerciais e validação de posicionamento |
+| Gráfico de barras | Barras comparando métricas SaaS (LTV vs CAC, MRR projetado) | Para comunicação visual de unit economics |
+
+> [!info] Avaliação pendente
+> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.

@@ -38,3 +38,27 @@ data_quality:
 | Validade | Valores dentro de ranges esperados | >= 99% |
 | Consistencia | Totais batem entre camadas | 100% |
 | Freshness | Dados atualizados dentro do SLA | < 1h de atraso |
+
+## Representacao Visual
+
+### Dados de amostra
+
+| Dimensao | Bronze | Silver | Gold |
+|----------|--------|--------|------|
+| Completude | 92% | 99.2% | 99.8% |
+| Unicidade | 95% | 100% | 100% |
+| Validade | 88% | 99.5% | 99.9% |
+| Consistencia | N/A | 98% | 100% |
+| Freshness | < 5min | < 30min | < 1h |
+
+### Formatos de exibicao possiveis
+
+| Formato | Descricao | Quando usar |
+|---------|-----------|-------------|
+| Texto corrido | Descricao narrativa de cada dimensao de qualidade com regras, thresholds e estrategia de teste | Documentacao de governanca, politicas de dados |
+| Tabela | Tabela com dimensoes, regras e thresholds por camada | Referencia operacional, checklists de qualidade |
+| Heatmap de cobertura | Mapa de calor com dimensoes de qualidade (linhas) vs camadas (colunas), cores indicando nivel de conformidade | Dashboards de monitoramento, reports de qualidade para stakeholders |
+| Indicadores de status | Cards ou badges com status (verde/amarelo/vermelho) por dimensao e camada | Dashboards operacionais, alertas visuais em tempo real |
+
+> [!info] Avaliacao pendente
+> Um especialista em visualizacao de dados deve avaliar qual formato grafico melhor representa esta informacao, considerando o publico-alvo e o contexto de uso.

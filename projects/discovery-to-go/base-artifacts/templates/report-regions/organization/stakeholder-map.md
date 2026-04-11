@@ -32,3 +32,33 @@ Identifica todos os stakeholders relevantes do projeto, classificando-os por ní
 | Time de Compliance | Consultor | Média | Alto | Consultoria sob demanda + validação de entregas |
 | Equipe de Suporte N2 | Usuário final | Baixa | Médio | Treinamento pré-go-live + documentação |
 | CFO | Influenciador | Alta | Baixo | Report trimestral de ROI e custos |
+
+## Representação Visual
+
+### Dados de amostra
+
+| Stakeholder | Influência | Interesse |
+|-------------|:----------:|:---------:|
+| Diretor de Produto | Alta | Alto |
+| Head de Engenharia | Alta | Alto |
+| Time de Compliance | Média | Alto |
+| Equipe de Suporte N2 | Baixa | Médio |
+| CFO | Alta | Baixo |
+
+**Quadrantes (Influência x Interesse):**
+- **Alta Influência + Alto Interesse:** Diretor de Produto, Head de Engenharia → Gerenciar de perto
+- **Alta Influência + Baixo Interesse:** CFO → Manter satisfeito
+- **Média/Baixa Influência + Alto Interesse:** Time de Compliance → Manter informado
+- **Baixa Influência + Baixo/Médio Interesse:** Equipe de Suporte N2 → Monitorar
+
+### Formatos de exibição possíveis
+
+| Formato | Descrição | Quando usar |
+|---------|-----------|-------------|
+| Texto corrido | Narrativa descritiva listando stakeholders agrupados por estratégia de engajamento | Relatórios executivos textuais ou contextos onde gráficos não são suportados |
+| Tabela | Tabela com colunas de stakeholder, influência, interesse e engajamento | Visão detalhada para planejamento operacional de comunicação |
+| Gráfico de quadrantes (Influência x Interesse) | Matriz 2x2 posicionando cada stakeholder conforme seu nível de influência e interesse | Apresentações estratégicas para definir prioridades de engajamento e comunicação |
+| Mapa de bolhas | Bolhas posicionadas nos eixos influência/interesse, com tamanho representando criticidade | Quando há muitos stakeholders e é preciso destacar os mais críticos visualmente |
+
+> [!info] Avaliação pendente
+> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.

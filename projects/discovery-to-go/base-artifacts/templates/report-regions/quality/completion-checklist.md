@@ -44,3 +44,65 @@ completion_checklist:
 | Qualidade | Revisao do 10th-man | Completo | |
 
 **Taxa de conclusao:** 77% (10/13 completos)
+
+## Representacao Visual
+
+### Dados de amostra
+
+```yaml
+completion_checklist:
+  items:
+    - category: "Produto"
+      item: "Visao e proposta de valor"
+      status: "Completo"
+    - category: "Produto"
+      item: "Personas e jornadas"
+      status: "Completo"
+    - category: "Produto"
+      item: "Backlog priorizado (epicos)"
+      status: "Completo"
+    - category: "Arquitetura"
+      item: "Diagrama de arquitetura"
+      status: "Completo"
+    - category: "Arquitetura"
+      item: "Definicao de stack"
+      status: "Completo"
+    - category: "Arquitetura"
+      item: "NFRs e SLAs"
+      status: "Parcial"
+    - category: "Financeiro"
+      item: "TCO 3 anos"
+      status: "Completo"
+    - category: "Financeiro"
+      item: "Estimativa de esforco"
+      status: "Completo"
+    - category: "Seguranca"
+      item: "Analise LGPD"
+      status: "Pendente"
+    - category: "Seguranca"
+      item: "Threat modeling"
+      status: "Pendente"
+    - category: "Riscos"
+      item: "Matriz de riscos"
+      status: "Completo"
+    - category: "Qualidade"
+      item: "Revisao do auditor"
+      status: "Completo"
+    - category: "Qualidade"
+      item: "Revisao do 10th-man"
+      status: "Completo"
+  completion_rate: 77
+```
+
+### Formatos de exibicao possiveis
+
+| Formato | Descricao | Quando usar |
+|---------|-----------|-------------|
+| Texto corrido | Paragrafo resumindo a taxa de conclusao, categorias completas e itens pendentes com seus bloqueios | Relatorios executivos, comunicacao de status por email |
+| Tabela | Tabela com colunas Categoria, Item, Status e Notas (formato atual do Exemplo) | Revisao detalhada, rastreamento item a item |
+| Barra de progresso geral + checkmarks | Barra de progresso mostrando % de conclusao geral, seguida de lista com checkmarks (completo), alertas (parcial) e X (pendente) | Dashboards de projeto, visao rapida de completude |
+| Barras de progresso por categoria | Uma barra de progresso para cada categoria (Produto, Arquitetura, Financeiro, etc.) mostrando % de itens completos | Identificar categorias com maior lacuna, priorizacao de esforco |
+| Donut chart | Grafico de rosca mostrando proporcao Completo vs Parcial vs Pendente com numero total no centro | Resumo executivo, apresentacoes onde proporcao geral importa mais que detalhe |
+
+> [!info] Avaliacao pendente
+> Um especialista em visualizacao de dados deve avaliar qual formato grafico melhor representa esta informacao, considerando o publico-alvo e o contexto de uso.

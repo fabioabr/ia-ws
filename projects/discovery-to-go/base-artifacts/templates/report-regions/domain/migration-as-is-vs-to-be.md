@@ -35,3 +35,28 @@ as_is_vs_to_be:
 | Monitoramento | Logs em arquivo + Nagios | Datadog (APM + logs + metrics) | MTTR de 4h para < 30min |
 | Performance | P95 latencia: 1.2s | P95 latencia: < 200ms | 6x mais rapido |
 | Custo mensal | R$ 12.000 | R$ 7.230 | Economia de R$ 4.770/mes |
+
+## Representacao Visual
+
+### Dados de amostra
+
+| Dimensao | As-Is (score 1-5) | To-Be (score 1-5) |
+|----------|-------------------|-------------------|
+| Elasticidade | 1 | 5 |
+| Custo | 2 | 4 |
+| Automacao deploy | 1 | 5 |
+| Observabilidade | 2 | 5 |
+| Performance | 2 | 5 |
+| Agilidade | 1 | 4 |
+
+### Formatos de exibicao possiveis
+
+| Formato | Descricao | Quando usar |
+|---------|-----------|-------------|
+| Texto corrido | Descricao narrativa de cada dimensao comparando estado atual e futuro com ganhos esperados | Relatorios executivos, business cases |
+| Tabela | Tabela lado a lado com dimensoes, estado atual, estado futuro e melhoria esperada | Documentacao tecnica, planejamento de migracao |
+| Comparativo lado a lado | Dois paineis visuais (As-Is e To-Be) com stack e metricas de cada estado | Apresentacoes para decisores, workshops de alinhamento |
+| Grafico radar/spider | Grafico radar sobrepondo as-is e to-be em multiplas dimensoes para visualizar a evolucao | Apresentacoes executivas, comparacao rapida de maturidade entre estados |
+
+> [!info] Avaliacao pendente
+> Um especialista em visualizacao de dados deve avaliar qual formato grafico melhor representa esta informacao, considerando o publico-alvo e o contexto de uso.

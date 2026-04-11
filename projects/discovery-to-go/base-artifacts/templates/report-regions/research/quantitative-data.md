@@ -58,3 +58,23 @@ Dados quantitativos coletados durante o discovery que dimensionam o problema e f
 | Custo de SAP BPC para escopo similar | R$ 3,8M / 3 anos | Cotação SAP via Deloitte |
 | Adoção de ferramentas de consolidação automatizada no Brasil (mid-market) | 23% | KPMG — Pesquisa CFO 2025 |
 ```
+
+## Representação Visual
+
+### Dados de amostra
+
+- **7 métricas-chave:** Tempo de fechamento (D+8), Horas semanais (12h/analista), Erros materiais (3 em 6 meses), Custo hora/analista (R$ 120), Filiais (12), Tempo de auditoria (2 semanas), Best practice (D+2 a D+3)
+- **Impacto anual estimado:** R$ 500K -- R$ 700K em 4 componentes (horas desperdiçadas R$ 230K, retrabalho R$ 80K, oportunidade R$ 150K, risco regulatório R$ 40K--R$ 240K)
+- **3 benchmarks de mercado:** fechamento automatizado (D+2), Oracle HFM (R$ 4,2M/3 anos), SAP BPC (R$ 3,8M/3 anos)
+
+### Formatos de exibição possíveis
+
+| Formato | Descrição | Quando usar |
+|---------|-----------|-------------|
+| Texto corrido | Narrativa analítica contextualizando cada métrica com sua fonte e relevância para a decisão | Quando o relatório precisa guiar o leitor pela lógica do dimensionamento do problema |
+| Tabela | Tabelas estruturadas para métricas, composição do custo e benchmarks com alinhamento numérico | Quando stakeholders precisam consultar valores específicos rapidamente ou exportar dados |
+| Bar chart | Gráfico de barras comparando componentes do custo anual ou métricas atuais vs. benchmark | Quando é necessário evidenciar a magnitude das diferenças e o peso relativo de cada componente |
+| KPI cards | Cards de destaque com valor principal, variação e indicador visual (cor/ícone) para cada métrica-chave | Quando o objetivo é um dashboard executivo com leitura rápida dos números mais importantes |
+
+> [!info] Avaliação pendente
+> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.

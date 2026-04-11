@@ -38,3 +38,28 @@ rpa_coe:
 | Monitoramento | Dashboard com taxa de sucesso, tempo de execucao, filas pendentes |
 | Manutencao | Revisao mensal de automacoes; re-teste apos mudancas nos sistemas-fonte |
 | Metricas | Taxa de sucesso >= 98%, FTE liberados, ROI acumulado |
+
+## Representacao Visual
+
+### Dados de amostra
+
+| KPI | Meta | Atual | Tendencia |
+|-----|------|-------|-----------|
+| Taxa de sucesso | >= 98% | 99.2% | Estavel |
+| FTE liberados | 4 | 3.5 | Subindo |
+| ROI acumulado (12m) | R$ 180.000 | R$ 156.000 | No ritmo |
+| Automacoes ativas | 6 | 4 | Crescendo |
+| Tempo medio execucao | < 5 min | 3.2 min | Estavel |
+| Incidentes/mes | < 2 | 1 | Melhorando |
+
+### Formatos de exibicao possiveis
+
+| Formato | Descricao | Quando usar |
+|---------|-----------|-------------|
+| Texto corrido | Descricao narrativa da estrutura do CoE com modelo, time, monitoramento e metricas | Documentos de governanca, propostas de CoE |
+| Tabela | Tabela com aspectos do CoE e suas definicoes | Referencia operacional, onboarding |
+| Dashboard de KPIs | Painel com gauges, trend lines e semaforos para cada KPI do CoE | Reunioes de acompanhamento, relatorios mensais para gestao |
+| Scorecard | Card com metricas-chave, meta vs realizado e indicadores de tendencia | Relatorios executivos, apresentacoes de resultado |
+
+> [!info] Avaliacao pendente
+> Um especialista em visualizacao de dados deve avaliar qual formato grafico melhor representa esta informacao, considerando o publico-alvo e o contexto de uso.

@@ -36,3 +36,31 @@ conditions_to_proceed:
 | CTP-04 | Contrato com Auth0 (Business plan) assinado | Financeira | Pendente | Procurement | 1 semana |
 | CTP-05 | DPO designado para acompanhar requisitos LGPD | Legal | Pendente | Juridico | Antes do kickoff |
 | CTP-06 | Acesso as APIs Open Finance (sandbox) obtido | Tecnica | Atendida | Tech Lead | - |
+
+## Representacao Visual
+
+### Dados de amostra
+
+```
+Condicoes para Prosseguir (2/6 atendidas)
+
+[x] CTP-03  Conta AWS dedicada provisionada          Tecnica        Atendida
+[x] CTP-06  Acesso APIs Open Finance (sandbox)       Tecnica        Atendida
+[~] CTP-02  Contratacao 2 devs backend                Organizacional Em andamento
+[ ] CTP-01  Budget R$ 564.000 aprovado                Financeira     Pendente
+[ ] CTP-04  Contrato Auth0 (Business plan)            Financeira     Pendente
+[ ] CTP-05  DPO designado para LGPD                   Legal          Pendente
+```
+
+### Formatos de exibicao possiveis
+
+| Formato | Descricao | Quando usar |
+|---------|-----------|-------------|
+| Texto corrido | Paragrafo descritivo listando condicoes e seus status | Relatorios textuais, comunicacao por e-mail |
+| Tabela | Tabela estruturada com colunas ID, Condicao, Categoria, Status, Responsavel, Prazo | Referencia completa, acompanhamento detalhado |
+| Checklist com status | Lista de verificacao com indicadores visuais (check, pendente, em andamento) agrupados por categoria | Reunioes de go/no-go, apresentacoes de status |
+| Checklist com barra de progresso | Checklist com barra geral de progresso (X de Y atendidas) | Dashboards executivos, visao rapida de prontidao |
+| Checklist agrupado por categoria | Checklists separados por categoria (Tecnica, Financeira, Legal, Organizacional) com contagem | Acompanhamento por area, delegacao de responsabilidades |
+
+> [!info] Avaliacao pendente
+> Um especialista em visualizacao de dados deve avaliar qual formato grafico melhor representa esta informacao, considerando o publico-alvo e o contexto de uso.

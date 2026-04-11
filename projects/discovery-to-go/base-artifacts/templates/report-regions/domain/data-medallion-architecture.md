@@ -39,3 +39,34 @@ medallion:
 | Bronze | Dados brutos das fontes (APIs, CSVs, eventos) | S3 | JSON/Parquet | 90 dias |
 | Silver | Dados limpos, deduplicados, tipados | S3 + Glue Catalog | Delta Lake | 1 ano |
 | Gold | Agregacoes e metricas prontas para consumo | Redshift/Athena | Parquet | Indefinido |
+
+## Representacao Visual
+
+### Dados de amostra
+
+```
+Fontes (APIs, CSVs, Eventos)
+    |
+    v
+[ Bronze ] -- S3/JSON/Parquet -- Dados brutos, 90 dias retencao
+    |
+    v (Spark/dbt - limpeza, dedup, tipagem)
+[ Silver ] -- S3+Glue/Delta Lake -- Dados limpos, 1 ano retencao
+    |
+    v (Agregacoes, metricas)
+[  Gold  ] -- Redshift/Athena/Parquet -- Consumo, retencao indefinida
+    |
+    v
+Dashboards / APIs / ML Models
+```
+
+### Formatos de exibicao possiveis
+
+| Formato | Descricao | Quando usar |
+|---------|-----------|-------------|
+| Texto corrido | Descricao narrativa de cada camada com responsabilidades, tecnologias e fluxos entre elas | Documentos de arquitetura detalhados, ADRs |
+| Tabela | Tabela com camadas em linhas e atributos (proposito, storage, formato, retencao) em colunas | Referencia rapida, documentacao tecnica |
+| Diagrama de fluxo em camadas | Fluxo vertical ou horizontal mostrando Bronze, Silver e Gold com setas de transformacao e pipelines entre camadas | Apresentacoes de arquitetura, onboarding, wikis tecnicas |
+
+> [!info] Avaliacao pendente
+> Um especialista em visualizacao de dados deve avaliar qual formato grafico melhor representa esta informacao, considerando o publico-alvo e o contexto de uso.

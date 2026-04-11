@@ -32,3 +32,34 @@ Define a composição do time necessário para o projeto, incluindo percentual d
 | Desenvolvedor Frontend | 100% | Construção → Go-live | React + Design System interno |
 | QA Engineer | 50% | Construção → Go-live | Automação de testes + testes exploratórios |
 | DevOps/SRE | 25% | Construção → Sustentação | Infra, CI/CD e observabilidade |
+
+## Representação Visual
+
+### Dados de amostra
+
+```
+Product Owner (50%)
+├── Tech Lead (100%)
+│   ├── Desenvolvedor Backend 1 (100%)
+│   ├── Desenvolvedor Backend 2 (100%)
+│   ├── Desenvolvedor Frontend (100%)
+│   └── DevOps/SRE (25%)
+└── QA Engineer (50%)
+```
+
+**Fases de atuação:**
+- **Discovery → Go-live:** Product Owner, Tech Lead
+- **Construção → Go-live:** Desenvolvedores Backend (2x), Desenvolvedor Frontend, QA Engineer
+- **Construção → Sustentação:** DevOps/SRE
+
+### Formatos de exibição possíveis
+
+| Formato | Descrição | Quando usar |
+|---------|-----------|-------------|
+| Texto corrido | Narrativa descritiva da composição do time, dedicação e fases de cada membro | Relatórios executivos ou documentos onde diagramas não são viáveis |
+| Tabela | Tabela com papel, dedicação, fase e observações por membro | Planejamento detalhado de alocação e dimensionamento de recursos |
+| Organograma (org chart) | Diagrama hierárquico mostrando a estrutura de reporte e os papéis do time | Apresentações para stakeholders que precisam entender a cadeia de liderança e composição |
+| Diagrama de timeline | Barras horizontais por papel mostrando dedicação ao longo das fases do projeto | Quando é importante visualizar a variação de alocação ao longo do tempo |
+
+> [!info] Avaliação pendente
+> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.

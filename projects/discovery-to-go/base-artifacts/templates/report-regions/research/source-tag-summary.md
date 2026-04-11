@@ -56,3 +56,23 @@ Resumo da distribuição das fontes de informação utilizadas no discovery, cla
 - **Diagramas C4 (50% INFERENCE):** arquitetura inferida a partir de descrições verbais e documentação parcial do SAP. Revisão técnica com equipe de TI é necessária antes de implementação.
 - **Produto (80% BRIEFING):** alto nível de confiança — problema e contexto foram amplamente detalhados pelo cliente em entrevistas diretas.
 ```
+
+## Representação Visual
+
+### Dados de amostra
+
+- **Distribuição geral:** BRIEFING 65%, INFERENCE 25%, RAG 10% (142 data points)
+- **8 blocos do discovery** com distribuição variando de 30% a 90% BRIEFING
+- **Blocos com maior inferência:** Diagramas C4 (50%), Segurança e privacidade (45%), Negócio (35%)
+- **Blocos com maior confiança:** Organização (90% BRIEFING), Produto (80% BRIEFING)
+
+### Formatos de exibição possíveis
+
+| Formato | Descrição | Quando usar |
+|---------|-----------|-------------|
+| Texto corrido | Narrativa explicando a distribuição geral e destacando áreas de alta inferência que requerem validação | Quando o contexto e as implicações de cada percentual precisam ser comunicados em detalhe |
+| Tabela | Tabela com colunas por source tag e linhas por bloco, incluindo total geral e destaques condicionais | Quando stakeholders precisam consultar a distribuição exata por bloco rapidamente |
+| Pie chart / Donut | Gráfico de pizza ou donut mostrando a proporção BRIEFING/RAG/INFERENCE na visão geral e por bloco | Quando o objetivo é comunicar visualmente a composição das fontes e evidenciar a proporção de inferência |
+
+> [!info] Avaliação pendente
+> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.

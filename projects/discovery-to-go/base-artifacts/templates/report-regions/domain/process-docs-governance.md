@@ -47,3 +47,37 @@ docs_governance:
 - % de processos documentados: target >= 90%
 - % de documentos dentro da validade: target >= 95%
 - Acessos unicos/mes por documento: target >= 5
+
+## Representacao Visual
+
+### Dados de amostra
+
+**RACI Heatmap:**
+
+| Atividade | Analista Proc. | Gestor Area | Diretor | Compliance | Qualidade |
+|-----------|:-------------:|:-----------:|:-------:|:----------:|:---------:|
+| Criar documento | R | A | - | - | C |
+| Revisar documento | C | R | A | - | I |
+| Aprovar publicacao | - | C | R | C | I |
+| Monitorar adocao | I | A | I | - | R |
+
+Legenda: R = Responsible, A = Accountable, C = Consulted, I = Informed
+
+**Metricas:**
+
+| Metrica | Target | Atual |
+|---------|--------|-------|
+| Processos documentados | >= 90% | 78% |
+| Documentos dentro da validade | >= 95% | 91% |
+| Acessos unicos/mes | >= 5 | 6.2 |
+
+### Formatos de exibicao possiveis
+
+| Formato | Descricao | Quando usar |
+|---------|-----------|-------------|
+| Texto corrido | Descricao narrativa do modelo de governanca com papeis, ciclos e metricas | Politicas internas, documentos de qualidade |
+| Tabela | Tabela RACI com atividades e papeis | Definicao de responsabilidades, onboarding de times |
+| RACI heatmap | Matriz RACI com cores indicando nivel de envolvimento por papel e atividade | Workshops de governanca, apresentacoes para gestao, definicao de processos |
+
+> [!info] Avaliacao pendente
+> Um especialista em visualizacao de dados deve avaliar qual formato grafico melhor representa esta informacao, considerando o publico-alvo e o contexto de uso.

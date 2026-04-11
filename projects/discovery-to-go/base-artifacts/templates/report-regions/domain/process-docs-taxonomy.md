@@ -35,3 +35,33 @@ docs_taxonomy:
 | Politica | Governanca | Toda a organizacao | Anual | Aprovacao diretoria |
 | Manual de Sistema | Tecnico | TI e suporte | A cada release | Versionado com o software |
 | Registro de Processo | Regulatorio | Auditoria | N/A (imutavel) | Retencao de 5 anos |
+
+## Representacao Visual
+
+### Dados de amostra
+
+```
+Documentacao de Processos
+├── Governanca
+│   └── Politica (3 docs)
+├── Operacional
+│   ├── POP (12 docs)
+│   └── Instrucao de Trabalho (28 docs)
+├── Tecnico
+│   └── Manual de Sistema (8 docs)
+└── Regulatorio
+    └── Registro de Processo (15 docs)
+
+Total: 66 documentos | 5 tipos | 4 categorias
+```
+
+### Formatos de exibicao possiveis
+
+| Formato | Descricao | Quando usar |
+|---------|-----------|-------------|
+| Texto corrido | Descricao narrativa de cada tipo de documento com categoria, publico e lifecycle | Documentos de governanca, manuais de qualidade |
+| Tabela | Tabela com tipos, categorias, publico, frequencia de revisao e lifecycle | Referencia operacional, treinamentos |
+| Treemap/Diagrama de hierarquia | Visualizacao hierarquica mostrando categorias, tipos e quantidade de documentos em cada nivel | Dashboards de gestao documental, apresentacoes sobre maturidade de processos |
+
+> [!info] Avaliacao pendente
+> Um especialista em visualizacao de dados deve avaliar qual formato grafico melhor representa esta informacao, considerando o publico-alvo e o contexto de uso.

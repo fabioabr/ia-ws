@@ -41,3 +41,28 @@ effort_estimation:
 **Total estimado:** 12-18 sprints (6-9 meses com sprints de 2 semanas)
 
 **Time assumido:** 2 devs backend, 1 dev frontend, 1 QA, 1 PO (parcial)
+
+## Representação Visual
+
+### Dados de amostra
+
+| Épico | Complexidade | T-Shirt | Sprints |
+|-------|-------------|---------|---------|
+| EP-01: Onboarding e Auth | Média | M | 2-3 |
+| EP-02: Dashboard Financeiro | Alta | L | 3-4 |
+| EP-03: Gestão de Assinaturas | Média | M | 2-3 |
+| EP-04: Relatórios e Exportação | Baixa | S | 1-2 |
+| EP-05: Admin e Multi-tenancy | Muito Alta | XL | 4-6 |
+
+Total estimado: 12-18 sprints (6-9 meses). Time: 2 backend, 1 frontend, 1 QA, 1 PO (parcial).
+
+### Formatos de exibição possíveis
+
+| Formato | Descrição | Quando usar |
+|---------|-----------|-------------|
+| Texto corrido | Narrativa descrevendo os épicos, suas complexidades relativas e o esforço total estimado com premissas | Relatórios executivos onde o contexto das estimativas importa mais que a comparação visual |
+| Tabela | Matriz épico x complexidade x T-shirt x sprints com premissas, como no exemplo acima | Quando o leitor precisa de detalhes por épico para planejamento de roadmap |
+| Horizontal bar chart (T-shirt) | Barras horizontais por épico, comprimento proporcional ao tamanho T-shirt (XS=1, S=2, M=3, L=4, XL=5), coloridas por complexidade | Comparar visualmente o esforço relativo entre épicos e identificar os mais custosos |
+
+> [!info] Avaliação pendente
+> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.

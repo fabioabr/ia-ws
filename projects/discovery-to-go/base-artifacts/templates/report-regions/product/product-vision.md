@@ -50,3 +50,24 @@ O time-to-value será de **2 dias** para empresas com ERPs suportados, com onboa
 4. **Latin America first** — priorizamos regulações, moedas e ERPs da América Latina antes de expandir globalmente
 5. **Open by default** — APIs abertas, exports flexíveis, sem lock-in de dados
 ```
+
+## Representação Visual
+
+### Dados de amostra
+
+- **Elevator pitch:** "O FinTrack Pro transforma a consolidação financeira de um processo manual, lento e propenso a erros em uma operação automatizada, auditável e em tempo real."
+- **Visão 3 anos:** 200+ empresas, milhares de filiais, hub de inteligência financeira com ML
+- **Capacidades futuras:** Predição de fechamento, detecção de anomalias, benchmarking, marketplace de conectores
+- **Princípios:** 5 itens (controller como herói, dados confiáveis, complexidade abstraída, LatAm first, open by default)
+- **Time-to-value futuro:** 2 dias (self-service)
+
+### Formatos de exibição possíveis
+
+| Formato | Descrição | Quando usar |
+|---------|-----------|-------------|
+| Texto corrido | Narrativa aspiracional com elevator pitch, visão de futuro e princípios | Quando o leitor precisa absorver a visão completa com contexto e inspiração |
+| Tabela | Matriz de princípios com descrição e implicação prática de cada um | Para referência rápida e alinhamento de time |
+| Quote card | Card visual com elevator pitch em destaque (estilo citação), visão 3 anos como narrativa e princípios como lista iconográfica | Para apresentações de visão de produto, pitch decks e onboarding de novos membros |
+
+> [!info] Avaliação pendente
+> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.

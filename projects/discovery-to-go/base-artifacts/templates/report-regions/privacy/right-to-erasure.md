@@ -41,3 +41,51 @@ Descreve como o sistema atende ao direito de eliminação de dados pessoais prev
 - **Transações financeiras** — Obrigação legal de retenção por 5 anos (Resolução BCB); dados anonimizados mas registros mantidos
 - **Logs de auditoria** — Mantidos por exigência de compliance SOC 2; dados pessoais mascarados
 - **Dados em backups** — Excluídos naturalmente pela rotação de backups (30 dias)
+
+## Representação Visual
+
+### Dados de amostra
+
+O direito à exclusão pode ser representado como texto corrido descrevendo o processo, complementado por um diagrama de fluxo detalhado e uma tabela de exceções.
+
+**Texto corrido:** "O FinTrack Pro atende ao direito de eliminação (Art. 18, VI da LGPD) com SLA de 15 dias úteis. O fluxo envolve 6 etapas: solicitação pelo titular, verificação de identidade via MFA, análise de viabilidade pelo DPO, execução via API de erasure (anonimização irreversível), propagação para sub-processadores e confirmação ao titular. Dados financeiros e logs de auditoria são exceções por obrigação legal, sendo mantidos de forma anonimizada."
+
+**Diagrama de fluxo:**
+
+```
+[Titular] → Solicitação (formulário/e-mail)
+     ↓
+[Sistema] → Verificação de identidade (e-mail + MFA)
+     ↓
+[DPO] → Análise de viabilidade (obrigações legais?)
+     ↓                              ↓
+  Aprovado                      Negado (parcial)
+     ↓                              ↓
+[API Erasure] → Anonimização    Dados regulatórios
+  (PII → ERASED-{hash})        mantidos anonimizados
+     ↓
+[Propagação] → SendGrid, Datadog (evento de exclusão)
+     ↓
+[Confirmação] → E-mail ao titular com protocolo
+```
+
+**Tabela de exceções:**
+
+| Dado | Motivo da Retenção | Tratamento |
+|------|--------------------|------------|
+| Transações financeiras | Obrigação legal — Resolução BCB (5 anos) | Dados anonimizados, registros mantidos |
+| Logs de auditoria | Compliance SOC 2 | Dados pessoais mascarados |
+| Dados em backups | Limitação técnica | Excluídos pela rotação (30 dias) |
+
+### Formatos de exibição possíveis
+
+| Formato | Descrição | Quando usar |
+|---------|-----------|-------------|
+| Texto corrido | Parágrafo narrativo descrevendo o fluxo de exclusão, SLA e exceções | Para contextualizar o processo em documentos de governança e relatórios à ANPD |
+| Tabela de exceções | Tabela listando dados não excluídos, motivo legal e tratamento aplicado | Para documentação de compliance e referência em auditorias |
+| Diagrama de fluxo | Fluxograma detalhando cada etapa desde a solicitação até a confirmação | Para documentação técnica e treinamento de equipes de suporte |
+| Swimlane diagram | Raias separando Titular, Sistema, DPO e Sub-processadores com etapas cronológicas | Para visualizar responsabilidades de cada ator no processo |
+| BPMN diagram | Processo modelado em notação BPMN com gateways de decisão (viabilidade) | Para documentação formal de processos e integração com ferramentas de BPM |
+
+> [!info] Avaliação pendente
+> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.

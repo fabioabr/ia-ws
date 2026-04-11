@@ -35,3 +35,32 @@ rpa_roadmap:
 | Emissao de NF-e | 500 | R$ 5.000 | Baixa | 2 meses | 1 |
 | Cobranca de inadimplentes | 200 | R$ 3.000 | Alta | 6 meses | 2 |
 | Relatorio fiscal mensal | 12 | R$ 2.000 | Media | 4 meses | 2 |
+
+## Representacao Visual
+
+### Dados de amostra
+
+```
+Fase 1 (Mes 1-3)                    Fase 2 (Mes 4-8)
+|================================|  |================================|
+| Conciliacao bancaria           |  | Cobranca inadimplentes         |
+| ROI: 3 meses | R$ 8.000/mes   |  | ROI: 6 meses | R$ 3.000/mes   |
+|--------------------------------|  |--------------------------------|
+| Emissao NF-e                   |  | Relatorio fiscal               |
+| ROI: 2 meses | R$ 5.000/mes   |  | ROI: 4 meses | R$ 2.000/mes   |
+|================================|  |================================|
+
+ROI acumulado Fase 1: R$ 13.000/mes
+ROI acumulado Fase 2: R$ 18.000/mes
+```
+
+### Formatos de exibicao possiveis
+
+| Formato | Descricao | Quando usar |
+|---------|-----------|-------------|
+| Texto corrido | Descricao narrativa de cada processo com priorizacao, custo e ROI esperado | Business cases, aprovacao de investimento |
+| Tabela | Tabela com processos, volumes, custos e ROI ordenados por fase | Documentacao de planejamento, acompanhamento de progresso |
+| Gantt com anotacoes de ROI | Grafico de Gantt mostrando fases e processos no tempo, com anotacoes de ROI acumulado e economia mensal | Apresentacoes para stakeholders, gestao de programa, dashboards de acompanhamento |
+
+> [!info] Avaliacao pendente
+> Um especialista em visualizacao de dados deve avaliar qual formato grafico melhor representa esta informacao, considerando o publico-alvo e o contexto de uso.

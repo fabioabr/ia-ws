@@ -72,3 +72,26 @@ Plataforma web de consolidação financeira automatizada que centraliza dados de
 
 **Prosseguir com build customizado.** O problema é crítico (risco regulatório), as soluções de mercado não atendem às regras específicas de eliminação da Acme, e o ROI projetado é positivo em 14 meses. Recomenda-se aprovar a Fase 1 e reavaliar após validação da integração SAP na Sprint 0.
 ```
+
+## Representação Visual
+
+### Dados de amostra
+
+**Problema:** Consolidação manual, 2.500h/ano, 3 erros materiais em 6 meses
+**Solução:** Plataforma web de consolidação financeira automatizada (IFRS-compliant)
+**Usuários-alvo:** 3 perfis (analistas financeiros, controller/CFO, auditores)
+**Resultados esperados:** -80% tempo, zero erros, compliance SOX, fechamento D+2
+**MVP:** 5 épicos, 16 semanas, 3 filiais iniciais
+**Investimento:** R$ 680K — R$ 850K (MVP) / R$ 2,1M — R$ 2,8M (TCO 3 anos)
+**Recomendação:** Prosseguir com build customizado (ROI positivo em 14 meses)
+
+### Formatos de exibição possíveis
+
+| Formato | Descrição | Quando usar |
+|---------|-----------|-------------|
+| Texto corrido | Narrativa em seções com parágrafos explicativos, listas e destaques | Formato padrão — quando o público precisa entender o raciocínio completo de problema-solução-investimento |
+| Tabela | Resumo estruturado com campos-chave lado a lado (problema, solução, investimento, recomendação) | Quando o brief será incluído em um portfólio de projetos para comparação rápida |
+| Callout cards | Cards visuais por seção com ícones, destaques de métricas e badge de recomendação | Quando apresentado em formato de slide ou dashboard executivo e o foco está nas métricas-chave |
+
+> [!info] Avaliação pendente
+> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.

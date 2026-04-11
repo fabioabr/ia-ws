@@ -34,3 +34,28 @@ slas_and_slos:
 | Integracao Open Finance | % de sincronizacoes bem-sucedidas | 99.0% | 97.0% | 7.2h/mes de falha |
 | Servico de Relatorios | Tempo de geracao P95 | < 30s | < 60s | 5% acima do SLO |
 | Banco de Dados | Latencia de query P99 | < 100ms | N/A (interno) | 1% acima do SLO |
+
+## Representacao Visual
+
+### Dados de amostra
+
+```
+API Gateway          SLO 99.9% | SLA 99.5%  [██████████░] error budget: 43 min/mes
+Dashboard Web        SLO <1.5s | SLA <3s    [████████░░░] error budget: 5% sessoes
+Open Finance         SLO 99.0% | SLA 97.0%  [█████████░░] error budget: 7.2h/mes
+Servico Relatorios   SLO <30s  | SLA <60s   [████████░░░] error budget: 5% acima
+Banco de Dados       SLO <100ms| SLA N/A    [█████████░░] error budget: 1% acima
+```
+
+### Formatos de exibicao possiveis
+
+| Formato | Descricao | Quando usar |
+|---------|-----------|-------------|
+| Texto corrido | Paragrafo descritivo explicando SLIs, SLOs e SLAs de cada servico | Documentacao de arquitetura, contexto narrativo |
+| Tabela | Tabela estruturada com colunas Servico, SLI, SLO, SLA, Error Budget | Referencia tecnica completa, comparacao entre servicos |
+| Gauge charts | Indicadores circulares mostrando consumo do error budget por servico | Dashboards de operacoes, visao de saude dos servicos |
+| Status indicators | Indicadores coloridos (verde/amarelo/vermelho) por servico e metrica | Reunioes de status, visao rapida de compliance |
+| Gauge + status indicators | Gauges de error budget com semaforos de status integrados | Paineis de SRE, monitoramento continuo |
+
+> [!info] Avaliacao pendente
+> Um especialista em visualizacao de dados deve avaliar qual formato grafico melhor representa esta informacao, considerando o publico-alvo e o contexto de uso.

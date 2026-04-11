@@ -45,3 +45,37 @@ platform_architecture:
 | CI/CD | GitHub Actions | Build → Test → Security Scan → Deploy (staging → prod) |
 | Observabilidade | Datadog (metrics + logs + APM) | Dashboards por servico; alertas no Slack |
 | IDP | Backstage | Catalogo de servicos, templates, golden paths, docs |
+
+## Representacao Visual
+
+### Dados de amostra
+
+```
++----------------------------------------------------------+
+|                    Developer Portal                       |
+|                    (Backstage IDP)                        |
++----------------------------------------------------------+
+|             CI/CD (GitHub Actions)                        |
+|  Build -> Test -> Security Scan -> Deploy (stg -> prod)  |
++----------------------------------------------------------+
+|          Observabilidade (Datadog)                        |
+|  Metrics | Logs | APM | Alerting (Slack)                 |
++----------------------------------------------------------+
+|              Infraestrutura (AWS sa-east-1)               |
+|  EKS | RDS | S3 | CloudFront | Route53                   |
++----------------------------------------------------------+
+|              IaC (Terraform + Atlantis)                   |
+|  Modulos compartilhados | PR-based workflow               |
++----------------------------------------------------------+
+```
+
+### Formatos de exibicao possiveis
+
+| Formato | Descricao | Quando usar |
+|---------|-----------|-------------|
+| Texto corrido | Descricao narrativa de cada camada da plataforma com tecnologias e responsabilidades | ADRs, documentos de arquitetura detalhados |
+| Tabela | Tabela com camadas, tecnologias e detalhes | Referencia rapida, inventario tecnologico |
+| Diagrama de arquitetura em camadas | Diagrama empilhado mostrando camadas da plataforma (IaC, Cloud, Observabilidade, CI/CD, IDP) com componentes | Apresentacoes de arquitetura, onboarding de novos times, documentacao de referencia |
+
+> [!info] Avaliacao pendente
+> Um especialista em visualizacao de dados deve avaliar qual formato grafico melhor representa esta informacao, considerando o publico-alvo e o contexto de uso.

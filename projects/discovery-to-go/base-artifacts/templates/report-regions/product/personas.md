@@ -82,3 +82,25 @@ Perfis representativos dos usuários do produto, construídos a partir de entrev
 - **Comportamentos:** Técnico, aprende ferramentas novas rápido; frustra-se com processos manuais; sugere melhorias frequentemente.
 - **Frequência de uso:** Diária
 ```
+
+## Representação Visual
+
+### Dados de amostra
+
+| Persona | Cargo | Frequência | Qtd. Dores | Qtd. JTBD | Perfil de uso |
+|---------|-------|------------|------------|-----------|---------------|
+| Roberto Almeida | CFO | Semanal/Mensal | 3 | 2 | Consumidor de relatórios |
+| Juliana Ferreira | Controller | Diária | 3 | 2 | Power user operacional |
+| Marcos Oliveira | Analista Financeiro | Diária | 3 | 2 | Executor operacional |
+
+### Formatos de exibição possíveis
+
+| Formato | Descrição | Quando usar |
+|---------|-----------|-------------|
+| Texto corrido | Descrição narrativa de cada persona com JTBD, dores e ganhos em prosa | Quando o leitor precisa de contexto profundo sobre motivações e comportamentos |
+| Tabela | Matriz comparativa de personas com colunas para cargo, dores, ganhos e frequência | Para visão comparativa rápida entre personas |
+| Grid de persona cards | Cards visuais lado a lado, cada um com foto/avatar, nome, cargo, JTBD e dores principais | Para apresentações a stakeholders e workshops de alinhamento |
+| Mapa de empatia | Quadrantes (pensa, sente, faz, diz) por persona | Para aprofundamento em workshops de design |
+
+> [!info] Avaliação pendente
+> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.
