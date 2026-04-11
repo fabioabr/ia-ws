@@ -75,18 +75,47 @@ Você roda **depois** do md-writer (que gera os documentos markdown intermediár
 7. **Briefing original** em `{project}/setup/briefing.md` — para fechar a narrativa (começamos com X, terminamos com Y)
 8. **`{project}/setup/customization/report-templates/final-report-template.md`** (se existir) — definições do que o cliente considera importante no consolidado. Se não existir, use o fallback desta skill.
 
-### 2. Passo 1 — Análise estrutural
+### 2. Passo 1 — Análise estrutural e seleção de regions
 
-- Identifica os **achados-chave** do discovery (o que realmente importa para quem vai consumir)
+- Identifica os **achados-chave** do discovery
 - Agrupa riscos em matriz (impacto x probabilidade)
 - Fecha TCO se algum cálculo estiver incompleto
 - Define a ordem lógica de ataque para o backlog
 - Alinha com o context-template do projeto
-- Decide quais seções vão no relatório consolidado fazendo merge: template base (11 seções) + seção "Perfil do Delivery Report" do discovery-blueprint (seções extras, métricas, diagramas) + override total do cliente (se existir, substitui tudo)
+- **Seleciona as regions** que irão compor o delivery report:
 
-### 3. Passo 2 — Geração do `final-report.md` consolidado
+```
+1. Ler seção "Regions do Delivery Report" do discovery-blueprint carregado
+   → Lista de regions obrigatórias + opcionais + domain-specific
 
-Produz um **único arquivo `.md`** em `{project}/delivery/final-report.md`. A estrutura é definida por `{project}/setup/customization/report-templates/final-report-template.md` (copiado do default global em `templates/customization/`). Se o arquivo não existir, usa a seguinte estrutura mínima como fallback:
+2. Para cada region opcional: avaliar se há dados suficientes nos drafts
+   → Se sim, incluir. Se não, omitir.
+
+3. Se cliente tem override total (custom-artifacts/{client}/config/final-report-template.md)
+   → Ignorar blueprint e usar template do cliente
+
+4. Se não há blueprint (modo genérico)
+   → Usar apenas as 28 regions universais (Default: Todos)
+```
+
+O catálogo completo de regions está em `base-artifacts/templates/report-regions/information-regions.md`.
+
+### 3. Passo 2 — Geração do `delivery-report.md` por regions
+
+Produz um **único arquivo `.md`** em `{project}/delivery/delivery-report.md`. O arquivo é **completo** — contém todas as regions selecionadas com dados reais, legível como texto puro.
+
+Cada region no `.md` é marcada com um comentário HTML que o html-writer reconhece:
+
+```markdown
+<!-- region: REG-XXXX-NN -->
+## Nome da Seção
+
+{Conteúdo da region com dados reais do discovery}
+
+<!-- /region: REG-XXXX-NN -->
+```
+
+#### Estrutura padrão (regions universais)
 
 ```markdown
 ---
@@ -97,85 +126,171 @@ status: ativo
 author: claude-code
 category: delivery
 created: YYYY-MM-DD
+regions: [lista de REG-IDs incluídos]
 ---
 
 # Delivery Report — {Nome do Projeto}
 
+<!-- region: REG-EXEC-01 -->
 ## Overview (one-pager)
+{Problema, proposta, stakeholders, decisões técnicas, TCO, top 3 riscos, Build vs Buy, próximo passo}
+<!-- /region: REG-EXEC-01 -->
 
-{Seção executiva de UMA página, pensada para quem lê uma única vez e precisa entender o todo. Obrigatoriamente inclui:}
+<!-- region: REG-PROD-01 -->
+## Problema e Contexto
+{Descrição do problema, quem sofre, impacto mensurável}
+<!-- /region: REG-PROD-01 -->
 
-- **Problema resolvido:** 1-2 frases
-- **Proposta de valor:** 1-2 frases
-- **Stakeholders-chave:** lista enxuta
-- **Decisões técnicas fundamentais:** 3-5 bullets
-- **Custo estimado (TCO 3 anos):** número + faixa
-- **Riscos top 3:** bullets
-- **Recomendação Build vs Buy:** frase objetiva
-- **Próximo passo concreto:** 1 ação
+<!-- region: REG-PROD-02 -->
+## Personas
+{Perfis com JTBD, dores, ganhos}
+<!-- /region: REG-PROD-02 -->
 
-## Visão de Produto
+<!-- region: REG-PROD-04 -->
+## Proposta de Valor
+{Elevator pitch, diferenciação}
+<!-- /region: REG-PROD-04 -->
 
-{Consolida product-vision.md em formato legível. Seções: problema, personas, jornadas, OKRs/ROI, diferenciação.}
+<!-- region: REG-PROD-05 -->
+## OKRs e ROI
+{Objetivos, key results, targets}
+<!-- /region: REG-PROD-05 -->
 
-## Organização
+<!-- region: REG-PROD-07 -->
+## Escopo
+{Objetivo, dentro, fora, hipótese, go/no-go}
+<!-- /region: REG-PROD-07 -->
 
-{Consolida organization.md. Processo, equipe, estrutura, RACI.}
+<!-- region: REG-ORG-01 -->
+## Stakeholders
+{Mapa com papel, influência, interesse}
+<!-- /region: REG-ORG-01 -->
 
-## Tecnologia e Segurança
+<!-- region: REG-ORG-02 -->
+## Estrutura de Equipe
+{Papéis, dedicação, fase}
+<!-- /region: REG-ORG-02 -->
 
-{Consolida tech-and-security.md. Stack, padrões, segurança, observabilidade.}
+<!-- region: REG-TECH-01 -->
+## Stack Tecnológica
+{Linguagens, frameworks, bancos, infra}
+<!-- /region: REG-TECH-01 -->
 
-## Privacidade e Compliance
+<!-- region: REG-TECH-03 -->
+## Arquitetura Macro
+{Diagrama C4 L1, descrição dos componentes}
+<!-- /region: REG-TECH-03 -->
 
-{Consolida privacy.md — seja em modo profundo ou magro. Se magro, atesta não-aplicabilidade explicitamente.}
+<!-- region: REG-TECH-02 -->
+## Integrações
+{Sistemas, protocolos, volumes}
+<!-- /region: REG-TECH-02 -->
 
-## Análise Estratégica
+<!-- region: REG-TECH-06 -->
+## Build vs Buy
+{Comparativo por componente}
+<!-- /region: REG-TECH-06 -->
 
-{Consolida strategic-analysis.md. Arquitetura macro, Build vs Buy, TCO 3 anos, cenários.}
+{== DOMAIN-SPECIFIC REGIONS AQUI (se aplicável) ==}
 
-## Backlog Priorizado
+<!-- region: REG-SEC-01 -->
+## Classificação de Dados
+<!-- /region: REG-SEC-01 -->
 
-{Materializa backlog priorizado. Você define a priorização (MoSCoW/RICE) com base no briefing e nos drafts.}
+<!-- region: REG-SEC-02 -->
+## Autenticação e Autorização
+<!-- /region: REG-SEC-02 -->
 
+<!-- region: REG-SEC-04 -->
+## Compliance
+<!-- /region: REG-SEC-04 -->
+
+<!-- region: REG-PRIV-01 --> {se aplicável}
+## Dados Pessoais
+<!-- /region: REG-PRIV-01 -->
+
+<!-- region: REG-FIN-01 -->
+## TCO 3 Anos
+{Tabela por categoria × ano + sensibilidade}
+<!-- /region: REG-FIN-01 -->
+
+<!-- region: REG-FIN-05 -->
+## Estimativa de Esforço
+{T-shirt sizing por épico}
+<!-- /region: REG-FIN-05 -->
+
+<!-- region: REG-RISK-01 -->
 ## Matriz de Riscos
+{Top riscos com prob × impacto, mitigação, dono}
+<!-- /region: REG-RISK-01 -->
 
-{Matriz impacto x probabilidade, com top 5 riscos e mitigação inicial.}
+<!-- region: REG-RISK-02 -->
+## Riscos Técnicos
+<!-- /region: REG-RISK-02 -->
 
-## Métricas-chave para acompanhamento pós-discovery
+<!-- region: REG-RISK-03 -->
+## Hipóteses Não Validadas
+<!-- /region: REG-RISK-03 -->
 
-{Métricas que o context-template indica como relevantes para o tipo de projeto.}
+<!-- region: REG-QUAL-01 -->
+## Score do Auditor
+{5 dimensões com notas e pisos}
+<!-- /region: REG-QUAL-01 -->
 
-## Questões residuais (do Challenge)
+<!-- region: REG-QUAL-02 -->
+## Questões do 10th-man
+{Questões residuais}
+<!-- /region: REG-QUAL-02 -->
 
-{Questões que o 10th-man marcou como relevantes mesmo com nota aprovada. Para o cliente considerar.}
+<!-- region: REG-BACK-01 -->
+## Backlog Priorizado
+{Épicos com MoSCoW/RICE}
+<!-- /region: REG-BACK-01 -->
 
-## Como chegamos aqui
+<!-- region: REG-METR-01 -->
+## Métricas-chave
+{KPIs de negócio com targets}
+<!-- /region: REG-METR-01 -->
 
-{Resumo narrativo curto: quantas iterações, onde foi reprovado, o que mudou entre elas. Ajuda quem consome a entender a história do discovery.}
+<!-- region: REG-NARR-01 -->
+## Como Chegamos Aqui
+{História das iterações}
+<!-- /region: REG-NARR-01 -->
+
+<!-- region: REG-EXEC-04 -->
+## Próximos Passos
+{Ações com responsável e prazo}
+<!-- /region: REG-EXEC-04 -->
 ```
 
-### 4. Passo 3 — Invocação do report-maker global
+> [!info] Regions opcionais e domain-specific
+> Regions opcionais e domain-specific são inseridas nas posições indicadas no `html-layout.md`. O consolidator consulta o blueprint para saber quais incluir e onde posicionar.
 
-Após salvar `final-report.md`:
+### 4. Passo 3 — Invocação do html-writer global
 
-1. Invoca a skill global `report-maker` passando o arquivo consolidado como input
-2. O report-maker é responsável por gerar o HTML auto-contido visualmente rico seguindo o Design System global
-3. O HTML gerado é salvo em `{project}/delivery/final-report.html`
-4. Você **não gera HTML diretamente** — apenas delega para o skill global
+Após salvar `delivery-report.md`:
+
+1. Invoca a skill global `html-writer` passando o arquivo consolidado + `html-layout.md`
+2. O html-writer lê os marcadores `<!-- region: REG-XXXX-NN -->` para identificar cada region
+3. Para cada region, aplica o template visual correspondente (card, table, chart, timeline, etc.)
+4. O layout (ordem e disposição) é definido por `{project}/setup/customization/html-layout.md` (ou default)
+5. O HTML gerado é salvo em `{project}/delivery/delivery-report.html`
+6. Você **não gera HTML diretamente** — apenas delega para o html-writer
 
 ### 5. O que você FAZ
 
 - Lê e absorve todo o contexto do projeto (não só os markdown intermediários)
-- Decide estrutura do consolidado (qual seção entra, em que ordem, com que ênfase)
+- **Seleciona regions** com base no blueprint do context-template
+- Gera o `.md` com **marcadores de region** (`<!-- region: REG-XXXX-NN -->`)
 - Escreve o overview one-pager com bom estilo executivo
 - Prioriza backlog e organiza matriz de riscos
-- Invoca report-maker global para HTML final
+- Invoca html-writer global para HTML final
 - Fecha a narrativa do discovery (do briefing ao entregável)
 
 ### 6. O que você NÃO faz
 
-- Não gera HTML manualmente — é responsabilidade do report-maker global
+- Não gera HTML manualmente — é responsabilidade do html-writer global
+- Não decide o layout visual — isso é definido no `html-layout.md`
 - Não reescreve as análises técnicas dos drafts — só consolida e dá contexto
 - Não questiona decisões do Challenge — auditor e 10th-man já validaram
 - Não inventa métricas ou riscos que não estão nos drafts ou logs
