@@ -341,3 +341,67 @@ Automações sem governança quebram silenciosamente. Um CoE (Center of Excellen
 | **2. Candidatos à Automação** | #3 (Valor/OKRs), #4 (Processo) | po |
 | **3. Plataforma e Implementação** | #5 (Tech), #7 (Arch), #8 (TCO) | solution-architect |
 | **4. Governança e Sustentação** | #4 (Processo), #7 (Arch), #8 (TCO) | po, solution-architect |
+
+---
+
+## Regions do Delivery Report
+
+Regions de informação que o delivery report deste blueprint deve conter. Referência completa no [Information Regions Catalog](../../projects/discovery-to-go/base-artifacts/templates/report-regions/information-regions.md).
+
+### Obrigatórias
+
+Regions com Default "Todos" — sempre presentes no delivery report.
+
+| ID | Nome | Grupo |
+|----|------|-------|
+| REG-EXEC-01 | Overview one-pager | Executivo |
+| REG-EXEC-02 | Product brief | Executivo |
+| REG-EXEC-03 | Decisão de continuidade | Executivo |
+| REG-EXEC-04 | Próximos passos | Executivo |
+| REG-PROD-01 | Problema e contexto | Produto |
+| REG-PROD-02 | Personas | Produto |
+| REG-PROD-04 | Proposta de valor | Produto |
+| REG-PROD-05 | OKRs e ROI | Produto |
+| REG-PROD-07 | Escopo | Produto |
+| REG-ORG-01 | Mapa de stakeholders | Organização |
+| REG-ORG-02 | Estrutura de equipe | Organização |
+| REG-TECH-01 | Stack tecnológica | Técnico |
+| REG-TECH-02 | Integrações | Técnico |
+| REG-TECH-03 | Arquitetura macro | Técnico |
+| REG-TECH-06 | Build vs Buy | Técnico |
+| REG-SEC-01 | Classificação de dados | Segurança |
+| REG-SEC-02 | Autenticação e autorização | Segurança |
+| REG-SEC-04 | Compliance e regulação | Segurança |
+| REG-FIN-01 | TCO 3 anos | Financeiro |
+| REG-FIN-05 | Estimativa de esforço | Financeiro |
+| REG-RISK-01 | Matriz de riscos | Riscos |
+| REG-RISK-02 | Riscos técnicos | Riscos |
+| REG-RISK-03 | Hipóteses críticas não validadas | Riscos |
+| REG-QUAL-01 | Score do auditor | Qualidade |
+| REG-QUAL-02 | Questões do 10th-man | Qualidade |
+| REG-BACK-01 | Épicos priorizados | Backlog |
+| REG-METR-01 | KPIs de negócio | Métricas |
+| REG-NARR-01 | Como chegamos aqui | Narrativa |
+
+### Opcionais
+
+Regions que dependem do contexto do projeto.
+
+| ID | Nome | Grupo | Condição |
+|----|------|-------|----------|
+| REG-PRIV-01 | Dados pessoais mapeados | Privacidade | Quando robô acessa PII |
+| REG-PRIV-02 | Base legal LGPD | Privacidade | Quando robô acessa PII |
+| REG-PRIV-03 | DPO e responsabilidades | Privacidade | Quando robô acessa PII |
+| REG-PRIV-04 | Política de retenção | Privacidade | Quando robô acessa PII |
+
+> [!note] RPA e dados pessoais
+> Robôs RPA frequentemente acessam telas com dados pessoais (CPF, salário, dados de saúde). Se o processo automatizado manipula PII, as regions de privacidade tornam-se obrigatórias.
+
+### Domain-specific
+
+Regions exclusivas do context-template `process-automation`.
+
+| ID | Path | Nome | Descrição | Template visual |
+|----|------|------|-----------|-----------------|
+| REG-DOM-RPA-01 | `domain/rpa-automation-roadmap.md` | Roadmap de automação | Processos priorizados, tipo de automação, ROI, timeline | Timeline com ROI |
+| REG-DOM-RPA-02 | `domain/rpa-coe-governance.md` | CoE governance | Center of Excellence, monitoring, manutenção, métricas de valor | Card |

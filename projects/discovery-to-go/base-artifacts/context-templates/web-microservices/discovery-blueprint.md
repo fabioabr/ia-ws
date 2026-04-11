@@ -457,3 +457,164 @@ Configurações específicas que o `consolidator` aplica ao delivery report na F
 > - **Privacidade (bloco #6)** — PII aparece em múltiplos serviços, precisa de rastreamento de linhagem, propagação de consentimento e mecanismo de exclusão cross-service
 > - **Custo (bloco #8)** — Cada componente tem custo próprio (compute, networking/egress, observabilidade, licenças, on-call rotation)
 > - **Organização (blocos #1-#4)** — Conway's Law, ownership por squad, on-call rotation, experiência prévia com distribuído
+
+---
+
+## Regions do Delivery Report
+
+Regions de informação que o `consolidator` deve gerar no delivery report para projetos web-microservices. Referência completa no [Information Regions Catalog](../../projects/discovery-to-go/base-artifacts/templates/report-regions/information-regions.md).
+
+### Obrigatórias
+
+Regions com `Default: Todos` no catálogo, mais as de privacidade (web apps tipicamente manipulam PII).
+
+#### Executivo
+
+| ID | Nome | Schema | Template visual |
+|----|------|--------|-----------------|
+| REG-EXEC-01 | Overview one-pager | Texto narrativo + bullets | Hero card full-width |
+| REG-EXEC-02 | Product brief | Texto estruturado | Card com seções |
+| REG-EXEC-03 | Decisão de continuidade | Tabela de riscos + veredicto | Card com status badges |
+| REG-EXEC-04 | Próximos passos | Tabela (ação, responsável, prazo) | Table com checkboxes |
+
+#### Produto
+
+| ID | Nome | Schema | Template visual |
+|----|------|--------|-----------------|
+| REG-PROD-01 | Problema e contexto | Texto + métricas | Card com callout de métrica |
+| REG-PROD-02 | Personas | Lista de personas (nome, perfil, jobs, dores) | Grid de persona cards |
+| REG-PROD-04 | Proposta de valor | Texto estruturado (para/que/é um/que) | Card com highlight |
+| REG-PROD-05 | OKRs e ROI | Tabela (objetivo, key result, target, prazo) | Table com progress indicators |
+| REG-PROD-07 | Escopo | Objetivo + duas listas (dentro/fora) + hipótese | Card com objetivo + split list (in/out) |
+
+#### Organização
+
+| ID | Nome | Schema | Template visual |
+|----|------|--------|-----------------|
+| REG-ORG-01 | Mapa de stakeholders | Tabela (nome, papel, influência, interesse) | Table com badges |
+| REG-ORG-02 | Estrutura de equipe | Tabela (papel, dedicação, fase) | Table ou org chart |
+
+#### Técnico
+
+| ID | Nome | Schema | Template visual |
+|----|------|--------|-----------------|
+| REG-TECH-01 | Stack tecnológica | Tabela (tecnologia, camada, justificativa) | Table com badges |
+| REG-TECH-02 | Integrações | Tabela (sistema, protocolo, direção, volume) | Table ou diagram |
+| REG-TECH-03 | Arquitetura macro | Diagrama Mermaid | Diagram full-width |
+| REG-TECH-06 | Build vs Buy | Tabela (componente, opções, veredicto, justificativa) | Table com verdict badges |
+
+#### Segurança
+
+| ID | Nome | Schema | Template visual |
+|----|------|--------|-----------------|
+| REG-SEC-01 | Classificação de dados | Tabela (dado, classificação, tratamento) | Table com color-coded badges |
+| REG-SEC-02 | Autenticação e autorização | Texto + tabela | Card com checklist |
+| REG-SEC-04 | Compliance e regulação | Tabela (regulação, status, gap, ação) | Table com status badges |
+
+#### Privacidade
+
+Web apps baseadas em microsserviços tipicamente manipulam PII de usuários/clientes em múltiplos serviços — todas as regions `Quando há PII` são obrigatórias neste blueprint.
+
+| ID | Nome | Schema | Template visual |
+|----|------|--------|-----------------|
+| REG-PRIV-01 | Dados pessoais mapeados | Tabela (dado, local, acesso, base legal) | Table detalhada |
+| REG-PRIV-02 | Base legal LGPD | Tabela (tratamento, base legal, justificativa) | Table com badges |
+| REG-PRIV-03 | DPO e responsabilidades | Texto + contato | Card simples |
+| REG-PRIV-04 | Política de retenção | Tabela (dado, retenção, processo) | Table simples |
+
+#### Financeiro
+
+| ID | Nome | Schema | Template visual |
+|----|------|--------|-----------------|
+| REG-FIN-01 | TCO 3 anos | Tabela (categoria, ano 1, ano 2, ano 3, total) + faixa de sensibilidade | Table + stat card (total) |
+| REG-FIN-05 | Estimativa de esforço | Tabela (épico, complexidade, estimativa, premissas) | Table com badges |
+
+#### Riscos
+
+| ID | Nome | Schema | Template visual |
+|----|------|--------|-----------------|
+| REG-RISK-01 | Matriz de riscos | Tabela (risco, probabilidade, impacto, score, mitigação, dono) | Table com heatmap badges |
+| REG-RISK-02 | Riscos técnicos | Tabela | Table com severity |
+| REG-RISK-03 | Hipóteses críticas não validadas | Tabela (hipótese, risco se falsa, como validar, prazo) | Table com alert style |
+
+#### Qualidade
+
+| ID | Nome | Schema | Template visual |
+|----|------|--------|-----------------|
+| REG-QUAL-01 | Score do auditor | Tabela (dimensão, nota, piso, status) | Stat cards ou radar chart |
+| REG-QUAL-02 | Questões do 10th-man | Lista de questões com severidade | Card list com severity badges |
+
+#### Backlog
+
+| ID | Nome | Schema | Template visual |
+|----|------|--------|-----------------|
+| REG-BACK-01 | Épicos priorizados | Tabela (épico, narrativa, prioridade, estimativa) | Table com priority badges |
+
+#### Métricas
+
+| ID | Nome | Schema | Template visual |
+|----|------|--------|-----------------|
+| REG-METR-01 | KPIs de negócio | Tabela (KPI, valor atual, target, prazo) | Stat cards ou table |
+
+#### Narrativa
+
+| ID | Nome | Schema | Template visual |
+|----|------|--------|-----------------|
+| REG-NARR-01 | Como chegamos aqui | Texto narrativo + timeline | Timeline vertical |
+
+### Domain-specific
+
+Regions exclusivas do context-template `web-microservices`.
+
+| ID | Nome | Descrição | Template visual |
+|----|------|-----------|-----------------|
+| REG-DOM-MICRO-01 | Mapa de serviços | Diagrama de serviços com boundaries, protocolos, ownership | Diagram full-width |
+| REG-DOM-MICRO-02 | Resiliência inter-serviço | Circuit breaker, retry, saga, DLQ, timeout policies | Table com patterns |
+
+### Opcionais
+
+Regions que o consolidator pode incluir quando o discovery produzir informação suficiente.
+
+| ID | Nome | Quando incluir |
+|----|------|----------------|
+| REG-PROD-03 | Jornadas de usuário | Jornadas mapeadas em detalhe |
+| REG-PROD-06 | Modelo de negócio | Projeto com monetização/pricing |
+| REG-PROD-08 | Roadmap | Faseamento definido além do MVP |
+| REG-PROD-09 | Visão do produto | Visão de longo prazo articulada |
+| REG-ORG-03 | RACI | Matriz de responsabilidades definida |
+| REG-ORG-04 | Metodologia | Metodologia de desenvolvimento definida |
+| REG-ORG-05 | On-call e sustentação | Modelo de sustentação pós-MVP definido |
+| REG-TECH-04 | Arquitetura de containers | C4 L2 — containers internos detalhados |
+| REG-TECH-05 | ADRs | Architecture Decision Records documentados |
+| REG-TECH-07 | Requisitos não-funcionais | NFRs explícitos com SLAs |
+| REG-SEC-03 | Criptografia | Detalhamento de criptografia at-rest/in-transit |
+| REG-PRIV-05 | Direito ao esquecimento | Processo de exclusão cross-service detalhado |
+| REG-PRIV-06 | Sub-operadores | Terceiros que processam dados pessoais |
+| REG-FIN-02 | Break-even analysis | Análise de ponto de equilíbrio |
+| REG-FIN-03 | Custo por componente | Breakdown de custo por serviço/cluster |
+| REG-RISK-04 | Análise de viabilidade | Viabilidade por dimensão |
+| REG-QUAL-03 | Gaps identificados | Lacunas no discovery |
+| REG-QUAL-04 | Checklist de conclusão | Status de critérios de completude |
+| REG-BACK-02 | User stories de alto nível | Stories por épico |
+| REG-BACK-03 | Dependências | Dependências entre épicos |
+| REG-BACK-04 | Critérios de Go/No-Go | Métricas de go/no-go |
+| REG-METR-02 | KPIs técnicos | Métricas de saúde técnica |
+| REG-METR-03 | SLAs e SLOs | SLO/SLI por serviço |
+| REG-METR-04 | Targets por fase | Metas por fase do roadmap |
+| REG-METR-05 | DORA metrics | Deploy frequency, lead time, MTTR, change failure rate |
+| REG-NARR-02 | Condições para prosseguir | Pré-requisitos antes de iniciar desenvolvimento |
+| REG-NARR-03 | Assinaturas de aprovação | Sign-off formal |
+| REG-PESQ-01 | Relatório de entrevistas | Entrevistas realizadas durante o discovery |
+| REG-PESQ-02 | Citações representativas | Quotes de alta relevância |
+| REG-PESQ-03 | Mapa de oportunidades | Opportunity Solution Tree |
+| REG-PESQ-04 | Dados quantitativos | Métricas quantitativas identificadas |
+| REG-PESQ-05 | Source tag summary | Distribuição por fonte (BRIEFING, RAG, INFERENCE) |
+
+### Resumo quantitativo
+
+| Classificação | Quantidade |
+|---------------|------------|
+| Obrigatórias | 32 |
+| Domain-specific | 2 |
+| Opcionais | 31 |
+| **Total** | **65** |

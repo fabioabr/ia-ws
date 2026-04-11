@@ -477,3 +477,78 @@ Configurações específicas que o `consolidator` aplica ao delivery report na F
 > - **Privacidade (bloco #6)** — Dados pessoais existem em todos os componentes, do signup ao billing ao logging
 > - **Custo (bloco #8)** — Cada componente tem custo próprio (infra per tenant, billing platform fee, observabilidade)
 > - **Governança (bloco #4)** — Processo de releases, on-call e roadmap afetam todos os componentes
+
+---
+
+## Regions do Delivery Report
+
+Regions que o consolidator deve incluir no `delivery-report.md` para projetos deste tipo.
+
+### Obrigatórias
+
+| ID | Nome | Justificativa |
+|----|------|---------------|
+| REG-EXEC-01 | Overview one-pager | Resumo executivo é indispensável para alinhamento com decisores |
+| REG-EXEC-02 | Product brief | Documento de alinhamento executivo sobre problema, solução e investimento |
+| REG-EXEC-03 | Decisão de continuidade | Veredicto go/no-go com evidências — essencial para qualquer discovery |
+| REG-EXEC-04 | Próximos passos | Ações pós-discovery com responsável e prazo |
+| REG-PROD-01 | Problema e contexto | SaaS exige clareza sobre o problema e seu impacto mensurável |
+| REG-PROD-02 | Personas | Quem compra vs quem usa é crítico em SaaS (decisor ≠ operador) |
+| REG-PROD-04 | Proposta de valor | Diferenciação competitiva é central para SaaS em mercados com concorrentes |
+| REG-PROD-05 | OKRs e ROI | Métricas norte (MRR, churn, ativação) são obrigatórias para validar viabilidade |
+| REG-PROD-07 | Escopo | Definir dentro/fora do MVP evita scope creep em produto recorrente |
+| REG-ORG-01 | Mapa de stakeholders | Alinhamento entre product owner, engenharia e negócio é crítico |
+| REG-ORG-02 | Estrutura de equipe | Capacidade do time define viabilidade de operar SaaS (on-call, releases) |
+| REG-TECH-01 | Stack tecnológica | Stack define custos variáveis por tenant e viabilidade de multi-tenancy |
+| REG-TECH-02 | Integrações | SaaS tipicamente integra com gateways de pagamento, IdPs e ERPs |
+| REG-TECH-03 | Arquitetura macro | Diagrama C4 L1 é obrigatório — inclui tenancy e billing como vizinhos |
+| REG-TECH-06 | Build vs Buy | Decisão Stripe vs custom, Auth0 vs custom é estruturante em SaaS |
+| REG-SEC-01 | Classificação de dados | Multi-tenant exige classificação rigorosa para garantir isolamento |
+| REG-SEC-02 | Autenticação e autorização | SSO corporativo, RBAC e MFA são requisitos recorrentes em SaaS |
+| REG-SEC-04 | Compliance e regulação | SaaS opera em múltiplas jurisdições — compliance é obrigatório |
+| REG-PRIV-01 | Dados pessoais mapeados | SaaS sempre coleta PII (signup, perfil, uso) — inventário obrigatório |
+| REG-PRIV-02 | Base legal LGPD | Tratamento de dados pessoais de múltiplos tenants exige base legal clara |
+| REG-PRIV-03 | DPO e responsabilidades | Papel de controlador vs operador precisa estar definido |
+| REG-PRIV-04 | Política de retenção | Retenção por tenant e por tier é concern específico de SaaS multi-tenant |
+| REG-FIN-01 | TCO 3 anos | Projeção de custo total incluindo infra per-tenant e billing platform fees |
+| REG-FIN-05 | Estimativa de esforço | T-shirt sizing por épico para viabilizar roadmap e break-even |
+| REG-RISK-01 | Matriz de riscos | Inclui riscos SaaS: vendor lock-in, tenant abuse, DDoS direcionado |
+| REG-RISK-02 | Riscos técnicos | Multi-tenancy, schema migration e rate limiting geram riscos específicos |
+| REG-RISK-03 | Hipóteses críticas não validadas | Premissas de pricing e churn devem ser explicitadas como hipóteses |
+| REG-QUAL-01 | Score do auditor | Validação de qualidade do discovery é obrigatória |
+| REG-QUAL-02 | Questões do 10th-man | Edge cases de SaaS (tenant abuse, LGPD, gateway down) devem ser desafiados |
+| REG-BACK-01 | Épicos priorizados | Priorização por tier (MVP → Growth → Enterprise) é padrão SaaS |
+| REG-METR-01 | KPIs de negócio | MRR, churn, ativação e retenção são métricas norte do SaaS |
+| REG-NARR-01 | Como chegamos aqui | Histórico de iterações do discovery para rastreabilidade |
+
+### Opcionais
+
+| ID | Nome | Quando incluir |
+|----|------|----------------|
+| REG-PROD-03 | Jornadas de usuário | Quando o onboarding é self-service e a jornada signup→valor precisa ser mapeada |
+| REG-PROD-06 | Modelo de negócio | Quando o modelo comercial é complexo (freemium + tiered + usage-based) |
+| REG-PROD-08 | Roadmap | Quando há faseamento explícito MVP → Fase 2 → Fase N com épicos por fase |
+| REG-TECH-04 | Arquitetura de containers | Quando a decisão de tenancy exige diagrama C4 L2 (database-per-tenant vs row-level) |
+| REG-TECH-05 | ADRs | Quando decisões estruturantes (tenancy model, billing platform) precisam de registro formal |
+| REG-TECH-07 | Requisitos não-funcionais | Quando SLAs variam por tier (Enterprise 4 nines vs Basic 3 nines) |
+| REG-SEC-03 | Criptografia | Quando há requisito de BYOK para tenants enterprise ou compliance PCI-DSS |
+| REG-PRIV-05 | Direito ao esquecimento | Quando o banco multi-tenant dificulta exclusão sem quebrar referências históricas |
+| REG-PRIV-06 | Sub-operadores | Quando há sub-processadores (Stripe, SendGrid, Datadog) que exigem contratos DPA |
+| REG-FIN-02 | Break-even analysis | Quando o investidor ou board exige projeção de ponto de equilíbrio |
+| REG-FIN-03 | Custo por componente | Quando custos variáveis por tenant (compute, storage, bandwidth) são relevantes para pricing |
+| REG-FIN-04 | Projeção de receita | Quando há projeção de MRR/ARR com cenários de crescimento e churn |
+| REG-ORG-05 | On-call e sustentação | Quando o time precisa definir rotação de on-call e runbooks pós-MVP |
+| REG-METR-02 | KPIs técnicos | Quando há SLAs diferenciados por plano que exigem monitoramento contínuo |
+| REG-METR-03 | SLAs e SLOs | Quando SLAs contratuais variam por tier e precisam de SLIs explícitos |
+| REG-RISK-04 | Análise de viabilidade | Quando o discovery precisa de veredicto formal por dimensão (técnica, financeira, regulatória) |
+| REG-BACK-04 | Critérios de Go/No-Go | Quando o MVP tem métricas de sucesso que definem se avança ou pivota |
+| REG-PESQ-01 | Relatório de entrevistas | Quando houve entrevistas com usuários ou stakeholders durante o discovery |
+| REG-PESQ-03 | Mapa de oportunidades | Quando o discovery identificou múltiplas oportunidades que precisam de priorização |
+| REG-PESQ-05 | Source tag summary | Quando é necessário auditar a distribuição entre dados reais e inferências |
+
+### Domain-specific
+
+| ID | Nome |
+|----|------|
+| REG-DOM-SAAS-01 | Modelo comercial e pricing |
+| REG-DOM-SAAS-02 | Estratégia de tenancy |
