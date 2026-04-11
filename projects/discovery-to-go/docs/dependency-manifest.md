@@ -60,10 +60,10 @@ Domínios tecnológicos em `base-artifacts/knowledge/` (local copy of workspace 
 
 | Pack | Caminho no workspace | Arquivos |
 |------|---------------------|----------|
-| saas | `base-artifacts/knowledge/saas/` | `context.md`, `specialists.md` |
-| datalake-ingestion | `base-artifacts/knowledge/datalake-ingestion/` | `context.md`, `specialists.md` |
-| process-documentation | `base-artifacts/knowledge/process-documentation/` | `context.md`, `specialists.md` |
-| web-microservices | `base-artifacts/knowledge/web-microservices/` | `context.md`, `specialists.md` |
+| saas | `base-artifacts/knowledge/saas/` | `context.md`, `specialists.md`, `report-profile.md` |
+| datalake-ingestion | `base-artifacts/knowledge/datalake-ingestion/` | `context.md`, `specialists.md`, `report-profile.md` |
+| process-documentation | `base-artifacts/knowledge/process-documentation/` | `context.md`, `specialists.md`, `report-profile.md` |
+| web-microservices | `base-artifacts/knowledge/web-microservices/` | `context.md`, `specialists.md`, `report-profile.md` |
 
 ---
 

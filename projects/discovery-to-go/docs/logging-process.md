@@ -302,4 +302,4 @@ Ao final de um processo, o log pode ser analisado para extrair métricas:
 | 01.00.000 | 2026-04-04 10:30 | Criação do documento |
 | 01.01.000 | 2026-04-04 | Adição de 4 tipos de entrada para iterações do pipeline: Iteração, Perguntas enviadas, Respostas recebidas, Convergência |
 | 01.02.000 | 2026-04-05 18:30 | Atualização terminologia v1 para v2: "Nível" e "Fase" substituídos por "Sub-etapa" em todo o documento |
-| 01.03.000 | 2026-04-11 | Atualização de paths para nova estrutura de 3 camadas (base-artifacts, dtg-artifacts, custom-rules). Terminologia "Sub-etapa" substituída por "Fase" (v0.5). Wikilinks core/ atualizados para dtg-artifacts/rules/ |
+| 01.03.000 | 2026-04-11 | Atualização de paths para nova estrutura de 3 camadas (base-artifacts, dtg-artifacts, custom-artifacts). Terminologia "Sub-etapa" substituída por "Fase" (v0.5). Wikilinks core/ atualizados para dtg-artifacts/rules/ |

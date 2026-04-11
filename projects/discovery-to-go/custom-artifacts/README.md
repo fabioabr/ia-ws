@@ -1,5 +1,5 @@
 ---
-title: Custom Rules
+title: Custom Artifacts
 description: Guia de como estruturar regras e artefatos customizados por cliente dentro do Discovery Pipeline
 project-name: discovery-to-go
 version: 01.00.000
@@ -15,7 +15,7 @@ tags:
 created: 2026-04-11 12:00
 ---
 
-# Custom Rules
+# Custom Artifacts
 
 Guia para estruturar regras, knowledge base e assets customizados por cliente no Discovery Pipeline.
 
@@ -33,7 +33,7 @@ Use esta pasta quando um cliente precisa de:
 Cada cliente tem uma pasta própria com nome em kebab-case:
 
 ```
-custom-rules/
+custom-artifacts/
 ├── README.md                          ← este arquivo
 ├── {client-name}/
 │   ├── kb/                            ← knowledge base do cliente
@@ -72,7 +72,7 @@ Contém o conhecimento de negócio do cliente que os agentes usam durante a entr
 
 > [!tip] KB vs Knowledge Packs
 > **Knowledge packs** (em `knowledge/` na raiz do workspace) são por **domínio tecnológico** (SaaS, datalake, etc.) — qualquer cliente pode usar.
-> **KB do cliente** (aqui em `custom-rules/{client}/kb/`) é sobre **a empresa específica** — só se aplica a esse cliente.
+> **KB do cliente** (aqui em `custom-artifacts/{client}/kb/`) é sobre **a empresa específica** — só se aplica a esse cliente.
 > Ambos são carregados durante o setup. O orchestrator copia o knowledge pack para `setup/customization/current-context/` e o KB do cliente fica acessível via referência direta.
 
 ### Assets (`assets/`)
@@ -109,7 +109,7 @@ Overrides de configuração que substituem os defaults do `templates/customizati
 
 > [!warning] Prioridade
 > Durante o setup, o orchestrator copia configs nesta ordem de prioridade:
-> 1. `custom-rules/{client}/config/` — se existir, sobrescreve
+> 1. `custom-artifacts/{client}/config/` — se existir, sobrescreve
 > 2. `templates/customization/` — fallback (defaults)
 
 ## 🚀 Como usar
@@ -117,7 +117,7 @@ Overrides de configuração que substituem os defaults do `templates/customizati
 ### 1. Criar pasta do cliente
 
 ```bash
-mkdir -p custom-rules/{client-name}/{kb,assets,rules,config}
+mkdir -p custom-artifacts/{client-name}/{kb,assets,rules,config}
 ```
 
 ### 2. Popular com conteúdo
@@ -135,7 +135,7 @@ No `briefing.md` da run, adicione no frontmatter:
 client: {client-name}
 ```
 
-O orchestrator detecta e carrega automaticamente o conteúdo de `custom-rules/{client-name}/`.
+O orchestrator detecta e carrega automaticamente o conteúdo de `custom-artifacts/{client-name}/`.
 
 ### 4. O que o orchestrator faz com isso
 
@@ -149,7 +149,7 @@ O orchestrator detecta e carrega automaticamente o conteúdo de `custom-rules/{c
 ## 📄 Exemplo
 
 ```
-custom-rules/
+custom-artifacts/
 └── acme-corp/
     ├── kb/
     │   ├── integration-flow.md      ← "Acme usa SAP + Salesforce + Snowflake"
@@ -166,5 +166,5 @@ custom-rules/
 
 - `templates/customization/` — Defaults de configuração (fallback)
 - `knowledge/` — Knowledge packs globais por domínio tecnológico
-- `skills/orchestrator/SKILL.md` — Como o orchestrator carrega custom-rules
+- `skills/orchestrator/SKILL.md` — Como o orchestrator carrega custom-artifacts
 - `docs/quick-start.md` — Como iniciar uma run (campo `client` no briefing)

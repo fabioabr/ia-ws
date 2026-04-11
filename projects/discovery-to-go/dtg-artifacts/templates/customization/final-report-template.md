@@ -1,6 +1,6 @@
 ---
 title: Delivery Report Structure — Default
-description: Estrutura padrão do relatório consolidado gerado pelo consolidator na Fase 3 (Delivery). Define seções obrigatórias, overview one-pager, tom por seção e overrides por tipo de projeto. Projetos podem copiar e customizar localmente em {projeto}/customization/.
+description: Estrutura padrão do relatório consolidado gerado pelo consolidator na Fase 3 (Delivery). Define seções obrigatórias, overview one-pager e tom por seção. Seções extras por domínio estão nos report-profiles dos knowledge packs. Projetos podem copiar e customizar localmente em {projeto}/customization/.
 project-name: global
 version: 01.00.000
 status: ativo
@@ -78,33 +78,28 @@ O one-pager é a **seção mais importante** do relatório. Deve ser legível em
 
 ---
 
-## 4. Overrides por tipo de projeto
+## 4. Report Profiles por Knowledge Pack
 
-Dependendo do context-pack carregado, o consolidator pode **adicionar seções extras** ou **ajustar ênfase**:
+Seções extras, métricas obrigatórias, diagramas e ênfases específicas de cada domínio estão definidas nos **report-profiles** dos knowledge packs — não mais neste template.
 
-### SaaS
-- **Seção extra:** "Modelo Comercial e Pricing" (entre Overview e Visão de Produto)
-- **Ênfase no Backlog:** priorização por tier (MVP → Growth → Enterprise)
-- **Métricas:** MRR, ARR, LTV, CAC, Churn, Ativação
+O consolidator faz merge na seguinte ordem de prioridade:
 
-### Datalake Ingestion
-- **Seção extra:** "Arquitetura de Dados (Medallion)" com diagrama Bronze → Silver → Gold
-- **Ênfase em Privacidade:** mascaramento por camada, linhagem de PII
-- **Métricas:** volume/dia por camada, freshness SLA, custo compute+storage
+```
+1. Template base (este arquivo) → 11 seções obrigatórias + regras de tom/formato
+2. report-profile.md do pack carregado → seções extras, métricas, diagramas, ênfases
+3. Override total do cliente (se existir) → substitui tudo acima
+```
 
-### Process Documentation
-- **Seção extra:** "Taxonomia e Governança de Docs" (entre Organização e Tech)
-- **Ênfase em Organização:** RACI de manutenção, ciclo de revisão
-- **Métricas:** tempo médio de publicação, % docs com dono, taxa de busca sem resultado
+| Knowledge Pack | Report Profile |
+|---------------|----------------|
+| saas | `knowledge/saas/report-profile.md` |
+| datalake-ingestion | `knowledge/datalake-ingestion/report-profile.md` |
+| process-documentation | `knowledge/process-documentation/report-profile.md` |
+| web-microservices | `knowledge/web-microservices/report-profile.md` |
+| genérico (sem pack) | Sem report-profile — usa apenas as 11 seções base |
 
-### Web + Microservices
-- **Seção extra:** "Mapa de Serviços e Boundaries" com diagrama
-- **Ênfase em Tech:** comunicação inter-serviço, resiliência, observabilidade
-- **Métricas:** latência inter-serviço, SLO/SLI por serviço, error budget
-
-### Genérico (sem pack específico)
-- Sem seções extras — usa a estrutura mínima das 11 seções obrigatórias
-- Ênfase balanceada entre produto, tech e organização
+> [!info] Override total pelo cliente
+> Se o cliente tiver `custom-artifacts/{client}/config/final-report-template.md`, o consolidator ignora tanto este template base quanto o report-profile — usa exclusivamente o template do cliente.
 
 ---
 
@@ -134,15 +129,12 @@ O consolidator escolhe o formato de priorização com base no briefing e no tipo
 
 ---
 
-## 7. Diagramas esperados
+## 7. Diagramas
 
 O consolidator deve incluir diagramas Mermaid quando aplicável:
 
-- **Arquitetura macro** (extraída de tech-and-security.md) — obrigatória
-- **Mapa de serviços/boundaries** (se web-microservices) — obrigatória
-- **Medallion architecture** (se datalake-ingestion) — obrigatória
-- **Fluxo de onboarding/jornada** (se SaaS) — opcional
-- **RACI simplificado** (se process-documentation) — opcional
+- **Arquitetura macro** (extraída de tech-and-security.md) — **obrigatória em todos os projetos**
+- Diagramas adicionais por domínio são definidos no `report-profile.md` do knowledge pack carregado
 
 ---
 
@@ -150,4 +142,5 @@ O consolidator deve incluir diagramas Mermaid quando aplicável:
 
 | Versão | Data | Descrição |
 |---|---|---|
+| 02.00.000 | 2026-04-11 | Migração de overrides por tipo de projeto para report-profiles nos knowledge packs. Template base mantém apenas as 11 seções universais. |
 | 01.00.000 | 2026-04-10 | Versão inicial. Estrutura mínima de 11 seções, overrides por tipo de projeto, formatos de backlog e riscos. |

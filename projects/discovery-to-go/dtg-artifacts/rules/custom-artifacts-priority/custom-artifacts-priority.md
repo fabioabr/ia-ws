@@ -1,6 +1,6 @@
 ---
-title: Custom Rules Priority
-description: Regra de prioridade de carregamento — custom-rules do cliente sempre sobrescreve defaults do pipeline e do workspace global
+title: Custom Artifacts Priority
+description: Regra de prioridade de carregamento — custom-artifacts do cliente sempre sobrescreve defaults do pipeline e do workspace global
 project-name: discovery-to-go
 version: 01.00.000
 status: ativo
@@ -15,12 +15,12 @@ tags:
 created: 2026-04-11 12:00
 ---
 
-# Custom Rules Priority
+# Custom Artifacts Priority
 
-Regra que define a **cadeia de prioridade** para carregamento de configurações, knowledge base, assets e regras. Custom-rules do cliente **sempre** têm prioridade sobre os defaults do pipeline e do workspace global.
+Regra que define a **cadeia de prioridade** para carregamento de configurações, knowledge base, assets e regras. Custom-artifacts do cliente **sempre** têm prioridade sobre os defaults do pipeline e do workspace global.
 
 > [!danger] Regra fundamental
-> Quando existir um recurso tanto em `custom-rules/{client}/` quanto nos defaults, o orchestrator **DEVE** usar o do cliente. Os defaults são **fallback**, nunca override.
+> Quando existir um recurso tanto em `custom-artifacts/{client}/` quanto nos defaults, o orchestrator **DEVE** usar o do cliente. Os defaults são **fallback**, nunca override.
 
 ---
 
@@ -29,7 +29,7 @@ Regra que define a **cadeia de prioridade** para carregamento de configurações
 A prioridade segue a ordem: **cliente > projeto > workspace global**. O recurso mais específico sempre vence.
 
 ```
-1. custom-rules/{client}/    ← MAIOR prioridade (cliente)
+1. custom-artifacts/{client}/    ← MAIOR prioridade (cliente)
 2. templates/                ← fallback do pipeline (projeto)
 3. E:\Workspace/             ← fallback global (workspace)
 ```
@@ -40,7 +40,7 @@ A prioridade segue a ordem: **cliente > projeto > workspace global**. O recurso 
 
 | Prioridade | Local | Exemplo |
 |------------|-------|---------|
-| 1 (maior) | `custom-rules/{client}/config/` | `scoring-thresholds.md` do cliente |
+| 1 (maior) | `custom-artifacts/{client}/config/` | `scoring-thresholds.md` do cliente |
 | 2 | `templates/customization/` | `scoring-thresholds.md` default do pipeline |
 
 Arquivos afetados:
@@ -53,7 +53,7 @@ Arquivos afetados:
 
 | Prioridade | Local | Conteúdo |
 |------------|-------|----------|
-| 1 (maior) | `custom-rules/{client}/kb/` | Contexto específico do cliente (ecossistema, integrações, regras de negócio) |
+| 1 (maior) | `custom-artifacts/{client}/kb/` | Contexto específico do cliente (ecossistema, integrações, regras de negócio) |
 | 2 | `knowledge/{domain}/` (workspace global) | Contexto do domínio tecnológico (SaaS, datalake, etc.) |
 
 > [!info] KB do cliente complementa, não substitui
@@ -63,7 +63,7 @@ Arquivos afetados:
 
 | Prioridade | Local | Conteúdo |
 |------------|-------|----------|
-| 1 (maior) | `custom-rules/{client}/assets/` | Logo, templates visuais do cliente |
+| 1 (maior) | `custom-artifacts/{client}/assets/` | Logo, templates visuais do cliente |
 | 2 | `assets/` (projeto) | Assets do pipeline |
 | 3 | `E:\Workspace\assets/` (workspace global) | Assets globais (design system, logos default) |
 
@@ -71,12 +71,12 @@ Arquivos afetados:
 
 | Prioridade | Local | Conteúdo |
 |------------|-------|----------|
-| 1 (maior) | `custom-rules/{client}/rules/` | Regras adicionais do cliente (compliance, formato, restrições) |
+| 1 (maior) | `custom-artifacts/{client}/rules/` | Regras adicionais do cliente (compliance, formato, restrições) |
 | 2 | `rules/` (projeto) | Regras do pipeline |
 | 3 | `E:\Workspace\behavior\rules/` (workspace global) | Regras globais do workspace |
 
 > [!warning] Regras do cliente são aditivas
-> Regras em `custom-rules/{client}/rules/` **não substituem** as regras do pipeline ou do workspace — elas **adicionam** restrições. Se o pipeline exige X e o cliente exige X + Y, ambos se aplicam.
+> Regras em `custom-artifacts/{client}/rules/` **não substituem** as regras do pipeline ou do workspace — elas **adicionam** restrições. Se o pipeline exige X e o cliente exige X + Y, ambos se aplicam.
 >
 > A única exceção é quando uma regra do cliente **explicitamente** declara que sobrescreve uma regra específica, usando:
 > ```yaml
@@ -91,13 +91,13 @@ Arquivos afetados:
 
 1. Lê o campo `client` no frontmatter do `briefing.md`
 2. Se `client` está definido:
-   - Verifica se `custom-rules/{client}/` existe
+   - Verifica se `custom-artifacts/{client}/` existe
    - Se existe, carrega recursos na ordem de prioridade
-   - Copia configs de `custom-rules/{client}/config/` para `setup/customization/` (sobrescrevendo defaults)
-   - Registra no `pipeline-state.md`: `client: {client-name}, custom-rules: loaded`
+   - Copia configs de `custom-artifacts/{client}/config/` para `setup/customization/` (sobrescrevendo defaults)
+   - Registra no `pipeline-state.md`: `client: {client-name}, custom-artifacts: loaded`
 3. Se `client` não está definido ou pasta não existe:
    - Usa defaults de `templates/customization/`
-   - Registra no `pipeline-state.md`: `client: none, custom-rules: not loaded`
+   - Registra no `pipeline-state.md`: `client: none, custom-artifacts: not loaded`
 
 ### Durante a Fase 1 (Discovery)
 
@@ -118,7 +118,7 @@ Arquivos afetados:
 Antes de iniciar qualquer fase, verificar:
 
 - [ ] Campo `client` lido do briefing
-- [ ] Pasta `custom-rules/{client}/` verificada
+- [ ] Pasta `custom-artifacts/{client}/` verificada
 - [ ] Se existir `config/`: copiado para `setup/customization/` (sobrescrevendo defaults)
 - [ ] Se existir `kb/`: carregado como contexto adicional para os agentes
 - [ ] Se existir `assets/`: registrado para uso no delivery
@@ -129,8 +129,8 @@ Antes de iniciar qualquer fase, verificar:
 
 ## 🔗 Documentos Relacionados
 
-- `custom-rules/README.md` — Guia de como estruturar custom-rules por cliente
-- `skills/orchestrator/SKILL.md` — Como o orchestrator carrega e aplica custom-rules
+- `custom-artifacts/README.md` — Guia de como estruturar custom-artifacts por cliente
+- `skills/orchestrator/SKILL.md` — Como o orchestrator carrega e aplica custom-artifacts
 - `templates/customization/` — Defaults de configuração (fallback)
 - `knowledge/` — Knowledge packs globais por domínio
 

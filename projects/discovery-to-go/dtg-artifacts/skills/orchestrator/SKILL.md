@@ -123,7 +123,12 @@ Ao iniciar a iteração 1, leia o briefing e procure sinais:
 **Se 2+ sinais de um pack único** → carrega esse pack.
 **Se sinais ambíguos ou nenhum** → modo genérico, avisa o humano: *"⚠️ Não consegui auto-detectar o tipo de projeto. Rodando em modo genérico — você pode declarar `project-type` no frontmatter do briefing para melhor cobertura."*
 
-**Cópia obrigatória:** ao detectar o pack, copie de `knowledge/{pack}/context.md` (pasta global do workspace) para `{project}/setup/customization/current-context/{pack}.md`. O projeto pode customizar a cópia local sem afetar a global.
+**Cópia obrigatória:** ao detectar o pack, copie de `knowledge/{pack}/` (pasta global do workspace) para `{project}/setup/customization/current-context/`:
+- `context.md` → `{pack}.md`
+- `specialists.md` → `{pack}-specialists.md`
+- `report-profile.md` → `{pack}-report-profile.md`
+
+O projeto pode customizar as cópias locais sem afetar as globais.
 
 #### 3. Arbitrar a reunião conjunta (Fase 1 — Discovery)
 

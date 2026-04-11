@@ -43,7 +43,7 @@ discovery-to-go/
 │   ├── templates/                    ← templates de artefatos + customization defaults
 │   ├── assets/                       ← assets do pipeline (diagrams)
 │   └── arctifact-samples/            ← samples de uma run completa
-└── custom-rules/                     ← customização do tenant/cliente
+└── custom-artifacts/                     ← customização do tenant/cliente
     ├── README.md
     └── min-rag/
 ```
@@ -54,7 +54,7 @@ discovery-to-go/
 |--------|-------|-----------|
 | Base | `base-artifacts/` | Cópia local do workspace global — assets, regras base, convenções, knowledge packs, skills globais e support-tools. Sincronizável com o workspace central. |
 | Pipeline | `dtg-artifacts/` | Artefatos específicos do pipeline DTG — regras, skills, templates, assets e samples de execução. |
-| Custom | `custom-rules/` | Customizações por tenant/cliente — regras e políticas que sobrescrevem as camadas anteriores. |
+| Custom | `custom-artifacts/` | Customizações por tenant/cliente — regras e políticas que sobrescrevem as camadas anteriores. |
 
 ## 🔧 Pipeline v0.5 — Fases
 
@@ -131,12 +131,12 @@ runs/run-{n}/
 - `dtg-artifacts/templates/` — Templates de artefatos (briefing, reports, memory, etc.)
 - `dtg-artifacts/skills/` — Skills locais do pipeline (orchestrator, customer, auditor, etc.)
 - `dtg-artifacts/arctifact-samples/` — Samples de uma run completa
-- `custom-rules/` — Customizações por tenant/cliente (scoring, policies, etc.)
+- `custom-artifacts/` — Customizações por tenant/cliente (scoring, policies, etc.)
 - `base-artifacts/` — Cópia local do workspace global (assets, conventions, knowledge, etc.)
 
 ## 📜 Histórico de Alterações
 
 | Versão | Data | Descrição |
 |--------|------|-----------|
-| 02.00.000 | 2026-04-11 | Reestruturação em 3 camadas (base-artifacts, dtg-artifacts, custom-rules) |
+| 02.00.000 | 2026-04-11 | Reestruturação em 3 camadas (base-artifacts, dtg-artifacts, custom-artifacts) |
 | 01.00.000 | 2026-04-10 | Criação — reestruturação completa do projeto com separação definição/execução |

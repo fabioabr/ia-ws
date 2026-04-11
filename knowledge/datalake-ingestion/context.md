@@ -124,11 +124,6 @@ O catálogo de custom-specialists para projetos de ingestão de datalake está n
 
 Lembrete: LGPD/Privacidade NÃO é custom-specialist — é coberta obrigatoriamente pelo `cyber-security-architect`.
 
-## Métricas-chave para o delivery
+## Report Profile
 
-- Volume estimado por camada (GB/TB por dia)
-- Frescor por caso de uso (SLA)
-- Custo mensal estimado (compute + storage)
-- Tempo de reprocessamento histórico completo
-- Cobertura de testes de qualidade (% de tabelas Gold com testes)
-- Cobertura de linhagem (% de tabelas com lineage rastreável)
+Seções extras, métricas obrigatórias e diagramas específicos para o delivery report estão definidos em [[report-profile]].

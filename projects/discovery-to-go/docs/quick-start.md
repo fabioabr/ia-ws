@@ -246,7 +246,7 @@ Se o projeto tem necessidades específicas, edite os arquivos em `runs/run-{n}/s
 
 ### Overrides por cliente
 
-Se o cliente já tem overrides definidos em `custom-rules/{client}/`, o orchestrator usa esses automaticamente no lugar dos defaults.
+Se o cliente já tem overrides definidos em `custom-artifacts/{client}/`, o orchestrator usa esses automaticamente no lugar dos defaults.
 
 ---
 

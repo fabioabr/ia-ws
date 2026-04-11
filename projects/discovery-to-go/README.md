@@ -46,14 +46,14 @@ O projeto é organizado em 3 camadas com prioridade crescente:
 discovery-to-go/
 ├── base-artifacts/     ← Camada 1: cópia do workspace global (sincronizável)
 ├── dtg-artifacts/      ← Camada 2: artefatos específicos do pipeline
-└── custom-rules/       ← Camada 3: customizações por cliente (maior prioridade)
+└── custom-artifacts/       ← Camada 3: customizações por cliente (maior prioridade)
 ```
 
 | Camada | Pasta | Propósito | Prioridade |
 |--------|-------|-----------|------------|
 | **Base** | `base-artifacts/` | Cópia local do workspace global — assets, regras, convenções, knowledge packs, skills globais, support-tools. Sincronizável com o workspace central via `docs/dependency-manifest.md`. | Menor |
 | **Pipeline** | `dtg-artifacts/` | Artefatos específicos do pipeline DTG — regras, skills, templates, samples de execução. É o "motor" do discovery. | Média |
-| **Custom** | `custom-rules/` | Customizações por tenant/cliente — knowledge base do cliente, assets visuais, regras adicionais e overrides de configuração. | Maior |
+| **Custom** | `custom-artifacts/` | Customizações por tenant/cliente — knowledge base do cliente, assets visuais, regras adicionais e overrides de configuração. | Maior |
 
 > [!info] Resolução de conflitos
 > Quando a mesma configuração existe em múltiplas camadas, a camada de **maior prioridade** vence: Custom > Pipeline > Base. Isso permite personalizar o pipeline por cliente sem alterar o core.
@@ -102,7 +102,7 @@ discovery-to-go/
 │   │   ├── audit-log/                     ← log de auditoria
 │   │   ├── requirement-priority/          ← classificação de requisitos (MoSCoW)
 │   │   ├── token-tracking/                ← rastreamento de consumo de tokens
-│   │   └── custom-rules-priority/         ← cadeia de prioridade Custom > Pipeline > Base
+│   │   └── custom-artifacts-priority/         ← cadeia de prioridade Custom > Pipeline > Base
 │   ├── skills/                            ← 5 skills locais do pipeline
 │   │   ├── orchestrator/                  ← coordenador central (transversal)
 │   │   ├── customer/                      ← simulador do cliente (Fase 1)
@@ -124,7 +124,7 @@ discovery-to-go/
 │   └── arctifact-samples/                 ← sample de uma run completa (FinTrack Pro)
 │       └── run-sample/                    ← todos os artefatos gerados ponta a ponta
 │
-└── custom-rules/                          ← CAMADA 3 — customizações por cliente
+└── custom-artifacts/                          ← CAMADA 3 — customizações por cliente
     ├── README.md                          ← guia de estruturação
     └── {client-name}/                     ← pasta por cliente
         ├── kb/                            ← knowledge base do cliente
@@ -250,9 +250,10 @@ Domínios tecnológicos que enriquecem a entrevista da Fase 1 com perguntas, con
 | `process-documentation` | Documentação de processos existentes | "documentar processo", "mapeamento", "AS-IS/TO-BE" |
 | `web-microservices` | Aplicações web com microserviços | "microserviços", "API gateway", "container" |
 
-Cada pack contém:
+Cada pack contém 3 arquivos:
 - **`context.md`** — concerns, perguntas recomendadas por bloco temático, checklist de cobertura
 - **`specialists.md`** — catálogo de custom-specialists disponíveis para o domínio
+- **`report-profile.md`** — seções extras, métricas obrigatórias, diagramas e ênfases para o delivery report
 
 O orchestrator auto-detecta o pack a partir de sinais no briefing. Se ambíguo, roda em modo genérico.
 
@@ -270,7 +271,7 @@ O orchestrator auto-detecta o pack a partir de sinais no briefing. Se ambíguo, 
 | `audit-log/` | Log de auditoria |
 | `requirement-priority/` | Classificação de requisitos (MoSCoW/RICE) |
 | `token-tracking/` | Rastreamento de consumo de tokens por fase |
-| `custom-rules-priority/` | Cadeia de prioridade: Custom > Pipeline > Base |
+| `custom-artifacts-priority/` | Cadeia de prioridade: Custom > Pipeline > Base |
 
 ---
 
@@ -291,7 +292,7 @@ Templates em `dtg-artifacts/templates/` usados pelo orchestrator ao criar o scaf
 | `customization/scoring-thresholds.md` | Pisos de nota por perfil (standard, PoC, high-risk) |
 
 > [!tip] Customização
-> Os templates em `customization/` podem ser sobrescritos por `custom-rules/{client}/config/` para personalização por cliente.
+> Os templates em `customization/` podem ser sobrescritos por `custom-artifacts/{client}/config/` para personalização por cliente.
 
 ---
 
@@ -393,14 +394,14 @@ Use este sample como referência para entender exatamente o que o pipeline produ
 
 Para personalizar o pipeline para um cliente específico:
 
-1. Crie uma pasta em `custom-rules/{client-name}/`
+1. Crie uma pasta em `custom-artifacts/{client-name}/`
 2. Adicione knowledge base em `kb/` (contexto da empresa, integrações, stack)
 3. Coloque assets em `assets/` (logos para o report)
 4. Crie regras em `rules/` (compliance setorial, formato obrigatório)
 5. Override configs em `config/` (scoring, iteração, report structure)
 6. No briefing, adicione `client: {client-name}` no frontmatter
 
-O orchestrator detecta e carrega automaticamente. Ver `custom-rules/README.md` para detalhes.
+O orchestrator detecta e carrega automaticamente. Ver `custom-artifacts/README.md` para detalhes.
 
 ---
 
@@ -447,7 +448,7 @@ Guia detalhado passo a passo em `docs/quick-start.md`.
 ## Versionamento
 
 - **Pipeline:** v0.5 (3 fases sequenciais com reunião conjunta temática)
-- **Projeto:** v03.00.000 (3 camadas: base-artifacts, dtg-artifacts, custom-rules)
+- **Projeto:** v03.00.000 (3 camadas: base-artifacts, dtg-artifacts, custom-artifacts)
 - **Formato de versão:** `XX.YY.ZZZ` (semver estendido)
 
 ---
@@ -463,7 +464,7 @@ Guia detalhado passo a passo em `docs/quick-start.md`.
 | **Pipeline state** | Arquivo append-only que registra todo o histórico da run |
 | **Knowledge pack** | Conjunto de concerns e especialistas para um domínio tecnológico |
 | **Source tag** | Marcação `[BRIEFING]`/`[RAG]`/`[INFERENCE]` que indica a origem de cada informação |
-| **Custom rules** | Personalizações por cliente que sobrescrevem os defaults do pipeline |
+| **Custom artifacts** | Personalizações por cliente que sobrescrevem os defaults do pipeline |
 | **Scaffold** | Estrutura de pastas e arquivos criada automaticamente pelo orchestrator |
 | **Context pack** | Sinônimo de knowledge pack (terminologia legada, preferir "knowledge pack") |
 
@@ -475,7 +476,7 @@ Guia detalhado passo a passo em `docs/quick-start.md`.
 - `dtg-artifacts/templates/` — Templates de artefatos
 - `dtg-artifacts/skills/` — Skills locais do pipeline
 - `dtg-artifacts/arctifact-samples/` — Sample de uma run completa
-- `custom-rules/` — Customizações por tenant/cliente
+- `custom-artifacts/` — Customizações por tenant/cliente
 - `base-artifacts/` — Cópia local do workspace global
 
 ## Historico de Alteracoes
@@ -483,5 +484,5 @@ Guia detalhado passo a passo em `docs/quick-start.md`.
 | Versao | Data | Descricao |
 |--------|------|-----------|
 | 03.00.000 | 2026-04-11 | README.md criado como entry point detalhado do projeto, substituindo index.md como documento de referência principal |
-| 02.00.000 | 2026-04-11 | Reestruturação em 3 camadas (base-artifacts, dtg-artifacts, custom-rules) |
+| 02.00.000 | 2026-04-11 | Reestruturação em 3 camadas (base-artifacts, dtg-artifacts, custom-artifacts) |
 | 01.00.000 | 2026-04-10 | Criação — reestruturação completa do projeto com separação definição/execução |

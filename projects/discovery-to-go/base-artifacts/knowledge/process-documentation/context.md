@@ -122,11 +122,6 @@ O catálogo de custom-specialists para projetos de documentação de processos e
 
 Lembrete: LGPD/Privacidade NÃO é custom-specialist — é coberta obrigatoriamente pelo `cyber-security-architect`.
 
-## Métricas-chave para o delivery
+## Report Profile
 
-- Tempo médio para publicar um doc novo
-- % de docs com revisão em dia
-- % de docs com dono claro
-- Taxa de busca sem resultado
-- NPS dos usuários da documentação
-- Custo total da documentação por mês (plataforma + horas)
+Seções extras, métricas obrigatórias e diagramas específicos para o delivery report estão definidos em [[report-profile]].

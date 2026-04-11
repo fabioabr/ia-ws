@@ -102,7 +102,7 @@ runs/run-{n}/
 ```
 
 > [!tip] Customização por cliente
-> Se o cliente tem overrides específicos em `custom-rules/{client}/`, o orchestrator usa esses ao invés dos defaults de `dtg-artifacts/templates/customization/`.
+> Se o cliente tem overrides específicos em `custom-artifacts/{client}/`, o orchestrator usa esses ao invés dos defaults de `dtg-artifacts/templates/customization/`.
 
 ---
 

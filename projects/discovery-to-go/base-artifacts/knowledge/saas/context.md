@@ -144,13 +144,6 @@ O catálogo de custom-specialists para projetos SaaS está no **spec-pack** corr
 
 Lembrete: LGPD/Privacidade NÃO é custom-specialist — é coberta obrigatoriamente pelo `cyber-security-architect` (agente fixo, bloco 6).
 
-## Métricas-chave para incluir no delivery
+## Report Profile
 
-O consolidator (Round 3) deve garantir que estas métricas apareçam no `delivery-report.md` consolidado:
-
-- MRR/ARR projetado por tier
-- Churn rate aceitável
-- LTV/CAC mínimo viável
-- Time-to-value alvo
-- Disponibilidade alvo (3 9s, 4 9s, 5 9s)
-- Custo de infraestrutura por tenant
+Seções extras, métricas obrigatórias e diagramas específicos para o delivery report estão definidos em [[report-profile]].

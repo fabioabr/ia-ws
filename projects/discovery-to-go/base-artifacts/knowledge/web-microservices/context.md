@@ -132,14 +132,6 @@ O catálogo de custom-specialists para projetos web-microservices está no **spe
 Lembrete: LGPD/Privacidade NÃO é custom-specialist — é coberta obrigatoriamente pelo `cyber-security-architect`.
 | Frontend complexo (micro-frontends, BFF) | `frontend-architecture` |
 
-## Métricas-chave para o delivery
+## Report Profile
 
-- Latência P95/P99 por jornada crítica
-- Disponibilidade alvo (3 9s, 4 9s)
-- Throughput máximo testado
-- MTTR (mean time to recovery)
-- MTBF (mean time between failures)
-- % de cobertura de testes de contrato
-- Custo de infra mensal
-- Custo de observabilidade mensal
-- Tamanho do time vs número de serviços (recomendação: ≥ 2 pessoas por serviço)
+Seções extras, métricas obrigatórias e diagramas específicos para o delivery report estão definidos em [[report-profile]].
