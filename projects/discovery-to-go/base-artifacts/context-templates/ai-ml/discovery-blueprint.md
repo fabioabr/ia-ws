@@ -365,7 +365,7 @@ Modelo em produção degrada silenciosamente. Monitoring de drift, bias, perform
 
 ## Regions do Delivery Report
 
-Regions de informação que o delivery report deve conter para projetos AI/ML. Referência completa: `templates/report-regions/information-regions.md`.
+Regions de informação que o delivery report deve conter para projetos AI/ML. Referência completa: `templates/report-regions/README.md`.
 
 ### Obrigatórias
 

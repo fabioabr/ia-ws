@@ -355,7 +355,7 @@ O go-live não é o fim — é o começo da operação no novo ambiente. Precisa
 
 ## Regions do Delivery Report
 
-Regions de informação que compõem o delivery report deste blueprint. Referência completa no [Information Regions Catalog](../../projects/discovery-to-go/base-artifacts/templates/report-regions/information-regions.md).
+Regions de informação que compõem o delivery report deste blueprint. Referência completa no [Information Regions Catalog](../../projects/discovery-to-go/base-artifacts/templates/report-regions/README.md).
 
 ### Obrigatórias
 

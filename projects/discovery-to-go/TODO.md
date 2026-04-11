@@ -62,7 +62,7 @@ custom-artifacts/                                         html-layout.md
 
 | # | Entregável | Status |
 |---|-----------|--------|
-| 8.1 | Catálogo de regions (`base-artifacts/templates/report-regions/information-regions.md`) — 85 regions em 14 grupos | DONE |
+| 8.1 | Catálogo de regions (`base-artifacts/templates/report-regions/README.md`) — 85 regions em 14 grupos | DONE |
 | 8.2 | 85 arquivos individuais com schema, exemplo, dados visuais e recomendação do chart-specialist | DONE |
 | 8.3 | Blueprints → regions: cada discovery-blueprint listar quais regions são obrigatórias/opcionais | PENDENTE |
 | 8.4 | `dtg-artifacts/templates/customization/html-layout.md` — template default de layout HTML | PENDENTE |

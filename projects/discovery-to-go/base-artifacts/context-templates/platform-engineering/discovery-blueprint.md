@@ -360,7 +360,7 @@ Platform engineering existe para servir desenvolvedores. O IDP (Internal Develop
 
 ## Regions do Delivery Report
 
-Regions de informacao que o delivery report deve conter para projetos de platform engineering. Referencia o catalogo completo em `templates/report-regions/information-regions.md`.
+Regions de informacao que o delivery report deve conter para projetos de platform engineering. Referencia o catalogo completo em `templates/report-regions/README.md`.
 
 ### Obrigatorias
 

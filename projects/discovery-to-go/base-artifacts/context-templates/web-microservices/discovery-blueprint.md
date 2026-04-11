@@ -462,7 +462,7 @@ Configurações específicas que o `consolidator` aplica ao delivery report na F
 
 ## Regions do Delivery Report
 
-Regions de informação que o `consolidator` deve gerar no delivery report para projetos web-microservices. Referência completa no [Information Regions Catalog](../../projects/discovery-to-go/base-artifacts/templates/report-regions/information-regions.md).
+Regions de informação que o `consolidator` deve gerar no delivery report para projetos web-microservices. Referência completa no [Information Regions Catalog](../../projects/discovery-to-go/base-artifacts/templates/report-regions/README.md).
 
 ### Obrigatórias
 

@@ -440,7 +440,7 @@ Configurações específicas que o `consolidator` aplica ao delivery report na F
 
 ## Regions do Delivery Report
 
-Regions de informação que o **consolidator** deve incluir no delivery report para projetos de ingestão de datalake. Referência completa em `templates/report-regions/information-regions.md`.
+Regions de informação que o **consolidator** deve incluir no delivery report para projetos de ingestão de datalake. Referência completa em `templates/report-regions/README.md`.
 
 ### Obrigatórias
 

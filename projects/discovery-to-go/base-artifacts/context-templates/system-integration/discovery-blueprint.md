@@ -362,7 +362,7 @@ Integrações sem governança viram spaghetti. Versionamento de APIs, SLA entre 
 
 ## Regions do Delivery Report
 
-Regions de informação que o delivery report deve conter para projetos de integração de sistemas. Referência completa no [Information Regions Catalog](../../projects/discovery-to-go/base-artifacts/templates/report-regions/information-regions.md).
+Regions de informação que o delivery report deve conter para projetos de integração de sistemas. Referência completa no [Information Regions Catalog](../../projects/discovery-to-go/base-artifacts/templates/report-regions/README.md).
 
 ### Obrigatórias
 

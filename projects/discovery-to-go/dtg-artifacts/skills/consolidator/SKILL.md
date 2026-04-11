@@ -98,7 +98,7 @@ Você roda **depois** do md-writer (que gera os documentos markdown intermediár
    → Usar apenas as 28 regions universais (Default: Todos)
 ```
 
-O catálogo completo de regions está em `base-artifacts/templates/report-regions/information-regions.md`.
+O catálogo completo de regions está em `base-artifacts/templates/report-regions/README.md`.
 
 ### 3. Passo 2 — Geração do `delivery-report.md` por regions
 

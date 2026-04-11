@@ -355,7 +355,7 @@ Mobile tem um ciclo de vida único: publicação em stores, reviews, updates, cr
 
 ## Regions do Delivery Report
 
-Regions de informação que o delivery report **deve conter** quando este blueprint está ativo. Referência completa no [catálogo de regions](../../projects/discovery-to-go/base-artifacts/templates/report-regions/information-regions.md).
+Regions de informação que o delivery report **deve conter** quando este blueprint está ativo. Referência completa no [catálogo de regions](../../projects/discovery-to-go/base-artifacts/templates/report-regions/README.md).
 
 ### Obrigatórias
 

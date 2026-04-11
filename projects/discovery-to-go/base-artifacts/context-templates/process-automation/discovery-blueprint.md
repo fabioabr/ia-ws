@@ -346,7 +346,7 @@ Automações sem governança quebram silenciosamente. Um CoE (Center of Excellen
 
 ## Regions do Delivery Report
 
-Regions de informação que o delivery report deste blueprint deve conter. Referência completa no [Information Regions Catalog](../../projects/discovery-to-go/base-artifacts/templates/report-regions/information-regions.md).
+Regions de informação que o delivery report deste blueprint deve conter. Referência completa no [Information Regions Catalog](../../projects/discovery-to-go/base-artifacts/templates/report-regions/README.md).
 
 ### Obrigatórias
 
