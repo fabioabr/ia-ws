@@ -1,6 +1,6 @@
 ---
 title: Iteration Setup Template
-description: Template do setup.md criado pelo orchestrator no início de cada iteração. Define o plano da iteração, objetivos, contexto carregado (context-pack + spec-pack) e foco. Referencia o Setup pré-iteração que rodou uma única vez no início do projeto.
+description: Template do setup.md criado pelo orchestrator no início de cada iteração. Define o plano da iteração, objetivos, contexto carregado (context-template + spec-pack) e foco. Referencia o Setup pré-iteração que rodou uma única vez no início do projeto.
 project-name: discovery-to-go
 version: 02.00.000
 status: ativo
@@ -34,7 +34,7 @@ project-name: {slug}
 iteration: {i}
 generated-at: YYYY-MM-DD HH:mm
 generated-by: orchestrator
-context-pack: {nome ou "generic"}
+context-template: {nome ou "generic"}
 spec-pack: {nome ou "generic"}
 mode: {first | partial-rework | resume}
 previous-iteration: {i-1 ou "none"}
@@ -91,12 +91,12 @@ Esta iteração será considerada bem-sucedida se:
 - **Atualizações desde a iteração anterior:** {sim/não}
 - **Resumo do briefing:** {3-5 bullets do conteúdo principal}
 
-### 3.2 Context pack + Spec pack
+### 3.2 Context-template + Spec pack
 
 > [!info] Carregados no Setup pré-iteração
 > Os packs foram carregados **uma única vez** no Setup, antes da iteração 1. Esta seção referencia os packs em uso — o carregamento não é repetido a cada iteração na v0.5.
 
-- **Context pack:** `{nome do pack}.md` (ou "modo genérico")
+- **Context-template:** `{nome do pack}.md` (ou "modo genérico")
   - Carregado de: `{project}/kb/context/{pack}.md` (cópia local)
   - Auto-detectado no Setup: {sim/não — se sim, qual sinal do briefing disparou}
 - **Spec pack:** `{nome do pack}.md` (ou "modo genérico")
@@ -180,8 +180,8 @@ FIM do loop de discovery
 | 7 | {ex: "TCO e Build vs Buy"} | solution-architect | {tópicos} | alta |
 | ... | | | | |
 
-> [!info] Blocos vêm do context pack
-> Os blocos temáticos são derivados do `context-pack` carregado no Setup + tópicos específicos do briefing. Em iteração de partial-rework, blocos focam no change request.
+> [!info] Blocos vêm do context-template
+> Os blocos temáticos são derivados do `context-template` carregado no Setup + tópicos específicos do briefing. Em iteração de partial-rework, blocos focam no change request.
 
 ### 4.3 Custom-specialists antecipados
 

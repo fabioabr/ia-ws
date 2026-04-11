@@ -52,7 +52,7 @@ discovery-to-go/
 
 | Camada | Pasta | Propósito |
 |--------|-------|-----------|
-| Base | `base-artifacts/` | Cópia local do workspace global — assets, regras base, convenções, knowledge packs, skills globais e support-tools. Sincronizável com o workspace central. |
+| Base | `base-artifacts/` | Cópia local do workspace global — assets, regras base, convenções, context-templates, skills globais e support-tools. Sincronizável com o workspace central. |
 | Pipeline | `dtg-artifacts/` | Artefatos específicos do pipeline DTG — regras, skills, templates, assets e samples de execução. |
 | Custom | `custom-artifacts/` | Customizações por tenant/cliente — regras e políticas que sobrescrevem as camadas anteriores. |
 
@@ -81,7 +81,7 @@ Entre cada fase: **Human Review** loop com logs de aprovação/rejeição.
 | pipeline-md-writer | Formata drafts em markdown polido |
 | consolidator | Consolida tudo no delivery report final |
 
-## 📚 Knowledge Packs
+## 📚 Context-Templates
 
 Domínios tecnológicos disponíveis localmente em `base-artifacts/context-templates/`:
 
@@ -92,7 +92,7 @@ Domínios tecnológicos disponíveis localmente em `base-artifacts/context-templ
 | process-documentation | `base-artifacts/context-templates/process-documentation/context.md` | `base-artifacts/context-templates/process-documentation/specialists.md` |
 | web-microservices | `base-artifacts/context-templates/web-microservices/context.md` | `base-artifacts/context-templates/web-microservices/specialists.md` |
 
-> [!info] Knowledge packs são cópias locais do workspace global (`base-artifacts/`). A fonte de verdade continua no workspace central — sincronize quando necessário.
+> [!info] Context-templates são cópias locais do workspace global (`base-artifacts/`). A fonte de verdade continua no workspace central — sincronize quando necessário.
 
 ## 🚀 Scaffold de uma Run
 
@@ -103,7 +103,7 @@ runs/run-{n}/
 │   ├── briefing.md                   Input do humano
 │   ├── config.md                     Configuração da run
 │   └── customization/
-│       ├── current-context/          Knowledge pack copiado
+│       ├── current-context/          Context-template copiado
 │       ├── report-templates/         Templates de output
 │       └── rules/                    Políticas da run
 ├── iterations/

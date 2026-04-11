@@ -1,6 +1,6 @@
 ---
 title: Delivery Report Structure — Default
-description: Estrutura padrão do relatório consolidado gerado pelo consolidator na Fase 3 (Delivery). Define seções obrigatórias, overview one-pager e tom por seção. Seções extras por domínio estão nos report-profiles dos knowledge packs. Projetos podem copiar e customizar localmente em {projeto}/customization/.
+description: Estrutura padrão do relatório consolidado gerado pelo consolidator na Fase 3 (Delivery). Define seções obrigatórias, overview one-pager e tom por seção. Seções extras por domínio estão nos report-profiles dos context-templates. Projetos podem copiar e customizar localmente em {projeto}/customization/.
 project-name: global
 version: 01.00.000
 status: ativo
@@ -78,9 +78,9 @@ O one-pager é a **seção mais importante** do relatório. Deve ser legível em
 
 ---
 
-## 4. Report Profiles por Knowledge Pack
+## 4. Report Profiles por Context-Template
 
-Seções extras, métricas obrigatórias, diagramas e ênfases específicas de cada domínio estão definidas nos **report-profiles** dos knowledge packs — não mais neste template.
+Seções extras, métricas obrigatórias, diagramas e ênfases específicas de cada domínio estão definidas nos **report-profiles** dos context-templates — não mais neste template.
 
 O consolidator faz merge na seguinte ordem de prioridade:
 
@@ -90,7 +90,7 @@ O consolidator faz merge na seguinte ordem de prioridade:
 3. Override total do cliente (se existir) → substitui tudo acima
 ```
 
-| Knowledge Pack | Report Profile |
+| Context-Template | Report Profile |
 |---------------|----------------|
 | saas | `context-templates/saas/report-profile.md` |
 | datalake-ingestion | `context-templates/datalake-ingestion/report-profile.md` |
@@ -134,7 +134,7 @@ O consolidator escolhe o formato de priorização com base no briefing e no tipo
 O consolidator deve incluir diagramas Mermaid quando aplicável:
 
 - **Arquitetura macro** (extraída de tech-and-security.md) — **obrigatória em todos os projetos**
-- Diagramas adicionais por domínio são definidos no `report-profile.md` do knowledge pack carregado
+- Diagramas adicionais por domínio são definidos no `report-profile.md` do context-template carregado
 
 ---
 
@@ -142,5 +142,5 @@ O consolidator deve incluir diagramas Mermaid quando aplicável:
 
 | Versão | Data | Descrição |
 |---|---|---|
-| 02.00.000 | 2026-04-11 | Migração de overrides por tipo de projeto para report-profiles nos knowledge packs. Template base mantém apenas as 11 seções universais. |
+| 02.00.000 | 2026-04-11 | Migração de overrides por tipo de projeto para report-profiles nos context-templates. Template base mantém apenas as 11 seções universais. |
 | 01.00.000 | 2026-04-10 | Versão inicial. Estrutura mínima de 11 seções, overrides por tipo de projeto, formatos de backlog e riscos. |

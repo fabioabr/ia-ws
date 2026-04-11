@@ -54,7 +54,7 @@ Skills globais em `base-artifacts/skills/` (local copy of `base-artifacts/skills
 
 ---
 
-## 📚 Knowledge Packs
+## 📚 Context-Templates
 
 Domínios tecnológicos em `base-artifacts/context-templates/` (local copy of workspace `context-templates/`) copiados para a run durante o setup.
 

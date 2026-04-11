@@ -81,7 +81,7 @@ Questões que tocam mais de um eixo (product × bounds × project):
 
 ### 2.2 Antipatterns conhecidos do domínio
 
-Cruzando os drafts com antipatterns do context pack ativo:
+Cruzando os drafts com antipatterns do context-template ativo:
 
 | # | Antipattern | Onde aparece nos drafts | Impacto |
 |---|---|---|---|
@@ -170,7 +170,7 @@ Score = 100% − (penalidade) = {XX,XX%}
 
 **Cálculo:**
 ```
-Antipatterns + edge cases conhecidos do domínio (via context pack): {N}
+Antipatterns + edge cases conhecidos do domínio (via context-template): {N}
 Cobertos pelos drafts: {C}
 Score = C/N × 100 = {XX,XX%}
 ```

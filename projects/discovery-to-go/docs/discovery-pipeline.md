@@ -67,8 +67,8 @@ flowchart LR
 ### O que o orchestrator faz
 
 1. **Cria o scaffold** da run em `runs/run-{n}/`
-2. **Detecta o knowledge pack** a partir de sinais no briefing (ex: "SaaS multi-tenant" → pack `saas`)
-3. **Copia o knowledge pack** de `base-artifacts/context-templates/{pack}/` para `{run}/setup/customization/current-context/`
+2. **Detecta o context-template** a partir de sinais no briefing (ex: "SaaS multi-tenant" → pack `saas`)
+3. **Copia o context-template** de `base-artifacts/context-templates/{pack}/` para `{run}/setup/customization/current-context/`
 4. **Copia os defaults de customization** de `dtg-artifacts/templates/customization/` para `{run}/setup/customization/` (sub-folders: `report-templates/`, `rules/`)
 5. **Cria o config.md** em `{run}/setup/` com plano de execução
 6. **Cria o pipeline-state.md** (state tracker mantido ao longo de toda a run, append-only)
@@ -82,7 +82,7 @@ runs/run-{n}/
 │   ├── briefing.md                           ← input do humano
 │   ├── config.md                             ← configuração da run
 │   └── customization/
-│       ├── current-context/                  ← knowledge pack copiado
+│       ├── current-context/                  ← context-template copiado
 │       │   ├── {pack}.md
 │       │   └── {pack}-specialists.md
 │       ├── report-templates/                 ← templates de output
@@ -175,7 +175,7 @@ flowchart TD
 
 - Formato de **reunião síncrona** — todos presentes, falam na ordem dos blocos
 - Qualquer agente pode pedir a voz para **apartes curtos** relevantes
-- O **customer** responde baseado no briefing + knowledge pack
+- O **customer** responde baseado no briefing + context-template
 - Se um agente precisa de profundidade em domínio específico, pede **help** e o orchestrator invoca o **custom-specialist**
 - Dados marcados como `[BRIEFING]`, `[RAG]` ou `[INFERENCE]` para rastreabilidade
 
@@ -369,9 +369,9 @@ O orchestrator mantém um tracking contínuo de consumo de tokens:
 
 ---
 
-## 📦 Knowledge Packs
+## 📦 Context-Templates
 
-O pipeline usa knowledge packs (em `base-artifacts/context-templates/`):
+O pipeline usa context-templates (em `base-artifacts/context-templates/`):
 
 | Pack | Quando usar |
 |------|-------------|
@@ -437,4 +437,4 @@ O orchestrator auto-detecta o pack a partir de sinais no briefing. Se ambíguo, 
 
 | Versão | Data | Descrição |
 |--------|------|-----------|
-| 01.00.000 | 2026-04-10 | Reescrita completa para Pipeline v0.5. Substitui documento do Pipeline v2 (3 sub-etapas com mini-ciclos) pelo novo formato de 3 fases (Discovery com reunião conjunta, Challenge com auditor + 10th-man em paralelo, Delivery com md-writer + consolidator + html-writer). Novas opções de Human Review (Re-executar, Refazer, Avançar, Abortar). Scaffold de runs. Knowledge packs globais. |
+| 01.00.000 | 2026-04-10 | Reescrita completa para Pipeline v0.5. Substitui documento do Pipeline v2 (3 sub-etapas com mini-ciclos) pelo novo formato de 3 fases (Discovery com reunião conjunta, Challenge com auditor + 10th-man em paralelo, Delivery com md-writer + consolidator + html-writer). Novas opções de Human Review (Re-executar, Refazer, Avançar, Abortar). Scaffold de runs. Context-templates globais. |

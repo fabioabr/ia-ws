@@ -29,10 +29,10 @@ inputs:
     type: file-path
     required: true
     description: Briefing original do projeto para cruzamento
-  - name: context-pack
+  - name: context-template
     type: file-path
     required: false
-    description: Context pack ativo com checklist de cobertura esperada
+    description: Context-template ativo com checklist de cobertura esperada
   - name: setup
     type: file-path
     required: false
@@ -93,7 +93,7 @@ A nota tem **duas camadas obrigatórias**:
 
 #### Dimensão 1: Completude — peso 25% — piso 80%
 
-**O que mede:** quantos tópicos do checklist da Fase 1 (vindos do context pack + briefing) foram cobertos pelos 4-5 drafts.
+**O que mede:** quantos tópicos do checklist da Fase 1 (vindos do context-template + briefing) foram cobertos pelos 4-5 drafts.
 
 **Como calcular:**
 

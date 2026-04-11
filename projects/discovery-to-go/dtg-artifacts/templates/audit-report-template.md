@@ -72,7 +72,7 @@ floor-violations: {lista de dimensões abaixo do piso, ou "none"}
 
 **Cálculo:**
 ```
-Tópicos esperados (do checklist da Fase 1, alimentado pelo context pack + briefing): {N}
+Tópicos esperados (do checklist da Fase 1, alimentado pelo context-template + briefing): {N}
 Tópicos cobertos pelos drafts (product-vision.md + organization.md + tech-and-security.md + strategic-analysis.md + privacy.md): {M}
 Score = M/N × 100 = {XX,XX%}
 ```

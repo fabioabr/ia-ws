@@ -76,11 +76,11 @@ Campos adicionais alem do schema padrao:
 
 Logo apos o H1, o log deve conter:
 
-1. **Info line** — run, iteracao, fase, horario de inicio e knowledge pack:
+1. **Info line** — run, iteracao, fase, horario de inicio e context-template:
 
 ```markdown
 > **Run:** {run-id} | **Iteracao:** {i} | **Fase:** 1 — Discovery
-> **Inicio:** YYYY-MM-DD HH:mm | **Knowledge Pack:** {pack}
+> **Inicio:** YYYY-MM-DD HH:mm | **Context-Template:** {pack}
 ```
 
 2. **Tabela de participantes** — todos os agentes que participam da reuniao:
@@ -138,7 +138,7 @@ Toda resposta do customer deve ser prefixada com uma source tag que indica a ori
 |-----|-------------|-------------|
 | `[BRIEFING]` | Informacao do briefing | Dado extraido diretamente do documento de briefing |
 | `[INFERENCE]` | Inferencia do customer | Dado deduzido ou inferido, nao declarado explicitamente no briefing |
-| `[RAG]` | Knowledge pack | Informacao proveniente do contexto do knowledge pack |
+| `[RAG]` | Context-template | Informacao proveniente do contexto do context-template |
 
 > [!warning] Inferencias
 > Toda resposta com `[INFERENCE]` deve gerar um callout `> [!warning] Dado inferido` entre as tabelas, sinalizando necessidade de validacao no Human Review.

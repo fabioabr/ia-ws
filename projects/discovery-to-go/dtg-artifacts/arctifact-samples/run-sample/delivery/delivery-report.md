@@ -30,7 +30,7 @@ FinTrack Pro is a SaaS platform that automates multi-bank financial consolidatio
 |-------|-------|
 | **Project** | FinTrack Pro |
 | **Client** | Confidential (startup, fintech segment) |
-| **Knowledge Pack** | SaaS |
+| **Context-Template** | SaaS |
 | **Discovery Duration** | 2h10min (single joint session) |
 | **Iteration** | 1 |
 | **Data Source Breakdown** | Briefing 65% · Inference 25% · RAG 10% |

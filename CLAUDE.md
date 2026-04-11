@@ -34,9 +34,9 @@ Global skills available via `/skill-name`:
 | 10th-man | Devil's advocate — challenges assumptions, divergent validation |
 | custom-specialist | On-demand domain expertise for any technical domain |
 
-## Knowledge
+## Context-Templates
 
-Global technology domain packs at [context-templates/](context-templates/). Each domain has `context.md` (concerns + questions) and `specialists.md` (custom-specialist catalog). Any project can use them.
+Global discovery blueprints at [context-templates/](context-templates/). Each domain has a single `discovery-blueprint.md` — a self-contained guide covering concerns, questions, antipatterns, specialists, and delivery report profile. Any project can use them.
 
 ## Setup
 

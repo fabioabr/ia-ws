@@ -2,3 +2,5 @@
 tmp/
 .gitnexus
 __pycache__/
+.$*.bkp
+.$*.dtmp

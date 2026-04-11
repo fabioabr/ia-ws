@@ -25,7 +25,7 @@ iteration: 1
 |-------|-------|
 | Iteração | 1 |
 | Run | run-2 |
-| Knowledge Pack | saas |
+| Context-Template | saas |
 | Origem | Briefing do cliente (briefing.md) |
 | Objetivo | Discovery completo do MVP FinTrack Pro |
 
@@ -98,7 +98,7 @@ Todos usando configuração padrão (sem overrides para este run).
 
 ---
 
-## Knowledge Pack
+## Context-Template
 
 | Arquivo | Caminho |
 |---------|---------|

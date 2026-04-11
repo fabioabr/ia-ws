@@ -57,7 +57,7 @@ Arquivos afetados:
 | 2 | `context-templates/{domain}/` (workspace global) | Contexto do domínio tecnológico (SaaS, datalake, etc.) |
 
 > [!info] KB do cliente complementa, não substitui
-> O KB do cliente e o knowledge pack global são **complementares**. Ambos são carregados. Se houver conflito entre uma informação do KB do cliente e do knowledge pack, prevalece o do cliente.
+> O KB do cliente e o context-template global são **complementares**. Ambos são carregados. Se houver conflito entre uma informação do KB do cliente e do context-template, prevalece o do cliente.
 
 #### Assets
 

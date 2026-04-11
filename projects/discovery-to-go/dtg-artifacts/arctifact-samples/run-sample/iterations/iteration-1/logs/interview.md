@@ -20,7 +20,7 @@ run: run-2
 # Interview Log — FinTrack Pro
 
 > **Run:** run-2 | **Iteração:** 1 | **Fase:** 1 — Discovery
-> **Início:** 2026-04-11 09:00 | **Knowledge Pack:** saas
+> **Início:** 2026-04-11 09:00 | **Context-Template:** saas
 
 ### Participantes
 

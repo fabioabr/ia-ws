@@ -291,7 +291,7 @@ Sinalize ao orchestrator se durante a formatação detectar:
 
 ### Modos de falha
 
-- **Drafts com lacunas estruturais** (TCO incompleto, backlog sem priorização): você completa com base em padrões do context-pack e sinaliza
+- **Drafts com lacunas estruturais** (TCO incompleto, backlog sem priorização): você completa com base em padrões do context-template e sinaliza
 - **Frontmatter sem dados** (datas, autor, projeto): use defaults sensatos e sinalize
 - **Wikilink para arquivo que não vai ser gerado:** transforme em texto plano e sinalize
 - **Conteúdo grande demais para um único `.md`:** escreva mesmo assim, sinalize que talvez precise ser fatiado

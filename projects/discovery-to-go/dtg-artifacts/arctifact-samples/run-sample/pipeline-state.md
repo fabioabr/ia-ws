@@ -26,7 +26,7 @@ pack: saas
 |-------|-------|
 | Run | run-sample |
 | Cliente | FinTrack Pro |
-| Knowledge Pack | saas |
+| Context-Template | saas |
 | Início | 2026-04-11 09:00 |
 | Fim | 2026-04-11 14:45 |
 | Status | ✅ Concluído |

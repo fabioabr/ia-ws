@@ -61,7 +61,7 @@ custom-artifacts/
 
 ### KB — Knowledge Base (`kb/`)
 
-Contém o conhecimento de negócio do cliente que os agentes usam durante a entrevista. Diferente dos knowledge packs globais (que são por domínio tecnológico), o KB do cliente é sobre **o contexto específico da empresa**.
+Contém o conhecimento de negócio do cliente que os agentes usam durante a entrevista. Diferente dos context-templates globais (que são por domínio tecnológico), o KB do cliente é sobre **o contexto específico da empresa**.
 
 | Tipo de arquivo | O que contém | Quando criar |
 |-----------------|-------------|--------------|
@@ -70,10 +70,10 @@ Contém o conhecimento de negócio do cliente que os agentes usam durante a entr
 | `business-context.md` | Modelo de negócio, regulações, restrições específicas | Cliente tem regras de negócio únicas |
 | `{topic}.md` | Qualquer outro contexto relevante | Quando necessário |
 
-> [!tip] KB vs Knowledge Packs
-> **Knowledge packs** (em `context-templates/` na raiz do workspace) são por **domínio tecnológico** (SaaS, datalake, etc.) — qualquer cliente pode usar.
+> [!tip] KB vs Context-Templates
+> **Context-templates** (em `context-templates/` na raiz do workspace) são por **domínio tecnológico** (SaaS, datalake, etc.) — qualquer cliente pode usar.
 > **KB do cliente** (aqui em `custom-artifacts/{client}/kb/`) é sobre **a empresa específica** — só se aplica a esse cliente.
-> Ambos são carregados durante o setup. O orchestrator copia o knowledge pack para `setup/customization/current-context/` e o KB do cliente fica acessível via referência direta.
+> Ambos são carregados durante o setup. O orchestrator copia o context-template para `setup/customization/current-context/` e o KB do cliente fica acessível via referência direta.
 
 ### Assets (`assets/`)
 
@@ -165,6 +165,6 @@ custom-artifacts/
 ## 🔗 Documentos Relacionados
 
 - `templates/customization/` — Defaults de configuração (fallback)
-- `context-templates/` — Knowledge packs globais por domínio tecnológico
+- `context-templates/` — Context-templates globais por domínio tecnológico
 - `skills/orchestrator/SKILL.md` — Como o orchestrator carrega custom-artifacts
 - `docs/quick-start.md` — Como iniciar uma run (campo `client` no briefing)

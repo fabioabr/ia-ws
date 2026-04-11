@@ -51,7 +51,7 @@ discovery-to-go/
 
 | Camada | Pasta | Propósito | Prioridade |
 |--------|-------|-----------|------------|
-| **Base** | `base-artifacts/` | Cópia local do workspace global — assets, regras, convenções, knowledge packs, skills globais, support-tools. Sincronizável com o workspace central via `docs/dependency-manifest.md`. | Menor |
+| **Base** | `base-artifacts/` | Cópia local do workspace global — assets, regras, convenções, context-templates, skills globais, support-tools. Sincronizável com o workspace central via `docs/dependency-manifest.md`. | Menor |
 | **Pipeline** | `dtg-artifacts/` | Artefatos específicos do pipeline DTG — regras, skills, templates, samples de execução. É o "motor" do discovery. | Média |
 | **Custom** | `custom-artifacts/` | Customizações por tenant/cliente — knowledge base do cliente, assets visuais, regras adicionais e overrides de configuração. | Maior |
 
@@ -84,7 +84,7 @@ discovery-to-go/
 │   │   └── variables/                     ← report-variables.md (empresa, footer, selo)
 │   ├── behavior/rules/                    ← regras globais (skill-structure, etc.)
 │   ├── conventions/                       ← 30+ convenções (frontmatter, markdown, naming, colors, etc.)
-│   ├── context-templates/                 ← knowledge packs por domínio tecnológico
+│   ├── context-templates/                 ← context-templates por domínio tecnológico
 │   │   ├── saas/                          ← context.md + specialists.md
 │   │   ├── datalake-ingestion/
 │   │   ├── process-documentation/
@@ -152,8 +152,8 @@ flowchart LR
 
 O **orchestrator** recebe o briefing e prepara tudo:
 - Cria o scaffold da run (`runs/run-{n}/`)
-- Auto-detecta o knowledge pack a partir de sinais no briefing
-- Copia templates de customização e knowledge pack para a run
+- Auto-detecta o context-template a partir de sinais no briefing
+- Copia templates de customização e context-template para a run
 - Cria `config.md` e `pipeline-state.md` (state tracker append-only)
 
 ### Fase 1 — Discovery (Reunião Conjunta Temática)
@@ -171,7 +171,7 @@ Uma reunião simulada com **8 blocos temáticos** onde especialistas de IA entre
 | #7 | Arquitetura Macro | solution-architect |
 | #8 | TCO e Build vs Buy | solution-architect |
 
-O **customer** responde todas as perguntas baseado no briefing + knowledge pack. Cada resposta carrega uma tag de rastreabilidade: `[BRIEFING]` (dado literal), `[RAG]` (base corporativa) ou `[INFERENCE]` (deduzido — obrigatoriamente justificado).
+O **customer** responde todas as perguntas baseado no briefing + context-template. Cada resposta carrega uma tag de rastreabilidade: `[BRIEFING]` (dado literal), `[RAG]` (base corporativa) ou `[INFERENCE]` (deduzido — obrigatoriamente justificado).
 
 **Outputs:** 8 result files (`1.1` a `1.8`) + `interview.md`
 
@@ -239,7 +239,7 @@ O humano também pode:
 
 ---
 
-## Knowledge Packs
+## Context-Templates
 
 Domínios tecnológicos que enriquecem a entrevista da Fase 1 com perguntas, concerns e especialistas específicos do tipo de projeto:
 
@@ -308,7 +308,7 @@ runs/run-{n}/
 │   ├── briefing.md                       ← input do humano
 │   ├── config.md                         ← configuração da run
 │   └── customization/
-│       ├── current-context/              ← knowledge pack copiado
+│       ├── current-context/              ← context-template copiado
 │       │   ├── {pack}.md
 │       │   └── {pack}-specialists.md
 │       ├── report-templates/             ← templates de output
@@ -413,7 +413,7 @@ O projeto herda recursos do workspace global (`E:\Workspace`). O manifesto compl
 | Categoria | Quantidade | Exemplos |
 |-----------|-----------|----------|
 | Global Skills | 8 | po, solution-architect, html-writer, md-validator |
-| Knowledge Packs | 4 domínios | saas, datalake-ingestion, web-microservices, process-documentation |
+| Context-Templates | 4 domínios | saas, datalake-ingestion, web-microservices, process-documentation |
 | Assets | 7 recursos | logos, design system, playground, variáveis |
 | Conventions | 30+ arquivos | frontmatter, markdown, naming, colors, typography |
 | Behavior Rules | 2 | skill-structure, index |
@@ -463,11 +463,11 @@ Guia detalhado passo a passo em `docs/quick-start.md`.
 | **Bloco temático** | Um dos 8 temas da reunião da Fase 1 (#1 a #8) |
 | **Human Review** | Pausa obrigatória onde o humano revisa e decide o próximo passo |
 | **Pipeline state** | Arquivo append-only que registra todo o histórico da run |
-| **Knowledge pack** | Conjunto de concerns e especialistas para um domínio tecnológico |
+| **Context-template** | Conjunto de concerns e especialistas para um domínio tecnológico |
 | **Source tag** | Marcação `[BRIEFING]`/`[RAG]`/`[INFERENCE]` que indica a origem de cada informação |
 | **Custom artifacts** | Personalizações por cliente que sobrescrevem os defaults do pipeline |
 | **Scaffold** | Estrutura de pastas e arquivos criada automaticamente pelo orchestrator |
-| **Context pack** | Sinônimo de knowledge pack (terminologia legada, preferir "knowledge pack") |
+| **Context-template** | Conjunto de concerns, perguntas recomendadas e especialistas para um domínio tecnológico (sinônimo histórico: "knowledge pack") |
 
 ---
 

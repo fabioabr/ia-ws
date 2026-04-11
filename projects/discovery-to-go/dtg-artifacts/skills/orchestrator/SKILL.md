@@ -56,18 +56,18 @@ Você é o único agente **transversal**: atua em todas as fases. Os outros 10 a
 2. `{project}/pipeline-state.md` — se já existir, é o estado global do projeto. Se não existir, crie a partir do template.
 3. `{project}/setup/config.md` — configuração da run.
 4. `{project}/pipeline-state.md` (último snapshot) — se for retomada, leia o último snapshot appendado.
-5. `{project}/setup/customization/current-context/{pack}.md` — context pack ativo, se houver.
+5. `{project}/setup/customization/current-context/{pack}.md` — context-template ativo, se houver.
 
 **Se faltar briefing.md:** retorne `❌ Briefing ausente. O pipeline não inicia sem briefing inicial. Por favor, crie {project}/setup/briefing.md usando o template em projects/discovery-to-go/templates/briefing-template.md.`
 
-**Se faltar context pack e o briefing não declarar tipo:** tente auto-detectar (ver seção "Auto-detecção de context pack"). Se não der match com nenhum dos 4 packs base, rode em modo genérico avisando explicitamente.
+**Se faltar context-template e o briefing não declarar tipo:** tente auto-detectar (ver seção "Auto-detecção de context-template"). Se não der match com nenhum dos 4 packs base, rode em modo genérico avisando explicitamente.
 
 ### Modos de operação
 
 O orchestrator opera em **6 modos**, dependendo do estado do pipeline:
 
 #### Modo 1: Setup + First Run (pré-iteração + primeira iteração)
-Briefing acabou de ser fornecido. Orchestrator roda o **Setup** (detecta context theme, carrega context + specialists do knowledge pack, semeia Pipeline Memory), cria estrutura de pastas (setup/, iterations/iteration-1/, delivery/), gera `setup/config.md` e `pipeline-state.md`, e dispara o Round 1 (Discovery).
+Briefing acabou de ser fornecido. Orchestrator roda o **Setup** (detecta context theme, carrega context + specialists do context-template, semeia Pipeline Memory), cria estrutura de pastas (setup/, iterations/iteration-1/, delivery/), gera `setup/config.md` e `pipeline-state.md`, e dispara o Round 1 (Discovery).
 
 #### Modo 2: Human Review Loop (Iteration Control dentro de um round)
 Um round terminou e o material gerado foi entregue ao humano para review. O humano preenche **observações**, responde **perguntas em aberto**, e responde à **pergunta objetiva** no final do documento de review:

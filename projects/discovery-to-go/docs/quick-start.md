@@ -59,7 +59,7 @@ O orchestrator vai:
 
 1. **Criar a run** em `runs/run-{n}/` (número auto-incrementado)
 2. **Copiar o briefing** para `setup/briefing.md`
-3. **Detectar o knowledge pack** (saas, datalake, web-microservices, process-documentation ou genérico)
+3. **Detectar o context-template** (saas, datalake, web-microservices, process-documentation ou genérico)
 4. **Copiar customization defaults** de `dtg-artifacts/templates/customization/` para `setup/customization/`
 5. **Criar o config.md** em `setup/` com plano de execução
 
@@ -99,7 +99,7 @@ O orchestrator inicia a **reunião conjunta temática** com 8 blocos:
 | #7 | Arquitetura Macro | solution-architect |
 | #8 | TCO e Build vs Buy | solution-architect |
 
-O **customer** (simulado) responde as perguntas de todos os especialistas, baseado no briefing + knowledge pack.
+O **customer** (simulado) responde as perguntas de todos os especialistas, baseado no briefing + context-template.
 
 **Ao final da Fase 1 você terá:**
 - 8 result files em `iterations/iteration-1/results/1-discovery/` (1.1 a 1.8)
@@ -193,7 +193,7 @@ runs/run-{n}/
 │   ├── briefing.md                           ← input do humano
 │   ├── config.md                             ← configuração da run
 │   └── customization/
-│       ├── current-context/                  ← knowledge pack copiado
+│       ├── current-context/                  ← context-template copiado
 │       │   ├── {pack}.md
 │       │   └── {pack}-specialists.md
 │       ├── report-templates/                 ← templates de output
@@ -254,7 +254,7 @@ Se o cliente já tem overrides definidos em `custom-artifacts/{client}/`, o orch
 
 | Problema | Solução |
 |----------|---------|
-| Pipeline não detectou o knowledge pack | Adicione `project-type: saas` (ou outro) no frontmatter do briefing |
+| Pipeline não detectou o context-template | Adicione `project-type: saas` (ou outro) no frontmatter do briefing |
 | Notas baixas repetidas no Challenge | Verifique se o briefing tem informações suficientes; considere enriquecer com mais contexto |
 | Pipeline parou sem Human Review | Verifique o `pipeline-state.md` — pode haver um erro registrado |
 | Quer mudar customization mid-run | Edite os arquivos em `runs/run-{n}/setup/customization/` e re-execute |
@@ -274,4 +274,4 @@ Se o cliente já tem overrides definidos em `custom-artifacts/{client}/`, o orch
 |--------|------|-----------|
 | 01.00.000 | 2026-04-05 | Criação do documento |
 | 02.00.000 | 2026-04-05 | Reescrita para Pipeline v2 |
-| 03.00.000 | 2026-04-10 | Reescrita completa para Pipeline v0.5 — guia passo a passo de ponta a ponta com scaffold de runs, 3 fases, Human Review com 4 opções de decisão, knowledge packs globais |
+| 03.00.000 | 2026-04-10 | Reescrita completa para Pipeline v0.5 — guia passo a passo de ponta a ponta com scaffold de runs, 3 fases, Human Review com 4 opções de decisão, context-templates globais |

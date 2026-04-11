@@ -196,7 +196,7 @@ runs/run-{n}/
 │   ├── briefing.md                           ← input do humano
 │   ├── config.md                             ← configuração da run
 │   └── customization/
-│       ├── current-context/                  ← knowledge pack copiado
+│       ├── current-context/                  ← context-template copiado
 │       │   ├── {pack}.md
 │       │   └── {pack}-specialists.md
 │       ├── report-templates/                 ← templates de output
@@ -230,9 +230,9 @@ runs/run-{n}/
 
 ---
 
-## 📦 Knowledge Packs
+## 📦 Context-Templates
 
-O pipeline usa knowledge packs globais (em `context-templates/` na raiz do workspace):
+O pipeline usa context-templates globais (em `context-templates/` na raiz do workspace):
 
 | Pack | Quando usar |
 |------|-------------|
