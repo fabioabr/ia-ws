@@ -1,8 +1,8 @@
 ---
 title: Discovery Blueprint — Datalake Ingestion
 pack-id: datalake-ingestion
-description: Blueprint de discovery para projetos de ingestão de dados em datalake — descreve os componentes-chave do projeto e o que precisa ser descoberto em cada um
-version: 01.00.000
+description: Blueprint completo de discovery para projetos de ingestão de dados em datalake — guia de componentes, concerns, perguntas, antipatterns, especialistas disponíveis e perfil do delivery report. Documento único e auto-contido que o orchestrator carrega na Fase 1.
+version: 02.00.000
 status: ativo
 author: claude-code
 category: discovery-blueprint
@@ -12,15 +12,34 @@ tags:
   - datalake-ingestion
   - etl
   - medallion
+  - context-pack
+  - spec-pack
+  - report-profile
 created: 2026-04-11
 ---
 
 # Discovery Blueprint — Datalake Ingestion
 
-Este blueprint organiza o discovery de um projeto de ingestão de dados em **4 componentes** que representam as partes concretas da solução. Cada componente descreve o que precisa ser descoberto, quais perguntas fazer, quais decisões tomar e como saber que o discovery está completo.
+Documento completo e auto-contido para conduzir o discovery de um projeto de ingestão de dados em datalake. Organizado em **4 componentes** que representam as partes concretas da solução, seguido de antipatterns, edge cases, especialistas disponíveis e perfil do delivery report.
 
-> [!info] Relação com context.md
-> O `context.md` organiza concerns por **papel do agente** (PO, architect, security). Este blueprint organiza por **componente do projeto**. Ambos são complementares — o agente consulta o context.md durante cada bloco temático e usa este blueprint para entender o todo.
+Serve como guia tanto para os agentes de IA (carregado pelo orchestrator na Fase 1) quanto para o humano que acompanha o processo.
+
+---
+
+## Quando usar este blueprint
+
+O orchestrator deve carregar este blueprint quando o briefing apresentar **dois ou mais** dos seguintes sinais:
+
+- Menção a "datalake", "data warehouse", "lakehouse", "ETL", "ELT", "pipeline de dados"
+- Termos: bronze/silver/gold, medallion, raw zone, refined zone, curated zone
+- Stack mencionada: Spark, Databricks, Snowflake, Redshift, BigQuery, Synapse, Delta Lake, Iceberg
+- Volume grande de dados (TB+, milhões de registros)
+- Necessidade de processamento batch ou streaming
+- Origem transacional (bancos, eventos, APIs) → destino analítico
+
+---
+
+## Visão geral dos componentes
 
 ```mermaid
 flowchart LR
@@ -35,6 +54,13 @@ flowchart LR
     style C fill:#9B96FF,color:#1A1923
     style D fill:#0ED145,color:#1A1923
 ```
+
+| # | Componente | O que define | Blocos do discovery |
+|---|-----------|-------------|-------------------|
+| 1 | Aquisição de Dados | De onde vêm os dados, como são obtidos, autenticação, segurança | #5, #6 |
+| 2 | Armazenamento Raw (Bronze) | Formato, particionamento, versionamento, retenção | #5, #7 |
+| 3 | Processo de Transformação (ETL/ELT) | Engine, orquestração, qualidade, idempotência, mascaramento | #5, #7, #8 |
+| 4 | Armazenamento Transformado (Silver/Gold) | Modelos de dados, governança, SLA, acesso, custos | #4, #7, #8 |
 
 ---
 
@@ -52,6 +78,7 @@ A aquisição de dados é o ponto de entrada do pipeline. Define **de onde** vê
 - **Disponibilidade das fontes** — SLA de cada fonte? O que acontece quando uma fonte fica indisponível? Retry? Alerta? Degradação graciosa?
 - **Data contracts** — Existe contrato formal com as equipes das fontes? Quem notifica mudanças de schema? Versionamento de APIs?
 - **Volume e crescimento** — Volume atual por fonte (registros/dia, GB/dia)? Taxa de crescimento esperada?
+- **Dados sensíveis na origem** — Alguma fonte tem PII, dados financeiros ou de saúde? Há restrição de horário para extração?
 
 ### Perguntas-chave
 
@@ -68,7 +95,7 @@ A aquisição de dados é o ponto de entrada do pipeline. Define **de onde** vê
 
 | Decisão | Alternativas típicas | Critério |
 |---------|---------------------|----------|
-| Método de extração por fonte | Pull/Push/CDC/File drop | Latência requerida vs capacidade da fonte |
+| Método de extração por fonte | Pull / Push / CDC / File drop | Latência requerida vs capacidade da fonte |
 | Frequência de coleta por fonte | Real-time / Micro-batch / Batch (horário/diário) | SLA de freshness do consumidor final |
 | Estratégia de autenticação | API key / OAuth2 / Service account / mTLS | Política de segurança da organização |
 | Tratamento de indisponibilidade | Retry com backoff / Skip e alerta / Circuit breaker | Criticidade da fonte |
@@ -81,7 +108,7 @@ A aquisição de dados é o ponto de entrada do pipeline. Define **de onde** vê
 - [ ] Método de autenticação definido para cada fonte
 - [ ] Plano de contingência para indisponibilidade documentado
 - [ ] Data contracts definidos (ou risco documentado da ausência)
-- [ ] Dados sensíveis identificados por fonte (alimenta componente Privacy no bloco #6)
+- [ ] Dados sensíveis identificados por fonte
 
 ---
 
@@ -98,7 +125,7 @@ O armazenamento raw é a primeira camada persistente do pipeline. Recebe os dado
 - **Schema evolution** — O que acontece quando a fonte muda o schema? Schema registry? Evolução automática?
 - **Criptografia** — At-rest obrigatória? Chave gerenciada pelo cloud provider ou BYOK?
 - **Acesso** — Quem pode acessar o raw? Somente pipelines ou também analistas/cientistas?
-- **Localização** — Qual bucket/container/path? Região? Multi-região?
+- **Localização** — Qual bucket/container/path? Região? Multi-região? Restrição de residência de dados?
 
 ### Perguntas-chave
 
@@ -178,7 +205,7 @@ O processo de transformação converte dados brutos em dados limpos, padronizado
 - [ ] Estratégia de qualidade de dados documentada (o que testar, quando, o que fazer se falhar)
 - [ ] Idempotência garantida ou risco documentado
 - [ ] Tratamento de late-arriving data e dados corrompidos definido
-- [ ] Ponto de mascaramento de PII definido (alimenta bloco #6)
+- [ ] Ponto de mascaramento de PII definido
 - [ ] Estratégia de testes documentada
 - [ ] Responsável por manutenção e on-call identificado
 
@@ -233,9 +260,168 @@ O armazenamento transformado é onde os dados ficam prontos para consumo. A cama
 
 ---
 
-## Mapeamento para os 8 Blocos do Discovery
+## Concerns transversais — Produto e Organização
 
-Esta tabela mostra como cada componente do blueprint se distribui nos 8 blocos temáticos da Fase 1:
+Além dos 4 componentes técnicos, o discovery precisa cobrir aspectos de produto e organização que atravessam todos os componentes. Estes são endereçados principalmente nos blocos #1 a #4 pelo **po**.
+
+### Quem consome e por quê
+
+- Quem consome os dados finais? (analistas, dashboards, ML, aplicações downstream)
+- Quais são os top 3 casos de uso? (as 3 perguntas que os dados precisam responder)
+- Qual a granularidade exigida? (linha por transação, agregada, snapshot diário)
+- Quanto histórico reter? (90 dias, 2 anos, forever)
+
+### Valor e métricas
+
+- OKRs mensuráveis — redução de tempo de reporting, aumento de cobertura de dados, ROI esperado
+- Sinais de resposta incompleta:
+  - "Vamos consolidar tudo num lugar" (sem caso de uso claro)
+  - "Pra todo mundo da empresa" (sem persona analítica definida)
+  - "Real-time" sem definição de janela aceitável
+  - "Melhorar as decisões" (OKR vago)
+
+### Organização e governança
+
+- Quem é o "dono do dado" (data owner) por domínio?
+- Estrutura do time de dados (engineer, analyst, scientist, steward)
+- Processo de aprovação de mudança na Gold
+- On-call pós-MVP — quem é acionado quando pipeline falha?
+
+---
+
+## Concerns transversais — Privacidade (bloco #6)
+
+O **cyber-security-architect** sempre roda este bloco. Em projetos de ingestão de datalake, o **modo profundo é quase sempre o caso** — ingestão costuma carregar PII, dados financeiros ou dados de saúde. O modo magro se aplica apenas a pipelines de dados puramente técnicos (ex: métricas de máquinas, logs de sistema sem identificação de pessoa).
+
+### Concerns específicos de ingestão
+
+- Mascaramento / pseudonimização / anonimização por camada (Bronze = raw, Silver = pseudonimizado, Gold = agregado?)
+- Linhagem de dados pessoais (onde uma PII entra e todos os destinos que vai)
+- Direito ao esquecimento em datalake append-only (como "apagar" um registro sem quebrar histórico)
+- Retenção por categoria de dado
+- Controle de acesso por coluna (quem pode ver PII vs quem só vê agregado)
+- Transferência internacional (se data warehouse em cloud fora do Brasil)
+- DPO precisa aprovar queries que cruzam PII?
+
+---
+
+## Antipatterns conhecidos
+
+| # | Antipattern | Por quê é ruim |
+|---|-------------|----------------|
+| 1 | **Bronze sem versionamento (overwrite)** | Impossibilita reprocessamento e auditoria histórica |
+| 2 | **Sem schema evolution policy** | Mudança em origem quebra pipeline em produção |
+| 3 | **Pipelines não-idempotentes** | Replay duplica dados, corrompe métricas |
+| 4 | **Gold sem testes de qualidade** | Dashboards mostrando dados inconsistentes ao usuário final |
+| 5 | **Particionamento por timestamp ingestion (não evento)** | Late data fica em partições erradas, agregações ficam erradas |
+| 6 | **Medallion sem governança** | Vira "datalake → dataswamp" em 6 meses |
+| 7 | **Lambda architecture quando Kappa basta** | Duplicação de pipelines batch + streaming |
+| 8 | **Sem data contracts entre origens e ingestão** | Mudanças unilaterais quebram tudo |
+| 9 | **Monitoring só de erro de execução, sem freshness** | Pipeline roda OK mas dados estão atrasados |
+| 10 | **PII sem mascaramento já na Bronze** | Vazamento de dados pessoais não-pseudonimizados |
+
+---
+
+## Edge cases para o 10th-man verificar
+
+- O que acontece quando uma origem fica fora do ar por 24 horas?
+- Como reprocessar 2 anos de histórico em uma nova lógica de negócio?
+- Como lidar com schema evolution backward-incompatible numa origem crítica?
+- Late-arriving data: como lidar com evento de ontem que chegou hoje?
+- Duplicação por retry de pipeline: idempotência garantida em qual nível?
+- Pipeline que roda de madrugada e falha — quando o usuário descobre?
+- Custo explode 3x em um mês — como detectar e investigar antes do mês fechar?
+- Compliance LGPD pede exclusão de pessoa específica — como remover de Bronze, Silver, Gold e backups?
+- Origem mudou de timezone — como retroagir histórico?
+- Dois domínios geram dados conflitantes — quem ganha?
+- Pipeline crítico depende de alguém de férias — quem mantém em standby?
+
+---
+
+## Custom-specialists disponíveis
+
+Quando po, solution-architect ou cyber-security-architect precisarem de profundidade em subtópico específico durante a reunião, o orchestrator pode invocar um dos specialists abaixo:
+
+| Specialist | Domínio | Quando invocar |
+|-----------|---------|----------------|
+| `streaming-architect` | Streaming real-time com Kafka/Kinesis/PubSub | SLA de frescor < 1 minuto, CDC, eventos em alto volume |
+| `cloud-data-platform-comparison` | Databricks vs Snowflake vs BigQuery vs Redshift | Decisão de plataforma não fechada no briefing |
+| `feature-store-architect` | Feature store para ML downstream | Gold consumida por modelos de ML, feature reuse, online/offline serving |
+| `data-governance` | Catálogo e governança formal | DataHub, Unity Catalog, Collibra; linhagem automatizada; data contracts |
+| `data-cost-optimization` | Otimização de custo em cloud data warehouse | Custo explodindo, queries caras, storage ineficiente |
+| `cdc-architect` | Change data capture de origens transacionais | Ingestão near-real-time a partir de Postgres/MySQL/Oracle com Debezium |
+| `data-quality-engineer` | Testes e monitoramento de qualidade | Great Expectations, Soda, dbt tests; SLA de qualidade em Gold |
+| `lakehouse-table-format` | Delta Lake vs Iceberg vs Hudi | Decisão de formato de tabela para data lakehouse |
+| `regulated-data-finance` | Compliance de dados financeiros (Bacen, CVM) | Ingestão de dados transacionais financeiros sensíveis |
+| `regulated-data-health` | Compliance de dados de saúde | Dados clínicos, prontuários, compliance ANS/LGPD-saúde |
+
+> [!info] Fallback genérico
+> Se o subtópico não casa com nenhum specialist acima, o orchestrator gera um specialist genérico e registra `[CUSTOM-SPECIALIST-GENERIC]` no log.
+
+### Prompt base de invocação
+
+```
+Você é o specialist `{specialist-id}` do blueprint datalake-ingestion no Discovery Pipeline v0.5.
+
+Domínio: {domínio da tabela}
+
+Contexto da reunião até aqui:
+{log dos blocos já cobertos}
+
+Subtópico que pediram sua ajuda:
+{descrição do ponto}
+
+Sua missão:
+1. Aprofunda o subtópico com vocabulário real do domínio
+2. Sinaliza antipatterns conhecidos
+3. Se o customer marcar [INFERENCE] em ponto crítico, force aprofundamento
+4. Se o domínio exige especialista humano de verdade, marque [NEEDS-HUMAN-SPECIALIST]
+5. Devolve controle ao especialista fixo que te invocou
+```
+
+---
+
+## Perfil do Delivery Report
+
+Configurações específicas que o `consolidator` aplica ao delivery report na Fase 3 para projetos deste tipo.
+
+### Seções extras no relatório
+
+| Seção | Posição | Conteúdo esperado |
+|-------|---------|-------------------|
+| **Arquitetura de Dados (Medallion)** | Entre Tecnologia e Segurança e Privacidade e Compliance | Diagrama Bronze → Silver → Gold com descrição de cada camada, transformações, retenção, particionamento |
+
+### Métricas obrigatórias no relatório
+
+| Métrica | Onde incluir | Descrição |
+|---------|-------------|-----------|
+| Volume estimado por camada | Métricas-chave + Arquitetura de Dados | GB/TB por dia esperados em Bronze, Silver, Gold |
+| Freshness SLA | Métricas-chave | Tempo máximo entre dado chegar no source e estar disponível na Gold |
+| Custo mensal estimado | Métricas-chave + Análise Estratégica | Compute + storage por camada |
+| Tempo de reprocessamento | Métricas-chave | Tempo para reprocessar todo o histórico de uma tabela/pipeline |
+| Cobertura de testes de qualidade | Métricas-chave | % de tabelas Gold com testes de qualidade automatizados |
+| Cobertura de linhagem | Métricas-chave | % de tabelas com lineage rastreável end-to-end |
+
+### Diagramas obrigatórios no relatório
+
+| Diagrama | Obrigatório? | Seção destino |
+|----------|-------------|---------------|
+| Arquitetura macro | Sim (base) | Tecnologia e Segurança |
+| Medallion architecture | Sim | Arquitetura de Dados |
+
+### Ênfases por seção base
+
+| Seção base | Ênfase para datalake |
+|------------|---------------------|
+| **Tecnologia e Segurança** | Stack de ingestão (Spark, Airflow, dbt, Kafka), particionamento, formato (Parquet, Delta, Iceberg) |
+| **Privacidade e Compliance** | Mascaramento de PII por camada (Bronze raw → Silver mascarado), linhagem de dados pessoais, retenção por camada |
+| **Análise Estratégica** | Build vs Buy para orquestração (Airflow/Prefect/Dagster), storage (S3/GCS/ADLS), processamento (Spark/dbt/Flink) |
+| **Backlog Priorizado** | Por pipeline: críticos primeiro (receita/compliance), depois analíticos, depois exploratórios |
+| **Matriz de Riscos** | Schema drift, dados duplicados, falha silenciosa de ingestão, custo de reprocessamento não orçado |
+
+---
+
+## Mapeamento para os 8 Blocos do Discovery
 
 | Componente | Bloco(s) principal(is) | Agente responsável |
 |------------|----------------------|-------------------|
@@ -244,17 +430,8 @@ Esta tabela mostra como cada componente do blueprint se distribui nos 8 blocos t
 | **3. Processo ETL** | #5 (Tecnologia e Segurança), #7 (Arquitetura Macro), #8 (TCO) | solution-architect |
 | **4. Armazenamento Transformado** | #4 (Processo e Equipe), #7 (Arquitetura Macro), #8 (TCO) | po, solution-architect |
 
-> [!tip] Cross-cutting concerns
+> [!tip] Concerns transversais
 > Alguns temas atravessam todos os componentes:
 > - **Privacidade (bloco #6)** — PII aparece na aquisição, precisa ser mascarada no ETL, e controlada na Gold
 > - **Custo (bloco #8)** — Cada componente tem custo próprio (extração, storage raw, compute ETL, storage Gold)
 > - **Governança (bloco #4)** — Data ownership, processos de aprovação e on-call afetam todos os componentes
-
----
-
-## Documentos Relacionados
-
-- [[context|context-templates/datalake-ingestion/context.md]] — Concerns organizados por papel do agente
-- [[specialists|context-templates/datalake-ingestion/specialists.md]] — Catálogo de custom-specialists
-- [[report-profile|context-templates/datalake-ingestion/report-profile.md]] — Perfil do delivery report
-- `dtg-artifacts/rules/discovery/discovery.md` — Regra formal dos 8 blocos temáticos

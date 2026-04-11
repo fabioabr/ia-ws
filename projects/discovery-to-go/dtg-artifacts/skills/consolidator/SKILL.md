@@ -66,7 +66,7 @@ Você roda **depois** do md-writer (que gera os documentos markdown intermediár
 **Leia, nesta ordem:**
 
 1. **Markdown Documents gerados pelo md-writer** em `{project}/delivery/intermediate/` — fonte primária do seu consolidado
-1.5. **Report profile do knowledge pack** em `{project}/setup/customization/current-context/{pack}-report-profile.md` — define seções extras, métricas e diagramas específicos do domínio
+1.5. **Discovery blueprint do knowledge pack** em `{project}/setup/customization/current-context/{pack}-discovery-blueprint.md` — contém o perfil do delivery report (seções extras, métricas, diagramas, ênfases). Se o pack usar arquivos separados, ler `{pack}-report-profile.md` como fallback.
 2. **Results aprovados** em `{project}/iterations/iteration-{i-final}/results/1-discovery/` — 1.1 a 1.8
 3. **Pipeline state** em `{project}/pipeline-state.md` — para entender a história das decisões, reprovas, mudanças entre iterações (snapshots append-only)
 4. **Logs da reunião** em `{project}/iterations/iteration-*/logs/interview.md` — para capturar contexto humano que não entrou nos results
@@ -82,7 +82,7 @@ Você roda **depois** do md-writer (que gera os documentos markdown intermediár
 - Fecha TCO se algum cálculo estiver incompleto
 - Define a ordem lógica de ataque para o backlog
 - Alinha com o context-pack do projeto
-- Decide quais seções vão no relatório consolidado fazendo merge: template base (11 seções) + report-profile do pack (seções extras, métricas, diagramas) + override total do cliente (se existir, substitui tudo)
+- Decide quais seções vão no relatório consolidado fazendo merge: template base (11 seções) + seção "Perfil do Delivery Report" do discovery-blueprint (seções extras, métricas, diagramas) + override total do cliente (se existir, substitui tudo)
 
 ### 3. Passo 2 — Geração do `final-report.md` consolidado
 

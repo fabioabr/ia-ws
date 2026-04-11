@@ -61,7 +61,7 @@ Domínios tecnológicos em `base-artifacts/context-templates/` (local copy of wo
 | Pack | Caminho no workspace | Arquivos |
 |------|---------------------|----------|
 | saas | `base-artifacts/context-templates/saas/` | `context.md`, `specialists.md`, `report-profile.md` |
-| datalake-ingestion | `base-artifacts/context-templates/datalake-ingestion/` | `context.md`, `specialists.md`, `report-profile.md`, `discovery-blueprint.md` |
+| datalake-ingestion | `base-artifacts/context-templates/datalake-ingestion/` | `discovery-blueprint.md` (documento único e auto-contido) |
 | process-documentation | `base-artifacts/context-templates/process-documentation/` | `context.md`, `specialists.md`, `report-profile.md` |
 | web-microservices | `base-artifacts/context-templates/web-microservices/` | `context.md`, `specialists.md`, `report-profile.md` |
 

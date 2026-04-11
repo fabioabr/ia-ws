@@ -109,9 +109,9 @@ Detectou que a iteração N+1 cresceu menos de 10% em relação à N (ou diminui
 | `{project}/pipeline-state.md` | Continuamente — append-only após cada transição de fase (snapshots) |
 | `{project}/setup/config.md` | Uma vez, no início da run |
 
-#### 2. Auto-detecção de context pack
+#### 2. Auto-detecção de context-templates
 
-Ao iniciar a iteração 1, leia o briefing e procure sinais:
+Ao iniciar a iteração 1, leia o briefing e procure sinais. **Um projeto pode usar mais de um template** — ex: um SaaS que também tem ingestão de dados usaria `saas` + `datalake-ingestion`. O briefing também pode declarar explicitamente via frontmatter `context-templates: [saas, datalake-ingestion]`.
 
 | Pack | Sinais no briefing |
 |---|---|
@@ -119,15 +119,27 @@ Ao iniciar a iteração 1, leia o briefing e procure sinais:
 | `datalake-ingestion` | "datalake", "ETL", "ELT", "bronze/silver/gold", "Spark", "Databricks", "Snowflake", "ingestão de dados" |
 | `process-documentation` | "documentar", "manual", "SOP", "runbook", "padronizar", "knowledge base", "wiki" |
 | `web-microservices` | "microsserviços", "Kubernetes", "service mesh", "API gateway", "distributed", "Kafka" |
+| `system-integration` | "integração", "middleware", "ESB", "iPaaS", "conectar sistemas", "MuleSoft", "Boomi" |
+| `migration-modernization` | "migração", "modernização", "legado", "lift-and-shift", "re-platform", "cloud migration" |
+| `ai-ml` | "inteligência artificial", "machine learning", "modelo preditivo", "LLM", "NLP", "MLOps" |
+| `mobile-app` | "app", "aplicativo", "mobile", "iOS", "Android", "React Native", "Flutter" |
+| `process-automation` | "automação", "RPA", "robô", "workflow", "BPM", "UiPath", "Power Automate" |
+| `platform-engineering` | "infraestrutura", "DevOps", "platform", "IDP", "CI/CD", "Kubernetes", "Terraform" |
 
-**Se 2+ sinais de um pack único** → carrega esse pack.
-**Se sinais ambíguos ou nenhum** → modo genérico, avisa o humano: *"⚠️ Não consegui auto-detectar o tipo de projeto. Rodando em modo genérico — você pode declarar `project-type` no frontmatter do briefing para melhor cobertura."*
+**Regras de seleção:**
+- **2+ sinais de um pack** → carrega esse pack
+- **2+ sinais de múltiplos packs** → carrega todos os packs detectados (multi-template)
+- **Briefing declara `context-templates: [...]`** → usa a lista declarada (tem prioridade sobre auto-detecção)
+- **Sinais ambíguos ou nenhum** → modo genérico, avisa o humano: *"⚠️ Não consegui auto-detectar o tipo de projeto. Rodando em modo genérico — você pode declarar `context-templates` no frontmatter do briefing para melhor cobertura."*
 
-**Cópia obrigatória:** ao detectar o pack, copie de `context-templates/{pack}/` (pasta global do workspace) para `{project}/setup/customization/current-context/`:
-- `context.md` → `{pack}.md`
-- `specialists.md` → `{pack}-specialists.md`
-- `report-profile.md` → `{pack}-report-profile.md`
-- `discovery-blueprint.md` → `{pack}-discovery-blueprint.md` (se existir)
+**Cópia obrigatória:** para **cada** pack detectado, copie todos os arquivos de `context-templates/{pack}/` para `{project}/setup/customization/current-context/`:
+- `discovery-blueprint.md` → `{pack}-discovery-blueprint.md`
+- `context.md` → `{pack}.md` (se existir — packs legados)
+- `specialists.md` → `{pack}-specialists.md` (se existir)
+- `report-profile.md` → `{pack}-report-profile.md` (se existir)
+
+> [!info] Multi-template
+> Quando múltiplos packs são carregados, os agentes consultam todos os blueprints durante a entrevista. O consolidator faz merge dos report-profiles de todos os packs no delivery report. Em caso de conflito entre packs, o agente sinaliza ao humano no Human Review.
 
 O projeto pode customizar as cópias locais sem afetar as globais.
 
