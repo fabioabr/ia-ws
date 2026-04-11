@@ -127,6 +127,7 @@ Ao iniciar a iteração 1, leia o briefing e procure sinais:
 - `context.md` → `{pack}.md`
 - `specialists.md` → `{pack}-specialists.md`
 - `report-profile.md` → `{pack}-report-profile.md`
+- `discovery-blueprint.md` → `{pack}-discovery-blueprint.md` (se existir)
 
 O projeto pode customizar as cópias locais sem afetar as globais.
 

@@ -124,6 +124,10 @@ O catálogo de custom-specialists para projetos de ingestão de datalake está n
 
 Lembrete: LGPD/Privacidade NÃO é custom-specialist — é coberta obrigatoriamente pelo `cyber-security-architect`.
 
+## Discovery Blueprint
+
+Para um guia organizado por componentes do projeto (aquisição de dados, armazenamento raw, ETL, armazenamento transformado), ver [[discovery-blueprint]].
+
 ## Report Profile
 
 Seções extras, métricas obrigatórias e diagramas específicos para o delivery report estão definidos em [[report-profile]].

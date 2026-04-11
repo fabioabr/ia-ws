@@ -250,10 +250,11 @@ Domínios tecnológicos que enriquecem a entrevista da Fase 1 com perguntas, con
 | `process-documentation` | Documentação de processos existentes | "documentar processo", "mapeamento", "AS-IS/TO-BE" |
 | `web-microservices` | Aplicações web com microserviços | "microserviços", "API gateway", "container" |
 
-Cada pack contém 3 arquivos:
+Cada pack contém até 4 arquivos:
 - **`context.md`** — concerns, perguntas recomendadas por bloco temático, checklist de cobertura
 - **`specialists.md`** — catálogo de custom-specialists disponíveis para o domínio
 - **`report-profile.md`** — seções extras, métricas obrigatórias, diagramas e ênfases para o delivery report
+- **`discovery-blueprint.md`** — guia por componentes do projeto: o que descobrir em cada parte da solução (piloto: datalake-ingestion)
 
 O orchestrator auto-detecta o pack a partir de sinais no briefing. Se ambíguo, roda em modo genérico.
 
