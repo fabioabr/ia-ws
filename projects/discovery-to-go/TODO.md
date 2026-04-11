@@ -2,7 +2,7 @@
 title: TODO
 description: Lista de pendências do projeto Discovery To Go
 project-name: discovery-to-go
-version: 01.00.000
+version: 02.00.000
 status: ativo
 author: claude-code
 category: todo
@@ -11,67 +11,46 @@ tags:
   - todo
   - pendencia
 created: 2026-04-11
+updated: 2026-04-11
 ---
 
 # TODO — Discovery To Go
 
-## ~~1. Consolidar os 3 packs antigos no formato único~~ DONE
-
-Os packs `saas`, `process-documentation` e `web-microservices` foram consolidados em `discovery-blueprint.md` único. Arquivos antigos removidos.
-
-| Pack | Arquivos atuais | Ação |
-|------|----------------|------|
-| `saas` | 3 separados | Consolidar em `discovery-blueprint.md` |
-| `process-documentation` | 3 separados | Consolidar em `discovery-blueprint.md` |
-| `web-microservices` | 3 separados | Consolidar em `discovery-blueprint.md` |
-
-**Impacto:** `context-templates/` (global) + `base-artifacts/context-templates/` (cópia local)
-
 ---
 
-## ~~2. Atualizar sample run para novo formato~~ DONE
+## Concluídos
 
+<details>
+<summary>Itens 1-7 (clique para expandir)</summary>
+
+### ~~1. Consolidar os 3 packs antigos no formato único~~ DONE
+Os packs `saas`, `process-documentation` e `web-microservices` foram consolidados em `discovery-blueprint.md` único.
+
+### ~~2. Atualizar sample run para novo formato~~ DONE
 Sample run atualizado — `current-context/` agora tem apenas `saas-discovery-blueprint.md`.
 
----
+### ~~3. Terminologia "knowledge pack" → "context-template"~~ DONE
+70 ocorrências substituídas em 24 arquivos.
 
-## ~~3. Terminologia "knowledge pack" → "context-template"~~ DONE
+### ~~4. Seção "Knowledge" no CLAUDE.md do workspace~~ DONE
+Heading atualizado para `## Context-Templates`.
 
-Terminologia atualizada em todos os arquivos do projeto (exceto base-artifacts/). 46 ocorrências substituídas.
+### ~~5. Arquivo temporário do draw.io no git~~ DONE
+`.$*.bkp` e `.$*.dtmp` adicionados ao `.gitignore`.
 
----
+### ~~6. Arquivo `product-discovery-deliverables.md`~~ DONE
+Mantido em `docs/` como referência teórica.
 
-## ~~4. Seção "Knowledge" no CLAUDE.md do workspace~~ DONE
+### ~~7. README.md desatualizado~~ DONE
+10 packs, formato documento único, multi-template, scaffold corrigido.
 
-Heading atualizado para `## Context-Templates` com descrição refletindo o formato `discovery-blueprint.md`.
-
----
-
-## ~~5. Arquivo temporário do draw.io no git~~ DONE
-
-Adicionado `.$*.bkp` e `.$*.dtmp` ao `.gitignore`.
-
----
-
-## ~~6. Arquivo `product-discovery-deliverables.md`~~ DONE
-
-Mantido em `docs/` como referência teórica para o catálogo de information regions (item 8).
+</details>
 
 ---
 
-## ~~7. README.md — seção Context-Templates desatualizada~~ DONE
+## 8. Information Regions — PARCIAL
 
-Atualizado: 10 packs listados, formato documento único, multi-template, scaffold corrigido, dependências atualizadas.
-
----
-
-## 8. ~~Catálogo de information regions para o delivery report~~ PARCIAL
-
-Criar um catálogo completo de **todos os tipos de informação** que podem ser gerados num processo de discovery — independente do tipo de projeto. Cada tipo de informação será uma **region** reutilizável que aparece tanto no `.md` final quanto no `.html` visual.
-
-### Conceito
-
-O delivery report (`.md`) é **completo** — contém todas as informações do discovery em texto puro. O report HTML (`.html`) renderiza essas informações como **regions visuais** (cards, tabelas, diagramas, KPIs, checklists) configuráveis por projeto.
+Sistema de regions reutilizáveis para o delivery report (`.md` completo + `.html` configurável).
 
 ```
 discovery-blueprint.md          delivery-report.md           delivery-report.html
@@ -81,43 +60,90 @@ custom-artifacts/                                         html-layout.md
 (override por cliente)                                    (quais regions, ordem, layout)
 ```
 
-### Camadas
+| # | Entregável | Status |
+|---|-----------|--------|
+| 8.1 | Catálogo de regions (`base-artifacts/templates/report-regions/information-regions.md`) — 85 regions em 14 grupos | DONE |
+| 8.2 | 85 arquivos individuais com schema, exemplo, dados visuais e recomendação do chart-specialist | DONE |
+| 8.3 | Blueprints → regions: cada discovery-blueprint listar quais regions são obrigatórias/opcionais | PENDENTE |
+| 8.4 | `dtg-artifacts/templates/customization/html-layout.md` — template default de layout HTML | PENDENTE |
+| 8.5 | Templates HTML por region — componentes visuais reutilizáveis para o html-writer | PENDENTE |
 
-| Camada | O que define | Quem configura |
-|--------|-------------|----------------|
-| **Catálogo de regions** | Todas as regions possíveis com nome, schema, template visual | Global (dtg-artifacts) |
-| **Discovery blueprint** | Quais regions são relevantes para aquele tipo de projeto | Por context-template |
-| **HTML layout** | Quais regions aparecem no HTML, em que ordem e com que layout | Por projeto (custom-artifacts) |
-| **Delivery report (.md)** | Conteúdo completo — todas as regions com dados reais | Gerado pelo consolidator |
-| **Delivery report (.html)** | Renderização visual das regions selecionadas | Gerado pelo html-writer |
+---
 
-### Exemplos de regions
+## 9. Atualizar Consolidator para gerar por regions
 
-| Categoria | Regions |
-|-----------|---------|
-| Executivo | Overview one-pager, Product brief, Decisão de continuidade, Próximos passos |
-| Produto | Problema e contexto, Personas (JTBD), Jornadas de usuário, Proposta de valor (elevator pitch), Visão do produto, OKRs/ROI, Modelo de negócio, MVP scope (dentro/fora), Roadmap (faseamento) |
-| Pesquisa | Relatório de entrevistas, Mapa de oportunidades (OST), Dados quantitativos, Citações representativas, Hipóteses não validadas |
-| Organização | Mapa de stakeholders, Estrutura de equipe, RACI, Metodologia, Composição de equipe necessária, On-call, Change management |
-| Técnico | Stack tecnológica, Arquitetura macro (diagrama C4 L1), Arquitetura de containers (C4 L2), Integrações, ADRs (Architecture Decision Records), Build vs Buy |
-| Segurança | Classificação de dados, Criptografia (at-rest/in-transit), Autenticação/autorização, Compliance/regulação |
-| Privacidade | Dados pessoais mapeados, Base legal LGPD, DPO, Política de retenção, Direito ao esquecimento, Sub-operadores |
-| Financeiro | TCO 3 anos (por componente), Break-even analysis, Custo por componente/camada, Projeção de receita, Estimativa de esforço (T-shirt) |
-| Riscos | Matriz de riscos (impacto x probabilidade), Risk register (score + dono + mitigação), Riscos técnicos, Hipóteses críticas em aberto |
-| Qualidade | Score do auditor (5 dimensões), Questões do 10th-man, Gaps identificados, Checklist de conclusão |
-| Backlog | Épicos priorizados (MoSCoW/RICE), User stories de alto nível, Dependências entre épicos, Critérios de Go/No-Go |
-| Métricas | KPIs de negócio, KPIs técnicos, SLAs/SLOs, Targets por fase, DORA metrics (se platform) |
-| Narrativa | Como chegamos aqui (história das iterações), Condições para prosseguir, Assinaturas de aprovação |
-| Domain-specific | Modelo comercial e pricing (SaaS), Medallion architecture (datalake), Mapa de serviços (microservices), Mapa de integrações (integration), Roadmap de migração (migration), Pipeline ML (AI/ML), Estratégia mobile (mobile), Roadmap de automação (RPA/BPM), Arquitetura da plataforma (platform) |
+O consolidator hoje gera o `delivery-report.md` usando seções fixas (11 seções base + extras por context-template). Precisa ser atualizado para:
 
-### Referência
+- Ler o catálogo de regions + blueprint do context-template carregado
+- Gerar cada seção do `.md` como uma region identificada (com marcador que o html-writer reconhece)
+- Respeitar a lista de regions obrigatórias/opcionais do blueprint
+- Manter o `.md` completo e legível como texto puro (sem depender de HTML)
 
-O documento `docs/product-discovery-deliverables.md` serve como base teórica para a definição das regions — baseado em frameworks de Marty Cagan, Teresa Torres, JTBD, C4, ADRs.
+**Arquivos:** `dtg-artifacts/skills/consolidator/SKILL.md`
 
-### Entregáveis
+---
 
-1. ~~**Catálogo de regions** (`base-artifacts/templates/report-regions/information-regions.md`) — 85 regions em 14 grupos~~ DONE
-2. ~~**85 arquivos .md individuais** em `base-artifacts/templates/report-regions/{grupo}/{region}.md` — cada um com frontmatter, schema e exemplo~~ DONE
-3. **Atualizar cada discovery-blueprint** para referenciar quais regions são obrigatórias/opcionais para aquele tipo de projeto
-4. **`dtg-artifacts/templates/customization/html-layout.md`** — template default de layout do HTML (quais regions, ordem, grid) — customizável por projeto em `custom-artifacts/{client}/config/html-layout.md`
-5. **Templates HTML por region** — componentes visuais reutilizáveis que o `html-writer` usa para renderizar cada region (card, table, KPI, diagram, checklist, etc.)
+## 10. Atualizar HTML Writer para renderizar regions
+
+O html-writer hoje converte `.md` → `.html` de forma linear. Precisa ser atualizado para:
+
+- Ler `html-layout.md` para saber quais regions renderizar, em que ordem e com que layout
+- Usar os templates visuais por region (card, table, chart, timeline, etc.)
+- Renderizar gráficos Chart.js onde indicado pelo chart-specialist
+- Respeitar HTML/CSS puro como prioridade (Chart.js só onde necessário)
+- Manter dark/light theme, responsividade e auto-contido
+
+**Arquivos:** `.claude/skills/html-writer/SKILL.md`, templates HTML por region
+
+---
+
+## 11. Atualizar Sample Run
+
+O sample run (`dtg-artifacts/arctifact-samples/run-sample/`) precisa refletir:
+
+- `delivery-report.md` no formato de regions (com marcadores)
+- `delivery-report.html` gerado pelo novo html-writer com regions visuais
+- `setup/customization/` com `html-layout.md` (se customizado)
+
+**Arquivos:** `dtg-artifacts/arctifact-samples/run-sample/delivery/`
+
+---
+
+## 12. CLAUDE.md — Adicionar chart-specialist
+
+Adicionar `chart-specialist` à lista de skills globais no `CLAUDE.md` do workspace.
+
+**Arquivo:** `E:\Workspace\CLAUDE.md`
+
+---
+
+## 13. Sync base-artifacts
+
+Vários arquivos novos/alterados no projeto que precisam ser espelhados no `base-artifacts/`:
+
+- Context-templates consolidados (já sincronizados)
+- Templates de report-regions (já estão em base-artifacts)
+- Skills globais alteradas (chart-specialist é nova, não está em base-artifacts)
+- Verificar se há drift entre workspace global e base-artifacts
+
+---
+
+## Ordem sugerida de execução
+
+```
+12. CLAUDE.md (rápido)                          ← 1 min
+ ↓
+8.3 Blueprints → regions (10 blueprints)        ← paralelo com 10 agentes
+ ↓
+8.4 html-layout.md (template default)           ← 1 arquivo
+ ↓
+9. Consolidator atualizado                       ← SKILL.md
+ ↓
+8.5 Templates HTML por region                    ← componentes visuais
+ ↓
+10. HTML Writer atualizado                       ← SKILL.md
+ ↓
+11. Sample run atualizado                        ← validação end-to-end
+ ↓
+13. Sync base-artifacts                          ← verificação final
+```
