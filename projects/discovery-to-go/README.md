@@ -66,7 +66,7 @@ discovery-to-go/
 discovery-to-go/
 │
 ├── README.md                              ← este arquivo (entry point do projeto)
-├── index.md                               ← índice Obsidian (navegação por wikilinks)
+├── TODO.md                                ← lista de pendências do projeto
 │
 ├── docs/                                  ← documentação operacional
 │   ├── discovery-pipeline.md              ← guia completo do pipeline (3 fases, blocos, HR)
