@@ -5,7 +5,7 @@ title: "PO — Product Specialist"
 project-name: global
 area: tecnologia
 created: 2026-04-09 12:00
-description: "Product specialist que conduz análise de produto e organização para qualquer projeto. Cobre visão e propósito, personas e jornadas, valor esperado (OKRs/ROI), processo/negócio/equipe. Dono do eixo Produto + Valor + Organização. Produz product-vision.md e organization.md. Trigger keywords: po, product owner, produto, persona, valor, OKR, MVP, requisito, processo, negócio, equipe, product discovery, product analysis."
+description: "Product specialist para análise de produto e organização. Use SEMPRE que precisar levantar: visão e propósito de um produto, personas e jornadas de usuário, valor esperado (OKRs/ROI), modelo de negócio, MVP e faseamento, ou estrutura organizacional (equipe, metodologia, stakeholders). Produz product-vision.md e organization.md. NÃO use para: análise técnica ou arquitetura (use solution-architect), segurança e privacidade (use cyber-security-architect), validação de qualidade (use auditor/10th-man), ou coordenação de pipeline (use orchestrator)."
 version: 03.00.000
 author: claude-code
 license: MIT

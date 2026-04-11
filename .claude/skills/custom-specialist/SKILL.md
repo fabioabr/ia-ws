@@ -4,7 +4,7 @@ title: "Custom Specialist — Dynamic Domain Expert"
 project-name: global
 area: tecnologia
 created: 2026-04-09 12:00
-description: "Dynamic meta-skill that assumes expertise in a specific domain on demand. Use when any skill or agent needs deeper domain knowledge (LGPD, advanced security, cloud architecture, ML, specific ERPs, sector compliance, etc.). Assumes the domain expert role, validates plausibility of information in that domain, marks [CONTESTADO] if implausible, returns control to the caller. Trigger keywords: custom-specialist, specialist, domain, expert, help, depth, plausibility, domain-expert."
+description: "Meta-skill dinâmica que assume expertise em qualquer domínio sob demanda. Use SEMPRE que outro agente ou o usuário precisar de profundidade em um domínio específico — ex: kafka streaming, cloud architecture, ML/MLOps, ERPs (SAP, Oracle), compliance setorial (SOX, PCI-DSS, HIPAA), data engineering, ou qualquer área técnica especializada. Assume o papel do especialista, valida plausibilidade de informações no domínio, marca [CONTESTADO] se implausível, e devolve controle ao chamador. NÃO use para: análises completas de produto (use po), arquitetura completa (use solution-architect), ou segurança/privacidade (use cyber-security-architect) — esses têm skills próprias."
 version: 02.00.000
 author: claude-code
 license: MIT

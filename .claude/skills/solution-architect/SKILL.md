@@ -5,7 +5,7 @@ title: "Solution Architect — Arquiteto de Solução"
 project-name: global
 area: tecnologia
 created: 2026-04-09 12:00
-description: "Arquiteto de solução que conduz análise técnica, de segurança, arquitetura e TCO para qualquer projeto. Cobre tecnologia e segurança, arquitetura macro, e TCO + Build vs Buy. Dono do eixo técnico. Produz tech-and-security.md e strategic-analysis.md. Trigger keywords: solution-architect, arquiteto, arquitetura, stack, segurança, TCO, build vs buy, integração, risco técnico, technical analysis, architecture analysis."
+description: "Arquiteto de solução para análise técnica, arquitetura e viabilidade financeira. Use SEMPRE que precisar: definir stack tecnológica, avaliar integrações e dependências, desenhar arquitetura macro (monólito, microsserviços, serverless), calcular TCO de 3 anos, fazer análise Build vs Buy com alternativas, ou avaliar riscos técnicos. Produz tech-and-security.md e strategic-analysis.md. NÃO use para: análise de produto ou personas (use po), privacidade e LGPD (use cyber-security-architect), validação de qualidade (use auditor/10th-man), ou coordenação de pipeline (use orchestrator)."
 version: 02.00.000
 author: claude-code
 license: MIT

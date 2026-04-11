@@ -2,7 +2,7 @@
 name: get-flaticon
 argument-hint: "<pack-url> <output-folder>"
 title: get-flaticon
-description: "Baixa em lote ícones PNG 128px de um pack do Flaticon para uma pasta local usando Playwright stealth. Trigger: flaticon, ícones, icons, scraper, download icons."
+description: "Baixa em lote ícones PNG 128px de um pack do Flaticon para uma pasta local usando Playwright stealth. Use SEMPRE que precisar: baixar ícones de um pack do Flaticon, fazer download em lote de ícones PNG, ou obter ícones para usar em projetos/reports. Requer URL do pack e pasta de destino. NÃO use para: criar diagramas (use diagram-drawio), gerar HTML (use html-writer), ou buscar ícones de outras fontes (Remix Icon já está no design system via CDN)."
 project-name: global
 version: 01.01.000
 author: claude-code

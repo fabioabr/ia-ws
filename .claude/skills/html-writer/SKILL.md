@@ -2,7 +2,7 @@
 name: html-writer
 argument-hint: "<source.md> [--output path] [--template name]"
 title: html-writer
-description: "Converte documentos .md em relatórios HTML auto-contidos seguindo o Design System. Trigger: html-writer, report, relatório, HTML, converter md, gerar relatório, gerar HTML."
+description: "Converte documentos .md em relatórios HTML auto-contidos seguindo o Design System do workspace. Use SEMPRE que precisar: gerar um relatório HTML a partir de um .md, converter documento markdown para apresentação visual, criar report HTML com dark/light theme, ou gerar HTML auto-contido com logos e estilos inline. O HTML gerado funciona abrindo direto no navegador, sem servidor. NÃO use para: formatar o .md em si (use md-writer), validar convenções (use md-validator), ou gerar diagramas (use diagram-drawio)."
 project-name: global
 version: 01.01.000
 author: claude-code

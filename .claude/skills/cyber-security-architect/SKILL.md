@@ -4,7 +4,7 @@ title: "Cyber-Security Architect — Arquiteto de Cyberseguranca"
 project-name: global
 area: tecnologia
 created: 2026-04-09 12:00
-description: "Arquiteto de cyberseguranca e privacidade. Especialista OBRIGATORIO em qualquer projeto que precise de analise de seguranca, privacidade ou compliance. Dono do eixo LGPD/GDPR e protecao de dados pessoais. Quando o projeto menciona dados pessoais, roda em modo profundo. Quando nao menciona, roda em modo magro (confirma ausencia e atesta nao-aplicabilidade em privacy.md curto). Sempre escreve privacy.md. Trigger keywords: cyber-security-architect, privacidade, LGPD, GDPR, PII, dados pessoais, compliance, DPO, seguranca, data protection."
+description: "Arquiteto de cybersegurança e privacidade. Use SEMPRE que o projeto envolver dados pessoais, compliance regulatório, LGPD, GDPR, PII, DPO, criptografia, autenticação, ou qualquer aspecto de segurança da informação. Opera em 2 modos: profundo (quando há dados pessoais — checklist completo) ou magro (quando não há — atesta não-aplicabilidade). Sempre produz privacy.md. NÃO use para: análise de produto (use po), arquitetura ou TCO (use solution-architect), validação de qualidade (use auditor/10th-man), ou coordenação de pipeline (use orchestrator)."
 version: 02.00.000
 author: claude-code
 license: MIT

@@ -2,7 +2,7 @@
 name: diagram-drawio
 argument-hint: "<description-or-file> [--type flowchart|C4|ER|sequence]"
 title: diagram-drawio
-description: "Cria diagramas profissionais em XML compatível com draw.io (diagrams.net). Trigger: diagrama, drawio, draw.io, flowchart, fluxograma, arquitetura, C4, ER, pipeline, organograma."
+description: "Cria diagramas profissionais em XML compatível com draw.io (diagrams.net). Use SEMPRE que precisar: criar flowcharts, diagramas de arquitetura, C4, ER, sequence diagrams, organogramas, pipelines, ou qualquer diagrama técnico visual. Gera XML que abre direto no draw.io ou diagrams.net. NÃO use para: diagramas em Mermaid dentro de .md (use sintaxe mermaid direto), gerar HTML (use html-writer), ou documentar processos em texto (use md-writer)."
 project-name: global
 version: 01.00.000
 author: claude-code

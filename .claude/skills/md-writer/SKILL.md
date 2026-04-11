@@ -2,7 +2,7 @@
 name: md-writer
 argument-hint: "<file-or-content> [--mode format|create|polish] [--output path]"
 title: md-writer
-description: "Formatador de markdown que materializa conteúdo em arquivos .md polidos seguindo as convenções centralizadas do workspace. Trigger keywords: md-writer, markdown writer, formatar md, gerar markdown, materializar documento, polir documento."
+description: "Formatador de markdown que materializa conteúdo em arquivos .md polidos. Use SEMPRE que precisar: formatar ou reformatar um .md existente seguindo as convenções do workspace, criar um novo .md a partir de conteúdo bruto (notas, transcrições, bullets), ou polir um .md quase pronto (siglas, frontmatter, headings, emojis). 3 modos: format (default), create, polish. NÃO use para: gerar HTML a partir do .md (use html-writer), validar erros no .md (use md-validator), ou criar SKILL.md (use skill-writer)."
 project-name: global
 version: 01.01.000
 author: claude-code

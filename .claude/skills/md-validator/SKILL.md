@@ -2,7 +2,7 @@
 name: md-validator
 argument-hint: "<path> [--rule name] [--severity level] [--skip rules] [--fix]"
 title: "md-validator \u2014 Markdown Validator"
-description: "Valida arquivos .md contra as convenções do workspace (frontmatter, headings, emojis, siglas, naming, etc.) usando o validador Python. Trigger keywords: md-validator, validar md, validate markdown, checar convenções, compliance check, audit md."
+description: "Valida arquivos .md contra as convenções do workspace usando o validador Python. Use SEMPRE que precisar: verificar se um .md está em conformidade (frontmatter, headings, emojis, siglas, naming, section-order), auditar uma pasta inteira de .md recursivamente, ou corrigir problemas automaticamente (modo --fix). Aceita arquivo único ou pasta. 10 regras: frontmatter, heading, emoji, section-order, acronym, wikilink, callout, diagram, naming, skill-fields. NÃO use para: formatar/reescrever o .md (use md-writer), gerar HTML (use html-writer), ou criar skills (use skill-writer)."
 project-name: global
 version: 01.00.000
 author: claude-code

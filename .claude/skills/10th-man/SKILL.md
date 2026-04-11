@@ -4,7 +4,7 @@ title: "10th-man — Devil's Advocate / Divergent Gate"
 project-name: global
 area: tecnologia
 created: 2026-04-09 12:00
-description: "Devil's advocate and divergent gate for critical review of any document, analysis, or proposal. Operates in 2 internal phases: pure divergence (generates all hostile questions without scoring) then evaluation (cross-references with source documents and scores). Calculates score 0-100% across 3 dimensions with floors. Key question: 'What was NOT done — and is that acceptable?'. Trigger keywords: 10th-man, decimo homem, challenger, divergence, gate, devil's advocate, critical review, challenge."
+description: "Devil's advocate para revisão crítica de qualquer documento, análise ou proposta. Use SEMPRE que precisar questionar premissas, buscar pontos cegos, desafiar decisões, ou validar se o que NÃO foi feito é aceitável. Opera em 2 fases: divergência pura (gera perguntas hostis sem pontuar) e avaliação (cruza com documentos-fonte e pontua 0-100% em 3 dimensões). NÃO use para: validação convergente de qualidade (use auditor), gerar conteúdo de análise (use po/solution-architect), ou coordenação de pipeline (use orchestrator). Use este skill mesmo fora de pipelines — funciona para qualquer revisão crítica."
 version: 02.00.000
 author: claude-code
 license: MIT
