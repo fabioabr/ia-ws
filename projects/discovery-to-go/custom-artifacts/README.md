@@ -71,7 +71,7 @@ Contém o conhecimento de negócio do cliente que os agentes usam durante a entr
 | `{topic}.md` | Qualquer outro contexto relevante | Quando necessário |
 
 > [!tip] KB vs Knowledge Packs
-> **Knowledge packs** (em `knowledge/` na raiz do workspace) são por **domínio tecnológico** (SaaS, datalake, etc.) — qualquer cliente pode usar.
+> **Knowledge packs** (em `context-templates/` na raiz do workspace) são por **domínio tecnológico** (SaaS, datalake, etc.) — qualquer cliente pode usar.
 > **KB do cliente** (aqui em `custom-artifacts/{client}/kb/`) é sobre **a empresa específica** — só se aplica a esse cliente.
 > Ambos são carregados durante o setup. O orchestrator copia o knowledge pack para `setup/customization/current-context/` e o KB do cliente fica acessível via referência direta.
 
@@ -165,6 +165,6 @@ custom-artifacts/
 ## 🔗 Documentos Relacionados
 
 - `templates/customization/` — Defaults de configuração (fallback)
-- `knowledge/` — Knowledge packs globais por domínio tecnológico
+- `context-templates/` — Knowledge packs globais por domínio tecnológico
 - `skills/orchestrator/SKILL.md` — Como o orchestrator carrega custom-artifacts
 - `docs/quick-start.md` — Como iniciar uma run (campo `client` no briefing)

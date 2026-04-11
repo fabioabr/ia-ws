@@ -232,7 +232,7 @@ runs/run-{n}/
 
 ## 📦 Knowledge Packs
 
-O pipeline usa knowledge packs globais (em `knowledge/` na raiz do workspace):
+O pipeline usa knowledge packs globais (em `context-templates/` na raiz do workspace):
 
 | Pack | Quando usar |
 |------|-------------|

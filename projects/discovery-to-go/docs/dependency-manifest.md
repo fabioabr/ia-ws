@@ -56,14 +56,14 @@ Skills globais em `base-artifacts/skills/` (local copy of `base-artifacts/skills
 
 ## 📚 Knowledge Packs
 
-Domínios tecnológicos em `base-artifacts/knowledge/` (local copy of workspace `knowledge/`) copiados para a run durante o setup.
+Domínios tecnológicos em `base-artifacts/context-templates/` (local copy of workspace `context-templates/`) copiados para a run durante o setup.
 
 | Pack | Caminho no workspace | Arquivos |
 |------|---------------------|----------|
-| saas | `base-artifacts/knowledge/saas/` | `context.md`, `specialists.md`, `report-profile.md` |
-| datalake-ingestion | `base-artifacts/knowledge/datalake-ingestion/` | `context.md`, `specialists.md`, `report-profile.md` |
-| process-documentation | `base-artifacts/knowledge/process-documentation/` | `context.md`, `specialists.md`, `report-profile.md` |
-| web-microservices | `base-artifacts/knowledge/web-microservices/` | `context.md`, `specialists.md`, `report-profile.md` |
+| saas | `base-artifacts/context-templates/saas/` | `context.md`, `specialists.md`, `report-profile.md` |
+| datalake-ingestion | `base-artifacts/context-templates/datalake-ingestion/` | `context.md`, `specialists.md`, `report-profile.md` |
+| process-documentation | `base-artifacts/context-templates/process-documentation/` | `context.md`, `specialists.md`, `report-profile.md` |
+| web-microservices | `base-artifacts/context-templates/web-microservices/` | `context.md`, `specialists.md`, `report-profile.md` |
 
 ---
 

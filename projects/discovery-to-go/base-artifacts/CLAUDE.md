@@ -36,7 +36,7 @@ Global skills available via `/skill-name`:
 
 ## Knowledge
 
-Global technology domain packs at [knowledge/](knowledge/). Each domain has `context.md` (concerns + questions) and `specialists.md` (custom-specialist catalog). Any project can use them.
+Global technology domain packs at [context-templates/](context-templates/). Each domain has `context.md` (concerns + questions) and `specialists.md` (custom-specialist catalog). Any project can use them.
 
 ## Setup
 

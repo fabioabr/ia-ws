@@ -54,7 +54,7 @@ Arquivos afetados:
 | Prioridade | Local | Conteúdo |
 |------------|-------|----------|
 | 1 (maior) | `custom-artifacts/{client}/kb/` | Contexto específico do cliente (ecossistema, integrações, regras de negócio) |
-| 2 | `knowledge/{domain}/` (workspace global) | Contexto do domínio tecnológico (SaaS, datalake, etc.) |
+| 2 | `context-templates/{domain}/` (workspace global) | Contexto do domínio tecnológico (SaaS, datalake, etc.) |
 
 > [!info] KB do cliente complementa, não substitui
 > O KB do cliente e o knowledge pack global são **complementares**. Ambos são carregados. Se houver conflito entre uma informação do KB do cliente e do knowledge pack, prevalece o do cliente.
@@ -132,7 +132,7 @@ Antes de iniciar qualquer fase, verificar:
 - `custom-artifacts/README.md` — Guia de como estruturar custom-artifacts por cliente
 - `skills/orchestrator/SKILL.md` — Como o orchestrator carrega e aplica custom-artifacts
 - `templates/customization/` — Defaults de configuração (fallback)
-- `knowledge/` — Knowledge packs globais por domínio
+- `context-templates/` — Knowledge packs globais por domínio
 
 ## 📜 Histórico de Alterações
 

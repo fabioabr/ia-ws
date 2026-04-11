@@ -92,10 +92,10 @@ O consolidator faz merge na seguinte ordem de prioridade:
 
 | Knowledge Pack | Report Profile |
 |---------------|----------------|
-| saas | `knowledge/saas/report-profile.md` |
-| datalake-ingestion | `knowledge/datalake-ingestion/report-profile.md` |
-| process-documentation | `knowledge/process-documentation/report-profile.md` |
-| web-microservices | `knowledge/web-microservices/report-profile.md` |
+| saas | `context-templates/saas/report-profile.md` |
+| datalake-ingestion | `context-templates/datalake-ingestion/report-profile.md` |
+| process-documentation | `context-templates/process-documentation/report-profile.md` |
+| web-microservices | `context-templates/web-microservices/report-profile.md` |
 | genérico (sem pack) | Sem report-profile — usa apenas as 11 seções base |
 
 > [!info] Override total pelo cliente

@@ -34,7 +34,7 @@ discovery-to-go/
 │   ├── assets/
 │   ├── behavior/rules/
 │   ├── conventions/
-│   ├── knowledge/
+│   ├── context-templates/
 │   ├── skills/
 │   └── support-tools/
 ├── dtg-artifacts/                    ← artefatos do pipeline DTG
@@ -83,14 +83,14 @@ Entre cada fase: **Human Review** loop com logs de aprovação/rejeição.
 
 ## 📚 Knowledge Packs
 
-Domínios tecnológicos disponíveis localmente em `base-artifacts/knowledge/`:
+Domínios tecnológicos disponíveis localmente em `base-artifacts/context-templates/`:
 
 | Domínio | Context | Specialists |
 |---------|---------|-------------|
-| saas | `base-artifacts/knowledge/saas/context.md` | `base-artifacts/knowledge/saas/specialists.md` |
-| datalake-ingestion | `base-artifacts/knowledge/datalake-ingestion/context.md` | `base-artifacts/knowledge/datalake-ingestion/specialists.md` |
-| process-documentation | `base-artifacts/knowledge/process-documentation/context.md` | `base-artifacts/knowledge/process-documentation/specialists.md` |
-| web-microservices | `base-artifacts/knowledge/web-microservices/context.md` | `base-artifacts/knowledge/web-microservices/specialists.md` |
+| saas | `base-artifacts/context-templates/saas/context.md` | `base-artifacts/context-templates/saas/specialists.md` |
+| datalake-ingestion | `base-artifacts/context-templates/datalake-ingestion/context.md` | `base-artifacts/context-templates/datalake-ingestion/specialists.md` |
+| process-documentation | `base-artifacts/context-templates/process-documentation/context.md` | `base-artifacts/context-templates/process-documentation/specialists.md` |
+| web-microservices | `base-artifacts/context-templates/web-microservices/context.md` | `base-artifacts/context-templates/web-microservices/specialists.md` |
 
 > [!info] Knowledge packs são cópias locais do workspace global (`base-artifacts/`). A fonte de verdade continua no workspace central — sincronize quando necessário.
 

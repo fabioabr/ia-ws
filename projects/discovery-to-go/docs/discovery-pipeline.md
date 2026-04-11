@@ -68,7 +68,7 @@ flowchart LR
 
 1. **Cria o scaffold** da run em `runs/run-{n}/`
 2. **Detecta o knowledge pack** a partir de sinais no briefing (ex: "SaaS multi-tenant" → pack `saas`)
-3. **Copia o knowledge pack** de `base-artifacts/knowledge/{pack}/` para `{run}/setup/customization/current-context/`
+3. **Copia o knowledge pack** de `base-artifacts/context-templates/{pack}/` para `{run}/setup/customization/current-context/`
 4. **Copia os defaults de customization** de `dtg-artifacts/templates/customization/` para `{run}/setup/customization/` (sub-folders: `report-templates/`, `rules/`)
 5. **Cria o config.md** em `{run}/setup/` com plano de execução
 6. **Cria o pipeline-state.md** (state tracker mantido ao longo de toda a run, append-only)
@@ -371,7 +371,7 @@ O orchestrator mantém um tracking contínuo de consumo de tokens:
 
 ## 📦 Knowledge Packs
 
-O pipeline usa knowledge packs (em `base-artifacts/knowledge/`):
+O pipeline usa knowledge packs (em `base-artifacts/context-templates/`):
 
 | Pack | Quando usar |
 |------|-------------|

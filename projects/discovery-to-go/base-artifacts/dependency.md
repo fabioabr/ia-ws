@@ -121,13 +121,13 @@ Skills do projeto estendem ou substituem as globais.
 
 | Prioridade | Caminho |
 |------------|---------|
-| 1. Projeto (local) | `{pasta-do-projeto}/knowledge/` |
-| 2. Global (fallback) | `knowledge/` (relativo ao WS_BASE) |
+| 1. Projeto (local) | `{pasta-do-projeto}/context-templates/` |
+| 2. Global (fallback) | `context-templates/` (relativo ao WS_BASE) |
 
 Domínios tecnológicos com `context.md` (concerns + perguntas) e `specialists.md` (catálogo de especialistas). Projetos podem criar packs locais ou customizar cópias dos globais.
 
-| Domínio | Caminho relativo em `knowledge/` |
-|---------|----------------------------------|
+| Domínio | Caminho relativo em `context-templates/` |
+|---------|------------------------------------------|
 | SaaS | `saas/context.md` + `saas/specialists.md` |
 | Datalake Ingestion | `datalake-ingestion/context.md` + `datalake-ingestion/specialists.md` |
 | Process Documentation | `process-documentation/context.md` + `process-documentation/specialists.md` |

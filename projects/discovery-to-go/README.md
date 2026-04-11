@@ -84,7 +84,7 @@ discovery-to-go/
 │   │   └── variables/                     ← report-variables.md (empresa, footer, selo)
 │   ├── behavior/rules/                    ← regras globais (skill-structure, etc.)
 │   ├── conventions/                       ← 30+ convenções (frontmatter, markdown, naming, colors, etc.)
-│   ├── knowledge/                         ← knowledge packs por domínio tecnológico
+│   ├── context-templates/                 ← knowledge packs por domínio tecnológico
 │   │   ├── saas/                          ← context.md + specialists.md
 │   │   ├── datalake-ingestion/
 │   │   ├── process-documentation/
