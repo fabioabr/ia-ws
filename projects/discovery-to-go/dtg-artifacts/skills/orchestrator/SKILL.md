@@ -235,7 +235,7 @@ Depende do round:
 
 - **Round 1 (Discovery) REFAZER**: Reabre a reunião parcialmente. Os agentes dos eixos afetados pelas observações do humano reabordam os tópicos marcados. Customer atualiza respostas. Drafts são regenerados. Você produz nova versão do material de review.
 - **Round 2 (Challenge) REFAZER**: auditor e 10th-man reavaliam os drafts com as observações do humano como input adicional (podem mudar notas, reabrir questões residuais). Você gera nova versão do material de review.
-- **Round 3 (Delivery) REFAZER**: consolidator (via md-writer → consolidator → report-maker global) regenera o `final-report.md` e o HTML incorporando as observações do humano. Você gera nova versão do material de review.
+- **Round 3 (Delivery) REFAZER**: consolidator (via md-writer → consolidator → report-planner → html-writer) regenera o `delivery-report.md` e o HTML incorporando as observações do humano. Você gera nova versão do material de review.
 
 ##### 6.2 Diferença entre as decisões do HR Loop
 
@@ -288,7 +288,7 @@ Regras:
 - Fase 3 (Delivery) só conta tokens na iteração final aprovada pelo cliente no HR da Fase 3
 - Tokens da Fase 1 incluem: customer + po + solution-architect + cyber-security-architect + custom-specialist (se invocado) + seu próprio overhead
 - Tokens da Fase 2 incluem: auditor + 10th-man + seu overhead (rodando em paralelo)
-- Tokens da Fase 3 incluem: md-writer + consolidator + invocação do report-maker global + seu overhead
+- Tokens da Fase 3 incluem: md-writer + consolidator + report-planner + html-writer + seu overhead
 
 #### 10. Alertar estagnação
 
@@ -392,9 +392,9 @@ Toda saída sua segue:
 - **`auditor`** — você invoca no início da Fase 2 (Challenge) **em paralelo** com o 10th-man
 - **`10th-man`** — você invoca no início da Fase 2 (Challenge) **em paralelo** com o auditor
 - **`md-writer`** — você invoca na Fase 3 (Delivery) após o Human Review da Fase 2 aprovar. Ele gera os Markdown Documents intermediários a partir dos drafts aprovados.
-- **`consolidator`** — você invoca na Fase 3 **depois do md-writer**. Ele consome os markdown intermediários + pipeline-state + logs para produzir o `final-report.md` consolidado (com overview one-pager) e invoca o `report-maker` global para gerar o HTML.
-- **`report-maker`** (skill global, fora de discovery-to-go) — **você não invoca diretamente**. Quem invoca é o `consolidator` ao fim da Fase 3.
-- **`html-writer`** — **DEPRECATED** na v0.13. Substituído pelo `report-maker` global. Não invoque.
+- **`consolidator`** — você invoca na Fase 3 **depois do md-writer**. Ele consome os markdown intermediários + pipeline-state + logs para produzir o `delivery-report.md` consolidado (com overview one-pager) e invoca o `report-planner` para planejar o HTML.
+- **`report-planner`** (skill global, fora de discovery-to-go) — **você não invoca diretamente**. Quem invoca é o `consolidator` ao fim da Fase 3. Gera o plano de report que o `html-writer` consome para produzir o HTML final.
+- **`html-writer`** (skill global, fora de discovery-to-go) — **você não invoca diretamente**. Quem invoca é o `consolidator` (ou o pipeline) após o `report-planner`. Gera o HTML visual final a partir do plano de report.
 - **NÃO confunda com `pipeline-master` (v2)** — aquele é o orquestrador do pipeline antigo, não toca nele
 
 ### Modos de falha

@@ -285,9 +285,9 @@ Ao final de todos os 8 blocos, o log deve conter:
 
 ## 🔗 Documentos Relacionados
 
-- [[core/discovery/discovery]] — Processo de discovery que este log documenta
-- [[core/behavior-principles/behavior-principles]] — Principios fundamentais que governam o registro de informacoes
-- [[core/markdown-writing/markdown-writing]] — Regras de formatacao para o arquivo de log
+- [[rules/discovery/discovery]] — Processo de discovery que este log documenta
+- Behavior Principles (workspace global) — Principios fundamentais que governam o registro de informacoes
+- Markdown Writing (workspace global) — Regras de formatacao para o arquivo de log
 
 ## 📜 Historico de Alteracoes
 

@@ -101,7 +101,7 @@ O orchestrator copia o bloco abaixo (entre as marcas `<!-- HR-LOOP-START -->` e 
    - Depende do round:
      - Round 1: reabre reunião parcialmente nos tópicos afetados
      - Round 2: reavalia gates com as observações como input adicional
-     - Round 3: consolidator regenera `final-report.md` com as correções
+     - Round 3: consolidator regenera `delivery-report.md` com as correções
    - Registre a passagem em `logs/hr-loop-{round}-{pass}.md`
 4. Se **Avançar para a próxima fase**:
    - Finalize o round: appende snapshot em `pipeline-state.md`

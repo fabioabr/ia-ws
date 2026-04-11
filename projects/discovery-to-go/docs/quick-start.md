@@ -167,11 +167,12 @@ Se você avançou, o orchestrator executa em sequência:
 
 1. **pipeline-md-writer** — Transforma os drafts aprovados em markdown polido
 2. **consolidator** — Consolida tudo em um delivery report único
-3. **html-writer** — Gera a versão HTML do report
+3. **report-planner** — Planeja a visualização do HTML por regions
+4. **html-writer** — Gera a versão HTML do report
 
 **Ao final da Fase 3 você terá:**
-- `delivery/final-report.md`
-- `delivery/final-report.html`
+- `delivery/delivery-report.md`
+- `delivery/delivery-report.html`
 - State snapshot final appendado em `pipeline-state.md`
 
 ---
@@ -223,10 +224,11 @@ runs/run-{n}/
 │           └── 3-delivery/
 │               ├── 3.1-markdown-documents.md
 │               ├── 3.2-consolidated-report.md
-│               └── 3.3-delivery-reports.md
+│               ├── 3.3-report-layout.md
+│               └── 3.4-delivery-reports.md
 └── delivery/
-    ├── final-report.md               ← relatório final
-    └── final-report.html             ← versão HTML
+    ├── delivery-report.md               ← relatório final
+    └── delivery-report.html             ← versão HTML
 ```
 
 ---
@@ -274,4 +276,5 @@ Se o cliente já tem overrides definidos em `custom-artifacts/{client}/`, o orch
 |--------|------|-----------|
 | 01.00.000 | 2026-04-05 | Criação do documento |
 | 02.00.000 | 2026-04-05 | Reescrita para Pipeline v2 |
+| 03.01.000 | 2026-04-11 | Adicionado report-planner à Fase 3 (passo 7). Atualizado folder tree do resultado final com sub-fase 3.3 (report-layout) e renumeração de html-writer para 3.4. |
 | 03.00.000 | 2026-04-10 | Reescrita completa para Pipeline v0.5 — guia passo a passo de ponta a ponta com scaffold de runs, 3 fases, Human Review com 4 opções de decisão, context-templates globais |

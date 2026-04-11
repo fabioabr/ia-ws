@@ -137,9 +137,9 @@ Dados reais de consumo de tokens coletados durante testes do pipeline:
 
 ## 🔗 Documentos Relacionados
 
-- [[core/analyst-discovery-log/analyst-discovery-log]] — Log de discovery onde o consumo é registrado
-- [[core/audit-log/audit-log]] — Log de auditoria onde o consumo é registrado
-- [[core/behavior-principles/behavior-principles]] — Princípios de rastreabilidade
+- [[rules/analyst-discovery-log/analyst-discovery-log]] — Log de discovery onde o consumo é registrado
+- [[rules/audit-log/audit-log]] — Log de auditoria onde o consumo é registrado
+- Behavior Principles (workspace global) — Princípios de rastreabilidade
 
 ## 📜 Histórico de Alterações
 

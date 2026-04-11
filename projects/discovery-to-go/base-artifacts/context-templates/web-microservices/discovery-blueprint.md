@@ -11,7 +11,7 @@ tags:
   - discovery-blueprint
   - web-microservices
   - distributed-systems
-  - context-pack
+  - context-template
   - spec-pack
   - report-profile
 created: 2026-04-11

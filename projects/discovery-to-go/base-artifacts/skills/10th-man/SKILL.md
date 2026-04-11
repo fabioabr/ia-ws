@@ -30,7 +30,7 @@ inputs:
     type: file-path
     required: false
     description: "Original project briefing or context document"
-  - name: context-pack
+  - name: context-template
     type: file-path
     required: false
     description: "Domain context pack with antipatterns and edge cases (if available)"

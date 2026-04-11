@@ -215,8 +215,8 @@ Apresentar resultados do Challenge ao humano para Human Review.
 
 | Arquivo | Formato | Descrição |
 |---------|---------|-----------|
-| `delivery/final-report.md` | Markdown | Relatório consolidado com todas as seções |
-| `delivery/final-report.html` | HTML | Versão auto-contida para apresentação |
+| `delivery/delivery-report.md` | Markdown | Relatório consolidado com todas as seções |
+| `delivery/delivery-report.html` | HTML | Versão auto-contida para apresentação |
 
 ### Conteúdo do relatório final
 

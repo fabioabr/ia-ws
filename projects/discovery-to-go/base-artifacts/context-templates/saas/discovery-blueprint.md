@@ -12,7 +12,7 @@ tags:
   - saas
   - multi-tenant
   - billing
-  - context-pack
+  - context-template
   - spec-pack
   - report-profile
 created: 2026-04-11

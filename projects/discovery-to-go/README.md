@@ -109,11 +109,12 @@ discovery-to-go/
 │   │   ├── requirement-priority/          ← classificação de requisitos (MoSCoW)
 │   │   ├── token-tracking/                ← rastreamento de consumo de tokens
 │   │   └── custom-artifacts-priority/         ← cadeia de prioridade Custom > Pipeline > Base
-│   ├── skills/                            ← 5 skills locais do pipeline
+│   ├── skills/                            ← 6 skills locais do pipeline
 │   │   ├── orchestrator/                  ← coordenador central (transversal)
 │   │   ├── customer/                      ← simulador do cliente (Fase 1)
 │   │   ├── auditor/                       ← validação convergente (Fase 2)
 │   │   ├── consolidator/                  ← consolidador de relatórios (Fase 3)
+│   │   ├── report-planner/                ← planejador de layout HTML (Fase 3)
 │   │   └── pipeline-md-writer/            ← formatador de markdown (Fase 3)
 │   ├── templates/                         ← templates de artefatos
 │   │   ├── briefing-template.md           ← template do briefing inicial
@@ -194,13 +195,14 @@ Dois agentes independentes validam os drafts da Fase 1 **ao mesmo tempo**:
 
 ### Fase 3 — Delivery (Documentação + Consolidação)
 
-Três sub-fases sequenciais transformam drafts aprovados em entregáveis finais:
+Quatro sub-fases sequenciais transformam drafts aprovados em entregáveis finais:
 
 | # | Sub-fase | Agente | Output |
 |---|----------|--------|--------|
 | 3.1 | Documents | pipeline-md-writer | Markdown polido dos 5 drafts |
-| 3.2 | Consolidation | consolidator | `final-report.md` (one-pager + seções temáticas) |
-| 3.3 | Reports | html-writer | `final-report.html` (auto-contido, dark/light theme) |
+| 3.2 | Consolidation | consolidator | `delivery-report.md` (one-pager + seções temáticas) |
+| 3.3 | Report planning | report-planner | Report layout (regions para o HTML) |
+| 3.4 | Reports | html-writer | `delivery-report.html` (auto-contido, dark/light theme) |
 
 ---
 
@@ -225,7 +227,7 @@ O humano também pode:
 
 ---
 
-## Os 10 Agentes
+## Os 11 Agentes
 
 | Agente | Fase | Escopo | Localização |
 |--------|------|--------|-------------|
@@ -239,6 +241,7 @@ O humano também pode:
 | **10th-man** | 2 | Validação divergente — devil's advocate | `base-artifacts/skills/` |
 | **pipeline-md-writer** | 3 | Formata drafts em markdown polido | `dtg-artifacts/skills/` |
 | **consolidator** | 3 | Consolida tudo no delivery report final | `dtg-artifacts/skills/` |
+| **report-planner** | 3 | Planeja visualização do HTML por regions | `dtg-artifacts/skills/` |
 
 > [!info] Global vs Local
 > Skills em `base-artifacts/skills/` são cópias do workspace global — reutilizáveis em qualquer projeto. Skills em `dtg-artifacts/skills/` são específicas deste pipeline.
@@ -330,7 +333,7 @@ runs/run-{n}/
 │       └── results/
 │           ├── 1-discovery/              ← 8 blocos (1.1 a 1.8)
 │           ├── 2-challenge/              ← 2 validações (2.1, 2.2)
-│           └── 3-delivery/              ← 3 sub-fases (3.1, 3.2, 3.3)
+│           └── 3-delivery/              ← 4 sub-fases (3.1, 3.2, 3.3, 3.4)
 └── delivery/
     ├── delivery-report.md                ← relatório final consolidado
     └── delivery-report.html              ← versão HTML auto-contida
@@ -352,7 +355,8 @@ runs/run-{n}/
 | 2.2 | `divergent-validation.md` | Challenge | 10th-man |
 | 3.1 | `markdown-documents.md` | Delivery | pipeline-md-writer |
 | 3.2 | `consolidated-report.md` | Delivery | consolidator |
-| 3.3 | `delivery-reports.md` | Delivery | html-writer |
+| 3.3 | `report-layout.md` | Delivery | report-planner |
+| 3.4 | `delivery-reports.md` | Delivery | html-writer |
 
 ---
 
@@ -390,7 +394,7 @@ Contém:
 
 ## Artifact Sample
 
-Em `dtg-artifacts/arctifact-samples/run-sample/` existe uma **run completa de exemplo** simulando o projeto **FinTrack Pro** (plataforma SaaS de consolidação financeira). Inclui todos os 13 artefatos numerados, logs de entrevista, logs de HR review, pipeline-state com 3 snapshots, e delivery report final (MD + HTML).
+Em `dtg-artifacts/arctifact-samples/run-sample/` existe uma **run completa de exemplo** simulando o projeto **FinTrack Pro** (plataforma SaaS de consolidação financeira). Inclui todos os 14 artefatos numerados, logs de entrevista, logs de HR review, pipeline-state com 3 snapshots, e delivery report final (MD + HTML).
 
 Use este sample como referência para entender exatamente o que o pipeline produz.
 

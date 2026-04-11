@@ -179,10 +179,10 @@ O agente `auditor` gera o `audit-report.md` com:
 
 ## 🔗 Documentos Relacionados
 
-- [[core/analyst-discovery-log/analyst-discovery-log]] — Log do processo de discovery que antecede a auditoria
-- [[core/discovery/discovery]] — Processo de discovery cujos resultados são auditados
-- [[core/behavior-principles/behavior-principles]] — Princípios fundamentais de registro e rastreabilidade
-- [[core/markdown-writing/markdown-writing]] — Regras de formatação para os logs
+- [[rules/analyst-discovery-log/analyst-discovery-log]] — Log do processo de discovery que antecede a auditoria
+- [[rules/discovery/discovery]] — Processo de discovery cujos resultados são auditados
+- Behavior Principles (workspace global) — Princípios fundamentais de registro e rastreabilidade
+- Markdown Writing (workspace global) — Regras de formatação para os logs
 
 ## 📜 Histórico de Alterações
 

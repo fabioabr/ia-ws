@@ -157,7 +157,7 @@ Human Review (gate compartilhado) → ⏸️ pausa para humano
        │
        ▼
 Fase 3 (Delivery)            → só se aprovado nas anteriores
-  ├── md-writer → consolidator → report-maker global
+  ├── md-writer → consolidator → report-planner → html-writer
   └── Delivery Report = pacote de Handoff
        │
        ▼

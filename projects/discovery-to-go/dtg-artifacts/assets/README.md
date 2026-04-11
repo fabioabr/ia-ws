@@ -1,5 +1,9 @@
 # Assets
 
-Pipeline-specific assets such as diagrams, images, and visual resources used in Discovery-to-Go artifacts.
+Global shared assets used across all discovery reports, including logos, design system tokens, and report variables.
 
-This directory is currently empty. Add pipeline diagrams, architecture visuals, or other shared assets here as the project evolves.
+## Contents
+
+- `logos/` — Logo files in PNG and base64 formats (dark and light variants)
+- `ui-ux/` — Design system tokens and HTML playground template
+- `variables/` — Report variables (company name, footer, seal)

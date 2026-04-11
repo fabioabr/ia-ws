@@ -61,7 +61,7 @@ metadata:
 
 Você é o **formatador de markdown** da Fase 3 (Delivery). Sua função é **materializar** os drafts aprovados da iteração final em arquivos `.md` polidos, seguindo o padrão do behavior global — SEM decidir estrutura do relatório final. Isso é responsabilidade do `consolidator` que roda **depois** de você.
 
-Seu output são os **Markdown Documents intermediários** em `{project}/delivery/intermediate/`, que o `consolidator` vai consumir para gerar o `final-report.md` consolidado.
+Seu output são os **Markdown Documents intermediários** em `{project}/delivery/intermediate/`, que o `consolidator` vai consumir para gerar o `delivery-report.md` consolidado.
 
 ## Instructions
 
@@ -96,7 +96,7 @@ Para cada draft:
 | 5 | `delivery/intermediate/privacy.md` | Draft do cyber-security-architect (bloco 6, sempre existe — modo profundo ou magro) |
 
 > [!info] Por que só 5 arquivos intermediários?
-> Na v0.13, o md-writer gera **um markdown por draft aprovado** (5 drafts = 5 arquivos intermediários). O `consolidator` é quem transforma esses 5 arquivos + pipeline-state + logs + reports em **um único `final-report.md` consolidado** com overview one-pager + seções relevantes, e invoca o `report-maker` global para gerar o HTML.
+> Na v0.13, o md-writer gera **um markdown por draft aprovado** (5 drafts = 5 arquivos intermediários). O `consolidator` é quem transforma esses 5 arquivos + pipeline-state + logs + reports em **um único `delivery-report.md` consolidado** com overview one-pager + seções relevantes, e invoca o `report-planner` + `html-writer` para gerar o HTML.
 
 ### 4. Regras de formatação obrigatórias
 
@@ -168,7 +168,7 @@ flowchart LR
 Use wikilinks Obsidian para referências cruzadas:
 
 ```markdown
-Ver também [[boundaries|Boundaries]] para detalhes das fronteiras de tecnologia.
+Ver também Boundaries para detalhes das fronteiras de tecnologia.
 ```
 
 #### Emojis funcionais
@@ -247,9 +247,9 @@ Sinalize ao orchestrator se durante a formatação detectar:
 ### 10. Skills relacionados
 
 - **`orchestrator`** — invoca você na Fase 3 (Delivery) após o Human Review da Fase 2 aprovar
-- **`consolidator`** — roda **depois** de você; consome seus Markdown Documents intermediários e produz o `final-report.md` consolidado + invoca `report-maker` global para o HTML
-- **`report-maker`** (global, fora de discovery-to-go) — invocado pelo `consolidator` ao fim da Fase 3 para gerar HTML visual do relatório consolidado
-- **`html-writer`** — DEPRECATED na v0.13. Substituído pelo `report-maker` global invocado pelo `consolidator`
+- **`consolidator`** — roda **depois** de você; consome seus Markdown Documents intermediários e produz o `delivery-report.md` consolidado + invoca `report-planner` para planejar o HTML
+- **`report-planner`** (global, fora de discovery-to-go) — invocado pelo `consolidator` ao fim da Fase 3. Gera o plano de report que o `html-writer` consome para produzir o HTML final
+- **`html-writer`** (global, fora de discovery-to-go) — gera o HTML visual final a partir do plano de report produzido pelo `report-planner`
 - **NÃO confunda com `markdown-writing` rule do v2** — aquela é a regra; você é o agente que segue a regra
 
 ## Examples
@@ -304,7 +304,7 @@ Sinalize ao orchestrator se durante a formatação detectar:
 3. **Frontmatter Obsidian é obrigatório em todos os arquivos.**
 4. **Wikilinks entre docs intermediários quando fizer sentido.**
 5. **Padrões do behavior global são respeitados** (mesmo sem tocar nos arquivos).
-6. **Seu output vira input do consolidator.** O consolidator consome seus arquivos para montar o `final-report.md` consolidado final.
+6. **Seu output vira input do consolidator.** O consolidator consome seus arquivos para montar o `delivery-report.md` consolidado final.
 
 ## claude-code
 

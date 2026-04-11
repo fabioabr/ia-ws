@@ -44,7 +44,7 @@ flowchart LR
 |------|------|-----------|---------|------------------|
 | 1 | **Discovery** | Reunião conjunta temática com 8 blocos | customer, po, solution-architect, cyber-security-architect, custom-specialist | 5 drafts + interview.md |
 | 2 | **Challenge** | Validação convergente + divergente em paralelo | auditor (#2.1), 10th-man (#2.2) | audit-report.md + challenge-report.md |
-| 3 | **Delivery** | Documentação, consolidação e report HTML | pipeline-md-writer (#3.1), consolidator (#3.2), html-writer (#3.3) | final-report.md + final-report.html |
+| 3 | **Delivery** | Documentação, consolidação e report HTML | pipeline-md-writer (#3.1), consolidator (#3.2), html-writer (#3.3) | delivery-report.md + delivery-report.html |
 
 ---
 
@@ -126,15 +126,15 @@ flowchart LR
 | # | Sub-fase | Agente | Input | Output |
 |---|----------|--------|-------|--------|
 | 3.1 | Documents creation | pipeline-md-writer | Drafts aprovados | Markdown polido |
-| 3.2 | Consolidation | consolidator | Markdown documents | final-report.md |
-| 3.3 | Reports | html-writer | final-report.md | final-report.html |
+| 3.2 | Consolidation | consolidator | Markdown documents | delivery-report.md |
+| 3.3 | Reports | html-writer | delivery-report.md | delivery-report.html |
 
 ### Outputs
 
 | Arquivo | Descricao |
 |---------|-----------|
-| `delivery/final-report.md` | Relatorio consolidado final |
-| `delivery/final-report.html` | Versao HTML auto-contida |
+| `delivery/delivery-report.md` | Relatorio consolidado final |
+| `delivery/delivery-report.html` | Versao HTML auto-contida |
 
 ---
 
@@ -255,7 +255,7 @@ O discovery so esta completo quando:
 
 - [ ] Fase 1 — 8 result files (1.1 a 1.8) + interview.md gerados, aprovados no Human Review
 - [ ] Fase 2 — 2.1-convergent-validation.md + 2.2-divergent-validation.md gerados, aprovados no Human Review
-- [ ] Fase 3 — final-report.md + final-report.html gerados, aprovados no Human Review
+- [ ] Fase 3 — delivery-report.md + delivery-report.html gerados, aprovados no Human Review
 - [ ] pipeline-state.md atualizado com tracking completo de todas as fases e iteracoes
 - [ ] Todos os snapshots gerados em pipeline-state.md (após cada fase)
 

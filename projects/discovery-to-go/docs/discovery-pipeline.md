@@ -55,7 +55,7 @@ flowchart LR
 | — | Human Review | humano | Decisão: re-executar, avançar ou abortar |
 | 2 | Challenge | auditor, 10th-man (em paralelo) | 2.1-convergent-validation + 2.2-divergent-validation |
 | — | Human Review | humano | Decisão: re-executar, avançar ou abortar |
-| 3 | Delivery | pipeline-md-writer, consolidator, html-writer | final-report.md + .html |
+| 3 | Delivery | pipeline-md-writer, consolidator, report-planner, html-writer | delivery-report.md + .html |
 | — | Human Review | humano | Decisão: re-executar, avançar ou abortar |
 
 ---
@@ -294,28 +294,32 @@ flowchart LR
     MW --> MD["Markdown\nDocuments"]
     MD --> CO["#3.2\nconsolidator"]
     CO --> DA["Delivery\nArtifacts"]
-    DA --> HW["#3.3\nhtml-writer"]
+    DA --> RP["#3.3\nreport-planner"]
+    RP --> PL["Report\nLayout"]
+    PL --> HW["#3.4\nhtml-writer"]
     HW --> DR["Delivery\nReports"]
 
     style DD fill:#2EB5F5,color:#1A1923
     style CD fill:#F4AC00,color:#1A1923
     style MW fill:#9B96FF,color:#1A1923
     style CO fill:#9B96FF,color:#1A1923
+    style RP fill:#9B96FF,color:#1A1923
     style HW fill:#0ED145,color:#1A1923
 ```
 
 | # | Sub-fase | Agente | Input | Output |
 |---|----------|--------|-------|--------|
 | 3.1 | Documents creation | pipeline-md-writer | Drafts aprovados | Markdown polido |
-| 3.2 | Consolidation | consolidator | Markdown documents | final-report.md |
-| 3.3 | Reports | html-writer | final-report.md | final-report.html |
+| 3.2 | Consolidation | consolidator | Markdown documents | delivery-report.md |
+| 3.3 | Report planning | report-planner | delivery-report.md | Report layout (regions) |
+| 3.4 | Reports | html-writer | delivery-report.md + layout | delivery-report.html |
 
 ### Outputs da Fase 3
 
 | Arquivo | Descrição |
 |---------|-----------|
-| `delivery/final-report.md` | Relatório consolidado final |
-| `delivery/final-report.html` | Versão HTML auto-contida |
+| `delivery/delivery-report.md` | Relatório consolidado final |
+| `delivery/delivery-report.html` | Versão HTML auto-contida |
 
 ### State Snapshot
 
@@ -399,6 +403,7 @@ O orchestrator auto-detecta o pack a partir de sinais no briefing. Se ambíguo, 
 | auditor | 2 | Validação convergente (5 dimensões) |
 | pipeline-md-writer | 3 | Formata drafts em markdown polido |
 | consolidator | 3 | Consolida tudo no delivery report |
+| report-planner | 3 | Planeja visualização do HTML por regions |
 
 ### Globais (em `.claude/skills/`)
 
@@ -437,4 +442,5 @@ O orchestrator auto-detecta o pack a partir de sinais no briefing. Se ambíguo, 
 
 | Versão | Data | Descrição |
 |--------|------|-----------|
-| 01.00.000 | 2026-04-10 | Reescrita completa para Pipeline v0.5. Substitui documento do Pipeline v2 (3 sub-etapas com mini-ciclos) pelo novo formato de 3 fases (Discovery com reunião conjunta, Challenge com auditor + 10th-man em paralelo, Delivery com md-writer + consolidator + html-writer). Novas opções de Human Review (Re-executar, Refazer, Avançar, Abortar). Scaffold de runs. Context-templates globais. |
+| 01.01.000 | 2026-04-11 | Adicionado report-planner à Fase 3 (sub-fase 3.3). html-writer passa a ser sub-fase 3.4. Atualizado diagrama, tabela de sub-fases e tabela de skills. |
+| 01.00.000 | 2026-04-10 | Reescrita completa para Pipeline v0.5. Substitui documento do Pipeline v2 (3 sub-etapas com mini-ciclos) pelo novo formato de 3 fases (Discovery com reunião conjunta, Challenge com auditor + 10th-man em paralelo, Delivery com md-writer + consolidator + report-planner + html-writer). Novas opções de Human Review (Re-executar, Refazer, Avançar, Abortar). Scaffold de runs. Context-templates globais. |
