@@ -65,7 +65,7 @@ Atualizado: 10 packs listados, formato documento único, multi-template, scaffol
 
 ---
 
-## 8. Catálogo de information regions para o delivery report
+## 8. ~~Catálogo de information regions para o delivery report~~ PARCIAL
 
 Criar um catálogo completo de **todos os tipos de informação** que podem ser gerados num processo de discovery — independente do tipo de projeto. Cada tipo de informação será uma **region** reutilizável que aparece tanto no `.md` final quanto no `.html` visual.
 
@@ -116,7 +116,8 @@ O documento `docs/product-discovery-deliverables.md` serve como base teórica pa
 
 ### Entregáveis
 
-1. **`dtg-artifacts/catalog/information-regions.md`** — catálogo completo de regions com: id, nome, descrição, schema de dados esperado, template visual de referência
-2. **Atualizar cada discovery-blueprint** para referenciar quais regions são obrigatórias/opcionais para aquele tipo de projeto
-3. **`dtg-artifacts/templates/customization/html-layout.md`** — template default de layout do HTML (quais regions, ordem, grid) — customizável por projeto em `custom-artifacts/{client}/config/html-layout.md`
-4. **Templates HTML por region** — componentes visuais reutilizáveis que o `html-writer` usa para renderizar cada region (card, table, KPI, diagram, checklist, etc.)
+1. ~~**Catálogo de regions** (`base-artifacts/templates/report-regions/information-regions.md`) — 85 regions em 14 grupos~~ DONE
+2. ~~**85 arquivos .md individuais** em `base-artifacts/templates/report-regions/{grupo}/{region}.md` — cada um com frontmatter, schema e exemplo~~ DONE
+3. **Atualizar cada discovery-blueprint** para referenciar quais regions são obrigatórias/opcionais para aquele tipo de projeto
+4. **`dtg-artifacts/templates/customization/html-layout.md`** — template default de layout do HTML (quais regions, ordem, grid) — customizável por projeto em `custom-artifacts/{client}/config/html-layout.md`
+5. **Templates HTML por region** — componentes visuais reutilizáveis que o `html-writer` usa para renderizar cada region (card, table, KPI, diagram, checklist, etc.)
