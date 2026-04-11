@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Domain Regions Preview — Part 2 (Last 10)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+/* ====== DESIGN TOKENS (dark default) ====== */
+:root {
+    --primary: #4DA8DA;
+    --primary-dark: #3A8BB8;
+    --primary-light: rgba(77, 168, 218, 0.12);
+    --secondary: #B9B7BD;
+    --success: #0ED145;
+    --success-light: rgba(14, 209, 69, 0.12);
+    --success-border: rgba(14, 209, 69, 0.3);
+    --warning: #F4AC00;
+    --warning-light: rgba(244, 172, 0, 0.12);
+    --warning-border: rgba(244, 172, 0, 0.3);
+    --danger: #8B1A1A;
+    --danger-light: rgba(139, 26, 26, 0.15);
+    --danger-border: rgba(139, 26, 26, 0.35);
+    --info: #2EB5F5;
+    --info-light: rgba(46, 181, 245, 0.12);
+    --info-border: rgba(46, 181, 245, 0.3);
+    --bg: #1A1923;
+    --card-bg: #2E2D32;
+    --text: #E0DFE3;
+    --text-muted: #88878C;
+    --border: #3E3D44;
+    --purple: #9B96FF;
+    --purple-light: rgba(155, 150, 255, 0.12);
+    --orange: #FF9473;
+    --teal: #2DD4BF;
+    --chart-1: #4DA8DA;
+    --chart-2: #2EB5F5;
+    --chart-3: #0ED145;
+    --chart-4: #FF6B6B;
+    --chart-5: #A78BFA;
+    --header-bg: linear-gradient(135deg, #2E2D32 0%, #252428 50%, #1A1923 100%);
+    --card-header-bg: #252428;
+    --th-bg: #252428;
+    --th-bg-hover: #36353B;
+    --card-shadow: 0 2px 12px rgba(46, 181, 245, 0.06), 0 1px 4px rgba(0,0,0,0.4);
+    --progress-track: #3E3D44;
+    --alert-warning-text: #f0c040;
+    --danger-text: #E85D54;
+    --alert-danger-text: #E85D54;
+    --alert-info-text: #5FC8F8;
+    --alert-success-text: #3DE06A;
+    --pill-success-text: #3DE06A;
+    --pill-info-text: #5FC8F8;
+    --pill-warning-text: #f0c040;
+}
+
+[data-theme="light"] {
+    --primary: #4DA8DA;
+    --primary-dark: #3A8BB8;
+    --primary-light: rgba(77, 168, 218, 0.1);
+    --secondary: #88878C;
+    --success: #0A9E35;
+    --success-light: rgba(10, 158, 53, 0.08);
+    --success-border: rgba(10, 158, 53, 0.25);
+    --warning: #E67E22;
+    --warning-light: rgba(230, 126, 34, 0.12);
+    --warning-border: rgba(230, 126, 34, 0.35);
+    --danger: #E74C3C;
+    --danger-light: rgba(231, 76, 60, 0.10);
+    --danger-border: rgba(231, 76, 60, 0.30);
+    --info: #1E95CC;
+    --info-light: rgba(30, 149, 204, 0.08);
+    --info-border: rgba(30, 149, 204, 0.25);
+    --bg: #E0DFE3;
+    --card-bg: #ffffff;
+    --text: #1A1923;
+    --text-muted: #88878C;
+    --border: #B9B7BD;
+    --purple: #7B76FE;
+    --purple-light: rgba(123, 118, 254, 0.08);
+    --orange: #FE7C58;
+    --teal: #00D8D8;
+    --chart-1: #4DA8DA;
+    --chart-2: #1E95CC;
+    --chart-3: #0A9E35;
+    --chart-4: #D44040;
+    --chart-5: #7C6BD4;
+    --header-bg: linear-gradient(135deg, #2E2D32 0%, #252428 50%, #1A1923 100%);
+    --card-header-bg: rgba(77, 168, 218, 0.12);
+    --th-bg: rgba(77, 168, 218, 0.12);
+    --th-bg-hover: rgba(77, 168, 218, 0.22);
+    --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0,0,0,0.06);
+    --progress-track: #B9B7BD;
+    --alert-warning-text: #C0392B;
+    --alert-danger-text: #C0392B;
+    --alert-info-text: #1670A0;
+    --alert-success-text: #087A28;
+    --pill-success-text: #087A28;
+    --pill-info-text: #1670A0;
+    --pill-warning-text: #C0392B;
+    --hover-border: #4DA8DA;
+}
+[data-theme="light"] .card:hover { border-color: var(--hover-border); }
+[data-theme="light"] .stat-card:hover { border-color: var(--hover-border); }
+[data-theme="light"] .stat-card { background: #F0EFF2; }
+
+/* ====== RESET ====== */
+html, body, div, span, h1, h2, h3, h4, h5, h6, p, a, img, ul, ol, li,
+header, footer, nav, section, article, aside, button, input, select, textarea,
+table, tr, td, th, form, label, fieldset, legend { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; }
+.container { max-width: 1400px; margin: 0 auto; padding: 0 24px; }
+
+/* ====== HEADER ====== */
+.header { background: linear-gradient(135deg, #2E2D32 0%, #252428 50%, #1A1923 100%); color: white; padding: 36px 0 28px; position: relative; overflow: hidden; }
+.header::before { content: ''; position: absolute; top: -50%; right: -10%; width: 500px; height: 500px; background: rgba(255,255,255,0.03); border-radius: 50%; z-index: 0; }
+.header-content { position: relative; z-index: 1; }
+.header-top { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+.header-left { display: flex; align-items: center; gap: 16px; }
+.header h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.5px; }
+.header .subtitle { font-size: 0.95rem; opacity: 0.85; font-weight: 300; margin-top: 2px; }
+.header-right { display: flex; align-items: center; gap: 12px; }
+.header-badge { background: rgba(255,255,255,0.15); padding: 6px 14px; border-radius: 8px; font-size: 0.78rem; display: flex; align-items: center; gap: 6px; backdrop-filter: blur(10px); color: white; }
+
+/* ====== THEME TOGGLE ====== */
+.theme-toggle { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; padding: 6px 12px; cursor: pointer; color: white; font-family: 'Poppins', sans-serif; font-size: 0.78rem; display: flex; align-items: center; gap: 6px; transition: all 0.2s; }
+.theme-toggle:hover { background: rgba(255,255,255,0.22); }
+
+/* ====== SECTION ====== */
+.section { margin-top: 32px; }
+.section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid var(--border); }
+.section-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+.section-title { font-size: 1.15rem; font-weight: 600; }
+.section-count { background: var(--bg); padding: 4px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 600; color: var(--text-muted); }
+
+/* ====== REGION ID BADGE ====== */
+.region-badge { display: inline-flex; align-items: center; gap: 5px; background: var(--primary-light); color: var(--primary); border: 1px solid rgba(77, 168, 218, 0.25); padding: 3px 10px; border-radius: 6px; font-size: 0.68rem; font-weight: 600; font-family: monospace; letter-spacing: 0.3px; }
+
+/* ====== CARDS ====== */
+.card { background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border); box-shadow: var(--card-shadow); overflow: hidden; margin-bottom: 24px; transition: box-shadow 0.2s, border-color 0.2s; }
+.card:hover { border-color: var(--primary); }
+.card-header { display: flex; align-items: center; gap: 10px; padding: 14px 18px; border-bottom: 1px solid var(--border); background: var(--card-header-bg); flex-wrap: wrap; }
+.card-header-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+.card-title { font-weight: 600; font-size: 0.95rem; flex: 1; }
+.card-badge { padding: 2px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: 600; white-space: nowrap; }
+.card-body { padding: 18px; }
+.card-desc { font-size: 0.84rem; color: var(--text-muted); margin-bottom: 16px; line-height: 1.6; }
+
+/* ====== STAT CARDS ====== */
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 16px; }
+.stat-card { background: var(--card-bg); border-radius: 12px; padding: 18px 20px; box-shadow: var(--card-shadow); border: 1px solid var(--border); display: flex; align-items: center; gap: 14px; transition: all 0.2s; }
+.stat-card:hover { border-color: var(--primary); background: var(--th-bg-hover); }
+.stat-card-icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }
+.stat-card-info { flex: 1; }
+.stat-card-number { font-size: 1.12rem; font-weight: 700; line-height: 1.1; }
+.stat-card-label { font-size: 0.72rem; color: var(--text-muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.3px; }
+.stat-card-sub { font-size: 0.68rem; color: var(--text-muted); margin-top: 2px; }
+.stat-card-trend { font-size: 0.72rem; font-weight: 600; display: flex; align-items: center; gap: 3px; }
+.trend-up { color: var(--success); }
+.trend-stable { color: var(--info); }
+.trend-down { color: var(--danger-text); }
+
+/* ====== TABLES ====== */
+.table-wrapper { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+th { text-align: left; padding: 10px 14px; background: var(--th-bg); font-weight: 600; border-bottom: 2px solid var(--border); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.3px; color: var(--text-muted); }
+thead tr:hover th { background: var(--th-bg-hover); }
+td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+tr:hover { background: var(--primary-light); }
+
+/* ====== PILLS ====== */
+.pill { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: 600; }
+.pill-success { background: var(--success-light); color: var(--pill-success-text); border: 1px solid var(--success-border); }
+.pill-info { background: var(--info-light); color: var(--pill-info-text); border: 1px solid var(--info-border); }
+.pill-warning { background: var(--warning-light); color: var(--pill-warning-text); border: 1px solid var(--warning-border); }
+.pill-danger { background: var(--danger-light); color: var(--alert-danger-text); border: 1px solid var(--danger-border); }
+.pill-purple { background: var(--purple-light); color: var(--purple); border: 1px solid rgba(155, 150, 255, 0.3); }
+.pill-teal { background: rgba(45, 212, 191, 0.12); color: var(--teal); border: 1px solid rgba(45, 212, 191, 0.3); }
+.pill-orange { background: rgba(255, 148, 115, 0.12); color: var(--orange); border: 1px solid rgba(255, 148, 115, 0.3); }
+.pill-secondary { background: rgba(185, 183, 189, 0.12); color: var(--secondary); border: 1px solid rgba(185, 183, 189, 0.3); }
+
+/* ====== BG UTILITY ====== */
+.bg-primary { background: var(--primary); color: #1A1923 !important; }
+.bg-success { background: var(--success); color: #1A1923 !important; }
+.bg-warning { background: var(--warning); color: #1A1923 !important; }
+.bg-teal { background: var(--teal); color: #1A1923 !important; }
+.bg-orange { background: var(--orange); color: #1A1923 !important; }
+.bg-info { background: var(--info); color: white !important; }
+.bg-danger { background: var(--danger); color: white !important; }
+.bg-secondary { background: var(--secondary); color: #1A1923 !important; }
+.bg-purple { background: var(--purple); color: white !important; }
+
+/* ====== SCORE BADGES ====== */
+.score { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 24px; border-radius: 6px; font-size: 0.72rem; font-weight: 700; }
+.score-5 { background: var(--success-light); color: var(--pill-success-text); border: 1px solid var(--success-border); }
+.score-4 { background: var(--info-light); color: var(--pill-info-text); border: 1px solid var(--info-border); }
+.score-3 { background: var(--warning-light); color: var(--pill-warning-text); border: 1px solid var(--warning-border); }
+.score-2 { background: var(--danger-light); color: var(--alert-danger-text); border: 1px solid var(--danger-border); }
+.score-1 { background: var(--danger-light); color: var(--alert-danger-text); border: 1px solid var(--danger-border); }
+
+/* ====== FUNNEL BARS ====== */
+.funnel-container { display: flex; flex-direction: column; gap: 10px; }
+.funnel-row { display: flex; align-items: center; gap: 12px; }
+.funnel-label { width: 180px; font-size: 0.8rem; font-weight: 500; text-align: right; flex-shrink: 0; }
+.funnel-bars { flex: 1; display: flex; gap: 3px; height: 32px; align-items: center; }
+.funnel-bar { height: 100%; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 0.68rem; font-weight: 600; color: white; min-width: 36px; transition: opacity 0.2s; }
+.funnel-bar:hover { opacity: 0.85; }
+.funnel-total { font-size: 0.75rem; font-weight: 600; color: var(--text-muted); width: 80px; text-align: right; flex-shrink: 0; }
+.funnel-legend { display: flex; gap: 16px; margin-top: 8px; justify-content: center; }
+.funnel-legend-item { display: flex; align-items: center; gap: 6px; font-size: 0.72rem; color: var(--text-muted); }
+.funnel-legend-dot { width: 10px; height: 10px; border-radius: 3px; }
+
+/* ====== TIMELINE BARS (inline ROI) ====== */
+.roi-bar { height: 8px; border-radius: 4px; background: var(--success); display: inline-block; vertical-align: middle; }
+.phase-badge { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; font-size: 0.72rem; font-weight: 700; }
+
+/* ====== LAYERED STACK ====== */
+.stack-layer { padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 14px; transition: background 0.2s; }
+.stack-layer:last-child { border-bottom: none; }
+.stack-layer:hover { background: var(--primary-light); }
+.stack-layer-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+.stack-layer-content { flex: 1; }
+.stack-layer-title { font-weight: 600; font-size: 0.88rem; margin-bottom: 2px; }
+.stack-layer-tech { font-size: 0.78rem; color: var(--text-muted); }
+.stack-layer-badges { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+
+/* ====== RACI HEATMAP ====== */
+.raci-cell { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 28px; border-radius: 6px; font-size: 0.72rem; font-weight: 700; }
+.raci-r { background: var(--info-light); color: var(--pill-info-text); border: 1px solid var(--info-border); }
+.raci-a { background: var(--success-light); color: var(--pill-success-text); border: 1px solid var(--success-border); }
+.raci-c { background: var(--warning-light); color: var(--pill-warning-text); border: 1px solid var(--warning-border); }
+.raci-i { background: rgba(185, 183, 189, 0.15); color: var(--secondary); border: 1px solid rgba(185, 183, 189, 0.25); }
+.raci-empty { color: var(--border); }
+
+/* ====== BOUNDED CONTEXT GROUP ====== */
+.bc-group { margin-bottom: 4px; }
+.bc-header { font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); padding: 6px 14px; background: var(--bg); }
+.bc-header td { background: var(--bg); font-weight: 600; color: var(--text-muted); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid var(--border); }
+
+/* ====== FOOTER ====== */
+.footer { background: linear-gradient(135deg, #2E2D32 0%, #252428 50%, #1A1923 100%); color: white; padding: 36px 0; position: relative; overflow: hidden; margin-top: 48px; }
+.footer::before { content: ''; position: absolute; bottom: -50%; left: -10%; width: 500px; height: 500px; background: rgba(255,255,255,0.03); border-radius: 50%; z-index: 0; }
+.footer-content { position: relative; z-index: 1; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 24px; }
+.footer-left { display: flex; align-items: center; gap: 16px; }
+.footer-info-name { font-size: 0.95rem; font-weight: 600; }
+.footer-info-detail { font-size: 0.78rem; opacity: 0.7; }
+.footer-right { text-align: right; }
+.footer-doc-title { font-size: 0.85rem; font-weight: 500; opacity: 0.9; }
+.footer-doc-detail { font-size: 0.72rem; opacity: 0.6; margin-top: 2px; }
+.footer-seal { display: flex; align-items: center; gap: 8px; margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.12); font-size: 0.7rem; opacity: 0.5; justify-content: center; }
+.footer-seal i { font-size: 1rem; }
+
+/* ====== BACK TO TOP ====== */
+.back-to-top { position: fixed; bottom: 32px; right: 32px; width: 44px; height: 44px; border-radius: 12px; background: var(--info); color: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; box-shadow: 0 4px 16px rgba(46, 181, 245, 0.35); opacity: 0; visibility: hidden; transform: translateY(10px); transition: opacity 0.3s, visibility 0.3s, transform 0.3s; z-index: 999; }
+.back-to-top.visible { opacity: 1; visibility: visible; transform: translateY(0); }
+
+/* ====== RESPONSIVE ====== */
+@media (max-width: 768px) {
+    .header-top { flex-direction: column; align-items: flex-start; }
+    .stats-grid { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
+    .funnel-label { width: 120px; font-size: 0.72rem; }
+    .stack-layer { flex-direction: column; align-items: flex-start; }
+}
+    </style>
+</head>
+<body>
+
+<!-- ====== HEADER ====== -->
+<header class="header">
+    <div class="container">
+        <div class="header-content">
+            <div class="header-top">
+                <div class="header-left">
+                    <div>
+                        <h1><i class="ri-code-s-slash-line"></i> Domain Regions Preview</h1>
+                        <p class="subtitle">Part 2 -- Last 10 Domain Regions (Mobile, RPA, Platform, Process Docs, Microservices)</p>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <button class="theme-toggle" onclick="toggleTheme()">
+                        <i class="ri-moon-line" id="theme-icon"></i>
+                        <span id="theme-label">Light</span>
+                    </button>
+                    <span class="header-badge"><i class="ri-layout-grid-line"></i> 10 Regions</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="container" style="padding-top: 8px; padding-bottom: 32px;">
+
+<!-- ================================================================ -->
+<!-- 1. MOBILE STRATEGY — Comparison table with badges               -->
+<!-- ================================================================ -->
+<div class="section">
+    <div class="section-header">
+        <div class="section-icon bg-info"><i class="ri-smartphone-line"></i></div>
+        <span class="section-title">Mobile Strategy</span>
+        <span class="region-badge"><i class="ri-price-tag-3-line"></i> REG-DOM-MOB-01</span>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <div class="card-header-icon bg-info"><i class="ri-smartphone-line"></i></div>
+            <span class="card-title">Platform Comparison</span>
+            <span class="card-badge pill-info">Comparison Table</span>
+        </div>
+        <div class="card-body">
+            <p class="card-desc">Compara abordagens de desenvolvimento mobile (React Native, Flutter, Nativo, PWA) em criterios de performance, time-to-market, reuso de skills, acesso a hardware, offline e custo.</p>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Criterio</th>
+                            <th>React Native</th>
+                            <th>Flutter</th>
+                            <th>Nativo</th>
+                            <th>PWA</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><i class="ri-speed-line" style="color:var(--info);margin-right:6px;"></i>Performance</td>
+                            <td><span class="score score-4">4/5</span></td>
+                            <td><span class="score score-4">4/5</span></td>
+                            <td><span class="score score-5">5/5</span></td>
+                            <td><span class="score score-3">3/5</span></td>
+                        </tr>
+                        <tr>
+                            <td><i class="ri-timer-line" style="color:var(--teal);margin-right:6px;"></i>Time-to-market</td>
+                            <td><span class="score score-5">5/5</span></td>
+                            <td><span class="score score-4">4/5</span></td>
+                            <td><span class="score score-2">2/5</span></td>
+                            <td><span class="score score-5">5/5</span></td>
+                        </tr>
+                        <tr>
+                            <td><i class="ri-team-line" style="color:var(--purple);margin-right:6px;"></i>Reuso de skills</td>
+                            <td><span class="score score-5">5/5</span></td>
+                            <td><span class="score score-2">2/5</span></td>
+                            <td><span class="score score-1">1/5</span></td>
+                            <td><span class="score score-5">5/5</span></td>
+                        </tr>
+                        <tr>
+                            <td><i class="ri-cpu-line" style="color:var(--orange);margin-right:6px;"></i>Acesso HW</td>
+                            <td><span class="score score-4">4/5</span></td>
+                            <td><span class="score score-4">4/5</span></td>
+                            <td><span class="score score-5">5/5</span></td>
+                            <td><span class="score score-2">2/5</span></td>
+                        </tr>
+                        <tr>
+                            <td><i class="ri-wifi-off-line" style="color:var(--warning);margin-right:6px;"></i>Offline</td>
+                            <td><span class="score score-4">4/5</span></td>
+                            <td><span class="score score-4">4/5</span></td>
+                            <td><span class="score score-5">5/5</span></td>
+                            <td><span class="score score-3">3/5</span></td>
+                        </tr>
+                        <tr>
+                            <td><i class="ri-money-dollar-circle-line" style="color:var(--success);margin-right:6px;"></i>Custo</td>
+                            <td><span class="pill pill-warning">Medio</span></td>
+                            <td><span class="pill pill-warning">Medio</span></td>
+                            <td><span class="pill pill-danger">Alto</span></td>
+                            <td><span class="pill pill-success">Baixo</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ================================================================ -->
+<!-- 2. MOBILE DISTRIBUTION — Horizontal decreasing bars (funnel)    -->
+<!-- ================================================================ -->
+<div class="section">
+    <div class="section-header">
+        <div class="section-icon bg-teal"><i class="ri-download-2-line"></i></div>
+        <span class="section-title">Mobile Distribution</span>
+        <span class="region-badge"><i class="ri-price-tag-3-line"></i> REG-DOM-MOB-02</span>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <div class="card-header-icon bg-teal"><i class="ri-filter-3-line"></i></div>
+            <span class="card-title">Download Funnel</span>
+            <span class="card-badge pill-teal">Funnel Chart</span>
+        </div>
+        <div class="card-body">
+            <p class="card-desc">Funil de conversao desde impressoes na store ate retencao D7, segmentado por plataforma (iOS / Android).</p>
+            <div class="funnel-container">
+                <div class="funnel-row">
+                    <span class="funnel-label">Impressoes na store</span>
+                    <div class="funnel-bars" style="width:100%;">
+                        <div class="funnel-bar" style="width:38.5%;background:var(--chart-1);" title="iOS: 50.000">50k</div>
+                        <div class="funnel-bar" style="width:61.5%;background:var(--teal);" title="Android: 80.000">80k</div>
+                    </div>
+                    <span class="funnel-total">130.000</span>
+                </div>
+                <div class="funnel-row">
+                    <span class="funnel-label">Downloads</span>
+                    <div class="funnel-bars" style="width:100%;">
+                        <div class="funnel-bar" style="width:calc(38.5% * 0.1308);min-width:36px;background:var(--chart-1);" title="iOS: 5.000">5k</div>
+                        <div class="funnel-bar" style="width:calc(61.5% * 0.1308);min-width:36px;background:var(--teal);" title="Android: 12.000">12k</div>
+                    </div>
+                    <span class="funnel-total">17.000</span>
+                </div>
+            </div>
+            <!-- Simplified proportional funnel -->
+            <div style="margin-top:16px;">
+                <div class="funnel-container">
+                    <div class="funnel-row">
+                        <span class="funnel-label">Impressoes</span>
+                        <div class="funnel-bars">
+                            <div class="funnel-bar" style="width:38.5%;background:var(--chart-1);">50k</div>
+                            <div class="funnel-bar" style="width:61.5%;background:var(--teal);">80k</div>
+                        </div>
+                        <span class="funnel-total">130.000</span>
+                    </div>
+                    <div class="funnel-row">
+                        <span class="funnel-label">Downloads</span>
+                        <div class="funnel-bars">
+                            <div class="funnel-bar" style="width:29.4%;background:var(--chart-1);">5k</div>
+                            <div class="funnel-bar" style="width:70.6%;background:var(--teal);">12k</div>
+                        </div>
+                        <span class="funnel-total" style="color:var(--text);">17.000</span>
+                    </div>
+                    <div class="funnel-row">
+                        <span class="funnel-label">Instalacoes completas</span>
+                        <div class="funnel-bars">
+                            <div class="funnel-bar" style="width:30.4%;background:var(--chart-1);">4.8k</div>
+                            <div class="funnel-bar" style="width:69.6%;background:var(--teal);">11k</div>
+                        </div>
+                        <span class="funnel-total">15.800</span>
+                    </div>
+                    <div class="funnel-row">
+                        <span class="funnel-label">Primeiro acesso</span>
+                        <div class="funnel-bars">
+                            <div class="funnel-bar" style="width:30.4%;background:var(--chart-1);">3.5k</div>
+                            <div class="funnel-bar" style="width:69.6%;background:var(--teal);">8k</div>
+                        </div>
+                        <span class="funnel-total">11.500</span>
+                    </div>
+                    <div class="funnel-row">
+                        <span class="funnel-label">Ativacao (cadastro)</span>
+                        <div class="funnel-bars">
+                            <div class="funnel-bar" style="width:28.6%;background:var(--chart-1);">2k</div>
+                            <div class="funnel-bar" style="width:71.4%;background:var(--teal);">5k</div>
+                        </div>
+                        <span class="funnel-total">7.000</span>
+                    </div>
+                    <div class="funnel-row">
+                        <span class="funnel-label">Retencao D7</span>
+                        <div class="funnel-bars">
+                            <div class="funnel-bar" style="width:30%;background:var(--chart-1);">1.2k</div>
+                            <div class="funnel-bar" style="width:70%;background:var(--teal);">2.8k</div>
+                        </div>
+                        <span class="funnel-total">4.000</span>
+                    </div>
+                </div>
+                <div class="funnel-legend">
+                    <div class="funnel-legend-item"><div class="funnel-legend-dot" style="background:var(--chart-1);"></div> iOS</div>
+                    <div class="funnel-legend-item"><div class="funnel-legend-dot" style="background:var(--teal);"></div> Android</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ================================================================ -->
+<!-- 3. RPA AUTOMATION ROADMAP — Table with ROI + timeline bars      -->
+<!-- ================================================================ -->
+<div class="section">
+    <div class="section-header">
+        <div class="section-icon bg-purple"><i class="ri-robot-2-line"></i></div>
+        <span class="section-title">RPA Automation Roadmap</span>
+        <span class="region-badge"><i class="ri-price-tag-3-line"></i> REG-DOM-RPA-01</span>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <div class="card-header-icon bg-purple"><i class="ri-road-map-line"></i></div>
+            <span class="card-title">Prioritized Processes</span>
+            <span class="card-badge pill-purple">ROI + Timeline</span>
+        </div>
+        <div class="card-body">
+            <p class="card-desc">Processos priorizados para automacao com estimativa de ROI e timeline de implementacao, agrupados por fase.</p>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Fase</th>
+                            <th>Processo</th>
+                            <th>Volume/Mes</th>
+                            <th>Custo Manual</th>
+                            <th>Complexidade</th>
+                            <th>ROI em</th>
+                            <th style="min-width:120px;">ROI Timeline</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="phase-badge bg-info">1</span></td>
+                            <td><strong>Conciliacao bancaria</strong></td>
+                            <td>800</td>
+                            <td>R$ 8.000</td>
+                            <td><span class="pill pill-warning">Media</span></td>
+                            <td>3 meses</td>
+                            <td><span class="roi-bar" style="width:50%;background:var(--success);"></span> 3m</td>
+                        </tr>
+                        <tr>
+                            <td><span class="phase-badge bg-info">1</span></td>
+                            <td><strong>Emissao de NF-e</strong></td>
+                            <td>500</td>
+                            <td>R$ 5.000</td>
+                            <td><span class="pill pill-success">Baixa</span></td>
+                            <td>2 meses</td>
+                            <td><span class="roi-bar" style="width:33%;background:var(--success);"></span> 2m</td>
+                        </tr>
+                        <tr>
+                            <td><span class="phase-badge bg-purple">2</span></td>
+                            <td><strong>Cobranca de inadimplentes</strong></td>
+                            <td>200</td>
+                            <td>R$ 3.000</td>
+                            <td><span class="pill pill-danger">Alta</span></td>
+                            <td>6 meses</td>
+                            <td><span class="roi-bar" style="width:100%;background:var(--warning);"></span> 6m</td>
+                        </tr>
+                        <tr>
+                            <td><span class="phase-badge bg-purple">2</span></td>
+                            <td><strong>Relatorio fiscal mensal</strong></td>
+                            <td>12</td>
+                            <td>R$ 2.000</td>
+                            <td><span class="pill pill-warning">Media</span></td>
+                            <td>4 meses</td>
+                            <td><span class="roi-bar" style="width:67%;background:var(--warning);"></span> 4m</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div style="margin-top:14px; display:flex; gap:24px; font-size:0.78rem; color:var(--text-muted);">
+                <span><i class="ri-money-dollar-circle-line" style="color:var(--success);"></i> ROI acumulado Fase 1: <strong style="color:var(--success);">R$ 13.000/mes</strong></span>
+                <span><i class="ri-money-dollar-circle-line" style="color:var(--purple);"></i> ROI acumulado Fase 2: <strong style="color:var(--purple);">R$ 18.000/mes</strong></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ================================================================ -->
+<!-- 4. RPA CoE GOVERNANCE — Stat cards                              -->
+<!-- ================================================================ -->
+<div class="section">
+    <div class="section-header">
+        <div class="section-icon bg-success"><i class="ri-shield-check-line"></i></div>
+        <span class="section-title">RPA CoE Governance</span>
+        <span class="region-badge"><i class="ri-price-tag-3-line"></i> REG-DOM-RPA-02</span>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <div class="card-header-icon bg-success"><i class="ri-dashboard-3-line"></i></div>
+            <span class="card-title">CoE KPIs</span>
+            <span class="card-badge pill-success">Stat Cards</span>
+        </div>
+        <div class="card-body">
+            <p class="card-desc">KPIs do Centro de Excelencia de automacao: taxa de sucesso, FTE liberados, ROI acumulado, automacoes ativas, tempo medio de execucao e incidentes mensais.</p>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-card-icon bg-success"><i class="ri-checkbox-circle-line"></i></div>
+                    <div class="stat-card-info">
+                        <div class="stat-card-number">99.2%</div>
+                        <div class="stat-card-label">Taxa de sucesso</div>
+                        <div class="stat-card-sub">Meta: >= 98%</div>
+                        <div class="stat-card-trend trend-stable"><i class="ri-arrow-right-line"></i> Estavel</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-icon bg-info"><i class="ri-user-unfollow-line"></i></div>
+                    <div class="stat-card-info">
+                        <div class="stat-card-number">3.5</div>
+                        <div class="stat-card-label">FTE Liberados</div>
+                        <div class="stat-card-sub">Meta: 4</div>
+                        <div class="stat-card-trend trend-up"><i class="ri-arrow-up-line"></i> Subindo</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-icon bg-teal"><i class="ri-money-dollar-circle-line"></i></div>
+                    <div class="stat-card-info">
+                        <div class="stat-card-number">R$ 156k</div>
+                        <div class="stat-card-label">ROI Acumulado (12m)</div>
+                        <div class="stat-card-sub">Meta: R$ 180.000</div>
+                        <div class="stat-card-trend trend-stable"><i class="ri-arrow-right-line"></i> No ritmo</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-icon bg-purple"><i class="ri-robot-2-line"></i></div>
+                    <div class="stat-card-info">
+                        <div class="stat-card-number">4</div>
+                        <div class="stat-card-label">Automacoes Ativas</div>
+                        <div class="stat-card-sub">Meta: 6</div>
+                        <div class="stat-card-trend trend-up"><i class="ri-arrow-up-line"></i> Crescendo</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-icon bg-warning"><i class="ri-timer-flash-line"></i></div>
+                    <div class="stat-card-info">
+                        <div class="stat-card-number">3.2 min</div>
+                        <div class="stat-card-label">Tempo Medio Execucao</div>
+                        <div class="stat-card-sub">Meta: &lt; 5 min</div>
+                        <div class="stat-card-trend trend-stable"><i class="ri-arrow-right-line"></i> Estavel</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-icon bg-danger"><i class="ri-alarm-warning-line"></i></div>
+                    <div class="stat-card-info">
+                        <div class="stat-card-number">1</div>
+                        <div class="stat-card-label">Incidentes/Mes</div>
+                        <div class="stat-card-sub">Meta: &lt; 2</div>
+                        <div class="stat-card-trend trend-up"><i class="ri-arrow-down-line"></i> Melhorando</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ================================================================ -->
+<!-- 5. PLATFORM ARCHITECTURE — Card with layered stack              -->
+<!-- ================================================================ -->
+<div class="section">
+    <div class="section-header">
+        <div class="section-icon bg-orange"><i class="ri-stack-line"></i></div>
+        <span class="section-title">Platform Architecture</span>
+        <span class="region-badge"><i class="ri-price-tag-3-line"></i> REG-DOM-PLAT-01</span>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <div class="card-header-icon bg-orange"><i class="ri-stack-line"></i></div>
+            <span class="card-title">Platform Stack</span>
+            <span class="card-badge pill-orange">Layered Architecture</span>
+        </div>
+        <div class="card-body" style="padding:0;">
+            <div class="stack-layer">
+                <div class="stack-layer-icon bg-primary"><i class="ri-window-line"></i></div>
+                <div class="stack-layer-content">
+                    <div class="stack-layer-title">Developer Portal</div>
+                    <div class="stack-layer-tech">Backstage IDP</div>
+                    <div class="stack-layer-badges">
+                        <span class="pill pill-info">Catalogo de servicos</span>
+                        <span class="pill pill-info">Templates</span>
+                        <span class="pill pill-info">Golden paths</span>
+                        <span class="pill pill-info">Docs</span>
+                    </div>
+                </div>
+            </div>
+            <div class="stack-layer">
+                <div class="stack-layer-icon bg-teal"><i class="ri-git-merge-line"></i></div>
+                <div class="stack-layer-content">
+                    <div class="stack-layer-title">CI/CD</div>
+                    <div class="stack-layer-tech">GitHub Actions</div>
+                    <div class="stack-layer-badges">
+                        <span class="pill pill-teal">Build</span>
+                        <span class="pill pill-teal">Test</span>
+                        <span class="pill pill-teal">Security Scan</span>
+                        <span class="pill pill-teal">Deploy (stg -> prod)</span>
+                    </div>
+                </div>
+            </div>
+            <div class="stack-layer">
+                <div class="stack-layer-icon bg-purple"><i class="ri-line-chart-line"></i></div>
+                <div class="stack-layer-content">
+                    <div class="stack-layer-title">Observabilidade</div>
+                    <div class="stack-layer-tech">Datadog</div>
+                    <div class="stack-layer-badges">
+                        <span class="pill pill-purple">Metrics</span>
+                        <span class="pill pill-purple">Logs</span>
+                        <span class="pill pill-purple">APM</span>
+                        <span class="pill pill-purple">Alerting (Slack)</span>
+                    </div>
+                </div>
+            </div>
+            <div class="stack-layer">
+                <div class="stack-layer-icon bg-warning"><i class="ri-cloud-line"></i></div>
+                <div class="stack-layer-content">
+                    <div class="stack-layer-title">Infraestrutura</div>
+                    <div class="stack-layer-tech">AWS (sa-east-1)</div>
+                    <div class="stack-layer-badges">
+                        <span class="pill pill-warning">EKS</span>
+                        <span class="pill pill-warning">RDS</span>
+                        <span class="pill pill-warning">S3</span>
+                        <span class="pill pill-warning">CloudFront</span>
+                        <span class="pill pill-warning">Route53</span>
+                    </div>
+                </div>
+            </div>
+            <div class="stack-layer">
+                <div class="stack-layer-icon bg-secondary"><i class="ri-tools-line"></i></div>
+                <div class="stack-layer-content">
+                    <div class="stack-layer-title">Infrastructure as Code</div>
+                    <div class="stack-layer-tech">Terraform + Atlantis</div>
+                    <div class="stack-layer-badges">
+                        <span class="pill pill-secondary">Modulos compartilhados</span>
+                        <span class="pill pill-secondary">PR-based workflow</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ================================================================ -->
+<!-- 6. PLATFORM DEVELOPER EXPERIENCE — Stat cards grid (DX metrics) -->
+<!-- ================================================================ -->
+<div class="section">
+    <div class="section-header">
+        <div class="section-icon bg-primary"><i class="ri-code-box-line"></i></div>
+        <span class="section-title">Platform Developer Experience</span>
+        <span class="region-badge"><i class="ri-price-tag-3-line"></i> REG-DOM-PLAT-02</span>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <div class="card-header-icon bg-primary"><i class="ri-dashboard-3-line"></i></div>
+            <span class="card-title">DORA & DX Metrics</span>
+            <span class="card-badge pill-info">Stat Cards</span>
+        </div>
+        <div class="card-body">
+            <p class="card-desc">Metricas DORA e Developer Experience com targets e status atual.</p>
+            <div class="stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+                <div class="stat-card">
+                    <div class="stat-card-icon bg-success"><i class="ri-rocket-2-line"></i></div>
+                    <div class="stat-card-info">
+                        <div class="stat-card-number">3.2/dia</div>
+                        <div class="stat-card-label">Deployment Frequency</div>
+                        <div class="stat-card-sub">Target: Diario</div>
+                        <div class="stat-card-trend trend-up"><i class="ri-checkbox-circle-line"></i> OK</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-icon bg-info"><i class="ri-time-line"></i></div>
+                    <div class="stat-card-info">
+                        <div class="stat-card-number">12 min</div>
+                        <div class="stat-card-label">Lead Time for Changes</div>
+                        <div class="stat-card-sub">Target: &lt; 15 min</div>
+                        <div class="stat-card-trend trend-up"><i class="ri-checkbox-circle-line"></i> OK</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-icon bg-warning"><i class="ri-error-warning-line"></i></div>
+                    <div class="stat-card-info">
+                        <div class="stat-card-number">3.8%</div>
+                        <div class="stat-card-label">Change Failure Rate</div>
+                        <div class="stat-card-sub">Target: &lt; 5%</div>
+                        <div class="stat-card-trend trend-up"><i class="ri-checkbox-circle-line"></i> OK</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-icon bg-danger"><i class="ri-refresh-line"></i></div>
+                    <div class="stat-card-info">
+                        <div class="stat-card-number">22 min</div>
+                        <div class="stat-card-label">MTTR</div>
+                        <div class="stat-card-sub">Target: &lt; 30 min</div>
+                        <div class="stat-card-trend trend-up"><i class="ri-checkbox-circle-line"></i> OK</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-icon bg-teal"><i class="ri-user-add-line"></i></div>
+                    <div class="stat-card-info">
+                        <div class="stat-card-number">1.5 dias</div>
+                        <div class="stat-card-label">Onboarding Time</div>
+                        <div class="stat-card-sub">Target: &lt; 2 dias</div>
+                        <div class="stat-card-trend trend-up"><i class="ri-checkbox-circle-line"></i> OK</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-icon bg-purple"><i class="ri-emotion-happy-line"></i></div>
+                    <div class="stat-card-info">
+                        <div class="stat-card-number">4.2 / 5.0</div>
+                        <div class="stat-card-label">Dev Satisfaction</div>
+                        <div class="stat-card-sub">Target: >= 4.0/5.0</div>
+                        <div class="stat-card-trend trend-up"><i class="ri-checkbox-circle-line"></i> OK</div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top:8px;">
+                <div style="font-size:0.78rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">Golden Paths</div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Golden Path</th>
+                                <th>Tempo ate Producao</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><i class="ri-server-line" style="color:var(--info);margin-right:6px;"></i>Novo microservico</td>
+                                <td><span class="pill pill-success">28 min</span></td>
+                            </tr>
+                            <tr>
+                                <td><i class="ri-database-2-line" style="color:var(--purple);margin-right:6px;"></i>Novo banco de dados</td>
+                                <td><span class="pill pill-success">12 min</span></td>
+                            </tr>
+                            <tr>
+                                <td><i class="ri-git-branch-line" style="color:var(--teal);margin-right:6px;"></i>Novo ambiente staging</td>
+                                <td><span class="pill pill-info">45 min</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ================================================================ -->
+<!-- 7. PROCESS DOCS TAXONOMY — Table with type badges               -->
+<!-- ================================================================ -->
+<div class="section">
+    <div class="section-header">
+        <div class="section-icon bg-warning"><i class="ri-folder-chart-line"></i></div>
+        <span class="section-title">Process Docs Taxonomy</span>
+        <span class="region-badge"><i class="ri-price-tag-3-line"></i> REG-DOM-PROC-01</span>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <div class="card-header-icon bg-warning"><i class="ri-file-list-3-line"></i></div>
+            <span class="card-title">Document Taxonomy</span>
+            <span class="card-badge pill-warning">Type Badges</span>
+        </div>
+        <div class="card-body">
+            <p class="card-desc">Taxonomia de documentos de processo com tipos, categorias, publico-alvo, frequencia de revisao e lifecycle.</p>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tipo</th>
+                            <th>Categoria</th>
+                            <th>Publico</th>
+                            <th>Revisao</th>
+                            <th>Lifecycle</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>POP</strong></td>
+                            <td><span class="pill pill-info">Operacional</span></td>
+                            <td>Equipe operacao</td>
+                            <td><span class="pill pill-warning">Semestral</span></td>
+                            <td>Ativo ate substituicao</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Instrucao de Trabalho</strong></td>
+                            <td><span class="pill pill-info">Operacional</span></td>
+                            <td>Executor da tarefa</td>
+                            <td><span class="pill pill-success">Anual</span></td>
+                            <td>Vinculado ao POP</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Politica</strong></td>
+                            <td><span class="pill pill-purple">Governanca</span></td>
+                            <td>Toda a organizacao</td>
+                            <td><span class="pill pill-success">Anual</span></td>
+                            <td>Aprovacao diretoria</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Manual de Sistema</strong></td>
+                            <td><span class="pill pill-teal">Tecnico</span></td>
+                            <td>TI e suporte</td>
+                            <td><span class="pill pill-info">A cada release</span></td>
+                            <td>Versionado com o software</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Registro de Processo</strong></td>
+                            <td><span class="pill pill-danger">Regulatorio</span></td>
+                            <td>Auditoria</td>
+                            <td><span class="pill pill-secondary">N/A (imutavel)</span></td>
+                            <td>Retencao de 5 anos</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div style="margin-top:14px;font-size:0.78rem;color:var(--text-muted);">
+                <i class="ri-file-copy-2-line" style="color:var(--primary);"></i> Total: <strong>66 documentos</strong> | 5 tipos | 4 categorias
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ================================================================ -->
+<!-- 8. PROCESS DOCS GOVERNANCE — RACI heatmap + stat cards          -->
+<!-- ================================================================ -->
+<div class="section">
+    <div class="section-header">
+        <div class="section-icon bg-danger"><i class="ri-shield-user-line"></i></div>
+        <span class="section-title">Process Docs Governance</span>
+        <span class="region-badge"><i class="ri-price-tag-3-line"></i> REG-DOM-PROC-02</span>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <div class="card-header-icon bg-danger"><i class="ri-shield-user-line"></i></div>
+            <span class="card-title">RACI Matrix</span>
+            <span class="card-badge pill-danger">Heatmap</span>
+        </div>
+        <div class="card-body">
+            <p class="card-desc">Matriz RACI de governanca documental com heatmap de envolvimento por papel.</p>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Atividade</th>
+                            <th style="text-align:center;">Analista Proc.</th>
+                            <th style="text-align:center;">Gestor Area</th>
+                            <th style="text-align:center;">Diretor</th>
+                            <th style="text-align:center;">Compliance</th>
+                            <th style="text-align:center;">Qualidade</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Criar documento</td>
+                            <td style="text-align:center;"><span class="raci-cell raci-r">R</span></td>
+                            <td style="text-align:center;"><span class="raci-cell raci-a">A</span></td>
+                            <td style="text-align:center;"><span class="raci-empty">-</span></td>
+                            <td style="text-align:center;"><span class="raci-empty">-</span></td>
+                            <td style="text-align:center;"><span class="raci-cell raci-c">C</span></td>
+                        </tr>
+                        <tr>
+                            <td>Revisar documento</td>
+                            <td style="text-align:center;"><span class="raci-cell raci-c">C</span></td>
+                            <td style="text-align:center;"><span class="raci-cell raci-r">R</span></td>
+                            <td style="text-align:center;"><span class="raci-cell raci-a">A</span></td>
+                            <td style="text-align:center;"><span class="raci-empty">-</span></td>
+                            <td style="text-align:center;"><span class="raci-cell raci-i">I</span></td>
+                        </tr>
+                        <tr>
+                            <td>Aprovar publicacao</td>
+                            <td style="text-align:center;"><span class="raci-empty">-</span></td>
+                            <td style="text-align:center;"><span class="raci-cell raci-c">C</span></td>
+                            <td style="text-align:center;"><span class="raci-cell raci-r">R</span></td>
+                            <td style="text-align:center;"><span class="raci-cell raci-c">C</span></td>
+                            <td style="text-align:center;"><span class="raci-cell raci-i">I</span></td>
+                        </tr>
+                        <tr>
+                            <td>Monitorar adocao</td>
+                            <td style="text-align:center;"><span class="raci-cell raci-i">I</span></td>
+                            <td style="text-align:center;"><span class="raci-cell raci-a">A</span></td>
+                            <td style="text-align:center;"><span class="raci-cell raci-i">I</span></td>
+                            <td style="text-align:center;"><span class="raci-empty">-</span></td>
+                            <td style="text-align:center;"><span class="raci-cell raci-r">R</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div style="display:flex;gap:16px;margin-top:12px;flex-wrap:wrap;">
+                <span style="font-size:0.72rem;display:flex;align-items:center;gap:4px;"><span class="raci-cell raci-r" style="width:22px;height:20px;font-size:0.65rem;">R</span> Responsible</span>
+                <span style="font-size:0.72rem;display:flex;align-items:center;gap:4px;"><span class="raci-cell raci-a" style="width:22px;height:20px;font-size:0.65rem;">A</span> Accountable</span>
+                <span style="font-size:0.72rem;display:flex;align-items:center;gap:4px;"><span class="raci-cell raci-c" style="width:22px;height:20px;font-size:0.65rem;">C</span> Consulted</span>
+                <span style="font-size:0.72rem;display:flex;align-items:center;gap:4px;"><span class="raci-cell raci-i" style="width:22px;height:20px;font-size:0.65rem;">I</span> Informed</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <div class="card-header-icon bg-success"><i class="ri-bar-chart-box-line"></i></div>
+            <span class="card-title">Adoption Metrics</span>
+            <span class="card-badge pill-success">Stat Cards</span>
+        </div>
+        <div class="card-body">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-card-icon bg-warning"><i class="ri-file-text-line"></i></div>
+                    <div class="stat-card-info">
+                        <div class="stat-card-number">78%</div>
+                        <div class="stat-card-label">Processos Documentados</div>
+                        <div class="stat-card-sub">Target: >= 90%</div>
+                        <div class="stat-card-trend trend-down"><i class="ri-alert-line"></i> Abaixo</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-icon bg-info"><i class="ri-calendar-check-line"></i></div>
+                    <div class="stat-card-info">
+                        <div class="stat-card-number">91%</div>
+                        <div class="stat-card-label">Docs Dentro da Validade</div>
+                        <div class="stat-card-sub">Target: >= 95%</div>
+                        <div class="stat-card-trend trend-down"><i class="ri-alert-line"></i> Abaixo</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-icon bg-success"><i class="ri-eye-line"></i></div>
+                    <div class="stat-card-info">
+                        <div class="stat-card-number">6.2</div>
+                        <div class="stat-card-label">Acessos Unicos/Mes</div>
+                        <div class="stat-card-sub">Target: >= 5</div>
+                        <div class="stat-card-trend trend-up"><i class="ri-checkbox-circle-line"></i> OK</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ================================================================ -->
+<!-- 9. MICROSERVICES SERVICE MAP — Table with boundaries             -->
+<!-- ================================================================ -->
+<div class="section">
+    <div class="section-header">
+        <div class="section-icon bg-info"><i class="ri-bubble-chart-line"></i></div>
+        <span class="section-title">Microservices Service Map</span>
+        <span class="region-badge"><i class="ri-price-tag-3-line"></i> REG-DOM-MICRO-01</span>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <div class="card-header-icon bg-info"><i class="ri-bubble-chart-line"></i></div>
+            <span class="card-title">Service Catalog</span>
+            <span class="card-badge pill-info">Bounded Contexts</span>
+        </div>
+        <div class="card-body">
+            <p class="card-desc">Mapa de servicos agrupado por bounded context com tipo, protocolo, dependencias e banco de dados.</p>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Servico</th>
+                            <th>Bounded Context</th>
+                            <th>Tipo</th>
+                            <th>Protocolo</th>
+                            <th>Dependencias</th>
+                            <th>Banco</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="bc-header"><td colspan="6"><i class="ri-shield-line" style="margin-right:4px;"></i> Infrastructure</td></tr>
+                        <tr>
+                            <td><strong>api-gateway</strong></td>
+                            <td><span class="pill pill-secondary">Infrastructure</span></td>
+                            <td><span class="pill pill-info">Gateway</span></td>
+                            <td><span class="pill pill-teal">REST</span></td>
+                            <td style="font-size:0.78rem;">auth-service, bff-web</td>
+                            <td><span style="color:var(--text-muted);">N/A</span></td>
+                        </tr>
+                        <tr class="bc-header"><td colspan="6"><i class="ri-key-2-line" style="margin-right:4px;"></i> Identity</td></tr>
+                        <tr>
+                            <td><strong>auth-service</strong></td>
+                            <td><span class="pill pill-purple">Identity</span></td>
+                            <td><span class="pill pill-info">API</span></td>
+                            <td><span class="pill pill-teal">REST</span></td>
+                            <td style="font-size:0.78rem;">Auth0 (externo)</td>
+                            <td>Redis (sessoes)</td>
+                        </tr>
+                        <tr class="bc-header"><td colspan="6"><i class="ri-bank-line" style="margin-right:4px;"></i> Financial Core</td></tr>
+                        <tr>
+                            <td><strong>account-service</strong></td>
+                            <td><span class="pill pill-success">Financial Core</span></td>
+                            <td><span class="pill pill-info">API</span></td>
+                            <td><span class="pill pill-orange">gRPC</span></td>
+                            <td style="font-size:0.78rem;">auth-service</td>
+                            <td>PostgreSQL</td>
+                        </tr>
+                        <tr>
+                            <td><strong>transaction-service</strong></td>
+                            <td><span class="pill pill-success">Financial Core</span></td>
+                            <td><span class="pill pill-info">API</span></td>
+                            <td><span class="pill pill-orange">gRPC + Kafka</span></td>
+                            <td style="font-size:0.78rem;">account-service</td>
+                            <td>PostgreSQL</td>
+                        </tr>
+                        <tr class="bc-header"><td colspan="6"><i class="ri-notification-3-line" style="margin-right:4px;"></i> Communication</td></tr>
+                        <tr>
+                            <td><strong>notification-service</strong></td>
+                            <td><span class="pill pill-warning">Communication</span></td>
+                            <td><span class="pill pill-purple">Worker</span></td>
+                            <td><span class="pill pill-danger">Kafka consumer</span></td>
+                            <td style="font-size:0.78rem;">SendGrid (externo)</td>
+                            <td>DynamoDB</td>
+                        </tr>
+                        <tr class="bc-header"><td colspan="6"><i class="ri-file-chart-line" style="margin-right:4px;"></i> Reporting</td></tr>
+                        <tr>
+                            <td><strong>report-service</strong></td>
+                            <td><span class="pill pill-teal">Reporting</span></td>
+                            <td><span class="pill pill-purple">Worker</span></td>
+                            <td><span class="pill pill-danger">Async (SQS)</span></td>
+                            <td style="font-size:0.78rem;">transaction-service</td>
+                            <td>S3 (PDFs)</td>
+                        </tr>
+                        <tr class="bc-header"><td colspan="6"><i class="ri-layout-4-line" style="margin-right:4px;"></i> Frontend</td></tr>
+                        <tr>
+                            <td><strong>bff-web</strong></td>
+                            <td><span class="pill pill-orange">Frontend</span></td>
+                            <td><span class="pill pill-info">BFF</span></td>
+                            <td><span class="pill pill-teal">REST</span></td>
+                            <td style="font-size:0.78rem;">account, transaction, report</td>
+                            <td><span style="color:var(--text-muted);">N/A</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ================================================================ -->
+<!-- 10. MICROSERVICES RESILIENCE — Table with pattern badges         -->
+<!-- ================================================================ -->
+<div class="section">
+    <div class="section-header">
+        <div class="section-icon bg-danger"><i class="ri-shield-flash-line"></i></div>
+        <span class="section-title">Microservices Resilience</span>
+        <span class="region-badge"><i class="ri-price-tag-3-line"></i> REG-DOM-MICRO-02</span>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <div class="card-header-icon bg-danger"><i class="ri-shield-flash-line"></i></div>
+            <span class="card-title">Resilience Patterns</span>
+            <span class="card-badge pill-danger">Pattern Badges</span>
+        </div>
+        <div class="card-body">
+            <p class="card-desc">Padroes de resiliencia adotados na arquitetura de microservicos, incluindo circuit breaker, retry, saga, DLQ, bulkhead e timeout.</p>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Pattern</th>
+                            <th>Onde Aplicado</th>
+                            <th>Ferramenta</th>
+                            <th>Configuracao</th>
+                            <th>Fallback</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="pill pill-danger"><i class="ri-switch-line" style="margin-right:3px;"></i>Circuit Breaker</span></td>
+                            <td>Open Finance API</td>
+                            <td>Resilience4j</td>
+                            <td style="font-size:0.78rem;">50% falhas / 10 req; timeout 60s</td>
+                            <td style="font-size:0.78rem;">Dados cached (15min)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="pill pill-warning"><i class="ri-loop-left-line" style="margin-right:3px;"></i>Retry</span></td>
+                            <td>gRPC inter-service</td>
+                            <td>gRPC built-in</td>
+                            <td style="font-size:0.78rem;">3x exp. backoff (1s, 2s, 4s)</td>
+                            <td style="font-size:0.78rem;">Circuit breaker assume</td>
+                        </tr>
+                        <tr>
+                            <td><span class="pill pill-purple"><i class="ri-git-branch-line" style="margin-right:3px;"></i>Saga (Coreografia)</span></td>
+                            <td>Criacao de conta</td>
+                            <td>Kafka events</td>
+                            <td style="font-size:0.78rem;">Eventos compensatorios</td>
+                            <td style="font-size:0.78rem;">Estado "pendente"</td>
+                        </tr>
+                        <tr>
+                            <td><span class="pill pill-info"><i class="ri-inbox-archive-line" style="margin-right:3px;"></i>DLQ</span></td>
+                            <td>Kafka consumer</td>
+                            <td>AWS SQS DLQ</td>
+                            <td style="font-size:0.78rem;">Max 3 retries</td>
+                            <td style="font-size:0.78rem;">Alerta Slack + manual</td>
+                        </tr>
+                        <tr>
+                            <td><span class="pill pill-teal"><i class="ri-stack-line" style="margin-right:3px;"></i>Bulkhead</span></td>
+                            <td>Pools por servico externo</td>
+                            <td>Resilience4j</td>
+                            <td style="font-size:0.78rem;">10 threads (OF), 5 (Stripe)</td>
+                            <td style="font-size:0.78rem;">503 reject</td>
+                        </tr>
+                        <tr>
+                            <td><span class="pill pill-orange"><i class="ri-timer-line" style="margin-right:3px;"></i>Timeout</span></td>
+                            <td>HTTP externas</td>
+                            <td>Axios / gRPC config</td>
+                            <td style="font-size:0.78rem;">5s interno, 10s externo</td>
+                            <td style="font-size:0.78rem;">Erro + retry hint</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+</main>
+
+<!-- ====== FOOTER ====== -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-left">
+                <div>
+                    <div class="footer-info-name">Discovery to Go</div>
+                    <div class="footer-info-detail">Domain Regions Preview -- Part 2</div>
+                </div>
+            </div>
+            <div class="footer-right">
+                <div class="footer-doc-title">10 Domain Regions</div>
+                <div class="footer-doc-detail">Mobile | RPA | Platform | Process Docs | Microservices</div>
+            </div>
+        </div>
+        <div class="footer-seal">
+            <i class="ri-robot-2-line"></i>
+            Generated by Claude Code -- Preview artifact -- Not for production use
+        </div>
+    </div>
+</footer>
+
+<!-- ====== BACK TO TOP ====== -->
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <i class="ri-arrow-up-line"></i>
+</button>
+
+<script>
+/* Theme toggle */
+function toggleTheme() {
+    const html = document.documentElement;
+    const current = html.getAttribute('data-theme');
+    const next = current === 'light' ? 'dark' : 'light';
+    html.setAttribute('data-theme', next);
+    document.getElementById('theme-icon').className = next === 'light' ? 'ri-sun-line' : 'ri-moon-line';
+    document.getElementById('theme-label').textContent = next === 'light' ? 'Dark' : 'Light';
+}
+
+/* Back to top */
+window.addEventListener('scroll', function() {
+    const btn = document.getElementById('backToTop');
+    if (window.scrollY > 400) {
+        btn.classList.add('visible');
+    } else {
+        btn.classList.remove('visible');
+    }
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Backlog Regions Preview</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+/* ====== DESIGN TOKENS (dark — default) ====== */
+:root {
+    --primary: #4DA8DA;
+    --primary-dark: #3A8BB8;
+    --primary-light: rgba(77, 168, 218, 0.12);
+    --secondary: #B9B7BD;
+    --success: #0ED145;
+    --success-light: rgba(14, 209, 69, 0.12);
+    --success-border: rgba(14, 209, 69, 0.3);
+    --warning: #F4AC00;
+    --warning-light: rgba(244, 172, 0, 0.12);
+    --warning-border: rgba(244, 172, 0, 0.3);
+    --danger: #8B1A1A;
+    --danger-light: rgba(139, 26, 26, 0.15);
+    --danger-border: rgba(139, 26, 26, 0.35);
+    --info: #2EB5F5;
+    --info-light: rgba(46, 181, 245, 0.12);
+    --info-border: rgba(46, 181, 245, 0.3);
+    --bg: #1A1923;
+    --card-bg: #2E2D32;
+    --text: #E0DFE3;
+    --text-muted: #88878C;
+    --border: #3E3D44;
+    --purple: #9B96FF;
+    --purple-light: rgba(155, 150, 255, 0.12);
+    --orange: #FF9473;
+    --teal: #2DD4BF;
+    --header-bg: linear-gradient(135deg, #2E2D32 0%, #252428 50%, #1A1923 100%);
+    --card-header-bg: #252428;
+    --th-bg: #252428;
+    --th-bg-hover: #36353B;
+    --card-shadow: 0 2px 12px rgba(46, 181, 245, 0.06), 0 1px 4px rgba(0,0,0,0.4);
+    --progress-track: #3E3D44;
+    --alert-warning-text: #f0c040;
+    --danger-text: #E85D54;
+    --alert-danger-text: #E85D54;
+    --alert-info-text: #5FC8F8;
+    --alert-success-text: #3DE06A;
+    --pill-success-text: #3DE06A;
+    --pill-info-text: #5FC8F8;
+    --pill-warning-text: #f0c040;
+}
+
+/* ====== LIGHT THEME ====== */
+[data-theme="light"] {
+    --primary: #4DA8DA;
+    --primary-dark: #3A8BB8;
+    --primary-light: rgba(77, 168, 218, 0.1);
+    --secondary: #88878C;
+    --success: #0A9E35;
+    --success-light: rgba(10, 158, 53, 0.08);
+    --success-border: rgba(10, 158, 53, 0.25);
+    --warning: #E67E22;
+    --warning-light: rgba(230, 126, 34, 0.12);
+    --warning-border: rgba(230, 126, 34, 0.35);
+    --danger: #E74C3C;
+    --danger-light: rgba(231, 76, 60, 0.10);
+    --danger-border: rgba(231, 76, 60, 0.30);
+    --info: #1E95CC;
+    --info-light: rgba(30, 149, 204, 0.08);
+    --info-border: rgba(30, 149, 204, 0.25);
+    --bg: #E0DFE3;
+    --card-bg: #ffffff;
+    --text: #1A1923;
+    --text-muted: #88878C;
+    --border: #B9B7BD;
+    --purple: #7B76FE;
+    --purple-light: rgba(123, 118, 254, 0.08);
+    --orange: #FE7C58;
+    --teal: #00D8D8;
+    --header-bg: linear-gradient(135deg, #2E2D32 0%, #252428 50%, #1A1923 100%);
+    --card-header-bg: rgba(77, 168, 218, 0.12);
+    --th-bg: rgba(77, 168, 218, 0.12);
+    --th-bg-hover: rgba(77, 168, 218, 0.22);
+    --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0,0,0,0.06);
+    --progress-track: #B9B7BD;
+    --alert-warning-text: #C0392B;
+    --alert-danger-text: #C0392B;
+    --alert-info-text: #1670A0;
+    --alert-success-text: #087A28;
+    --pill-success-text: #087A28;
+    --pill-info-text: #1670A0;
+    --pill-warning-text: #C0392B;
+    --hover-border: #4DA8DA;
+}
+[data-theme="light"] .card:hover { border-color: var(--hover-border); }
+
+/* ====== RESET ====== */
+html, body, div, span, h1, h2, h3, h4, h5, h6, p, a, ul, ol, li,
+header, footer, nav, section, article, aside, button, input, select, textarea,
+table, tr, td, th { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+/* ====== HEADER ====== */
+.header { background: linear-gradient(135deg, #2E2D32 0%, #252428 50%, #1A1923 100%); color: white; padding: 36px 0 28px; position: relative; overflow: hidden; }
+.header::before { content: ''; position: absolute; top: -50%; right: -10%; width: 500px; height: 500px; background: rgba(255,255,255,0.03); border-radius: 50%; z-index: 0; }
+.header-content { position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+.header h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.5px; }
+.header .subtitle { font-size: 0.88rem; opacity: 0.7; font-weight: 300; margin-top: 4px; }
+
+/* ====== THEME TOGGLE ====== */
+.theme-toggle { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; padding: 8px 14px; color: white; cursor: pointer; font-family: 'Poppins', sans-serif; font-size: 0.78rem; font-weight: 500; display: flex; align-items: center; gap: 6px; transition: all 0.2s; }
+.theme-toggle:hover { background: rgba(255,255,255,0.22); }
+
+/* ====== REGION ID BADGE ====== */
+.region-badge { display: inline-flex; align-items: center; gap: 6px; background: var(--primary-light); border: 1px solid rgba(77, 168, 218, 0.3); color: var(--primary); padding: 3px 12px; border-radius: 6px; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.5px; font-family: monospace; }
+
+/* ====== SECTION ====== */
+.section { margin-top: 36px; }
+.section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid var(--border); }
+.section-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+.section-title { font-size: 1.15rem; font-weight: 600; flex: 1; }
+
+/* ====== TABLES ====== */
+.table-wrapper { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+th { text-align: left; padding: 10px 14px; background: var(--th-bg); font-weight: 600; border-bottom: 2px solid var(--border); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.3px; color: var(--text-muted); }
+td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+tr:hover { background: var(--primary-light); }
+
+/* ====== PILLS ====== */
+.pill { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: 600; }
+.pill-danger { background: var(--danger-light); color: var(--alert-danger-text); border: 1px solid var(--danger-border); }
+.pill-warning { background: var(--warning-light); color: var(--pill-warning-text); border: 1px solid var(--warning-border); }
+.pill-info { background: var(--info-light); color: var(--pill-info-text); border: 1px solid var(--info-border); }
+.pill-secondary { background: rgba(136,135,140,0.15); color: var(--text-muted); border: 1px solid rgba(136,135,140,0.3); }
+.pill-success { background: var(--success-light); color: var(--pill-success-text); border: 1px solid var(--success-border); }
+
+/* ====== CARDS ====== */
+.card { background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border); box-shadow: var(--card-shadow); overflow: hidden; margin-bottom: 16px; transition: box-shadow 0.2s, border-color 0.2s; }
+.card:hover { border-color: var(--primary); }
+.card-header { display: flex; align-items: center; gap: 10px; padding: 14px 18px; border-bottom: 1px solid var(--border); background: var(--card-header-bg); cursor: pointer; user-select: none; }
+.card-header-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+.card-title { font-weight: 600; font-size: 0.95rem; flex: 1; }
+.card-badge { padding: 2px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: 600; white-space: nowrap; }
+.card-body { padding: 18px; color: var(--text); opacity: 0.92; }
+.card-body.collapsed { display: none; }
+.card-chevron { font-size: 1.1rem; color: var(--text-muted); transition: transform 0.2s; }
+.card-chevron.open { transform: rotate(90deg); }
+
+/* ====== STORY ITEM ====== */
+.story-item { padding: 12px 16px; border-left: 3px solid var(--primary); margin-bottom: 10px; background: var(--bg); border-radius: 0 8px 8px 0; }
+.story-id { font-weight: 700; color: var(--primary); font-size: 0.8rem; }
+.story-title { font-size: 0.85rem; margin-top: 2px; }
+.story-criteria { list-style: none; margin-top: 8px; }
+.story-criteria li { font-size: 0.78rem; color: var(--text-muted); padding: 2px 0 2px 20px; position: relative; }
+.story-criteria li::before { content: '\2713'; position: absolute; left: 0; color: var(--success); font-weight: 700; }
+
+/* ====== DEPENDENCY BADGES ====== */
+.dep-blocks { background: var(--danger-light); color: var(--alert-danger-text); border: 1px solid var(--danger-border); padding: 2px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: 600; }
+.dep-enables { background: var(--info-light); color: var(--pill-info-text); border: 1px solid var(--info-border); padding: 2px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: 600; }
+
+/* ====== TRAFFIC LIGHT CARDS ====== */
+.traffic-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; }
+.traffic-card { background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border); padding: 20px; box-shadow: var(--card-shadow); position: relative; overflow: hidden; transition: border-color 0.2s; }
+.traffic-card:hover { border-color: var(--primary); }
+.traffic-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; }
+.traffic-card.status-green::before { background: var(--success); }
+.traffic-card.status-yellow::before { background: var(--warning); }
+.traffic-card.status-red::before { background: #E85D54; }
+.traffic-card.status-gray::before { background: var(--text-muted); }
+.traffic-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.traffic-id { font-weight: 700; font-size: 0.78rem; color: var(--text-muted); }
+.traffic-light { width: 14px; height: 14px; border-radius: 50%; }
+.traffic-light.green { background: var(--success); box-shadow: 0 0 8px rgba(14, 209, 69, 0.5); }
+.traffic-light.yellow { background: var(--warning); box-shadow: 0 0 8px rgba(244, 172, 0, 0.5); }
+.traffic-light.red { background: #E85D54; box-shadow: 0 0 8px rgba(232, 93, 84, 0.5); }
+.traffic-light.gray { background: var(--text-muted); }
+.traffic-criterion { font-size: 0.92rem; font-weight: 600; margin-bottom: 6px; }
+.traffic-target { font-size: 0.78rem; color: var(--text-muted); }
+.traffic-target strong { color: var(--text); }
+.traffic-deadline { font-size: 0.72rem; color: var(--text-muted); margin-top: 6px; display: flex; align-items: center; gap: 4px; }
+.traffic-status-label { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+.traffic-status-label.green { color: var(--pill-success-text); }
+.traffic-status-label.yellow { color: var(--pill-warning-text); }
+.traffic-status-label.red { color: var(--alert-danger-text); }
+.traffic-status-label.gray { color: var(--text-muted); }
+
+/* ====== PARALLEL GROUPS ====== */
+.parallel-groups { margin-top: 20px; }
+.parallel-group { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.parallel-label { font-size: 0.75rem; font-weight: 700; color: var(--text-muted); min-width: 70px; }
+.parallel-items { display: flex; gap: 8px; flex-wrap: wrap; }
+.parallel-item { background: var(--primary-light); border: 1px solid rgba(77, 168, 218, 0.3); color: var(--primary); padding: 4px 12px; border-radius: 8px; font-size: 0.75rem; font-weight: 600; }
+
+/* ====== FOOTER ====== */
+.footer { background: linear-gradient(135deg, #2E2D32 0%, #252428 50%, #1A1923 100%); color: white; padding: 28px 0; margin-top: 48px; position: relative; overflow: hidden; }
+.footer::before { content: ''; position: absolute; bottom: -50%; left: -10%; width: 500px; height: 500px; background: rgba(255,255,255,0.03); border-radius: 50%; z-index: 0; }
+.footer-content { position: relative; z-index: 1; text-align: center; }
+.footer-seal { display: flex; align-items: center; gap: 8px; justify-content: center; font-size: 0.72rem; opacity: 0.55; }
+.footer-seal i { font-size: 1rem; }
+
+/* ====== RESPONSIVE ====== */
+@media (max-width: 768px) {
+    .traffic-grid { grid-template-columns: 1fr; }
+    .header-content { flex-direction: column; align-items: flex-start; }
+}
+    </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+    <div class="container header-content">
+        <div>
+            <h1><i class="ri-stack-line"></i> Backlog Regions</h1>
+            <p class="subtitle">Preview — 4 regions | REG-BACK-01 to REG-BACK-04</p>
+        </div>
+        <button class="theme-toggle" onclick="toggleTheme()">
+            <i class="ri-moon-line" id="themeIcon"></i>
+            <span id="themeLabel">Light</span>
+        </button>
+    </div>
+</header>
+
+<main class="container">
+
+    <!-- ════════════════════════════════════════════════════════ -->
+    <!-- REG-BACK-01: Prioritized Epics                          -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <section class="section" id="prioritized-epics">
+        <div class="section-header">
+            <div class="section-icon bg-info"><i class="ri-list-ordered"></i></div>
+            <h2 class="section-title">Prioritized Epics</h2>
+            <span class="region-badge">REG-BACK-01</span>
+        </div>
+        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:16px;">
+            Epics prioritized with MoSCoW including business narrative and effort estimates.
+            Method: <strong style="color:var(--primary);">MoSCoW</strong>
+        </p>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Epic</th>
+                        <th>Narrative</th>
+                        <th>Priority</th>
+                        <th>Effort</th>
+                        <th>Release</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>EP-01</strong></td>
+                        <td>Onboarding e Auth</td>
+                        <td style="max-width:300px;">Permitir que PMEs se cadastrem e acessem o FinTrack Pro em menos de 3 minutos</td>
+                        <td><span class="pill pill-danger">Must</span></td>
+                        <td>M</td>
+                        <td><span class="pill pill-info">MVP</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>EP-02</strong></td>
+                        <td>Dashboard Financeiro</td>
+                        <td style="max-width:300px;">Visao consolidada de fluxo de caixa, contas a pagar/receber e saldo</td>
+                        <td><span class="pill pill-danger">Must</span></td>
+                        <td>L</td>
+                        <td><span class="pill pill-info">MVP</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>EP-03</strong></td>
+                        <td>Gestao de Assinaturas</td>
+                        <td style="max-width:300px;">Permitir escolha de plano, pagamento e upgrade/downgrade self-service</td>
+                        <td><span class="pill pill-danger">Must</span></td>
+                        <td>M</td>
+                        <td><span class="pill pill-info">MVP</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>EP-04</strong></td>
+                        <td>Relatorios e Exportacao</td>
+                        <td style="max-width:300px;">Gerar relatorios financeiros em PDF para contabilidade e fiscalizacao</td>
+                        <td><span class="pill pill-warning">Should</span></td>
+                        <td>S</td>
+                        <td><span class="pill pill-secondary">v1.1</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>EP-05</strong></td>
+                        <td>Admin e Multi-tenancy</td>
+                        <td style="max-width:300px;">Painel administrativo com gestao de tenants, usuarios e permissoes</td>
+                        <td><span class="pill pill-warning">Should</span></td>
+                        <td>XL</td>
+                        <td><span class="pill pill-secondary">v1.1</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════ -->
+    <!-- REG-BACK-02: High-Level Stories                         -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <section class="section" id="high-level-stories">
+        <div class="section-header">
+            <div class="section-icon bg-purple"><i class="ri-booklet-line"></i></div>
+            <h2 class="section-title">High-Level Stories</h2>
+            <span class="region-badge">REG-BACK-02</span>
+        </div>
+        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:16px;">
+            User stories grouped by epic with acceptance criteria. Click to expand.
+        </p>
+
+        <!-- EP-01 -->
+        <div class="card">
+            <div class="card-header" onclick="toggleAccordion(this)">
+                <div class="card-header-icon bg-danger"><i class="ri-rocket-line"></i></div>
+                <span class="card-title">EP-01: Onboarding e Auth</span>
+                <span class="card-badge pill pill-danger">Must</span>
+                <span class="card-badge pill pill-secondary">2 stories</span>
+                <i class="ri-arrow-right-s-line card-chevron"></i>
+            </div>
+            <div class="card-body collapsed">
+                <div class="story-item">
+                    <span class="story-id">US-01</span>
+                    <p class="story-title">Como novo usuario, quero me cadastrar usando meu email ou conta Google para acessar o FinTrack Pro rapidamente</p>
+                    <ul class="story-criteria">
+                        <li>Cadastro com email + senha com validacao de forca</li>
+                        <li>Login social com Google OAuth 2.0</li>
+                        <li>Email de verificacao enviado em ate 30 segundos</li>
+                    </ul>
+                </div>
+                <div class="story-item">
+                    <span class="story-id">US-02</span>
+                    <p class="story-title">Como usuario cadastrado, quero configurar minha empresa no primeiro acesso para personalizar minha experiencia</p>
+                    <ul class="story-criteria">
+                        <li>Wizard de 3 passos: dados da empresa, regime tributario, integracao bancaria</li>
+                        <li>Possibilidade de pular e completar depois</li>
+                        <li>Dados salvos a cada passo (nao perde progresso)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- EP-02 -->
+        <div class="card">
+            <div class="card-header" onclick="toggleAccordion(this)">
+                <div class="card-header-icon bg-info"><i class="ri-dashboard-3-line"></i></div>
+                <span class="card-title">EP-02: Dashboard Financeiro</span>
+                <span class="card-badge pill pill-danger">Must</span>
+                <span class="card-badge pill pill-secondary">2 stories</span>
+                <i class="ri-arrow-right-s-line card-chevron"></i>
+            </div>
+            <div class="card-body collapsed">
+                <div class="story-item">
+                    <span class="story-id">US-03</span>
+                    <p class="story-title">Como gestor financeiro, quero ver meu fluxo de caixa dos ultimos 30 dias para entender minha situacao atual</p>
+                    <ul class="story-criteria">
+                        <li>Grafico de linha com entradas e saidas diarias</li>
+                        <li>Saldo projetado para os proximos 7 dias</li>
+                        <li>Filtro por conta bancaria</li>
+                    </ul>
+                </div>
+                <div class="story-item">
+                    <span class="story-id">US-04</span>
+                    <p class="story-title">Como gestor financeiro, quero ver contas a pagar e receber para planejar meu caixa</p>
+                    <ul class="story-criteria">
+                        <li>Lista com vencimento, valor e status (pago, pendente, atrasado)</li>
+                        <li>Ordenacao por data de vencimento</li>
+                        <li>Alerta visual para contas atrasadas</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- EP-03 -->
+        <div class="card">
+            <div class="card-header" onclick="toggleAccordion(this)">
+                <div class="card-header-icon bg-success"><i class="ri-bank-card-line"></i></div>
+                <span class="card-title">EP-03: Gestao de Assinaturas</span>
+                <span class="card-badge pill pill-danger">Must</span>
+                <span class="card-badge pill pill-secondary">2 stories</span>
+                <i class="ri-arrow-right-s-line card-chevron"></i>
+            </div>
+            <div class="card-body collapsed">
+                <div class="story-item">
+                    <span class="story-id">US-05</span>
+                    <p class="story-title">Como usuario, quero escolher um plano de assinatura e pagar online</p>
+                    <ul class="story-criteria">
+                        <li>3 planos visiveis com comparacao de features</li>
+                        <li>Pagamento via cartao de credito e boleto</li>
+                        <li>Confirmacao imediata com acesso liberado</li>
+                    </ul>
+                </div>
+                <div class="story-item">
+                    <span class="story-id">US-06</span>
+                    <p class="story-title">Como usuario, quero fazer upgrade ou downgrade do meu plano self-service</p>
+                    <ul class="story-criteria">
+                        <li>Mudanca de plano efetiva no proximo ciclo de cobranca</li>
+                        <li>Calculo pro-rata automatico</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- EP-04 -->
+        <div class="card">
+            <div class="card-header" onclick="toggleAccordion(this)">
+                <div class="card-header-icon bg-warning"><i class="ri-file-chart-line"></i></div>
+                <span class="card-title">EP-04: Relatorios e Exportacao</span>
+                <span class="card-badge pill pill-warning">Should</span>
+                <span class="card-badge pill pill-secondary">1 story</span>
+                <i class="ri-arrow-right-s-line card-chevron"></i>
+            </div>
+            <div class="card-body collapsed">
+                <div class="story-item">
+                    <span class="story-id">US-07</span>
+                    <p class="story-title">Como gestor financeiro, quero gerar relatorios financeiros em PDF para enviar ao contador</p>
+                    <ul class="story-criteria">
+                        <li>Templates de relatorio padrao (DRE, Fluxo de Caixa)</li>
+                        <li>Exportacao em PDF e CSV</li>
+                        <li>Agendamento de envio automatico por email</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- EP-05 -->
+        <div class="card">
+            <div class="card-header" onclick="toggleAccordion(this)">
+                <div class="card-header-icon bg-purple"><i class="ri-admin-line"></i></div>
+                <span class="card-title">EP-05: Admin e Multi-tenancy</span>
+                <span class="card-badge pill pill-warning">Should</span>
+                <span class="card-badge pill pill-secondary">1 story</span>
+                <i class="ri-arrow-right-s-line card-chevron"></i>
+            </div>
+            <div class="card-body collapsed">
+                <div class="story-item">
+                    <span class="story-id">US-08</span>
+                    <p class="story-title">Como admin da plataforma, quero gerenciar tenants, usuarios e permissoes de forma centralizada</p>
+                    <ul class="story-criteria">
+                        <li>CRUD de tenants com isolamento de dados</li>
+                        <li>Gestao de usuarios por tenant com roles (admin, viewer)</li>
+                        <li>Audit log de acoes administrativas</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════ -->
+    <!-- REG-BACK-03: Dependencies                               -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <section class="section" id="dependencies">
+        <div class="section-header">
+            <div class="section-icon bg-warning"><i class="ri-git-branch-line"></i></div>
+            <h2 class="section-title">Dependencies</h2>
+            <span class="region-badge">REG-BACK-03</span>
+        </div>
+        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:16px;">
+            Dependency map between epics showing blocking and enabling relationships.
+        </p>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>EP-01</strong> Onboarding e Auth</td>
+                        <td><strong>EP-02</strong> Dashboard</td>
+                        <td><span class="dep-blocks">blocks</span></td>
+                        <td>Dashboard requer usuario autenticado e empresa configurada</td>
+                    </tr>
+                    <tr>
+                        <td><strong>EP-01</strong> Onboarding e Auth</td>
+                        <td><strong>EP-03</strong> Assinaturas</td>
+                        <td><span class="dep-blocks">blocks</span></td>
+                        <td>Gestao de assinatura requer tenant criado</td>
+                    </tr>
+                    <tr>
+                        <td><strong>EP-02</strong> Dashboard</td>
+                        <td><strong>EP-04</strong> Relatorios</td>
+                        <td><span class="dep-enables">enables</span></td>
+                        <td>Relatorios consomem dados ja exibidos no dashboard</td>
+                    </tr>
+                    <tr>
+                        <td><strong>EP-01</strong> Onboarding e Auth</td>
+                        <td><strong>EP-05</strong> Admin</td>
+                        <td><span class="dep-blocks">blocks</span></td>
+                        <td>Admin gerencia tenants criados pelo onboarding</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="parallel-groups">
+            <p style="font-size:0.82rem; font-weight:600; margin-bottom:10px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.3px;">
+                <i class="ri-git-merge-line"></i> Parallel Execution Groups
+            </p>
+            <div class="parallel-group">
+                <span class="parallel-label">Group 1</span>
+                <div class="parallel-items">
+                    <span class="parallel-item">EP-01</span>
+                </div>
+            </div>
+            <div class="parallel-group">
+                <span class="parallel-label">Group 2</span>
+                <div class="parallel-items">
+                    <span class="parallel-item">EP-02</span>
+                    <span class="parallel-item">EP-03</span>
+                </div>
+            </div>
+            <div class="parallel-group">
+                <span class="parallel-label">Group 3</span>
+                <div class="parallel-items">
+                    <span class="parallel-item">EP-04</span>
+                    <span class="parallel-item">EP-05</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════ -->
+    <!-- REG-BACK-04: Go/No-Go Criteria                          -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <section class="section" id="go-no-go-criteria">
+        <div class="section-header">
+            <div class="section-icon bg-success"><i class="ri-traffic-light-line"></i></div>
+            <h2 class="section-title">Go/No-Go Criteria</h2>
+            <span class="region-badge">REG-BACK-04</span>
+        </div>
+        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:16px;">
+            Decision criteria with target values and deadlines. Traffic light status for instant readability.
+        </p>
+
+        <div class="traffic-grid">
+            <!-- GNG-01 -->
+            <div class="traffic-card status-gray">
+                <div class="traffic-top">
+                    <span class="traffic-id">GNG-01</span>
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <span class="traffic-status-label gray">Pendente</span>
+                        <div class="traffic-light gray"></div>
+                    </div>
+                </div>
+                <div class="traffic-criterion">Validacao de willingness-to-pay</div>
+                <div class="traffic-target"><strong>Target:</strong> &ge; 50 pre-cadastros pagos</div>
+                <div class="traffic-deadline"><i class="ri-calendar-line"></i> Antes do MVP</div>
+            </div>
+
+            <!-- GNG-02 -->
+            <div class="traffic-card status-gray">
+                <div class="traffic-top">
+                    <span class="traffic-id">GNG-02</span>
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <span class="traffic-status-label gray">Pendente</span>
+                        <div class="traffic-light gray"></div>
+                    </div>
+                </div>
+                <div class="traffic-criterion">Spike tecnico de multi-tenancy</div>
+                <div class="traffic-target"><strong>Target:</strong> Isolamento comprovado com 10 tenants</div>
+                <div class="traffic-deadline"><i class="ri-calendar-line"></i> Sprint 1</div>
+            </div>
+
+            <!-- GNG-03 -->
+            <div class="traffic-card status-gray">
+                <div class="traffic-top">
+                    <span class="traffic-id">GNG-03</span>
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <span class="traffic-status-label gray">Pendente</span>
+                        <div class="traffic-light gray"></div>
+                    </div>
+                </div>
+                <div class="traffic-criterion">Cobertura Open Finance</div>
+                <div class="traffic-target"><strong>Target:</strong> &ge; 5 bancos com API funcional</div>
+                <div class="traffic-deadline"><i class="ri-calendar-line"></i> Sprint 2</div>
+            </div>
+
+            <!-- GNG-04 -->
+            <div class="traffic-card status-green">
+                <div class="traffic-top">
+                    <span class="traffic-id">GNG-04</span>
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <span class="traffic-status-label green">Atingido</span>
+                        <div class="traffic-light green"></div>
+                    </div>
+                </div>
+                <div class="traffic-criterion">Score do auditor</div>
+                <div class="traffic-target"><strong>Target:</strong> &ge; 7.0 em todas as dimensoes</div>
+                <div class="traffic-deadline"><i class="ri-calendar-line"></i> Fase 2</div>
+            </div>
+
+            <!-- GNG-05 -->
+            <div class="traffic-card status-gray">
+                <div class="traffic-top">
+                    <span class="traffic-id">GNG-05</span>
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <span class="traffic-status-label gray">Pendente</span>
+                        <div class="traffic-light gray"></div>
+                    </div>
+                </div>
+                <div class="traffic-criterion">Budget aprovado</div>
+                <div class="traffic-target"><strong>Target:</strong> Aprovacao formal do sponsor</div>
+                <div class="traffic-deadline"><i class="ri-calendar-line"></i> Antes do kickoff</div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="container footer-content">
+        <div class="footer-seal">
+            <i class="ri-shield-check-line"></i>
+            <span>&copy; 2026 mAInd Tech</span>
+        </div>
+    </div>
+</footer>
+
+<script>
+function toggleTheme() {
+    const html = document.documentElement;
+    const icon = document.getElementById('themeIcon');
+    const label = document.getElementById('themeLabel');
+    if (html.getAttribute('data-theme') === 'light') {
+        html.removeAttribute('data-theme');
+        icon.className = 'ri-moon-line';
+        label.textContent = 'Light';
+    } else {
+        html.setAttribute('data-theme', 'light');
+        icon.className = 'ri-sun-line';
+        label.textContent = 'Dark';
+    }
+}
+
+function toggleAccordion(header) {
+    const body = header.nextElementSibling;
+    const chevron = header.querySelector('.card-chevron');
+    body.classList.toggle('collapsed');
+    chevron.classList.toggle('open');
+}
+</script>
+</body>
+</html>

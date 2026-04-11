@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metrics Regions Preview</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+/* ====== DESIGN TOKENS (dark — default) ====== */
+:root {
+    --primary: #4DA8DA;
+    --primary-dark: #3A8BB8;
+    --primary-light: rgba(77, 168, 218, 0.12);
+    --secondary: #B9B7BD;
+    --success: #0ED145;
+    --success-light: rgba(14, 209, 69, 0.12);
+    --success-border: rgba(14, 209, 69, 0.3);
+    --warning: #F4AC00;
+    --warning-light: rgba(244, 172, 0, 0.12);
+    --warning-border: rgba(244, 172, 0, 0.3);
+    --danger: #8B1A1A;
+    --danger-light: rgba(139, 26, 26, 0.15);
+    --danger-border: rgba(139, 26, 26, 0.35);
+    --info: #2EB5F5;
+    --info-light: rgba(46, 181, 245, 0.12);
+    --info-border: rgba(46, 181, 245, 0.3);
+    --bg: #1A1923;
+    --card-bg: #2E2D32;
+    --text: #E0DFE3;
+    --text-muted: #88878C;
+    --border: #3E3D44;
+    --purple: #9B96FF;
+    --purple-light: rgba(155, 150, 255, 0.12);
+    --orange: #FF9473;
+    --teal: #2DD4BF;
+    --header-bg: linear-gradient(135deg, #2E2D32 0%, #252428 50%, #1A1923 100%);
+    --card-header-bg: #252428;
+    --th-bg: #252428;
+    --th-bg-hover: #36353B;
+    --card-shadow: 0 2px 12px rgba(46, 181, 245, 0.06), 0 1px 4px rgba(0,0,0,0.4);
+    --progress-track: #3E3D44;
+    --alert-warning-text: #f0c040;
+    --danger-text: #E85D54;
+    --alert-danger-text: #E85D54;
+    --alert-info-text: #5FC8F8;
+    --alert-success-text: #3DE06A;
+    --pill-success-text: #3DE06A;
+    --pill-info-text: #5FC8F8;
+    --pill-warning-text: #f0c040;
+}
+
+[data-theme="light"] {
+    --primary: #4DA8DA;
+    --primary-dark: #3A8BB8;
+    --primary-light: rgba(77, 168, 218, 0.1);
+    --secondary: #88878C;
+    --success: #0A9E35;
+    --success-light: rgba(10, 158, 53, 0.08);
+    --success-border: rgba(10, 158, 53, 0.25);
+    --warning: #E67E22;
+    --warning-light: rgba(230, 126, 34, 0.12);
+    --warning-border: rgba(230, 126, 34, 0.35);
+    --danger: #E74C3C;
+    --danger-light: rgba(231, 76, 60, 0.10);
+    --danger-border: rgba(231, 76, 60, 0.30);
+    --info: #1E95CC;
+    --info-light: rgba(30, 149, 204, 0.08);
+    --info-border: rgba(30, 149, 204, 0.25);
+    --bg: #E0DFE3;
+    --card-bg: #ffffff;
+    --text: #1A1923;
+    --text-muted: #88878C;
+    --border: #B9B7BD;
+    --purple: #7B76FE;
+    --purple-light: rgba(123, 118, 254, 0.08);
+    --orange: #FE7C58;
+    --teal: #00D8D8;
+    --header-bg: linear-gradient(135deg, #2E2D32 0%, #252428 50%, #1A1923 100%);
+    --card-header-bg: rgba(77, 168, 218, 0.12);
+    --th-bg: rgba(77, 168, 218, 0.12);
+    --th-bg-hover: rgba(77, 168, 218, 0.22);
+    --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0,0,0,0.06);
+    --progress-track: #B9B7BD;
+    --alert-warning-text: #C0392B;
+    --alert-danger-text: #C0392B;
+    --alert-info-text: #1670A0;
+    --alert-success-text: #087A28;
+    --pill-success-text: #087A28;
+    --pill-info-text: #1670A0;
+    --pill-warning-text: #C0392B;
+    --hover-border: #4DA8DA;
+}
+[data-theme="light"] .card:hover { border-color: var(--hover-border); }
+[data-theme="light"] .stat-card:hover { border-color: var(--hover-border); }
+[data-theme="light"] .stat-card { background: #F0EFF2; }
+
+/* ====== RESET ====== */
+html, body, div, span, h1, h2, h3, h4, h5, h6, p, a, ul, ol, li,
+header, footer, nav, section, article, aside, button, input, select, textarea,
+table, tr, td, th { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+/* ====== HEADER ====== */
+.header { background: linear-gradient(135deg, #2E2D32 0%, #252428 50%, #1A1923 100%); color: white; padding: 36px 0 28px; position: relative; overflow: hidden; }
+.header::before { content: ''; position: absolute; top: -50%; right: -10%; width: 500px; height: 500px; background: rgba(255,255,255,0.03); border-radius: 50%; z-index: 0; }
+.header-content { position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+.header h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.5px; }
+.header .subtitle { font-size: 0.88rem; opacity: 0.7; font-weight: 300; margin-top: 4px; }
+
+/* ====== THEME TOGGLE ====== */
+.theme-toggle { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; padding: 8px 14px; color: white; cursor: pointer; font-family: 'Poppins', sans-serif; font-size: 0.78rem; font-weight: 500; display: flex; align-items: center; gap: 6px; transition: all 0.2s; }
+.theme-toggle:hover { background: rgba(255,255,255,0.22); }
+
+/* ====== REGION ID BADGE ====== */
+.region-badge { display: inline-flex; align-items: center; gap: 6px; background: var(--primary-light); border: 1px solid rgba(77, 168, 218, 0.3); color: var(--primary); padding: 3px 12px; border-radius: 6px; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.5px; font-family: monospace; }
+
+/* ====== SECTION ====== */
+.section { margin-top: 36px; }
+.section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid var(--border); }
+.section-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+.section-title { font-size: 1.15rem; font-weight: 600; flex: 1; }
+
+/* ====== PILLS ====== */
+.pill { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: 600; }
+.pill-success { background: var(--success-light); color: var(--pill-success-text); border: 1px solid var(--success-border); }
+.pill-info { background: var(--info-light); color: var(--pill-info-text); border: 1px solid var(--info-border); }
+.pill-warning { background: var(--warning-light); color: var(--pill-warning-text); border: 1px solid var(--warning-border); }
+.pill-danger { background: var(--danger-light); color: var(--alert-danger-text); border: 1px solid var(--danger-border); }
+.pill-secondary { background: rgba(136,135,140,0.15); color: var(--text-muted); border: 1px solid rgba(136,135,140,0.3); }
+
+/* ====== BG UTILITY ====== */
+.bg-primary { background: var(--primary); color: #1A1923 !important; }
+.bg-success { background: var(--success); color: #1A1923 !important; }
+.bg-warning { background: var(--warning); color: #1A1923 !important; }
+.bg-teal { background: var(--teal); color: #1A1923 !important; }
+.bg-orange { background: var(--orange); color: #1A1923 !important; }
+.bg-info { background: var(--info); color: white !important; }
+.bg-danger { background: var(--danger); color: white !important; }
+.bg-purple { background: var(--purple); color: white !important; }
+
+/* ====== STAT CARDS ====== */
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+.stat-card { background: var(--card-bg); border-radius: 12px; padding: 20px; box-shadow: var(--card-shadow); border: 1px solid var(--border); transition: box-shadow 0.2s, border-color 0.2s; position: relative; overflow: hidden; }
+.stat-card:hover { border-color: var(--primary); }
+.stat-card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.stat-card-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+.stat-card-direction { font-size: 1.2rem; }
+.stat-card-direction.up { color: var(--pill-success-text); }
+.stat-card-direction.down { color: var(--pill-info-text); }
+.stat-card-name { font-size: 0.82rem; font-weight: 600; margin-bottom: 4px; }
+.stat-card-values { display: flex; align-items: baseline; gap: 8px; margin-bottom: 8px; }
+.stat-card-current { font-size: 0.75rem; color: var(--text-muted); }
+.stat-card-target { font-size: 1.1rem; font-weight: 700; color: var(--primary); }
+.stat-card-deadline { font-size: 0.72rem; color: var(--text-muted); display: flex; align-items: center; gap: 4px; }
+.progress-bar { height: 6px; background: var(--progress-track); border-radius: 3px; overflow: hidden; margin-top: 10px; }
+.progress-fill { height: 100%; border-radius: 3px; transition: width 0.5s ease; }
+
+/* ====== TECH KPI CARDS ====== */
+.tech-stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+.tech-card { background: var(--card-bg); border-radius: 12px; padding: 20px; box-shadow: var(--card-shadow); border: 1px solid var(--border); border-left: 3px solid var(--primary); transition: border-color 0.2s; }
+.tech-card:hover { border-color: var(--primary); }
+.tech-card-name { font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; }
+.tech-card-target { font-size: 1.3rem; font-weight: 800; color: var(--primary); margin-bottom: 4px; }
+.tech-card-sla { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 6px; }
+.tech-card-measure { font-size: 0.72rem; color: var(--text-muted); display: flex; align-items: center; gap: 4px; }
+
+/* ====== TABLES ====== */
+.table-wrapper { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+th { text-align: left; padding: 10px 14px; background: var(--th-bg); font-weight: 600; border-bottom: 2px solid var(--border); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.3px; color: var(--text-muted); }
+td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+tr:hover { background: var(--primary-light); }
+
+/* ====== GAUGE BAR (inline for SLAs) ====== */
+.gauge-bar { display: flex; align-items: center; gap: 8px; }
+.gauge-track { flex: 1; height: 8px; background: var(--progress-track); border-radius: 4px; overflow: hidden; min-width: 80px; }
+.gauge-fill { height: 100%; border-radius: 4px; }
+.gauge-label { font-size: 0.7rem; font-weight: 600; color: var(--text-muted); white-space: nowrap; }
+
+/* ====== TIMELINE (Targets per Phase) ====== */
+.timeline-h { display: flex; align-items: flex-start; gap: 0; margin: 24px 0; position: relative; }
+.timeline-phase { flex: 1; position: relative; text-align: center; }
+.timeline-line { position: absolute; top: 18px; left: 50%; right: -50%; height: 3px; background: var(--border); z-index: 0; }
+.timeline-phase:last-child .timeline-line { display: none; }
+.timeline-dot { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700; margin: 0 auto 12px; position: relative; z-index: 1; border: 3px solid var(--bg); }
+.timeline-phase-name { font-size: 0.88rem; font-weight: 700; margin-bottom: 2px; }
+.timeline-phase-duration { font-size: 0.72rem; color: var(--text-muted); margin-bottom: 10px; }
+.timeline-metrics { text-align: left; padding: 12px; background: var(--card-bg); border-radius: 10px; border: 1px solid var(--border); margin: 0 4px; }
+.timeline-metric { display: flex; align-items: center; gap: 6px; font-size: 0.75rem; padding: 3px 0; }
+.timeline-metric-type { width: 8px; height: 8px; border-radius: 3px; flex-shrink: 0; }
+.timeline-metric-type.business { background: var(--primary); }
+.timeline-metric-type.technical { background: var(--teal); }
+.timeline-metric-type.quality { background: var(--purple); }
+
+/* ====== DORA 2x2 GRID ====== */
+.dora-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.dora-card { background: var(--card-bg); border-radius: 12px; padding: 22px; box-shadow: var(--card-shadow); border: 1px solid var(--border); position: relative; overflow: hidden; transition: border-color 0.2s; }
+.dora-card:hover { border-color: var(--primary); }
+.dora-card-icon { font-size: 1.8rem; margin-bottom: 8px; }
+.dora-card-name { font-size: 0.92rem; font-weight: 700; margin-bottom: 12px; }
+.dora-row { display: flex; align-items: center; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid var(--border); }
+.dora-row:last-child { border-bottom: none; }
+.dora-label { font-size: 0.75rem; color: var(--text-muted); font-weight: 500; }
+.dora-value { font-size: 0.82rem; font-weight: 700; }
+.dora-value.target { color: var(--primary); }
+.dora-value.elite { color: var(--pill-success-text); }
+.dora-value.current { color: var(--text-muted); }
+.dora-level { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 8px; }
+
+/* ====== FOOTER ====== */
+.footer { background: linear-gradient(135deg, #2E2D32 0%, #252428 50%, #1A1923 100%); color: white; padding: 28px 0; margin-top: 48px; position: relative; overflow: hidden; }
+.footer::before { content: ''; position: absolute; bottom: -50%; left: -10%; width: 500px; height: 500px; background: rgba(255,255,255,0.03); border-radius: 50%; z-index: 0; }
+.footer-content { position: relative; z-index: 1; text-align: center; }
+.footer-seal { display: flex; align-items: center; gap: 8px; justify-content: center; font-size: 0.72rem; opacity: 0.55; }
+.footer-seal i { font-size: 1rem; }
+
+/* ====== RESPONSIVE ====== */
+@media (max-width: 768px) {
+    .stats-grid, .tech-stats-grid { grid-template-columns: 1fr; }
+    .dora-grid { grid-template-columns: 1fr; }
+    .timeline-h { flex-direction: column; }
+    .timeline-line { display: none !important; }
+    .header-content { flex-direction: column; align-items: flex-start; }
+}
+    </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+    <div class="container header-content">
+        <div>
+            <h1><i class="ri-bar-chart-grouped-line"></i> Metrics Regions</h1>
+            <p class="subtitle">Preview — 5 regions | REG-METR-01 to REG-METR-05</p>
+        </div>
+        <button class="theme-toggle" onclick="toggleTheme()">
+            <i class="ri-moon-line" id="themeIcon"></i>
+            <span id="themeLabel">Light</span>
+        </button>
+    </div>
+</header>
+
+<main class="container">
+
+    <!-- ════════════════════════════════════════════════════════ -->
+    <!-- REG-METR-01: Business KPIs                              -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <section class="section" id="business-kpis">
+        <div class="section-header">
+            <div class="section-icon bg-primary"><i class="ri-funds-line"></i></div>
+            <h2 class="section-title">Business KPIs</h2>
+            <span class="region-badge">REG-METR-01</span>
+        </div>
+        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:16px;">
+            Key business performance indicators with current values, targets, and deadlines.
+        </p>
+        <div class="stats-grid">
+            <!-- BK-01 MRR -->
+            <div class="stat-card">
+                <div class="stat-card-top">
+                    <div class="stat-card-icon bg-primary"><i class="ri-money-dollar-circle-line"></i></div>
+                    <span class="stat-card-direction up"><i class="ri-arrow-up-line"></i></span>
+                </div>
+                <div class="stat-card-name">MRR (Monthly Recurring Revenue)</div>
+                <div class="stat-card-values">
+                    <span class="stat-card-current">R$ 0</span>
+                    <span style="color:var(--text-muted);">&rarr;</span>
+                    <span class="stat-card-target">R$ 50.000</span>
+                </div>
+                <div class="stat-card-deadline"><i class="ri-calendar-line"></i> Mes 12</div>
+                <div class="progress-bar"><div class="progress-fill" style="width:0%; background:var(--primary);"></div></div>
+            </div>
+            <!-- BK-02 Clientes -->
+            <div class="stat-card">
+                <div class="stat-card-top">
+                    <div class="stat-card-icon bg-info"><i class="ri-group-line"></i></div>
+                    <span class="stat-card-direction up"><i class="ri-arrow-up-line"></i></span>
+                </div>
+                <div class="stat-card-name">Clientes Pagantes</div>
+                <div class="stat-card-values">
+                    <span class="stat-card-current">0</span>
+                    <span style="color:var(--text-muted);">&rarr;</span>
+                    <span class="stat-card-target">300</span>
+                </div>
+                <div class="stat-card-deadline"><i class="ri-calendar-line"></i> Mes 12</div>
+                <div class="progress-bar"><div class="progress-fill" style="width:0%; background:var(--info);"></div></div>
+            </div>
+            <!-- BK-03 Churn -->
+            <div class="stat-card">
+                <div class="stat-card-top">
+                    <div class="stat-card-icon bg-warning"><i class="ri-user-unfollow-line"></i></div>
+                    <span class="stat-card-direction down"><i class="ri-arrow-down-line"></i></span>
+                </div>
+                <div class="stat-card-name">Churn Mensal</div>
+                <div class="stat-card-values">
+                    <span class="stat-card-current">N/A</span>
+                    <span style="color:var(--text-muted);">&rarr;</span>
+                    <span class="stat-card-target">&lt; 3%</span>
+                </div>
+                <div class="stat-card-deadline"><i class="ri-calendar-line"></i> Mes 6 pos-lancamento</div>
+                <div class="progress-bar"><div class="progress-fill" style="width:0%; background:var(--warning);"></div></div>
+            </div>
+            <!-- BK-04 NPS -->
+            <div class="stat-card">
+                <div class="stat-card-top">
+                    <div class="stat-card-icon bg-success"><i class="ri-emotion-happy-line"></i></div>
+                    <span class="stat-card-direction up"><i class="ri-arrow-up-line"></i></span>
+                </div>
+                <div class="stat-card-name">NPS (Net Promoter Score)</div>
+                <div class="stat-card-values">
+                    <span class="stat-card-current">N/A</span>
+                    <span style="color:var(--text-muted);">&rarr;</span>
+                    <span class="stat-card-target">&ge; 50</span>
+                </div>
+                <div class="stat-card-deadline"><i class="ri-calendar-line"></i> Mes 6 pos-lancamento</div>
+                <div class="progress-bar"><div class="progress-fill" style="width:0%; background:var(--success);"></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════ -->
+    <!-- REG-METR-02: Technical KPIs                             -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <section class="section" id="technical-kpis">
+        <div class="section-header">
+            <div class="section-icon bg-teal"><i class="ri-cpu-line"></i></div>
+            <h2 class="section-title">Technical KPIs</h2>
+            <span class="region-badge">REG-METR-02</span>
+        </div>
+        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:16px;">
+            Technical performance indicators and their service level targets.
+        </p>
+        <div class="tech-stats-grid">
+            <!-- TK-01 -->
+            <div class="tech-card">
+                <div class="tech-card-name"><i class="ri-speed-line" style="color:var(--primary);"></i> Latencia P95 da API</div>
+                <div class="tech-card-target">&lt; 200ms</div>
+                <div class="tech-card-sla">SLA: 99% das requests</div>
+                <div class="tech-card-measure"><i class="ri-pulse-line"></i> APM (Datadog)</div>
+            </div>
+            <!-- TK-02 -->
+            <div class="tech-card" style="border-left-color: var(--success);">
+                <div class="tech-card-name"><i class="ri-shield-check-line" style="color:var(--success);"></i> Disponibilidade</div>
+                <div class="tech-card-target" style="color:var(--pill-success-text);">99.5%</div>
+                <div class="tech-card-sla">SLA: Mensal</div>
+                <div class="tech-card-measure"><i class="ri-pulse-line"></i> Uptime monitor</div>
+            </div>
+            <!-- TK-03 -->
+            <div class="tech-card" style="border-left-color: var(--info);">
+                <div class="tech-card-name"><i class="ri-dashboard-3-line" style="color:var(--info);"></i> Dashboard FCP</div>
+                <div class="tech-card-target" style="color:var(--pill-info-text);">&lt; 2s</div>
+                <div class="tech-card-sla">SLA: 95% dos acessos</div>
+                <div class="tech-card-measure"><i class="ri-pulse-line"></i> RUM (Real User Monitoring)</div>
+            </div>
+            <!-- TK-04 -->
+            <div class="tech-card" style="border-left-color: var(--warning);">
+                <div class="tech-card-name"><i class="ri-error-warning-line" style="color:var(--warning);"></i> Taxa de Erro API</div>
+                <div class="tech-card-target" style="color:var(--pill-warning-text);">&lt; 0.1%</div>
+                <div class="tech-card-sla">SLA: Mensal</div>
+                <div class="tech-card-measure"><i class="ri-pulse-line"></i> Logs + metricas</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════ -->
+    <!-- REG-METR-03: SLAs and SLOs                              -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <section class="section" id="slas-and-slos">
+        <div class="section-header">
+            <div class="section-icon bg-purple"><i class="ri-shield-star-line"></i></div>
+            <h2 class="section-title">SLAs and SLOs</h2>
+            <span class="region-badge">REG-METR-03</span>
+        </div>
+        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:16px;">
+            Service Level Agreements and Objectives per service component with gauge indicators.
+        </p>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Service</th>
+                        <th>SLI</th>
+                        <th>SLO</th>
+                        <th>SLA</th>
+                        <th>Error Budget</th>
+                        <th style="min-width:140px;">Usage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>API Gateway</strong></td>
+                        <td>% requests 2xx</td>
+                        <td>99.9%</td>
+                        <td>99.5%</td>
+                        <td>43 min/mes</td>
+                        <td>
+                            <div class="gauge-bar">
+                                <div class="gauge-track"><div class="gauge-fill" style="width:15%; background:var(--success);"></div></div>
+                                <span class="gauge-label">15%</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Dashboard Web</strong></td>
+                        <td>FCP P95</td>
+                        <td>&lt; 1.5s</td>
+                        <td>&lt; 3s</td>
+                        <td>5% sessoes</td>
+                        <td>
+                            <div class="gauge-bar">
+                                <div class="gauge-track"><div class="gauge-fill" style="width:35%; background:var(--primary);"></div></div>
+                                <span class="gauge-label">35%</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Open Finance</strong></td>
+                        <td>% sync ok</td>
+                        <td>99.0%</td>
+                        <td>97.0%</td>
+                        <td>7.2h/mes</td>
+                        <td>
+                            <div class="gauge-bar">
+                                <div class="gauge-track"><div class="gauge-fill" style="width:25%; background:var(--info);"></div></div>
+                                <span class="gauge-label">25%</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Relatorios</strong></td>
+                        <td>Gen time P95</td>
+                        <td>&lt; 30s</td>
+                        <td>&lt; 60s</td>
+                        <td>5% acima</td>
+                        <td>
+                            <div class="gauge-bar">
+                                <div class="gauge-track"><div class="gauge-fill" style="width:40%; background:var(--warning);"></div></div>
+                                <span class="gauge-label">40%</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Banco de Dados</strong></td>
+                        <td>Query P99 lat</td>
+                        <td>&lt; 100ms</td>
+                        <td>N/A (interno)</td>
+                        <td>1% acima</td>
+                        <td>
+                            <div class="gauge-bar">
+                                <div class="gauge-track"><div class="gauge-fill" style="width:10%; background:var(--teal);"></div></div>
+                                <span class="gauge-label">10%</span>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════ -->
+    <!-- REG-METR-04: Targets per Phase                          -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <section class="section" id="targets-per-phase">
+        <div class="section-header">
+            <div class="section-icon bg-orange"><i class="ri-route-line"></i></div>
+            <h2 class="section-title">Targets per Phase</h2>
+            <span class="region-badge">REG-METR-04</span>
+        </div>
+        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:16px;">
+            Measurable targets mapped to each project phase.
+            <span style="display:inline-flex; align-items:center; gap:4px; margin-left:12px;">
+                <span class="timeline-metric-type business" style="display:inline-block;"></span> <span style="font-size:0.72rem;">Business</span>
+                <span class="timeline-metric-type technical" style="display:inline-block; margin-left:8px;"></span> <span style="font-size:0.72rem;">Technical</span>
+                <span class="timeline-metric-type quality" style="display:inline-block; margin-left:8px;"></span> <span style="font-size:0.72rem;">Quality</span>
+            </span>
+        </p>
+        <div class="timeline-h">
+            <!-- MVP -->
+            <div class="timeline-phase">
+                <div class="timeline-line"></div>
+                <div class="timeline-dot bg-primary">1</div>
+                <div class="timeline-phase-name">MVP</div>
+                <div class="timeline-phase-duration">4 meses</div>
+                <div class="timeline-metrics">
+                    <div class="timeline-metric">
+                        <span class="timeline-metric-type quality"></span>
+                        <span>Epicos: <strong>3/3 (Must)</strong></span>
+                    </div>
+                    <div class="timeline-metric">
+                        <span class="timeline-metric-type technical"></span>
+                        <span>Testes: <strong>&ge; 80%</strong></span>
+                    </div>
+                    <div class="timeline-metric">
+                        <span class="timeline-metric-type business"></span>
+                        <span>Usuarios beta: <strong>&ge; 50</strong></span>
+                    </div>
+                </div>
+            </div>
+            <!-- v1.1 -->
+            <div class="timeline-phase">
+                <div class="timeline-line"></div>
+                <div class="timeline-dot bg-info" style="color:white;">2</div>
+                <div class="timeline-phase-name">v1.1</div>
+                <div class="timeline-phase-duration">2 meses</div>
+                <div class="timeline-metrics">
+                    <div class="timeline-metric">
+                        <span class="timeline-metric-type business"></span>
+                        <span>Clientes: <strong>&ge; 100</strong></span>
+                    </div>
+                    <div class="timeline-metric">
+                        <span class="timeline-metric-type technical"></span>
+                        <span>Uptime: <strong>&ge; 99.5%</strong></span>
+                    </div>
+                    <div class="timeline-metric">
+                        <span class="timeline-metric-type business"></span>
+                        <span>NPS beta: <strong>&ge; 40</strong></span>
+                    </div>
+                </div>
+            </div>
+            <!-- Scale -->
+            <div class="timeline-phase">
+                <div class="timeline-dot bg-success">3</div>
+                <div class="timeline-phase-name">Scale</div>
+                <div class="timeline-phase-duration">6 meses</div>
+                <div class="timeline-metrics">
+                    <div class="timeline-metric">
+                        <span class="timeline-metric-type business"></span>
+                        <span>MRR: <strong>&ge; R$ 50k</strong></span>
+                    </div>
+                    <div class="timeline-metric">
+                        <span class="timeline-metric-type technical"></span>
+                        <span>Latencia P95: <strong>&lt; 200ms</strong></span>
+                    </div>
+                    <div class="timeline-metric">
+                        <span class="timeline-metric-type business"></span>
+                        <span>Churn: <strong>&lt; 3%</strong></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════ -->
+    <!-- REG-METR-05: DORA Metrics                               -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <section class="section" id="dora-metrics">
+        <div class="section-header">
+            <div class="section-icon bg-danger"><i class="ri-rocket-2-line"></i></div>
+            <h2 class="section-title">DORA Metrics</h2>
+            <span class="region-badge">REG-METR-05</span>
+        </div>
+        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:16px;">
+            DevOps Research and Assessment — 4 key engineering performance metrics.
+            Greenfield project: targets are conservative. Goal: "High" in 6 months, "Elite" in 12.
+        </p>
+        <div class="dora-grid">
+            <!-- Deploy Frequency -->
+            <div class="dora-card">
+                <div class="dora-card-icon" style="color:var(--primary);"><i class="ri-rocket-line"></i></div>
+                <div class="dora-card-name">Deploy Frequency</div>
+                <div class="dora-row">
+                    <span class="dora-label">Current</span>
+                    <span class="dora-value current">N/A (greenfield)</span>
+                </div>
+                <div class="dora-row">
+                    <span class="dora-label">Target (6m)</span>
+                    <span class="dora-value target">Diario</span>
+                </div>
+                <div class="dora-row">
+                    <span class="dora-label">Elite Benchmark</span>
+                    <span class="dora-value elite">On-demand (multi/dia)</span>
+                </div>
+                <span class="dora-level" style="background:var(--info-light); color:var(--pill-info-text); border:1px solid var(--info-border);">Target: High</span>
+            </div>
+            <!-- Lead Time -->
+            <div class="dora-card">
+                <div class="dora-card-icon" style="color:var(--info);"><i class="ri-time-line"></i></div>
+                <div class="dora-card-name">Lead Time for Changes</div>
+                <div class="dora-row">
+                    <span class="dora-label">Current</span>
+                    <span class="dora-value current">N/A</span>
+                </div>
+                <div class="dora-row">
+                    <span class="dora-label">Target (6m)</span>
+                    <span class="dora-value target">&lt; 1 dia</span>
+                </div>
+                <div class="dora-row">
+                    <span class="dora-label">Elite Benchmark</span>
+                    <span class="dora-value elite">&lt; 1 hora</span>
+                </div>
+                <span class="dora-level" style="background:var(--info-light); color:var(--pill-info-text); border:1px solid var(--info-border);">Target: High</span>
+            </div>
+            <!-- MTTR -->
+            <div class="dora-card">
+                <div class="dora-card-icon" style="color:var(--warning);"><i class="ri-first-aid-kit-line"></i></div>
+                <div class="dora-card-name">Mean Time to Recovery</div>
+                <div class="dora-row">
+                    <span class="dora-label">Current</span>
+                    <span class="dora-value current">N/A</span>
+                </div>
+                <div class="dora-row">
+                    <span class="dora-label">Target (6m)</span>
+                    <span class="dora-value target">&lt; 1 hora</span>
+                </div>
+                <div class="dora-row">
+                    <span class="dora-label">Elite Benchmark</span>
+                    <span class="dora-value elite">&lt; 1 hora</span>
+                </div>
+                <span class="dora-level" style="background:var(--success-light); color:var(--pill-success-text); border:1px solid var(--success-border);">Target: Elite</span>
+            </div>
+            <!-- Change Failure Rate -->
+            <div class="dora-card">
+                <div class="dora-card-icon" style="color:var(--alert-danger-text);"><i class="ri-bug-line"></i></div>
+                <div class="dora-card-name">Change Failure Rate</div>
+                <div class="dora-row">
+                    <span class="dora-label">Current</span>
+                    <span class="dora-value current">N/A</span>
+                </div>
+                <div class="dora-row">
+                    <span class="dora-label">Target (6m)</span>
+                    <span class="dora-value target">&lt; 10%</span>
+                </div>
+                <div class="dora-row">
+                    <span class="dora-label">Elite Benchmark</span>
+                    <span class="dora-value elite">&lt; 5%</span>
+                </div>
+                <span class="dora-level" style="background:var(--info-light); color:var(--pill-info-text); border:1px solid var(--info-border);">Target: High</span>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="container footer-content">
+        <div class="footer-seal">
+            <i class="ri-shield-check-line"></i>
+            <span>&copy; 2026 mAInd Tech</span>
+        </div>
+    </div>
+</footer>
+
+<script>
+function toggleTheme() {
+    const html = document.documentElement;
+    const icon = document.getElementById('themeIcon');
+    const label = document.getElementById('themeLabel');
+    if (html.getAttribute('data-theme') === 'light') {
+        html.removeAttribute('data-theme');
+        icon.className = 'ri-moon-line';
+        label.textContent = 'Light';
+    } else {
+        html.setAttribute('data-theme', 'light');
+        icon.className = 'ri-sun-line';
+        label.textContent = 'Dark';
+    }
+}
+</script>
+</body>
+</html>

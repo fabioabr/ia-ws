@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Regions Preview</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+    <style>
+/* ====== DESIGN TOKENS (dark default) ====== */
+:root {
+    --primary: #4DA8DA;
+    --primary-dark: #3A8BB8;
+    --primary-light: rgba(77, 168, 218, 0.12);
+    --secondary: #B9B7BD;
+    --success: #0ED145;
+    --success-light: rgba(14, 209, 69, 0.12);
+    --success-border: rgba(14, 209, 69, 0.3);
+    --warning: #F4AC00;
+    --warning-light: rgba(244, 172, 0, 0.12);
+    --warning-border: rgba(244, 172, 0, 0.3);
+    --danger: #8B1A1A;
+    --danger-light: rgba(139, 26, 26, 0.15);
+    --danger-border: rgba(139, 26, 26, 0.35);
+    --info: #2EB5F5;
+    --info-light: rgba(46, 181, 245, 0.12);
+    --info-border: rgba(46, 181, 245, 0.3);
+    --bg: #1A1923;
+    --card-bg: #2E2D32;
+    --text: #E0DFE3;
+    --text-muted: #88878C;
+    --border: #3E3D44;
+    --purple: #9B96FF;
+    --purple-light: rgba(155, 150, 255, 0.12);
+    --orange: #FF9473;
+    --teal: #2DD4BF;
+    --chart-1: #4DA8DA;
+    --chart-2: #2EB5F5;
+    --chart-3: #0ED145;
+    --chart-4: #FF6B6B;
+    --chart-5: #A78BFA;
+    --header-bg: linear-gradient(135deg, #2E2D32 0%, #252428 50%, #1A1923 100%);
+    --card-header-bg: #252428;
+    --th-bg: #252428;
+    --th-bg-hover: #36353B;
+    --card-shadow: 0 2px 12px rgba(46, 181, 245, 0.06), 0 1px 4px rgba(0,0,0,0.4);
+    --progress-track: #3E3D44;
+    --alert-warning-text: #f0c040;
+    --danger-text: #E85D54;
+    --alert-danger-text: #E85D54;
+    --alert-info-text: #5FC8F8;
+    --alert-success-text: #3DE06A;
+    --pill-success-text: #3DE06A;
+    --pill-info-text: #5FC8F8;
+    --pill-warning-text: #f0c040;
+}
+
+/* ====== LIGHT THEME ====== */
+[data-theme="light"] {
+    --primary: #4DA8DA;
+    --primary-dark: #3A8BB8;
+    --primary-light: rgba(77, 168, 218, 0.1);
+    --secondary: #88878C;
+    --success: #0A9E35;
+    --success-light: rgba(10, 158, 53, 0.08);
+    --success-border: rgba(10, 158, 53, 0.25);
+    --warning: #E67E22;
+    --warning-light: rgba(230, 126, 34, 0.12);
+    --warning-border: rgba(230, 126, 34, 0.35);
+    --danger: #E74C3C;
+    --danger-light: rgba(231, 76, 60, 0.10);
+    --danger-border: rgba(231, 76, 60, 0.30);
+    --info: #1E95CC;
+    --info-light: rgba(30, 149, 204, 0.08);
+    --info-border: rgba(30, 149, 204, 0.25);
+    --bg: #E0DFE3;
+    --card-bg: #ffffff;
+    --text: #1A1923;
+    --text-muted: #88878C;
+    --border: #B9B7BD;
+    --purple: #7B76FE;
+    --purple-light: rgba(123, 118, 254, 0.08);
+    --orange: #FE7C58;
+    --teal: #00D8D8;
+    --chart-1: #4DA8DA;
+    --chart-2: #1E95CC;
+    --chart-3: #0A9E35;
+    --chart-4: #D44040;
+    --chart-5: #7C6BD4;
+    --header-bg: linear-gradient(135deg, #2E2D32 0%, #252428 50%, #1A1923 100%);
+    --card-header-bg: rgba(77, 168, 218, 0.12);
+    --th-bg: rgba(77, 168, 218, 0.12);
+    --th-bg-hover: rgba(77, 168, 218, 0.22);
+    --card-shadow: 0 2px 8px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.06);
+    --progress-track: #B9B7BD;
+    --alert-warning-text: #C0392B;
+    --alert-danger-text: #C0392B;
+    --alert-info-text: #1670A0;
+    --alert-success-text: #087A28;
+    --pill-success-text: #087A28;
+    --pill-info-text: #1670A0;
+    --pill-warning-text: #C0392B;
+}
+[data-theme="light"] .card:hover { border-color: #4DA8DA; }
+[data-theme="light"] .stat-card:hover { border-color: #4DA8DA; }
+[data-theme="light"] .stat-card { background: #F0EFF2; }
+
+/* ====== RESET ====== */
+html, body, div, span, h1, h2, h3, h4, h5, h6, p, a, img, ul, ol, li,
+header, footer, nav, section, article, aside, button, input, select, textarea,
+table, tr, td, th, form, label, fieldset, legend, blockquote { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; }
+.container { max-width: 1400px; margin: 0 auto; padding: 0 24px; }
+
+/* ====== HEADER ====== */
+.header { background: linear-gradient(135deg, #2E2D32 0%, #252428 50%, #1A1923 100%); color: white; padding: 36px 0 28px; position: relative; overflow: hidden; }
+.header::before { content: ''; position: absolute; top: -50%; right: -10%; width: 500px; height: 500px; background: rgba(255,255,255,0.03); border-radius: 50%; z-index: 0; }
+.header-content { position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+.header-left h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.5px; }
+.header-left .subtitle { font-size: 0.95rem; opacity: 0.85; font-weight: 300; margin-top: 2px; }
+.header-right { display: flex; align-items: center; gap: 12px; }
+
+/* ====== THEME TOGGLE ====== */
+.theme-toggle { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; padding: 8px 14px; color: white; font-family: 'Poppins', sans-serif; font-size: 0.78rem; font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: all 0.25s; }
+.theme-toggle:hover { background: rgba(255,255,255,0.22); }
+
+/* ====== REGION ID BADGE ====== */
+.region-badge { display: inline-flex; align-items: center; gap: 6px; background: var(--primary-light); border: 1px solid var(--primary); color: var(--primary); padding: 3px 10px; border-radius: 6px; font-size: 0.68rem; font-weight: 700; font-family: monospace; letter-spacing: 0.5px; }
+
+/* ====== SECTION ====== */
+.section { margin-top: 32px; }
+.section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid var(--border); flex-wrap: wrap; }
+.section-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+.section-title { font-size: 1.15rem; font-weight: 600; flex: 1; }
+
+/* ====== STAT CARDS ====== */
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 28px; }
+.stat-card { background: var(--card-bg); border-radius: 12px; padding: 18px 20px; box-shadow: var(--card-shadow); border: 1px solid var(--border); display: flex; align-items: center; gap: 14px; transition: all 0.2s; }
+.stat-card:hover { box-shadow: var(--card-shadow); border-color: var(--primary); background: var(--th-bg-hover); }
+.stat-card-icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }
+.stat-card-info { flex: 1; }
+.stat-card-number { font-size: 1.12rem; font-weight: 700; line-height: 1.1; }
+.stat-card-label { font-size: 0.72rem; color: var(--text-muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.3px; }
+
+/* ====== CARDS ====== */
+.card { background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 2px 8px rgba(0,0,0,0.03); overflow: hidden; margin-bottom: 20px; transition: all 0.2s; }
+.card:hover { box-shadow: var(--card-shadow); border-color: var(--primary); }
+.card:hover > .card-header { background: var(--th-bg-hover); }
+.card-header { display: flex; align-items: center; gap: 10px; padding: 14px 18px; border-bottom: 1px solid var(--border); background: var(--card-header-bg); cursor: pointer; user-select: none; }
+.card-header-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+.card-title { font-weight: 600; font-size: 0.95rem; flex: 1; }
+.card-badge { padding: 2px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: 600; white-space: nowrap; }
+.card-body { padding: 18px; color: var(--text); opacity: 0.85; }
+.card-body.collapsed { display: none; }
+.card-toggle { font-size: 1.1rem; color: var(--text-muted); transition: transform 0.25s; }
+.card-toggle.open { transform: rotate(180deg); }
+
+/* ====== PILLS ====== */
+.pill { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: 600; }
+.pill-success { background: var(--success-light); color: var(--pill-success-text); border: 1px solid var(--success-border); }
+.pill-info { background: var(--info-light); color: var(--pill-info-text); border: 1px solid var(--info-border); }
+.pill-warning { background: var(--warning-light); color: var(--pill-warning-text); border: 1px solid var(--warning-border); }
+.pill-danger { background: var(--danger-light); color: var(--alert-danger-text); border: 1px solid var(--danger-border); }
+.pill-purple { background: var(--purple-light); color: var(--purple); border: 1px solid rgba(155,150,255,0.3); }
+
+/* ====== TABLES ====== */
+.table-wrapper { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+th { text-align: left; padding: 10px 14px; background: var(--th-bg); font-weight: 600; border-bottom: 2px solid var(--border); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.3px; color: var(--text-muted); transition: background 0.2s; }
+thead tr:hover th { background: var(--th-bg-hover); }
+td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+tr:hover { background: var(--primary-light); }
+
+/* ====== BLOCKQUOTE CARDS ====== */
+.quote-card { background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border); padding: 24px; margin-bottom: 16px; border-left: 4px solid var(--primary); transition: all 0.2s; position: relative; }
+.quote-card:hover { border-color: var(--primary); box-shadow: var(--card-shadow); }
+.quote-text { font-size: 1rem; font-style: italic; line-height: 1.7; margin-bottom: 14px; color: var(--text); opacity: 0.92; }
+.quote-text::before { content: '\201C'; font-size: 2.5rem; color: var(--primary); opacity: 0.4; position: absolute; top: 10px; left: 14px; font-family: Georgia, serif; }
+.quote-attribution { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 0.8rem; color: var(--text-muted); }
+.quote-attribution strong { color: var(--text); font-weight: 600; }
+
+/* ====== OPPORTUNITY TREE ====== */
+.tree { padding: 8px 0; }
+.tree-root { background: linear-gradient(135deg, var(--info-light), var(--primary-light)); border: 2px solid var(--info); border-radius: 12px; padding: 16px 24px; text-align: center; font-weight: 700; font-size: 1rem; margin-bottom: 24px; color: var(--info); }
+.tree-level { display: flex; gap: 16px; margin-bottom: 20px; flex-wrap: wrap; }
+.tree-branch { flex: 1; min-width: 280px; }
+.tree-node { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; margin-bottom: 10px; transition: all 0.2s; }
+.tree-node:hover { border-color: var(--primary); box-shadow: var(--card-shadow); }
+.tree-node-title { font-weight: 600; font-size: 0.88rem; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+.tree-node-detail { font-size: 0.78rem; color: var(--text-muted); }
+.tree-connector { width: 2px; height: 16px; background: var(--border); margin: 0 auto; }
+.tree-children { padding-left: 20px; border-left: 2px solid var(--border); margin-left: 16px; }
+.tree-child { background: var(--card-header-bg); border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; margin-bottom: 8px; font-size: 0.82rem; transition: all 0.2s; }
+.tree-child:hover { border-color: var(--primary); }
+.tree-child-title { font-weight: 600; font-size: 0.82rem; }
+.tree-child-meta { font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; display: flex; gap: 12px; flex-wrap: wrap; }
+.tree-experiment { background: var(--bg); border: 1px dashed var(--border); border-radius: 6px; padding: 8px 12px; margin-top: 6px; margin-left: 12px; font-size: 0.75rem; color: var(--text-muted); }
+.tree-experiment i { color: var(--warning); margin-right: 4px; }
+
+/* ====== DONUT CHART CONTAINER ====== */
+.chart-container { max-width: 380px; margin: 0 auto; position: relative; }
+.chart-legend { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+.chart-legend-item { display: flex; align-items: center; gap: 10px; font-size: 0.85rem; }
+.chart-legend-color { width: 14px; height: 14px; border-radius: 4px; flex-shrink: 0; }
+.chart-legend-pct { font-weight: 700; min-width: 40px; }
+.chart-detail-table { margin-top: 24px; }
+
+/* ====== BG UTILITY ====== */
+.bg-primary { background: var(--primary); color: #1A1923 !important; }
+.bg-success { background: var(--success); color: #1A1923 !important; }
+.bg-warning { background: var(--warning); color: #1A1923 !important; }
+.bg-info { background: var(--info); color: white !important; }
+.bg-danger { background: var(--danger); color: white !important; }
+.bg-purple { background: var(--purple); color: white !important; }
+.bg-teal { background: var(--teal); color: #1A1923 !important; }
+.bg-orange { background: var(--orange); color: #1A1923 !important; }
+
+/* ====== FOOTER ====== */
+.footer { background: linear-gradient(135deg, #2E2D32 0%, #252428 50%, #1A1923 100%); color: white; padding: 36px 0; position: relative; overflow: hidden; margin-top: 48px; }
+.footer::before { content: ''; position: absolute; bottom: -50%; left: -10%; width: 500px; height: 500px; background: rgba(255,255,255,0.03); border-radius: 50%; z-index: 0; }
+.footer-content { position: relative; z-index: 1; text-align: center; }
+.footer-seal { display: flex; align-items: center; gap: 8px; justify-content: center; font-size: 0.78rem; opacity: 0.6; }
+.footer-seal i { font-size: 1rem; }
+
+/* ====== RESPONSIVE ====== */
+@media (max-width: 768px) {
+    .stats-grid { grid-template-columns: 1fr; }
+    .header-content { flex-direction: column; align-items: flex-start; }
+    .tree-level { flex-direction: column; }
+}
+
+/* ====== PRINT ====== */
+@media print {
+    body { background: white; color: #212B37; }
+    .header { background: #2E2D32 !important; }
+    .card-body.collapsed { display: block !important; }
+    .theme-toggle { display: none; }
+}
+    </style>
+</head>
+<body>
+
+<!-- ====== HEADER ====== -->
+<header class="header">
+    <div class="container header-content">
+        <div class="header-left">
+            <div>
+                <h1><i class="ri-search-eye-line"></i> Research Regions Preview</h1>
+                <div class="subtitle">5 report regions with sample data from discovery templates</div>
+            </div>
+        </div>
+        <div class="header-right">
+            <button class="theme-toggle" onclick="toggleTheme()">
+                <i class="ri-moon-line" id="themeIcon"></i>
+                <span id="themeLabel">Light mode</span>
+            </button>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+
+    <!-- ================================================================== -->
+    <!-- REGION 1: INTERVIEW REPORT (REG-PESQ-01) -->
+    <!-- ================================================================== -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-icon bg-primary"><i class="ri-mic-line"></i></div>
+            <div class="section-title">Interview Report</div>
+            <span class="region-badge">REG-PESQ-01</span>
+        </div>
+
+        <!-- Methodology summary -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-card-icon bg-info"><i class="ri-file-list-3-line"></i></div>
+                <div class="stat-card-info">
+                    <div class="stat-card-number">6 Sessions</div>
+                    <div class="stat-card-label">Total interviews</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-card-icon bg-success"><i class="ri-group-line"></i></div>
+                <div class="stat-card-info">
+                    <div class="stat-card-number">8 Participants</div>
+                    <div class="stat-card-label">Profiles covered</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-card-icon bg-warning"><i class="ri-timer-line"></i></div>
+                <div class="stat-card-info">
+                    <div class="stat-card-number">90 min</div>
+                    <div class="stat-card-label">Avg. session length</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-card-icon bg-purple"><i class="ri-calendar-event-line"></i></div>
+                <div class="stat-card-info">
+                    <div class="stat-card-number">01-08/Apr</div>
+                    <div class="stat-card-label">Period</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Accordion cards by theme -->
+        <div class="card">
+            <div class="card-header" onclick="toggleCard(this)">
+                <div class="card-header-icon bg-info"><i class="ri-focus-3-line"></i></div>
+                <div class="card-title">Tema 1: Processo de consolidacao</div>
+                <span class="card-badge pill-info">8/8 entrevistados</span>
+                <i class="ri-arrow-down-s-line card-toggle open"></i>
+            </div>
+            <div class="card-body">
+                <ul style="padding-left:18px; display:flex; flex-direction:column; gap:8px;">
+                    <li>Processo atual e 100% manual com planilhas Excel</li>
+                    <li>Tempo medio de fechamento: D+8 (varia de D+6 a D+12 dependendo de retrabalho)</li>
+                    <li>3 pontos de falha principais: coleta, conversao cambial, eliminacao intercompany</li>
+                    <li>Analistas gastam ~60% do tempo em coleta e normalizacao, nao em analise</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header" onclick="toggleCard(this)">
+                <div class="card-header-icon bg-warning"><i class="ri-shield-check-line"></i></div>
+                <div class="card-title">Tema 2: Qualidade e confianca nos dados</div>
+                <span class="card-badge pill-warning">7/8 entrevistados</span>
+                <i class="ri-arrow-down-s-line card-toggle"></i>
+            </div>
+            <div class="card-body collapsed">
+                <ul style="padding-left:18px; display:flex; flex-direction:column; gap:8px;">
+                    <li>Controller revisa 100% dos calculos manualmente -- "nao confio no processo"</li>
+                    <li>3 reapresentacoes ao conselho nos ultimos 6 meses por erros de eliminacao</li>
+                    <li>Auditores reclamam da falta de trilha -- reconstrucao manual leva 2 semanas</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header" onclick="toggleCard(this)">
+                <div class="card-header-icon bg-purple"><i class="ri-tools-line"></i></div>
+                <div class="card-title">Tema 3: Ferramentas e tecnologia</div>
+                <span class="card-badge pill-purple">6/8 entrevistados</span>
+                <i class="ri-arrow-down-s-line card-toggle"></i>
+            </div>
+            <div class="card-body collapsed">
+                <ul style="padding-left:18px; display:flex; flex-direction:column; gap:8px;">
+                    <li>SAP R/3 e o ERP de 10/12 filiais; 2 filiais menores usam TOTVS</li>
+                    <li>Tentativa anterior de automacao com macros VBA fracassou por manutenibilidade</li>
+                    <li>TI tem capacidade para manter integracoes, mas nao para construir solucao completa</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Patterns & Surprises -->
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px; margin-top:8px;">
+            <div class="card" style="margin-bottom:0;">
+                <div class="card-header">
+                    <div class="card-header-icon bg-success"><i class="ri-line-chart-line"></i></div>
+                    <div class="card-title">Padroes identificados</div>
+                </div>
+                <div class="card-body">
+                    <ol style="padding-left:18px; display:flex; flex-direction:column; gap:8px; font-size:0.85rem;">
+                        <li><strong>Unanimidade sobre a dor:</strong> todos classificaram a consolidacao manual como "o maior gargalo"</li>
+                        <li><strong>Desconfianca no processo:</strong> mesmo quem executa refaz calculos</li>
+                        <li><strong>Demanda por rastreabilidade:</strong> auditoria e o segundo driver depois de velocidade</li>
+                    </ol>
+                </div>
+            </div>
+            <div class="card" style="margin-bottom:0;">
+                <div class="card-header">
+                    <div class="card-header-icon bg-orange"><i class="ri-lightbulb-flash-line"></i></div>
+                    <div class="card-title">Surpresas</div>
+                </div>
+                <div class="card-body">
+                    <ol style="padding-left:18px; display:flex; flex-direction:column; gap:8px; font-size:0.85rem;">
+                        <li><strong>Filiais TOTVS sao o maior risco:</strong> formato completamente diferente e sem API</li>
+                        <li><strong>CFO quer predicao:</strong> "quero saber o resultado antes do fechamento oficial"</li>
+                        <li><strong>Analistas ja tem workarounds sofisticados:</strong> macros, scripts Python informais</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- REGION 2: KEY QUOTES (REG-PESQ-02) -->
+    <!-- ================================================================== -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-icon bg-purple"><i class="ri-double-quotes-l"></i></div>
+            <div class="section-title">Key Quotes</div>
+            <span class="region-badge">REG-PESQ-02</span>
+        </div>
+
+        <div class="quote-card">
+            <div class="quote-text" style="padding-left:24px;">Eu gasto mais tempo coletando dados do que analisando. Virei um operador de planilha, nao um analista financeiro.</div>
+            <div class="quote-attribution">
+                <strong>Analista Financeiro Senior</strong>
+                <span class="pill pill-info">Processo de consolidacao</span>
+                <span class="pill pill-success">INTERVIEW</span>
+            </div>
+        </div>
+
+        <div class="quote-card" style="border-left-color: var(--warning);">
+            <div class="quote-text" style="padding-left:24px;">Toda vez que apresento o consolidado ao conselho, rezo para nao ter erro. Ja tive que pedir desculpas 3 vezes esse ano.</div>
+            <div class="quote-attribution">
+                <strong>CFO</strong>
+                <span class="pill pill-warning">Qualidade e confianca</span>
+                <span class="pill pill-success">INTERVIEW</span>
+            </div>
+        </div>
+
+        <div class="quote-card" style="border-left-color: var(--purple);">
+            <div class="quote-text" style="padding-left:24px;">A gente ate tentou automatizar com macro. Funcionou por 2 meses. Depois ninguem entendia o codigo e voltamos para o manual.</div>
+            <div class="quote-attribution">
+                <strong>Controller</strong>
+                <span class="pill pill-purple">Tentativas anteriores</span>
+                <span class="pill pill-success">INTERVIEW</span>
+            </div>
+        </div>
+
+        <div class="quote-card" style="border-left-color: var(--success);">
+            <div class="quote-text" style="padding-left:24px;">Quando o auditor pede a memoria de calculo, eu levo 2 semanas para reconstruir. E tudo na minha cabeca e nas minhas planilhas.</div>
+            <div class="quote-attribution">
+                <strong>Analista Financeiro Pleno</strong>
+                <span class="pill pill-success">Rastreabilidade</span>
+                <span class="pill pill-success">INTERVIEW</span>
+            </div>
+        </div>
+
+        <div class="quote-card" style="border-left-color: var(--info);">
+            <div class="quote-text" style="padding-left:24px;">Eu nao quero so consolidar mais rapido. Eu quero saber o resultado antes do fechamento oficial. Quero predicao.</div>
+            <div class="quote-attribution">
+                <strong>CFO</strong>
+                <span class="pill pill-info">Visao de futuro</span>
+                <span class="pill pill-success">INTERVIEW</span>
+            </div>
+        </div>
+
+        <div class="quote-card" style="border-left-color: var(--orange);">
+            <div class="quote-text" style="padding-left:24px;">As filiais do TOTVS sao um pesadelo. O formato muda toda vez que atualizam o sistema. Nem eles sabem explicar.</div>
+            <div class="quote-attribution">
+                <strong>Analista Financeiro Senior</strong>
+                <span class="pill pill-warning">Integracao multi-ERP</span>
+                <span class="pill pill-success">INTERVIEW</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- REGION 3: OPPORTUNITY MAP (REG-PESQ-03) -->
+    <!-- ================================================================== -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-icon bg-teal"><i class="ri-mind-map"></i></div>
+            <div class="section-title">Opportunity Map</div>
+            <span class="region-badge">REG-PESQ-03</span>
+        </div>
+
+        <div class="tree">
+            <!-- Root -->
+            <div class="tree-root">
+                <i class="ri-focus-3-line"></i> Reduzir fechamento financeiro de D+8 para D+2
+            </div>
+
+            <!-- Branches -->
+            <div class="tree-level">
+                <!-- Branch 1 -->
+                <div class="tree-branch">
+                    <div class="tree-node" style="border-left: 3px solid var(--info);">
+                        <div class="tree-node-title"><i class="ri-database-2-line" style="color:var(--info)"></i> Automatizar coleta de dados</div>
+                        <div class="tree-node-detail">Evidencia: Analistas gastam 60% do tempo coletando e normalizando dados</div>
+                    </div>
+                    <div class="tree-children">
+                        <div class="tree-child">
+                            <div class="tree-child-title">API direta com SAP R/3</div>
+                            <div class="tree-child-meta">
+                                <span><i class="ri-flashlight-line"></i> Esforco: Alto</span>
+                                <span><i class="ri-bar-chart-box-line"></i> Impacto: Alto</span>
+                            </div>
+                            <div class="tree-experiment"><i class="ri-flask-line"></i> PoC com filial SP -- 2 semanas</div>
+                        </div>
+                        <div class="tree-child">
+                            <div class="tree-child-title">Middleware MuleSoft</div>
+                            <div class="tree-child-meta">
+                                <span><i class="ri-flashlight-line"></i> Esforco: Medio</span>
+                                <span><i class="ri-bar-chart-box-line"></i> Impacto: Medio</span>
+                            </div>
+                            <div class="tree-experiment"><i class="ri-flask-line"></i> PoC connector existente -- 1 semana</div>
+                        </div>
+                        <div class="tree-child" style="opacity:0.5;">
+                            <div class="tree-child-title" style="text-decoration:line-through;">RPA (extracao de telas)</div>
+                            <div class="tree-child-meta">
+                                <span><i class="ri-flashlight-line"></i> Esforco: Baixo</span>
+                                <span><i class="ri-bar-chart-box-line"></i> Impacto: Baixo</span>
+                                <span class="pill pill-danger">Descartada</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Branch 2 -->
+                <div class="tree-branch">
+                    <div class="tree-node" style="border-left: 3px solid var(--warning);">
+                        <div class="tree-node-title"><i class="ri-shield-check-line" style="color:var(--warning)"></i> Eliminar erros de consolidacao</div>
+                        <div class="tree-node-detail">Evidencia: 3 reapresentacoes ao conselho por erros de eliminacao intercompany</div>
+                    </div>
+                    <div class="tree-children">
+                        <div class="tree-child">
+                            <div class="tree-child-title">Engine de eliminacao com regras configuraveis</div>
+                            <div class="tree-child-meta">
+                                <span><i class="ri-flashlight-line"></i> Esforco: Alto</span>
+                                <span><i class="ri-bar-chart-box-line"></i> Impacto: Alto</span>
+                            </div>
+                            <div class="tree-experiment"><i class="ri-flask-line"></i> Prototipo com 3 regras mais frequentes -- 3 semanas</div>
+                        </div>
+                        <div class="tree-child">
+                            <div class="tree-child-title">Validacao cruzada automatica</div>
+                            <div class="tree-child-meta">
+                                <span><i class="ri-flashlight-line"></i> Esforco: Medio</span>
+                                <span><i class="ri-bar-chart-box-line"></i> Impacto: Medio</span>
+                            </div>
+                            <div class="tree-experiment"><i class="ri-flask-line"></i> Script de validacao com dados reais -- 1 semana</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Branch 3 -->
+                <div class="tree-branch">
+                    <div class="tree-node" style="border-left: 3px solid var(--success);">
+                        <div class="tree-node-title"><i class="ri-speed-line" style="color:var(--success)"></i> Acelerar revisao e aprovacao</div>
+                        <div class="tree-node-detail">Evidencia: Controller gasta 40% do tempo revisando calculos manualmente</div>
+                    </div>
+                    <div class="tree-children">
+                        <div class="tree-child">
+                            <div class="tree-child-title">Dashboard com drill-down</div>
+                            <div class="tree-child-meta">
+                                <span><i class="ri-flashlight-line"></i> Esforco: Medio</span>
+                                <span><i class="ri-bar-chart-box-line"></i> Impacto: Alto</span>
+                            </div>
+                            <div class="tree-experiment"><i class="ri-flask-line"></i> Wireframe + teste com controller -- 1 semana</div>
+                        </div>
+                        <div class="tree-child">
+                            <div class="tree-child-title">Workflow de aprovacao digital</div>
+                            <div class="tree-child-meta">
+                                <span><i class="ri-flashlight-line"></i> Esforco: Baixo</span>
+                                <span><i class="ri-bar-chart-box-line"></i> Impacto: Medio</span>
+                            </div>
+                            <div class="tree-experiment"><i class="ri-flask-line"></i> Prototipo em Figma -- 3 dias</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- REGION 4: QUANTITATIVE DATA (REG-PESQ-04) -->
+    <!-- ================================================================== -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-icon bg-info"><i class="ri-bar-chart-grouped-line"></i></div>
+            <div class="section-title">Quantitative Data</div>
+            <span class="region-badge">REG-PESQ-04</span>
+        </div>
+
+        <!-- KPI stat cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-card-icon bg-danger"><i class="ri-time-line"></i></div>
+                <div class="stat-card-info">
+                    <div class="stat-card-number">D+8</div>
+                    <div class="stat-card-label">Fechamento atual</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-card-icon bg-success"><i class="ri-target-line"></i></div>
+                <div class="stat-card-info">
+                    <div class="stat-card-number">D+2</div>
+                    <div class="stat-card-label">Target (benchmark)</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-card-icon bg-warning"><i class="ri-money-dollar-circle-line"></i></div>
+                <div class="stat-card-info">
+                    <div class="stat-card-number">R$ 500K-700K</div>
+                    <div class="stat-card-label">Impacto anual estimado</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-card-icon bg-info"><i class="ri-building-4-line"></i></div>
+                <div class="stat-card-info">
+                    <div class="stat-card-number">12 Filiais</div>
+                    <div class="stat-card-label">10 SAP + 2 TOTVS</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Metrics table -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-header-icon bg-info"><i class="ri-file-list-3-line"></i></div>
+                <div class="card-title">Metricas-chave identificadas</div>
+            </div>
+            <div class="card-body" style="padding:0;">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Metrica</th>
+                                <th>Valor Atual</th>
+                                <th>Fonte</th>
+                                <th>Relevancia</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Tempo de fechamento consolidado</td>
+                                <td><strong>D+8</strong> (media)</td>
+                                <td>Controller -- dados de 12 meses</td>
+                                <td>Indicador primario de eficiencia</td>
+                            </tr>
+                            <tr>
+                                <td>Horas semanais em consolidacao / analista</td>
+                                <td><strong>12h</strong></td>
+                                <td>Entrevistas com 4 analistas</td>
+                                <td>Dimensiona custo operacional direto</td>
+                            </tr>
+                            <tr>
+                                <td>Erros materiais em relatorios ao conselho</td>
+                                <td><strong>3 em 6 meses</strong></td>
+                                <td>CFO -- atas de conselho</td>
+                                <td>Risco reputacional e regulatorio</td>
+                            </tr>
+                            <tr>
+                                <td>Custo medio hora/analista (carregado)</td>
+                                <td><strong>R$ 120</strong></td>
+                                <td>RH -- tabela salarial 2026</td>
+                                <td>Base para calculo de ROI</td>
+                            </tr>
+                            <tr>
+                                <td>Tempo de auditoria para reconstruir trilha</td>
+                                <td><strong>2 semanas</strong> / ciclo</td>
+                                <td>Auditor interno</td>
+                                <td>Custo oculto de falta de rastreabilidade</td>
+                            </tr>
+                            <tr>
+                                <td>Best practice de mercado</td>
+                                <td><strong>D+2 a D+3</strong></td>
+                                <td>Gartner -- FP&A Benchmark 2025</td>
+                                <td>Referencia de target</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cost breakdown table -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-header-icon bg-warning"><i class="ri-money-dollar-circle-line"></i></div>
+                <div class="card-title">Tamanho do problema -- Impacto anual R$ 500K-700K</div>
+            </div>
+            <div class="card-body" style="padding:0;">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Componente</th>
+                                <th>Valor Anual</th>
+                                <th>Calculo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Horas desperdicadas em trabalho manual</td>
+                                <td><strong>R$ 230K</strong></td>
+                                <td>4 analistas x 10h/sem x 48 sem x R$ 120/h</td>
+                            </tr>
+                            <tr>
+                                <td>Custo de retrabalho por erros</td>
+                                <td><strong>R$ 80K</strong></td>
+                                <td>6 ciclos/ano x 40h x R$ 120/h + custo auditoria</td>
+                            </tr>
+                            <tr>
+                                <td>Custo de oportunidade do fechamento tardio</td>
+                                <td><strong>R$ 150K</strong></td>
+                                <td>Estimativa conservadora: decisoes atrasadas 6 dias</td>
+                            </tr>
+                            <tr>
+                                <td>Risco regulatorio (multa potencial)</td>
+                                <td><strong>R$ 40K-240K</strong></td>
+                                <td>Faixa de penalidades CVM por erros em demonstracoes</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- REGION 5: SOURCE TAG SUMMARY (REG-PESQ-05) -->
+    <!-- ================================================================== -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-icon bg-success"><i class="ri-pie-chart-line"></i></div>
+            <div class="section-title">Source Tag Summary</div>
+            <span class="region-badge">REG-PESQ-05</span>
+        </div>
+
+        <div style="display:grid; grid-template-columns: 380px 1fr; gap:24px; align-items:start;">
+            <!-- Donut chart -->
+            <div>
+                <div class="chart-container">
+                    <canvas id="sourceDonut"></canvas>
+                </div>
+                <div class="chart-legend" style="margin-top:20px;">
+                    <div class="chart-legend-item">
+                        <div class="chart-legend-color" style="background:#4DA8DA;"></div>
+                        <div class="chart-legend-pct">65%</div>
+                        <div><strong>BRIEFING</strong> -- Informacao fornecida diretamente pelo cliente</div>
+                    </div>
+                    <div class="chart-legend-item">
+                        <div class="chart-legend-color" style="background:#FF9473;"></div>
+                        <div class="chart-legend-pct">25%</div>
+                        <div><strong>INFERENCE</strong> -- Inferida pelo especialista com base em padroes de mercado</div>
+                    </div>
+                    <div class="chart-legend-item">
+                        <div class="chart-legend-color" style="background:#0ED145;"></div>
+                        <div class="chart-legend-pct">10%</div>
+                        <div><strong>RAG</strong> -- Recuperada de bases de conhecimento</div>
+                    </div>
+                </div>
+                <div style="text-align:center; margin-top:14px; font-size:0.82rem; color:var(--text-muted);">
+                    <strong style="color:var(--text);">142</strong> data points classificados
+                </div>
+            </div>
+
+            <!-- Breakdown table -->
+            <div class="card" style="margin-bottom:0;">
+                <div class="card-header">
+                    <div class="card-header-icon bg-success"><i class="ri-table-line"></i></div>
+                    <div class="card-title">Distribuicao por bloco do discovery</div>
+                </div>
+                <div class="card-body" style="padding:0;">
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Bloco</th>
+                                    <th>BRIEFING</th>
+                                    <th>RAG</th>
+                                    <th>INFERENCE</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1. Produto (problema, valor, escopo)</td>
+                                    <td><span class="pill pill-info">80%</span></td>
+                                    <td><span class="pill pill-success">5%</span></td>
+                                    <td><span class="pill pill-warning">15%</span></td>
+                                </tr>
+                                <tr>
+                                    <td>2. Personas e jornadas</td>
+                                    <td><span class="pill pill-info">75%</span></td>
+                                    <td>0%</td>
+                                    <td><span class="pill pill-warning">25%</span></td>
+                                </tr>
+                                <tr>
+                                    <td>3. Negocio (OKRs, ROI, pricing)</td>
+                                    <td><span class="pill pill-info">50%</span></td>
+                                    <td><span class="pill pill-success">15%</span></td>
+                                    <td><span class="pill pill-danger">35%</span></td>
+                                </tr>
+                                <tr>
+                                    <td>4. Organizacao (equipe, stakeholders)</td>
+                                    <td><span class="pill pill-info">90%</span></td>
+                                    <td>0%</td>
+                                    <td><span class="pill pill-success">10%</span></td>
+                                </tr>
+                                <tr>
+                                    <td>5. Arquitetura (stack, integracoes)</td>
+                                    <td><span class="pill pill-info">60%</span></td>
+                                    <td><span class="pill pill-success">20%</span></td>
+                                    <td><span class="pill pill-warning">20%</span></td>
+                                </tr>
+                                <tr>
+                                    <td>6. Seguranca e privacidade</td>
+                                    <td><span class="pill pill-info">30%</span></td>
+                                    <td><span class="pill pill-success">25%</span></td>
+                                    <td><span class="pill pill-danger">45%</span></td>
+                                </tr>
+                                <tr>
+                                    <td>7. Diagramas (C4)</td>
+                                    <td><span class="pill pill-info">40%</span></td>
+                                    <td><span class="pill pill-success">10%</span></td>
+                                    <td><span class="pill pill-danger">50%</span></td>
+                                </tr>
+                                <tr>
+                                    <td>8. Financeiro (TCO, Build vs Buy)</td>
+                                    <td><span class="pill pill-info">55%</span></td>
+                                    <td><span class="pill pill-success">20%</span></td>
+                                    <td><span class="pill pill-warning">25%</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Observations -->
+        <div style="margin-top:16px; display:flex; gap:12px; flex-wrap:wrap;">
+            <div style="flex:1; min-width:280px; background:var(--warning-light); border:1px solid var(--warning-border); border-radius:10px; padding:14px 18px; font-size:0.82rem; color:var(--alert-warning-text);">
+                <i class="ri-alert-line" style="margin-right:6px;"></i>
+                <strong>Seguranca e privacidade (45% INFERENCE):</strong> cliente nao tinha politicas formais. Validacao com equipe de seguranca recomendada.
+            </div>
+            <div style="flex:1; min-width:280px; background:var(--warning-light); border:1px solid var(--warning-border); border-radius:10px; padding:14px 18px; font-size:0.82rem; color:var(--alert-warning-text);">
+                <i class="ri-alert-line" style="margin-right:6px;"></i>
+                <strong>Diagramas C4 (50% INFERENCE):</strong> arquitetura inferida a partir de descricoes verbais. Revisao tecnica necessaria.
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- ====== FOOTER ====== -->
+<footer class="footer">
+    <div class="container footer-content">
+        <div class="footer-seal">
+            <i class="ri-copyright-line"></i>
+            <span>&copy; 2026 mAInd Tech</span>
+        </div>
+    </div>
+</footer>
+
+<script>
+// ====== THEME TOGGLE ======
+function toggleTheme() {
+    const html = document.documentElement;
+    const current = html.getAttribute('data-theme');
+    const next = current === 'light' ? 'dark' : 'light';
+    html.setAttribute('data-theme', next);
+    document.getElementById('themeIcon').className = next === 'light' ? 'ri-sun-line' : 'ri-moon-line';
+    document.getElementById('themeLabel').textContent = next === 'light' ? 'Dark mode' : 'Light mode';
+    // Rebuild chart for theme
+    buildDonut();
+}
+
+// ====== ACCORDION TOGGLE ======
+function toggleCard(header) {
+    const body = header.nextElementSibling;
+    const toggle = header.querySelector('.card-toggle');
+    body.classList.toggle('collapsed');
+    if (toggle) toggle.classList.toggle('open');
+}
+
+// ====== DONUT CHART ======
+let donutChart = null;
+function buildDonut() {
+    const ctx = document.getElementById('sourceDonut').getContext('2d');
+    if (donutChart) donutChart.destroy();
+    const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+    donutChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['BRIEFING', 'INFERENCE', 'RAG'],
+            datasets: [{
+                data: [65, 25, 10],
+                backgroundColor: ['#4DA8DA', '#FF9473', '#0ED145'],
+                borderColor: isDark ? '#2E2D32' : '#ffffff',
+                borderWidth: 3,
+                hoverOffset: 8
+            }]
+        },
+        options: {
+            cutout: '65%',
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    backgroundColor: isDark ? '#2E2D32' : '#ffffff',
+                    titleColor: isDark ? '#E0DFE3' : '#1A1923',
+                    bodyColor: isDark ? '#E0DFE3' : '#1A1923',
+                    borderColor: isDark ? '#3E3D44' : '#B9B7BD',
+                    borderWidth: 1,
+                    padding: 12,
+                    bodyFont: { family: 'Poppins' },
+                    titleFont: { family: 'Poppins', weight: 600 },
+                    callbacks: {
+                        label: function(c) { return c.label + ': ' + c.parsed + '%'; }
+                    }
+                }
+            }
+        }
+    });
+}
+buildDonut();
+</script>
+
+</body>
+</html>

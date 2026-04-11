@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organization Regions Preview</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+/* ====== DESIGN TOKENS (dark default) ====== */
+:root {
+    --primary: #4DA8DA;
+    --primary-dark: #3A8BB8;
+    --primary-light: rgba(77, 168, 218, 0.12);
+    --secondary: #B9B7BD;
+    --success: #0ED145;
+    --success-light: rgba(14, 209, 69, 0.12);
+    --success-border: rgba(14, 209, 69, 0.3);
+    --warning: #F4AC00;
+    --warning-light: rgba(244, 172, 0, 0.12);
+    --warning-border: rgba(244, 172, 0, 0.3);
+    --danger: #8B1A1A;
+    --danger-light: rgba(139, 26, 26, 0.15);
+    --danger-border: rgba(139, 26, 26, 0.35);
+    --info: #2EB5F5;
+    --info-light: rgba(46, 181, 245, 0.12);
+    --info-border: rgba(46, 181, 245, 0.3);
+    --bg: #1A1923;
+    --card-bg: #2E2D32;
+    --text: #E0DFE3;
+    --text-muted: #88878C;
+    --border: #3E3D44;
+    --purple: #9B96FF;
+    --purple-light: rgba(155, 150, 255, 0.12);
+    --orange: #FF9473;
+    --teal: #2DD4BF;
+    --chart-1: #4DA8DA;
+    --chart-2: #2EB5F5;
+    --chart-3: #0ED145;
+    --chart-4: #FF6B6B;
+    --chart-5: #A78BFA;
+    --header-bg: linear-gradient(135deg, #2E2D32 0%, #252428 50%, #1A1923 100%);
+    --card-header-bg: #252428;
+    --th-bg: #252428;
+    --th-bg-hover: #36353B;
+    --card-shadow: 0 2px 12px rgba(46, 181, 245, 0.06), 0 1px 4px rgba(0,0,0,0.4);
+    --progress-track: #3E3D44;
+    --alert-warning-text: #f0c040;
+    --danger-text: #E85D54;
+    --alert-danger-text: #E85D54;
+    --alert-info-text: #5FC8F8;
+    --alert-success-text: #3DE06A;
+    --pill-success-text: #3DE06A;
+    --pill-info-text: #5FC8F8;
+    --pill-warning-text: #f0c040;
+
+    /* RACI colors */
+    --raci-r: #4DA8DA;
+    --raci-r-bg: rgba(77, 168, 218, 0.18);
+    --raci-a: #0ED145;
+    --raci-a-bg: rgba(14, 209, 69, 0.18);
+    --raci-c: #F4AC00;
+    --raci-c-bg: rgba(244, 172, 0, 0.18);
+    --raci-i: #88878C;
+    --raci-i-bg: rgba(136, 135, 140, 0.18);
+}
+
+/* ====== LIGHT THEME ====== */
+[data-theme="light"] {
+    --primary: #4DA8DA;
+    --primary-dark: #3A8BB8;
+    --primary-light: rgba(77, 168, 218, 0.1);
+    --secondary: #88878C;
+    --success: #0A9E35;
+    --success-light: rgba(10, 158, 53, 0.08);
+    --success-border: rgba(10, 158, 53, 0.25);
+    --warning: #E67E22;
+    --warning-light: rgba(230, 126, 34, 0.12);
+    --warning-border: rgba(230, 126, 34, 0.35);
+    --danger: #E74C3C;
+    --danger-light: rgba(231, 76, 60, 0.10);
+    --danger-border: rgba(231, 76, 60, 0.30);
+    --info: #1E95CC;
+    --info-light: rgba(30, 149, 204, 0.08);
+    --info-border: rgba(30, 149, 204, 0.25);
+    --bg: #E0DFE3;
+    --card-bg: #ffffff;
+    --text: #1A1923;
+    --text-muted: #88878C;
+    --border: #B9B7BD;
+    --purple: #7B76FE;
+    --purple-light: rgba(123, 118, 254, 0.08);
+    --orange: #FE7C58;
+    --teal: #00D8D8;
+    --chart-1: #4DA8DA;
+    --chart-2: #1E95CC;
+    --chart-3: #0A9E35;
+    --chart-4: #D44040;
+    --chart-5: #7C6BD4;
+    --header-bg: linear-gradient(135deg, #2E2D32 0%, #252428 50%, #1A1923 100%);
+    --card-header-bg: rgba(77, 168, 218, 0.12);
+    --th-bg: rgba(77, 168, 218, 0.12);
+    --th-bg-hover: rgba(77, 168, 218, 0.22);
+    --card-shadow: 0 2px 8px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.06);
+    --progress-track: #B9B7BD;
+    --alert-warning-text: #C0392B;
+    --alert-danger-text: #C0392B;
+    --alert-info-text: #1670A0;
+    --alert-success-text: #087A28;
+    --pill-success-text: #087A28;
+    --pill-info-text: #1670A0;
+    --pill-warning-text: #C0392B;
+
+    --raci-r: #1E95CC;
+    --raci-r-bg: rgba(30, 149, 204, 0.15);
+    --raci-a: #0A9E35;
+    --raci-a-bg: rgba(10, 158, 53, 0.15);
+    --raci-c: #E67E22;
+    --raci-c-bg: rgba(230, 126, 34, 0.15);
+    --raci-i: #88878C;
+    --raci-i-bg: rgba(136, 135, 140, 0.12);
+}
+[data-theme="light"] .card:hover { border-color: #4DA8DA; }
+[data-theme="light"] .stat-card:hover { border-color: #4DA8DA; }
+[data-theme="light"] .stat-card { background: #F0EFF2; }
+
+/* ====== RESET ====== */
+html, body, div, span, h1, h2, h3, h4, h5, h6, p, a, img, ul, ol, li,
+header, footer, nav, section, article, aside, button, input, select, textarea,
+table, tr, td, th, form, label, fieldset, legend { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; }
+.container { max-width: 1400px; margin: 0 auto; padding: 0 24px; }
+
+/* ====== HEADER ====== */
+.header { background: linear-gradient(135deg, #2E2D32 0%, #252428 50%, #1A1923 100%); color: white; padding: 36px 0 28px; position: relative; overflow: hidden; }
+.header::before { content: ''; position: absolute; top: -50%; right: -10%; width: 500px; height: 500px; background: rgba(255,255,255,0.03); border-radius: 50%; z-index: 0; }
+.header-content { position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+.header-left h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.5px; }
+.header-left .subtitle { font-size: 0.95rem; opacity: 0.85; font-weight: 300; margin-top: 2px; }
+.header-right { display: flex; align-items: center; gap: 12px; }
+
+/* ====== THEME TOGGLE ====== */
+.theme-toggle { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; padding: 8px 14px; color: white; font-family: 'Poppins', sans-serif; font-size: 0.78rem; font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: all 0.25s; }
+.theme-toggle:hover { background: rgba(255,255,255,0.22); }
+
+/* ====== REGION ID BADGE ====== */
+.region-badge { display: inline-flex; align-items: center; gap: 6px; background: var(--primary-light); border: 1px solid var(--primary); color: var(--primary); padding: 3px 10px; border-radius: 6px; font-size: 0.68rem; font-weight: 700; font-family: monospace; letter-spacing: 0.5px; }
+
+/* ====== SECTION ====== */
+.section { margin-top: 32px; }
+.section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid var(--border); flex-wrap: wrap; }
+.section-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+.section-title { font-size: 1.15rem; font-weight: 600; flex: 1; }
+
+/* ====== CARDS ====== */
+.card { background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 2px 8px rgba(0,0,0,0.03); overflow: hidden; margin-bottom: 20px; transition: all 0.2s; }
+.card:hover { box-shadow: var(--card-shadow); border-color: var(--primary); }
+.card:hover > .card-header { background: var(--th-bg-hover); }
+.card-header { display: flex; align-items: center; gap: 10px; padding: 14px 18px; border-bottom: 1px solid var(--border); background: var(--card-header-bg); }
+.card-header-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+.card-title { font-weight: 600; font-size: 0.95rem; flex: 1; }
+.card-body { padding: 18px; color: var(--text); opacity: 0.85; }
+
+/* ====== PILLS ====== */
+.pill { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: 600; }
+.pill-success { background: var(--success-light); color: var(--pill-success-text); border: 1px solid var(--success-border); }
+.pill-info { background: var(--info-light); color: var(--pill-info-text); border: 1px solid var(--info-border); }
+.pill-warning { background: var(--warning-light); color: var(--pill-warning-text); border: 1px solid var(--warning-border); }
+.pill-danger { background: var(--danger-light); color: var(--alert-danger-text); border: 1px solid var(--danger-border); }
+.pill-purple { background: var(--purple-light); color: var(--purple); border: 1px solid rgba(155,150,255,0.3); }
+.pill-muted { background: var(--raci-i-bg); color: var(--text-muted); border: 1px solid var(--border); }
+
+/* ====== TABLES ====== */
+.table-wrapper { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+th { text-align: left; padding: 10px 14px; background: var(--th-bg); font-weight: 600; border-bottom: 2px solid var(--border); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.3px; color: var(--text-muted); transition: background 0.2s; }
+thead tr:hover th { background: var(--th-bg-hover); }
+td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+tr:hover { background: var(--primary-light); }
+
+/* ====== RACI HEATMAP ====== */
+.raci-cell { text-align: center; font-weight: 700; font-size: 0.82rem; border-radius: 6px; min-width: 36px; }
+.raci-R { background: var(--raci-r-bg); color: var(--raci-r); }
+.raci-A { background: var(--raci-a-bg); color: var(--raci-a); }
+.raci-C { background: var(--raci-c-bg); color: var(--raci-c); }
+.raci-I { background: var(--raci-i-bg); color: var(--raci-i); }
+.raci-empty { color: var(--border); }
+.raci-legend { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 16px; font-size: 0.78rem; }
+.raci-legend-item { display: flex; align-items: center; gap: 6px; }
+.raci-legend-swatch { width: 24px; height: 24px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.75rem; }
+
+/* ====== INFO CARD (METHODOLOGY) ====== */
+.info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.info-block { background: var(--bg); border-radius: 10px; padding: 16px 18px; border: 1px solid var(--border); }
+.info-block-title { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); font-weight: 600; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+.info-block-title i { font-size: 1rem; }
+.info-item { display: flex; align-items: center; gap: 8px; padding: 6px 0; font-size: 0.85rem; border-bottom: 1px solid var(--border); }
+.info-item:last-child { border-bottom: none; }
+.info-item i { color: var(--primary); font-size: 0.9rem; flex-shrink: 0; }
+
+/* ====== SHIFT BADGES ====== */
+.shift-badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 8px; font-size: 0.72rem; font-weight: 600; }
+.shift-n1 { background: var(--info-light); color: var(--pill-info-text); border: 1px solid var(--info-border); }
+.shift-n2 { background: var(--success-light); color: var(--pill-success-text); border: 1px solid var(--success-border); }
+.shift-n3 { background: var(--warning-light); color: var(--pill-warning-text); border: 1px solid var(--warning-border); }
+.shift-plantao { background: var(--purple-light); color: var(--purple); border: 1px solid rgba(155,150,255,0.3); }
+
+/* ====== BG UTILITY ====== */
+.bg-primary { background: var(--primary); color: #1A1923 !important; }
+.bg-success { background: var(--success); color: #1A1923 !important; }
+.bg-warning { background: var(--warning); color: #1A1923 !important; }
+.bg-info { background: var(--info); color: white !important; }
+.bg-danger { background: var(--danger); color: white !important; }
+.bg-purple { background: var(--purple); color: white !important; }
+.bg-teal { background: var(--teal); color: #1A1923 !important; }
+.bg-orange { background: var(--orange); color: #1A1923 !important; }
+
+/* ====== FOOTER ====== */
+.footer { background: linear-gradient(135deg, #2E2D32 0%, #252428 50%, #1A1923 100%); color: white; padding: 36px 0; position: relative; overflow: hidden; margin-top: 48px; }
+.footer::before { content: ''; position: absolute; bottom: -50%; left: -10%; width: 500px; height: 500px; background: rgba(255,255,255,0.03); border-radius: 50%; z-index: 0; }
+.footer-content { position: relative; z-index: 1; text-align: center; }
+.footer-seal { display: flex; align-items: center; gap: 8px; justify-content: center; font-size: 0.78rem; opacity: 0.6; }
+.footer-seal i { font-size: 1rem; }
+
+/* ====== RESPONSIVE ====== */
+@media (max-width: 768px) {
+    .header-content { flex-direction: column; align-items: flex-start; }
+    .info-grid { grid-template-columns: 1fr; }
+}
+
+/* ====== PRINT ====== */
+@media print {
+    body { background: white; color: #212B37; }
+    .header { background: #2E2D32 !important; }
+    .theme-toggle { display: none; }
+}
+    </style>
+</head>
+<body>
+
+<!-- ====== HEADER ====== -->
+<header class="header">
+    <div class="container header-content">
+        <div class="header-left">
+            <div>
+                <h1><i class="ri-organization-chart"></i> Organization Regions Preview</h1>
+                <div class="subtitle">5 report regions with sample data from discovery templates</div>
+            </div>
+        </div>
+        <div class="header-right">
+            <button class="theme-toggle" onclick="toggleTheme()">
+                <i class="ri-moon-line" id="themeIcon"></i>
+                <span id="themeLabel">Light mode</span>
+            </button>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+
+    <!-- ================================================================== -->
+    <!-- REGION 1: STAKEHOLDER MAP (REG-ORG-01) -->
+    <!-- ================================================================== -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-icon bg-primary"><i class="ri-team-line"></i></div>
+            <div class="section-title">Stakeholder Map</div>
+            <span class="region-badge">REG-ORG-01</span>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-header-icon bg-primary"><i class="ri-user-star-line"></i></div>
+                <div class="card-title">Matriz de stakeholders -- Influencia x Interesse</div>
+            </div>
+            <div class="card-body" style="padding:0;">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Stakeholder</th>
+                                <th>Papel</th>
+                                <th>Influencia</th>
+                                <th>Interesse</th>
+                                <th>Engajamento</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Diretor de Produto</strong></td>
+                                <td>Sponsor executivo</td>
+                                <td><span class="pill pill-danger">Alta</span></td>
+                                <td><span class="pill pill-danger">Alto</span></td>
+                                <td>Reuniao quinzenal de status + relatorio mensal</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Head de Engenharia</strong></td>
+                                <td>Technical Owner</td>
+                                <td><span class="pill pill-danger">Alta</span></td>
+                                <td><span class="pill pill-danger">Alto</span></td>
+                                <td>Participacao ativa em reviews de arquitetura</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Time de Compliance</strong></td>
+                                <td>Consultor</td>
+                                <td><span class="pill pill-warning">Media</span></td>
+                                <td><span class="pill pill-danger">Alto</span></td>
+                                <td>Consultoria sob demanda + validacao de entregas</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Equipe de Suporte N2</strong></td>
+                                <td>Usuario final</td>
+                                <td><span class="pill pill-muted">Baixa</span></td>
+                                <td><span class="pill pill-warning">Medio</span></td>
+                                <td>Treinamento pre-go-live + documentacao</td>
+                            </tr>
+                            <tr>
+                                <td><strong>CFO</strong></td>
+                                <td>Influenciador</td>
+                                <td><span class="pill pill-danger">Alta</span></td>
+                                <td><span class="pill pill-muted">Baixo</span></td>
+                                <td>Report trimestral de ROI e custos</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- REGION 2: TEAM STRUCTURE (REG-ORG-02) -->
+    <!-- ================================================================== -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-icon bg-info"><i class="ri-group-line"></i></div>
+            <div class="section-title">Team Structure</div>
+            <span class="region-badge">REG-ORG-02</span>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-header-icon bg-info"><i class="ri-user-settings-line"></i></div>
+                <div class="card-title">Composicao do time -- Papeis, dedicacao e fases</div>
+            </div>
+            <div class="card-body" style="padding:0;">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Papel</th>
+                                <th>Dedicacao</th>
+                                <th>Fase</th>
+                                <th>Observacao</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Product Owner</strong></td>
+                                <td><span class="pill pill-warning">50%</span></td>
+                                <td>Discovery &rarr; Go-live</td>
+                                <td>Ponto focal com o cliente</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Tech Lead</strong></td>
+                                <td><span class="pill pill-danger">100%</span></td>
+                                <td>Discovery &rarr; Go-live</td>
+                                <td>Responsavel por decisoes de arquitetura</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Desenvolvedor Backend (2x)</strong></td>
+                                <td><span class="pill pill-danger">100%</span></td>
+                                <td>Construcao &rarr; Go-live</td>
+                                <td>Foco em API e integracoes bancarias</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Desenvolvedor Frontend</strong></td>
+                                <td><span class="pill pill-danger">100%</span></td>
+                                <td>Construcao &rarr; Go-live</td>
+                                <td>React + Design System interno</td>
+                            </tr>
+                            <tr>
+                                <td><strong>QA Engineer</strong></td>
+                                <td><span class="pill pill-warning">50%</span></td>
+                                <td>Construcao &rarr; Go-live</td>
+                                <td>Automacao de testes + testes exploratorios</td>
+                            </tr>
+                            <tr>
+                                <td><strong>DevOps/SRE</strong></td>
+                                <td><span class="pill pill-info">25%</span></td>
+                                <td>Construcao &rarr; Sustentacao</td>
+                                <td>Infra, CI/CD e observabilidade</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- REGION 3: RACI (REG-ORG-03) -->
+    <!-- ================================================================== -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-icon bg-teal"><i class="ri-grid-line"></i></div>
+            <div class="section-title">RACI Matrix</div>
+            <span class="region-badge">REG-ORG-03</span>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-header-icon bg-teal"><i class="ri-layout-grid-line"></i></div>
+                <div class="card-title">Matriz de responsabilidades -- Heatmap R/A/C/I</div>
+            </div>
+            <div class="card-body" style="padding:0;">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Atividade</th>
+                                <th style="text-align:center;">PO</th>
+                                <th style="text-align:center;">Tech Lead</th>
+                                <th style="text-align:center;">Dev</th>
+                                <th style="text-align:center;">QA</th>
+                                <th style="text-align:center;">DevOps</th>
+                                <th style="text-align:center;">Sponsor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Definicao de requisitos</td>
+                                <td class="raci-cell raci-R">R</td>
+                                <td class="raci-cell raci-C">C</td>
+                                <td class="raci-cell raci-I">I</td>
+                                <td class="raci-cell raci-I">I</td>
+                                <td class="raci-cell raci-empty">--</td>
+                                <td class="raci-cell raci-A">A</td>
+                            </tr>
+                            <tr>
+                                <td>Decisao de arquitetura</td>
+                                <td class="raci-cell raci-C">C</td>
+                                <td class="raci-cell raci-R">R</td>
+                                <td class="raci-cell raci-C">C</td>
+                                <td class="raci-cell raci-empty">--</td>
+                                <td class="raci-cell raci-C">C</td>
+                                <td class="raci-cell raci-A">A</td>
+                            </tr>
+                            <tr>
+                                <td>Desenvolvimento de features</td>
+                                <td class="raci-cell raci-I">I</td>
+                                <td class="raci-cell raci-A">A</td>
+                                <td class="raci-cell raci-R">R</td>
+                                <td class="raci-cell raci-I">I</td>
+                                <td class="raci-cell raci-empty">--</td>
+                                <td class="raci-cell raci-I">I</td>
+                            </tr>
+                            <tr>
+                                <td>Code review</td>
+                                <td class="raci-cell raci-empty">--</td>
+                                <td class="raci-cell raci-A">A</td>
+                                <td class="raci-cell raci-R">R</td>
+                                <td class="raci-cell raci-empty">--</td>
+                                <td class="raci-cell raci-empty">--</td>
+                                <td class="raci-cell raci-empty">--</td>
+                            </tr>
+                            <tr>
+                                <td>Testes de aceitacao</td>
+                                <td class="raci-cell raci-A">A</td>
+                                <td class="raci-cell raci-I">I</td>
+                                <td class="raci-cell raci-C">C</td>
+                                <td class="raci-cell raci-R">R</td>
+                                <td class="raci-cell raci-empty">--</td>
+                                <td class="raci-cell raci-I">I</td>
+                            </tr>
+                            <tr>
+                                <td>Deploy em producao</td>
+                                <td class="raci-cell raci-I">I</td>
+                                <td class="raci-cell raci-A">A</td>
+                                <td class="raci-cell raci-C">C</td>
+                                <td class="raci-cell raci-C">C</td>
+                                <td class="raci-cell raci-R">R</td>
+                                <td class="raci-cell raci-I">I</td>
+                            </tr>
+                            <tr>
+                                <td>Aprovacao de go-live</td>
+                                <td class="raci-cell raci-C">C</td>
+                                <td class="raci-cell raci-C">C</td>
+                                <td class="raci-cell raci-empty">--</td>
+                                <td class="raci-cell raci-C">C</td>
+                                <td class="raci-cell raci-I">I</td>
+                                <td class="raci-cell raci-R">R/A</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div style="padding: 14px 18px;">
+                    <div class="raci-legend">
+                        <div class="raci-legend-item">
+                            <div class="raci-legend-swatch raci-R">R</div>
+                            <span><strong>Responsible</strong> -- Executa</span>
+                        </div>
+                        <div class="raci-legend-item">
+                            <div class="raci-legend-swatch raci-A">A</div>
+                            <span><strong>Accountable</strong> -- Aprova</span>
+                        </div>
+                        <div class="raci-legend-item">
+                            <div class="raci-legend-swatch raci-C">C</div>
+                            <span><strong>Consulted</strong> -- Consultado</span>
+                        </div>
+                        <div class="raci-legend-item">
+                            <div class="raci-legend-swatch raci-I">I</div>
+                            <span><strong>Informed</strong> -- Informado</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- REGION 4: METHODOLOGY (REG-ORG-04) -->
+    <!-- ================================================================== -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-icon bg-purple"><i class="ri-route-line"></i></div>
+            <div class="section-title">Methodology</div>
+            <span class="region-badge">REG-ORG-04</span>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-header-icon bg-purple"><i class="ri-settings-3-line"></i></div>
+                <div class="card-title">Framework de trabalho, cadencia e ferramentas</div>
+            </div>
+            <div class="card-body">
+                <div style="display:flex; gap:12px; margin-bottom:20px; flex-wrap:wrap;">
+                    <div style="background:var(--info-light); border:1px solid var(--info-border); border-radius:10px; padding:12px 20px;">
+                        <div style="font-size:0.68rem; text-transform:uppercase; letter-spacing:0.5px; color:var(--pill-info-text); font-weight:600;">Framework</div>
+                        <div style="font-weight:700; font-size:1rem; margin-top:2px;">Scrum + Kanban</div>
+                    </div>
+                    <div style="background:var(--success-light); border:1px solid var(--success-border); border-radius:10px; padding:12px 20px;">
+                        <div style="font-size:0.68rem; text-transform:uppercase; letter-spacing:0.5px; color:var(--pill-success-text); font-weight:600;">Cadencia</div>
+                        <div style="font-weight:700; font-size:1rem; margin-top:2px;">Sprints de 2 semanas</div>
+                    </div>
+                </div>
+
+                <div class="info-grid">
+                    <div class="info-block">
+                        <div class="info-block-title"><i class="ri-calendar-check-line"></i> Cerimonias</div>
+                        <div class="info-item"><i class="ri-play-circle-line"></i> <strong>Sprint Planning</strong> -- Seg, 1h, inicio de sprint</div>
+                        <div class="info-item"><i class="ri-chat-check-line"></i> <strong>Daily Standup</strong> -- Diaria, 15min, 09h30</div>
+                        <div class="info-item"><i class="ri-file-search-line"></i> <strong>Refinamento</strong> -- Qua (Sem 1), 1h</div>
+                        <div class="info-item"><i class="ri-slideshow-line"></i> <strong>Sprint Review</strong> -- Sex (Sem 2), 1h, aberta a stakeholders</div>
+                        <div class="info-item"><i class="ri-lightbulb-line"></i> <strong>Retrospectiva</strong> -- Sex (Sem 2), 45min, time interno</div>
+                    </div>
+                    <div class="info-block">
+                        <div class="info-block-title"><i class="ri-tools-line"></i> Ferramentas</div>
+                        <div class="info-item"><i class="ri-kanban-view-2"></i> <strong>Jira</strong> -- Backlog, sprints, metricas</div>
+                        <div class="info-item"><i class="ri-chat-3-line"></i> <strong>Slack</strong> -- Canal #fintrack-pro-delivery</div>
+                        <div class="info-item"><i class="ri-file-text-line"></i> <strong>Confluence + Git</strong> -- Documentacao</div>
+                        <div class="info-item"><i class="ri-palette-line"></i> <strong>Figma</strong> -- Prototipos e handoff</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- REGION 5: ON-CALL AND SUPPORT (REG-ORG-05) -->
+    <!-- ================================================================== -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-icon bg-warning"><i class="ri-alarm-warning-line"></i></div>
+            <div class="section-title">On-Call and Support</div>
+            <span class="region-badge">REG-ORG-05</span>
+        </div>
+
+        <!-- Support levels table -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-header-icon bg-warning"><i class="ri-customer-service-2-line"></i></div>
+                <div class="card-title">Modelo de suporte pos-go-live</div>
+            </div>
+            <div class="card-body" style="padding:0;">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nivel</th>
+                                <th>Quem</th>
+                                <th>Quando</th>
+                                <th>SLA Resposta</th>
+                                <th>Escalation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="shift-badge shift-n1">N1</span></td>
+                                <td>Service Desk cliente</td>
+                                <td><span class="shift-badge shift-plantao">24/7</span></td>
+                                <td>15min (P1), 1h (P2)</td>
+                                <td>Escala para N2 se nao resolver em 30min</td>
+                            </tr>
+                            <tr>
+                                <td><span class="shift-badge shift-n2">N2</span></td>
+                                <td>Time FinTrack Pro</td>
+                                <td><span class="shift-badge shift-n2">Seg-Sex 08h-20h</span></td>
+                                <td>30min (P1), 2h (P2)</td>
+                                <td>Escala para Tech Lead</td>
+                            </tr>
+                            <tr>
+                                <td><span class="shift-badge shift-n3">N3 (plantao)</span></td>
+                                <td>Dev rotativo</td>
+                                <td><span class="shift-badge shift-n3">Fora do horario comercial</span></td>
+                                <td>1h (P1 apenas)</td>
+                                <td>Escala para Head de Engenharia</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Weekly coverage grid -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-header-icon bg-info"><i class="ri-calendar-2-line"></i></div>
+                <div class="card-title">Cobertura semanal por faixa horaria</div>
+            </div>
+            <div class="card-body" style="padding:0;">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Horario</th>
+                                <th style="text-align:center;">Seg</th>
+                                <th style="text-align:center;">Ter</th>
+                                <th style="text-align:center;">Qua</th>
+                                <th style="text-align:center;">Qui</th>
+                                <th style="text-align:center;">Sex</th>
+                                <th style="text-align:center;">Sab</th>
+                                <th style="text-align:center;">Dom</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>00h-08h</strong></td>
+                                <td style="text-align:center;"><span class="shift-badge shift-n1">N1</span> <span class="shift-badge shift-n3">N3</span></td>
+                                <td style="text-align:center;"><span class="shift-badge shift-n1">N1</span> <span class="shift-badge shift-n3">N3</span></td>
+                                <td style="text-align:center;"><span class="shift-badge shift-n1">N1</span> <span class="shift-badge shift-n3">N3</span></td>
+                                <td style="text-align:center;"><span class="shift-badge shift-n1">N1</span> <span class="shift-badge shift-n3">N3</span></td>
+                                <td style="text-align:center;"><span class="shift-badge shift-n1">N1</span> <span class="shift-badge shift-n3">N3</span></td>
+                                <td style="text-align:center;"><span class="shift-badge shift-n1">N1</span> <span class="shift-badge shift-n3">N3</span></td>
+                                <td style="text-align:center;"><span class="shift-badge shift-n1">N1</span> <span class="shift-badge shift-n3">N3</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>08h-20h</strong></td>
+                                <td style="text-align:center;"><span class="shift-badge shift-n1">N1</span> <span class="shift-badge shift-n2">N2</span> <span class="shift-badge shift-n3">N3</span></td>
+                                <td style="text-align:center;"><span class="shift-badge shift-n1">N1</span> <span class="shift-badge shift-n2">N2</span> <span class="shift-badge shift-n3">N3</span></td>
+                                <td style="text-align:center;"><span class="shift-badge shift-n1">N1</span> <span class="shift-badge shift-n2">N2</span> <span class="shift-badge shift-n3">N3</span></td>
+                                <td style="text-align:center;"><span class="shift-badge shift-n1">N1</span> <span class="shift-badge shift-n2">N2</span> <span class="shift-badge shift-n3">N3</span></td>
+                                <td style="text-align:center;"><span class="shift-badge shift-n1">N1</span> <span class="shift-badge shift-n2">N2</span> <span class="shift-badge shift-n3">N3</span></td>
+                                <td style="text-align:center;"><span class="shift-badge shift-n1">N1</span> <span class="shift-badge shift-n3">N3</span></td>
+                                <td style="text-align:center;"><span class="shift-badge shift-n1">N1</span> <span class="shift-badge shift-n3">N3</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>20h-00h</strong></td>
+                                <td style="text-align:center;"><span class="shift-badge shift-n1">N1</span> <span class="shift-badge shift-n3">N3</span></td>
+                                <td style="text-align:center;"><span class="shift-badge shift-n1">N1</span> <span class="shift-badge shift-n3">N3</span></td>
+                                <td style="text-align:center;"><span class="shift-badge shift-n1">N1</span> <span class="shift-badge shift-n3">N3</span></td>
+                                <td style="text-align:center;"><span class="shift-badge shift-n1">N1</span> <span class="shift-badge shift-n3">N3</span></td>
+                                <td style="text-align:center;"><span class="shift-badge shift-n1">N1</span> <span class="shift-badge shift-n3">N3</span></td>
+                                <td style="text-align:center;"><span class="shift-badge shift-n1">N1</span> <span class="shift-badge shift-n3">N3</span></td>
+                                <td style="text-align:center;"><span class="shift-badge shift-n1">N1</span> <span class="shift-badge shift-n3">N3</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Channels -->
+        <div style="display:flex; gap:12px; flex-wrap:wrap;">
+            <div style="flex:1; min-width:220px; background:var(--danger-light); border:1px solid var(--danger-border); border-radius:10px; padding:14px 18px; font-size:0.82rem;">
+                <div style="font-weight:700; color:var(--alert-danger-text); margin-bottom:6px;"><i class="ri-alarm-warning-line"></i> P1 (Critico)</div>
+                <div style="color:var(--text); opacity:0.85;">Telefone + Slack #fintrack-incidents + PagerDuty</div>
+            </div>
+            <div style="flex:1; min-width:220px; background:var(--warning-light); border:1px solid var(--warning-border); border-radius:10px; padding:14px 18px; font-size:0.82rem;">
+                <div style="font-weight:700; color:var(--alert-warning-text); margin-bottom:6px;"><i class="ri-error-warning-line"></i> P2 (Alto)</div>
+                <div style="color:var(--text); opacity:0.85;">Slack #fintrack-incidents + ticket Jira</div>
+            </div>
+            <div style="flex:1; min-width:220px; background:var(--info-light); border:1px solid var(--info-border); border-radius:10px; padding:14px 18px; font-size:0.82rem;">
+                <div style="font-weight:700; color:var(--alert-info-text); margin-bottom:6px;"><i class="ri-information-line"></i> P3/P4</div>
+                <div style="color:var(--text); opacity:0.85;">Ticket Jira via Service Desk</div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- ====== FOOTER ====== -->
+<footer class="footer">
+    <div class="container footer-content">
+        <div class="footer-seal">
+            <i class="ri-copyright-line"></i>
+            <span>&copy; 2026 mAInd Tech</span>
+        </div>
+    </div>
+</footer>
+
+<script>
+// ====== THEME TOGGLE ======
+function toggleTheme() {
+    const html = document.documentElement;
+    const current = html.getAttribute('data-theme');
+    const next = current === 'light' ? 'dark' : 'light';
+    html.setAttribute('data-theme', next);
+    document.getElementById('themeIcon').className = next === 'light' ? 'ri-sun-line' : 'ri-moon-line';
+    document.getElementById('themeLabel').textContent = next === 'light' ? 'Dark mode' : 'Light mode';
+}
+</script>
+
+</body>
+</html>

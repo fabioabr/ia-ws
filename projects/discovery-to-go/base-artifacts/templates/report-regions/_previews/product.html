@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Regions — Product</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+/* ====== DESIGN TOKENS (dark default) ====== */
+:root {
+    --primary: #4DA8DA;
+    --primary-dark: #3A8BB8;
+    --primary-light: rgba(77, 168, 218, 0.12);
+    --secondary: #B9B7BD;
+    --success: #0ED145;
+    --success-light: rgba(14, 209, 69, 0.12);
+    --success-border: rgba(14, 209, 69, 0.3);
+    --warning: #F4AC00;
+    --warning-light: rgba(244, 172, 0, 0.12);
+    --warning-border: rgba(244, 172, 0, 0.3);
+    --danger: #8B1A1A;
+    --danger-light: rgba(139, 26, 26, 0.15);
+    --danger-border: rgba(139, 26, 26, 0.35);
+    --info: #2EB5F5;
+    --info-light: rgba(46, 181, 245, 0.12);
+    --info-border: rgba(46, 181, 245, 0.3);
+    --bg: #1A1923;
+    --card-bg: #2E2D32;
+    --text: #E0DFE3;
+    --text-muted: #88878C;
+    --border: #3E3D44;
+    --purple: #9B96FF;
+    --purple-light: rgba(155, 150, 255, 0.12);
+    --orange: #FF9473;
+    --teal: #2DD4BF;
+    --chart-1: #4DA8DA;
+    --chart-2: #2EB5F5;
+    --chart-3: #0ED145;
+    --chart-4: #FF6B6B;
+    --chart-5: #A78BFA;
+    --header-bg: linear-gradient(135deg, #2E2D32 0%, #252428 50%, #1A1923 100%);
+    --card-header-bg: #252428;
+    --th-bg: #252428;
+    --th-bg-hover: #36353B;
+    --card-shadow: 0 2px 12px rgba(46, 181, 245, 0.06), 0 1px 4px rgba(0,0,0,0.4);
+    --progress-track: #3E3D44;
+    --danger-text: #E85D54;
+    --pill-success-text: #3DE06A;
+    --pill-info-text: #5FC8F8;
+    --pill-warning-text: #f0c040;
+}
+
+/* ====== LIGHT THEME ====== */
+[data-theme="light"] {
+    --primary: #4DA8DA;
+    --primary-dark: #3A8BB8;
+    --primary-light: rgba(77, 168, 218, 0.1);
+    --secondary: #88878C;
+    --success: #0A9E35;
+    --success-light: rgba(10, 158, 53, 0.08);
+    --success-border: rgba(10, 158, 53, 0.25);
+    --warning: #E67E22;
+    --warning-light: rgba(230, 126, 34, 0.12);
+    --warning-border: rgba(230, 126, 34, 0.35);
+    --danger: #E74C3C;
+    --danger-light: rgba(231, 76, 60, 0.10);
+    --danger-border: rgba(231, 76, 60, 0.30);
+    --info: #1E95CC;
+    --info-light: rgba(30, 149, 204, 0.08);
+    --info-border: rgba(30, 149, 204, 0.25);
+    --bg: #E0DFE3;
+    --card-bg: #ffffff;
+    --text: #1A1923;
+    --text-muted: #88878C;
+    --border: #B9B7BD;
+    --purple: #7B76FE;
+    --purple-light: rgba(123, 118, 254, 0.08);
+    --orange: #FE7C58;
+    --teal: #00D8D8;
+    --chart-1: #4DA8DA;
+    --chart-2: #1E95CC;
+    --chart-3: #0A9E35;
+    --chart-4: #D44040;
+    --chart-5: #7C6BD4;
+    --header-bg: linear-gradient(135deg, #2E2D32 0%, #252428 50%, #1A1923 100%);
+    --card-header-bg: rgba(77, 168, 218, 0.12);
+    --th-bg: rgba(77, 168, 218, 0.12);
+    --th-bg-hover: rgba(77, 168, 218, 0.22);
+    --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0,0,0,0.06);
+    --progress-track: #B9B7BD;
+    --danger-text: #C0392B;
+    --pill-success-text: #087A28;
+    --pill-info-text: #1670A0;
+    --pill-warning-text: #C0392B;
+}
+[data-theme="light"] .card:hover { border-color: var(--primary); }
+
+/* ====== RESET ====== */
+html, body, div, span, h1, h2, h3, h4, h5, h6, p, a, img, ul, ol, li,
+header, footer, nav, section, article, aside, button, input, select, textarea,
+table, tr, td, th, form, label, fieldset, legend { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+/* ====== HEADER ====== */
+.header { background: linear-gradient(135deg, #2E2D32 0%, #252428 50%, #1A1923 100%); color: white; padding: 36px 0 36px; position: relative; overflow: hidden; }
+.header::before { content: ''; position: absolute; top: -50%; right: -10%; width: 500px; height: 500px; background: rgba(255,255,255,0.03); border-radius: 50%; z-index: 0; }
+.header-content { position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+.header h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.5px; }
+.header .subtitle { font-size: 0.88rem; opacity: 0.7; font-weight: 300; margin-top: 4px; }
+.header-right { display: flex; align-items: center; gap: 12px; }
+.header-badge { background: rgba(255,255,255,0.12); padding: 6px 14px; border-radius: 8px; font-size: 0.75rem; display: flex; align-items: center; gap: 6px; backdrop-filter: blur(10px); color: white; }
+
+/* ====== THEME TOGGLE ====== */
+.theme-toggle { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; padding: 6px 14px; font-family: 'Poppins', sans-serif; font-size: 0.78rem; font-weight: 500; color: white; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: all 0.2s; }
+.theme-toggle:hover { background: rgba(255,255,255,0.22); }
+
+/* ====== REGION SEPARATOR ====== */
+.region-separator { display: flex; align-items: center; gap: 16px; margin: 48px 0 24px; }
+.region-separator .id-badge { background: var(--primary); color: #1A1923; font-size: 0.68rem; font-weight: 700; padding: 4px 12px; border-radius: 6px; white-space: nowrap; letter-spacing: 0.5px; }
+.region-separator .region-title { font-size: 1.2rem; font-weight: 700; white-space: nowrap; }
+.region-separator .line { flex: 1; height: 1px; background: var(--border); }
+
+/* ====== CARDS ====== */
+.card { background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border); box-shadow: var(--card-shadow); overflow: hidden; margin-bottom: 20px; transition: box-shadow 0.2s, border-color 0.2s; }
+.card:hover { box-shadow: 0 4px 20px rgba(46, 181, 245, 0.1), 0 2px 8px rgba(0,0,0,0.3); }
+.card-header { display: flex; align-items: center; gap: 10px; padding: 14px 18px; border-bottom: 1px solid var(--border); background: var(--card-header-bg); }
+.card-header-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+.card-title { font-weight: 600; font-size: 0.95rem; flex: 1; }
+.card-badge { padding: 2px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: 600; white-space: nowrap; }
+.card-body { padding: 18px; color: var(--text); opacity: 0.92; }
+
+/* ====== STAT CARDS ====== */
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 16px; }
+.stat-card { background: var(--card-bg); border-radius: 12px; padding: 18px 20px; box-shadow: var(--card-shadow); border: 1px solid var(--border); display: flex; align-items: center; gap: 14px; transition: all 0.2s; }
+.stat-card:hover { border-color: var(--primary); }
+.stat-card-icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }
+.stat-card-info { flex: 1; }
+.stat-card-number { font-size: 1.15rem; font-weight: 700; line-height: 1.2; }
+.stat-card-label { font-size: 0.72rem; color: var(--text-muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.3px; }
+
+/* ====== PILLS ====== */
+.pill { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: 600; }
+.pill-success { background: var(--success-light); color: var(--pill-success-text); border: 1px solid var(--success-border); }
+.pill-info { background: var(--info-light); color: var(--pill-info-text); border: 1px solid var(--info-border); }
+.pill-warning { background: var(--warning-light); color: var(--pill-warning-text); border: 1px solid var(--warning-border); }
+.pill-danger { background: var(--danger-light); color: var(--danger-text); border: 1px solid var(--danger-border); }
+
+/* ====== PROBLEM & CONTEXT: metric callout ====== */
+.metric-callout { background: var(--primary-light); border: 1px solid rgba(77, 168, 218, 0.3); border-radius: 10px; padding: 16px 20px; margin-bottom: 12px; display: flex; align-items: center; gap: 14px; }
+.metric-callout-value { font-size: 1.6rem; font-weight: 700; color: var(--primary); white-space: nowrap; }
+.metric-callout-label { font-size: 0.85rem; color: var(--text); opacity: 0.85; }
+.problem-text { font-size: 0.88rem; line-height: 1.7; margin-bottom: 12px; }
+.problem-text strong { color: var(--primary); }
+.who-suffers { list-style: none; padding: 0; }
+.who-suffers li { padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 0.84rem; display: flex; align-items: flex-start; gap: 8px; }
+.who-suffers li:last-child { border-bottom: none; }
+.who-suffers li i { color: var(--chart-4); margin-top: 3px; }
+
+/* ====== PERSONAS: grid cards ====== */
+.personas-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.persona-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 20px; transition: border-color 0.2s; }
+.persona-card:hover { border-color: var(--primary); }
+.persona-header { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+.persona-avatar { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: white; font-weight: 700; flex-shrink: 0; }
+.persona-name { font-weight: 700; font-size: 1rem; }
+.persona-role { font-size: 0.78rem; color: var(--text-muted); }
+.persona-freq { font-size: 0.68rem; color: var(--pill-info-text); background: var(--info-light); border: 1px solid var(--info-border); padding: 1px 8px; border-radius: 10px; display: inline-block; margin-top: 4px; }
+.persona-section { margin-bottom: 10px; }
+.persona-section-title { font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); margin-bottom: 6px; }
+.persona-section ul { list-style: none; padding: 0; }
+.persona-section li { font-size: 0.82rem; padding: 3px 0; display: flex; align-items: flex-start; gap: 6px; line-height: 1.4; }
+.persona-section li i { margin-top: 3px; font-size: 0.75rem; flex-shrink: 0; }
+
+/* ====== USER JOURNEYS: timeline ====== */
+.journey-timeline { display: flex; gap: 0; overflow-x: auto; padding: 12px 0 20px; position: relative; }
+.journey-step { flex: 1; min-width: 170px; position: relative; text-align: center; padding: 0 10px; }
+.journey-step::before { content: ''; position: absolute; top: 24px; left: 0; right: 0; height: 3px; background: var(--border); z-index: 0; }
+.journey-step:first-child::before { left: 50%; }
+.journey-step:last-child::before { right: 50%; }
+.step-dot { width: 48px; height: 48px; border-radius: 50%; background: var(--card-bg); border: 3px solid var(--primary); display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; position: relative; z-index: 1; font-size: 1.1rem; }
+.step-label { font-size: 0.78rem; font-weight: 600; margin-bottom: 4px; }
+.step-action { font-size: 0.72rem; color: var(--text-muted); margin-bottom: 6px; line-height: 1.3; }
+.step-touchpoint { font-size: 0.65rem; background: var(--primary-light); border: 1px solid rgba(77,168,218,0.3); border-radius: 6px; padding: 2px 8px; display: inline-block; margin-bottom: 4px; color: var(--primary); }
+.step-emotion { font-size: 0.7rem; font-weight: 500; }
+.step-badges { display: flex; gap: 4px; justify-content: center; margin-top: 6px; flex-wrap: wrap; }
+.step-badges .pill { font-size: 0.6rem; padding: 1px 6px; }
+
+/* ====== VALUE PROPOSITION: highlight card ====== */
+.vp-pitch { background: linear-gradient(135deg, rgba(77,168,218,0.12) 0%, rgba(46,181,245,0.08) 100%); border: 1px solid rgba(77,168,218,0.3); border-radius: 12px; padding: 24px; margin-bottom: 20px; position: relative; }
+.vp-pitch::before { content: '\201C'; position: absolute; top: 8px; left: 16px; font-size: 3rem; color: var(--primary); opacity: 0.3; font-family: Georgia, serif; line-height: 1; }
+.vp-pitch p { font-size: 0.95rem; line-height: 1.7; padding-left: 24px; font-style: italic; }
+.vp-pitch strong { color: var(--primary); font-style: normal; }
+.vp-diff-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 16px; }
+.vp-diff-item { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 14px; display: flex; align-items: flex-start; gap: 10px; transition: border-color 0.2s; }
+.vp-diff-item:hover { border-color: var(--primary); }
+.vp-diff-item i { color: var(--primary); font-size: 1.1rem; margin-top: 2px; flex-shrink: 0; }
+.vp-diff-item .diff-title { font-weight: 600; font-size: 0.84rem; margin-bottom: 2px; }
+.vp-diff-item .diff-desc { font-size: 0.78rem; color: var(--text-muted); }
+.vp-principles { list-style: none; padding: 0; }
+.vp-principles li { padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 0.84rem; display: flex; align-items: flex-start; gap: 10px; }
+.vp-principles li:last-child { border-bottom: none; }
+.vp-principles .num { background: var(--primary); color: #1A1923; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; flex-shrink: 0; }
+
+/* ====== OKRs: progress bars + stat cards ====== */
+.okr-group { margin-bottom: 20px; }
+.okr-group-title { font-size: 0.88rem; font-weight: 600; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.okr-group-title i { color: var(--primary); }
+.okr-bar { margin-bottom: 14px; }
+.okr-bar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.okr-bar-label { font-size: 0.8rem; font-weight: 500; }
+.okr-bar-values { font-size: 0.72rem; color: var(--text-muted); }
+.okr-bar-values span { font-weight: 600; }
+.okr-bar-track { height: 10px; background: var(--progress-track); border-radius: 6px; overflow: hidden; position: relative; }
+.okr-bar-fill { height: 100%; border-radius: 6px; transition: width 0.6s ease; }
+.okr-bar-target { position: absolute; right: 0; top: -4px; bottom: -4px; width: 3px; background: var(--text); border-radius: 2px; opacity: 0.5; }
+
+/* ====== BUSINESS MODEL: pricing table ====== */
+.pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 24px; }
+.pricing-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 24px; text-align: center; transition: all 0.2s; position: relative; }
+.pricing-card:hover { border-color: var(--primary); transform: translateY(-2px); }
+.pricing-card.featured { border-color: var(--primary); }
+.pricing-card.featured::before { content: 'Popular'; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--primary); color: #1A1923; font-size: 0.68rem; font-weight: 700; padding: 2px 14px; border-radius: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+.pricing-plan-name { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; }
+.pricing-price { font-size: 1.6rem; font-weight: 700; color: var(--primary); margin-bottom: 4px; }
+.pricing-price small { font-size: 0.75rem; font-weight: 400; color: var(--text-muted); }
+.pricing-desc { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 16px; }
+.pricing-features { list-style: none; padding: 0; text-align: left; }
+.pricing-features li { font-size: 0.8rem; padding: 6px 0; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
+.pricing-features li:last-child { border-bottom: none; }
+.pricing-features li i { color: var(--success); font-size: 0.85rem; }
+.saas-metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+.saas-metric { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 14px; text-align: center; }
+.saas-metric-value { font-size: 1.1rem; font-weight: 700; color: var(--primary); }
+.saas-metric-label { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.3px; }
+
+/* ====== SCOPE: split card ====== */
+.scope-objective { background: var(--primary-light); border: 1px solid rgba(77,168,218,0.3); border-radius: 10px; padding: 16px 20px; margin-bottom: 16px; font-size: 0.88rem; line-height: 1.6; }
+.scope-split { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 16px; }
+.scope-col { border-radius: 12px; padding: 20px; }
+.scope-in { background: var(--success-light); border: 1px solid var(--success-border); }
+.scope-out { background: var(--danger-light); border: 1px solid var(--danger-border); }
+.scope-col-title { font-weight: 700; font-size: 0.88rem; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.scope-in .scope-col-title { color: var(--pill-success-text); }
+.scope-out .scope-col-title { color: var(--danger-text); }
+.scope-col ul { list-style: none; padding: 0; }
+.scope-col li { font-size: 0.82rem; padding: 6px 0; display: flex; align-items: flex-start; gap: 8px; line-height: 1.4; }
+.scope-in li i { color: var(--pill-success-text); }
+.scope-out li i { color: var(--danger-text); }
+.scope-hypothesis { background: var(--warning-light); border: 1px solid var(--warning-border); border-radius: 10px; padding: 16px 20px; font-size: 0.85rem; line-height: 1.6; font-style: italic; }
+.scope-hypothesis strong { font-style: normal; color: var(--pill-warning-text); }
+
+/* ====== ROADMAP: horizontal timeline ====== */
+.roadmap-timeline { display: flex; gap: 0; padding: 20px 0; position: relative; overflow-x: auto; }
+.roadmap-phase { flex: 1; min-width: 220px; position: relative; padding: 0 12px; }
+.roadmap-phase::before { content: ''; position: absolute; top: 20px; left: 0; right: 0; height: 4px; z-index: 0; }
+.roadmap-phase:nth-child(1)::before { background: var(--chart-5); }
+.roadmap-phase:nth-child(2)::before { background: var(--primary); }
+.roadmap-phase:nth-child(3)::before { background: var(--info); }
+.roadmap-phase:nth-child(4)::before { background: var(--teal); }
+.roadmap-phase:first-child::before { left: 50%; }
+.roadmap-phase:last-child::before { right: 50%; }
+.phase-diamond { width: 40px; height: 40px; background: var(--card-bg); border: 3px solid var(--primary); transform: rotate(45deg); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; position: relative; z-index: 1; }
+.phase-diamond i { transform: rotate(-45deg); font-size: 0.9rem; color: var(--primary); }
+.phase-content { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 16px; text-align: center; }
+.phase-name { font-weight: 700; font-size: 0.88rem; margin-bottom: 4px; }
+.phase-period { font-size: 0.72rem; color: var(--text-muted); margin-bottom: 4px; }
+.phase-duration { font-size: 0.68rem; background: var(--primary-light); color: var(--primary); padding: 1px 8px; border-radius: 8px; display: inline-block; margin-bottom: 10px; border: 1px solid rgba(77,168,218,0.3); }
+.phase-epics { list-style: none; padding: 0; text-align: left; }
+.phase-epics li { font-size: 0.75rem; padding: 3px 0; display: flex; align-items: flex-start; gap: 6px; color: var(--text-muted); }
+.phase-epics li i { color: var(--primary); margin-top: 2px; font-size: 0.7rem; }
+.phase-milestone { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); font-size: 0.72rem; color: var(--pill-warning-text); display: flex; align-items: center; gap: 6px; justify-content: center; }
+
+/* ====== PRODUCT VISION: quote card ====== */
+.vision-quote { background: linear-gradient(135deg, rgba(155,150,255,0.1) 0%, rgba(77,168,218,0.08) 100%); border: 1px solid rgba(155,150,255,0.25); border-radius: 14px; padding: 32px; margin-bottom: 20px; position: relative; text-align: center; }
+.vision-quote::before { content: '\201C'; position: absolute; top: 12px; left: 24px; font-size: 4rem; color: var(--purple); opacity: 0.25; font-family: Georgia, serif; line-height: 1; }
+.vision-quote::after { content: '\201D'; position: absolute; bottom: 0; right: 24px; font-size: 4rem; color: var(--purple); opacity: 0.25; font-family: Georgia, serif; line-height: 1; }
+.vision-quote p { font-size: 1.05rem; line-height: 1.8; font-style: italic; max-width: 800px; margin: 0 auto; }
+.vision-3y { margin-bottom: 16px; }
+.vision-3y-title { font-size: 0.88rem; font-weight: 600; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+.vision-3y-title i { color: var(--purple); }
+.vision-3y p { font-size: 0.84rem; line-height: 1.7; color: var(--text); opacity: 0.85; margin-bottom: 10px; }
+.vision-caps { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-top: 12px; }
+.vision-cap { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 14px; display: flex; align-items: flex-start; gap: 10px; }
+.vision-cap i { color: var(--purple); font-size: 1rem; margin-top: 2px; }
+.vision-cap span { font-size: 0.8rem; }
+
+/* ====== FOOTER ====== */
+.footer { text-align: center; padding: 32px 0; margin-top: 48px; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.78rem; }
+
+/* ====== RESPONSIVE ====== */
+@media (max-width: 768px) {
+    .personas-grid { grid-template-columns: 1fr; }
+    .pricing-grid { grid-template-columns: 1fr; }
+    .scope-split { grid-template-columns: 1fr; }
+    .journey-timeline { flex-direction: column; }
+    .journey-step::before { display: none; }
+    .roadmap-timeline { flex-direction: column; }
+    .roadmap-phase::before { display: none; }
+}
+    </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+    <div class="container">
+        <div class="header-content">
+            <div>
+                <h1><i class="ri-box-3-line" style="margin-right:8px; opacity:0.8;"></i>Report Regions &mdash; Product</h1>
+                <p class="subtitle">Preview of all 9 product report regions with sample data</p>
+            </div>
+            <div class="header-right">
+                <div class="header-badge"><i class="ri-layout-grid-line"></i> 9 Regions</div>
+                <button class="theme-toggle" onclick="toggleTheme()">
+                    <i class="ri-moon-line" id="theme-icon"></i>
+                    <span id="theme-label">Light</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="container">
+
+<!-- ============================================================ -->
+<!-- REG-PROD-01: PROBLEM AND CONTEXT -->
+<!-- ============================================================ -->
+<div class="region-separator">
+    <span class="id-badge">REG-PROD-01</span>
+    <span class="region-title">Problem and Context</span>
+    <span class="line"></span>
+    <span class="pill pill-info">Card + Metric Callout</span>
+</div>
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-card-icon" style="background: var(--danger-light); color: var(--danger-text);"><i class="ri-time-line"></i></div>
+        <div class="stat-card-info">
+            <div class="stat-card-number">2,500 h/year</div>
+            <div class="stat-card-label">Wasted on Manual Work</div>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-card-icon" style="background: var(--warning-light); color: var(--pill-warning-text);"><i class="ri-error-warning-line"></i></div>
+        <div class="stat-card-info">
+            <div class="stat-card-number">3 Restatements</div>
+            <div class="stat-card-label">Last 6 months</div>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-card-icon" style="background: var(--info-light); color: var(--pill-info-text);"><i class="ri-calendar-schedule-line"></i></div>
+        <div class="stat-card-info">
+            <div class="stat-card-number">D+8 Close</div>
+            <div class="stat-card-label">Benchmark: D+2 to D+3</div>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-card-icon" style="background: var(--purple-light); color: var(--purple);"><i class="ri-money-dollar-circle-line"></i></div>
+        <div class="stat-card-info">
+            <div class="stat-card-number">R$ 500K-700K/yr</div>
+            <div class="stat-card-label">Total Impact</div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <div class="card-header-icon" style="background: var(--danger-light); color: var(--danger-text);"><i class="ri-alarm-warning-line"></i></div>
+        <span class="card-title">Problem Statement</span>
+    </div>
+    <div class="card-body">
+        <p class="problem-text">Acme Corp operates <strong>12 branches across 4 countries</strong> in Latin America. Each branch runs a local SAP R/3 instance for accounting, generating financial data in different currencies and chart of accounts. The consolidation process is entirely manual: analysts export data via spreadsheets, apply FX conversion and intercompany elimination rules manually, and consolidate into a master spreadsheet. The process is <strong>slow, error-prone, and lacks an audit trail</strong>.</p>
+        <ul class="who-suffers">
+            <li><i class="ri-user-line"></i><span><strong>Financial Analysts (4 people)</strong> &mdash; spend 12h/week each on low-value manual work</span></li>
+            <li><i class="ri-user-line"></i><span><strong>Controller</strong> &mdash; cannot close before D+8, impacting C-level decision-making</span></li>
+            <li><i class="ri-user-line"></i><span><strong>CFO</strong> &mdash; had to restate board reports 3 times due to consolidation errors</span></li>
+            <li><i class="ri-user-line"></i><span><strong>Auditors</strong> &mdash; no audit trail; every review requires manual recalculation</span></li>
+        </ul>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- REG-PROD-02: PERSONAS -->
+<!-- ============================================================ -->
+<div class="region-separator">
+    <span class="id-badge">REG-PROD-02</span>
+    <span class="region-title">Personas</span>
+    <span class="line"></span>
+    <span class="pill pill-info">Grid of Persona Cards</span>
+</div>
+
+<div class="personas-grid">
+    <!-- Persona 1 -->
+    <div class="persona-card">
+        <div class="persona-header">
+            <div class="persona-avatar" style="background: linear-gradient(135deg, var(--chart-5), var(--purple));">RA</div>
+            <div>
+                <div class="persona-name">Roberto Almeida</div>
+                <div class="persona-role">Chief Financial Officer</div>
+                <div class="persona-freq">Weekly / Monthly</div>
+            </div>
+        </div>
+        <div class="persona-section">
+            <div class="persona-section-title"><i class="ri-crosshair-2-line"></i> Jobs to Be Done</div>
+            <ul>
+                <li><i class="ri-arrow-right-s-line" style="color:var(--primary);"></i>Consolidated visibility of the group's financial health in real time</li>
+                <li><i class="ri-arrow-right-s-line" style="color:var(--primary);"></i>Present reliable reports to the board with zero restatement risk</li>
+            </ul>
+        </div>
+        <div class="persona-section">
+            <div class="persona-section-title"><i class="ri-emotion-sad-line"></i> Pains</div>
+            <ul>
+                <li><i class="ri-close-circle-line" style="color:var(--danger-text);"></i>Receives consolidated data with 8-day delay</li>
+                <li><i class="ri-close-circle-line" style="color:var(--danger-text);"></i>Had to restate reports 3 times &mdash; credibility impact</li>
+                <li><i class="ri-close-circle-line" style="color:var(--danger-text);"></i>Cannot drill down by branch without requesting extra reports</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Persona 2 -->
+    <div class="persona-card">
+        <div class="persona-header">
+            <div class="persona-avatar" style="background: linear-gradient(135deg, var(--primary), var(--info));">JF</div>
+            <div>
+                <div class="persona-name">Juliana Ferreira</div>
+                <div class="persona-role">Corporate Controller</div>
+                <div class="persona-freq">Daily</div>
+            </div>
+        </div>
+        <div class="persona-section">
+            <div class="persona-section-title"><i class="ri-crosshair-2-line"></i> Jobs to Be Done</div>
+            <ul>
+                <li><i class="ri-arrow-right-s-line" style="color:var(--primary);"></i>Ensure consolidation is correct and on time</li>
+                <li><i class="ri-arrow-right-s-line" style="color:var(--primary);"></i>Reduce team rework and free up time for analysis</li>
+            </ul>
+        </div>
+        <div class="persona-section">
+            <div class="persona-section-title"><i class="ri-emotion-sad-line"></i> Pains</div>
+            <ul>
+                <li><i class="ri-close-circle-line" style="color:var(--danger-text);"></i>Spends 60% of time reviewing spreadsheets instead of analyzing</li>
+                <li><i class="ri-close-circle-line" style="color:var(--danger-text);"></i>No data confidence &mdash; always rechecks elimination calculations</li>
+                <li><i class="ri-close-circle-line" style="color:var(--danger-text);"></i>Audit process is exhausting due to lack of traceability</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Persona 3 -->
+    <div class="persona-card">
+        <div class="persona-header">
+            <div class="persona-avatar" style="background: linear-gradient(135deg, var(--success), var(--teal));">MO</div>
+            <div>
+                <div class="persona-name">Marcos Oliveira</div>
+                <div class="persona-role">Senior Financial Analyst</div>
+                <div class="persona-freq">Daily</div>
+            </div>
+        </div>
+        <div class="persona-section">
+            <div class="persona-section-title"><i class="ri-crosshair-2-line"></i> Jobs to Be Done</div>
+            <ul>
+                <li><i class="ri-arrow-right-s-line" style="color:var(--primary);"></i>Collect branch data and consolidate without errors</li>
+                <li><i class="ri-arrow-right-s-line" style="color:var(--primary);"></i>Deliver consolidation on time for the controller</li>
+            </ul>
+        </div>
+        <div class="persona-section">
+            <div class="persona-section-title"><i class="ri-emotion-sad-line"></i> Pains</div>
+            <ul>
+                <li><i class="ri-close-circle-line" style="color:var(--danger-text);"></i>Manual and repetitive process &mdash; 12h/week on mechanical work</li>
+                <li><i class="ri-close-circle-line" style="color:var(--danger-text);"></i>Different formats per branch require manual normalization</li>
+                <li><i class="ri-close-circle-line" style="color:var(--danger-text);"></i>Errors discovered late cause cascading rework</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- REG-PROD-03: USER JOURNEYS -->
+<!-- ============================================================ -->
+<div class="region-separator">
+    <span class="id-badge">REG-PROD-03</span>
+    <span class="region-title">User Journeys</span>
+    <span class="line"></span>
+    <span class="pill pill-info">Horizontal Timeline</span>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <div class="card-header-icon" style="background: var(--info-light); color: var(--pill-info-text);"><i class="ri-route-line"></i></div>
+        <span class="card-title">Marcos Oliveira &mdash; Monthly Consolidation</span>
+        <span class="card-badge" style="background: var(--primary-light); color: var(--primary);">6 Steps</span>
+    </div>
+    <div class="card-body">
+        <div class="journey-timeline">
+            <div class="journey-step">
+                <div class="step-dot"><i class="ri-download-cloud-line"></i></div>
+                <div class="step-label">1. Collection</div>
+                <div class="step-action">Export report from each SAP</div>
+                <div class="step-touchpoint">Email + SAP GUI</div>
+                <div class="step-emotion" style="color: var(--danger-text);">Frustration</div>
+                <div class="step-badges">
+                    <span class="pill pill-danger">Pain</span>
+                    <span class="pill pill-success">Opportunity</span>
+                </div>
+            </div>
+            <div class="journey-step">
+                <div class="step-dot"><i class="ri-file-transfer-line"></i></div>
+                <div class="step-label">2. Normalization</div>
+                <div class="step-action">Convert to standard format</div>
+                <div class="step-touchpoint">Excel</div>
+                <div class="step-emotion" style="color: var(--text-muted);">Boredom</div>
+                <div class="step-badges">
+                    <span class="pill pill-danger">Pain</span>
+                    <span class="pill pill-success">Opportunity</span>
+                </div>
+            </div>
+            <div class="journey-step">
+                <div class="step-dot"><i class="ri-scissors-cut-line"></i></div>
+                <div class="step-label">3. Elimination</div>
+                <div class="step-action">Apply intercompany rules</div>
+                <div class="step-touchpoint">Excel</div>
+                <div class="step-emotion" style="color: var(--pill-warning-text);">Anxiety</div>
+                <div class="step-badges">
+                    <span class="pill pill-danger">Pain</span>
+                    <span class="pill pill-success">Opportunity</span>
+                </div>
+            </div>
+            <div class="journey-step">
+                <div class="step-dot"><i class="ri-calculator-line"></i></div>
+                <div class="step-label">4. Consolidation</div>
+                <div class="step-action">Sum and generate P&L</div>
+                <div class="step-touchpoint">Excel</div>
+                <div class="step-emotion" style="color: var(--primary);">Focus</div>
+                <div class="step-badges">
+                    <span class="pill pill-danger">Pain</span>
+                    <span class="pill pill-success">Opportunity</span>
+                </div>
+            </div>
+            <div class="journey-step">
+                <div class="step-dot"><i class="ri-search-eye-line"></i></div>
+                <div class="step-label">5. Review</div>
+                <div class="step-action">Send to controller</div>
+                <div class="step-touchpoint">Email + Excel</div>
+                <div class="step-emotion" style="color: var(--purple);">Expectation</div>
+                <div class="step-badges">
+                    <span class="pill pill-danger">Pain</span>
+                    <span class="pill pill-success">Opportunity</span>
+                </div>
+            </div>
+            <div class="journey-step">
+                <div class="step-dot"><i class="ri-check-double-line"></i></div>
+                <div class="step-label">6. Delivery</div>
+                <div class="step-action">Controller approves to CFO</div>
+                <div class="step-touchpoint">Email + PPT</div>
+                <div class="step-emotion" style="color: var(--pill-success-text);">Relief</div>
+                <div class="step-badges">
+                    <span class="pill pill-danger">Pain</span>
+                    <span class="pill pill-success">Opportunity</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- REG-PROD-04: VALUE PROPOSITION -->
+<!-- ============================================================ -->
+<div class="region-separator">
+    <span class="id-badge">REG-PROD-04</span>
+    <span class="region-title">Value Proposition</span>
+    <span class="line"></span>
+    <span class="pill pill-info">Highlight Card + Elevator Pitch</span>
+</div>
+
+<div class="vp-pitch">
+    <p><strong>For</strong> controllership teams at multi-branch companies <strong>who</strong> need to consolidate financial data from different ERPs quickly and reliably, <strong>FinTrack Pro</strong> is an <strong>automated financial consolidation platform</strong> that centralizes data, applies intercompany elimination rules, and generates real-time consolidated reports. <strong>Unlike</strong> Oracle HFM or manual spreadsheets, <strong>our product</strong> is no-code configurable, costs 40% less, and natively integrates with SAP, TOTVS, and Oracle.</p>
+</div>
+
+<h3 style="font-size:0.88rem; font-weight:600; margin-bottom:12px; display:flex; align-items:center; gap:8px;"><i class="ri-star-line" style="color:var(--primary);"></i> Competitive Differentiators</h3>
+<div class="vp-diff-grid">
+    <div class="vp-diff-item">
+        <i class="ri-link"></i>
+        <div>
+            <div class="diff-title">Native Multi-ERP Integration</div>
+            <div class="diff-desc">Ready-made connectors for SAP, TOTVS, Oracle &mdash; no middleware</div>
+        </div>
+    </div>
+    <div class="vp-diff-item">
+        <i class="ri-settings-3-line"></i>
+        <div>
+            <div class="diff-title">Configurable Elimination Rules</div>
+            <div class="diff-desc">No-code rule engine controllers configure without IT dependency</div>
+        </div>
+    </div>
+    <div class="vp-diff-item">
+        <i class="ri-price-tag-3-line"></i>
+        <div>
+            <div class="diff-title">40% Lower Cost</div>
+            <div class="diff-desc">Per-branch pricing, no per-user licensing</div>
+        </div>
+    </div>
+    <div class="vp-diff-item">
+        <i class="ri-shield-check-line"></i>
+        <div>
+            <div class="diff-title">Complete Audit Trail</div>
+            <div class="diff-desc">Every number traceable to source with full transformation logs</div>
+        </div>
+    </div>
+    <div class="vp-diff-item">
+        <i class="ri-rocket-line"></i>
+        <div>
+            <div class="diff-title">8-Week Time-to-Value</div>
+            <div class="diff-desc">Fast implementation with industry templates</div>
+        </div>
+    </div>
+</div>
+
+<h3 style="font-size:0.88rem; font-weight:600; margin: 16px 0 12px; display:flex; align-items:center; gap:8px;"><i class="ri-compass-3-line" style="color:var(--primary);"></i> Product Principles</h3>
+<ul class="vp-principles">
+    <li><span class="num">1</span><span><strong>Automate, don't just digitize</strong> &mdash; eliminate manual steps, not just move them to a screen</span></li>
+    <li><span class="num">2</span><span><strong>Trust over speed</strong> &mdash; consolidated data must be auditable and traceable</span></li>
+    <li><span class="num">3</span><span><strong>Controller in control</strong> &mdash; business rules configurable by the user, no IT dependency</span></li>
+    <li><span class="num">4</span><span><strong>Radical transparency</strong> &mdash; every calculation visible, every transformation logged</span></li>
+    <li><span class="num">5</span><span><strong>Scale without complexity</strong> &mdash; adding a branch should take hours, not weeks</span></li>
+</ul>
+
+<!-- ============================================================ -->
+<!-- REG-PROD-05: OKRs AND ROI -->
+<!-- ============================================================ -->
+<div class="region-separator">
+    <span class="id-badge">REG-PROD-05</span>
+    <span class="region-title">OKRs and ROI</span>
+    <span class="line"></span>
+    <span class="pill pill-info">Progress Bars + Stat Cards</span>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <div class="card-header-icon" style="background: var(--success-light); color: var(--pill-success-text);"><i class="ri-focus-3-line"></i></div>
+        <span class="card-title">OKRs &mdash; MVP Phase</span>
+    </div>
+    <div class="card-body">
+        <div class="okr-group">
+            <div class="okr-group-title"><i class="ri-target-line"></i> Objective 1: Eliminate errors in financial consolidation</div>
+            <div class="okr-bar">
+                <div class="okr-bar-header">
+                    <span class="okr-bar-label">Material errors per semester</span>
+                    <span class="okr-bar-values">Baseline: <span style="color:var(--danger-text);">3</span> &rarr; Target: <span style="color:var(--pill-success-text);">0</span></span>
+                </div>
+                <div class="okr-bar-track">
+                    <div class="okr-bar-fill" style="width: 100%; background: linear-gradient(90deg, var(--danger-text), var(--pill-success-text));"></div>
+                </div>
+            </div>
+            <div class="okr-bar">
+                <div class="okr-bar-header">
+                    <span class="okr-bar-label">Traceability in elimination calculations</span>
+                    <span class="okr-bar-values">Baseline: <span style="color:var(--danger-text);">0%</span> &rarr; Target: <span style="color:var(--pill-success-text);">100%</span></span>
+                </div>
+                <div class="okr-bar-track">
+                    <div class="okr-bar-fill" style="width: 100%; background: linear-gradient(90deg, var(--chart-4), var(--primary));"></div>
+                </div>
+            </div>
+        </div>
+        <div class="okr-group">
+            <div class="okr-group-title"><i class="ri-target-line"></i> Objective 2: Accelerate monthly close</div>
+            <div class="okr-bar">
+                <div class="okr-bar-header">
+                    <span class="okr-bar-label">Consolidated close time</span>
+                    <span class="okr-bar-values">Baseline: <span style="color:var(--danger-text);">D+8</span> &rarr; Target: <span style="color:var(--pill-success-text);">D+2</span></span>
+                </div>
+                <div class="okr-bar-track">
+                    <div class="okr-bar-fill" style="width: 75%; background: linear-gradient(90deg, var(--warning), var(--primary));"></div>
+                </div>
+            </div>
+            <div class="okr-bar">
+                <div class="okr-bar-header">
+                    <span class="okr-bar-label">Weekly consolidation hours per analyst</span>
+                    <span class="okr-bar-values">Baseline: <span style="color:var(--danger-text);">12h</span> &rarr; Target: <span style="color:var(--pill-success-text);">2h</span></span>
+                </div>
+                <div class="okr-bar-track">
+                    <div class="okr-bar-fill" style="width: 83%; background: linear-gradient(90deg, var(--orange), var(--teal));"></div>
+                </div>
+            </div>
+        </div>
+        <div class="okr-group">
+            <div class="okr-group-title"><i class="ri-target-line"></i> Objective 3: Enable operational scale</div>
+            <div class="okr-bar">
+                <div class="okr-bar-header">
+                    <span class="okr-bar-label">Branches consolidated without headcount increase</span>
+                    <span class="okr-bar-values">Baseline: <span style="color:var(--text-muted);">12 / 4 analysts</span> &rarr; Target: <span style="color:var(--pill-success-text);">20 / 4 analysts</span></span>
+                </div>
+                <div class="okr-bar-track">
+                    <div class="okr-bar-fill" style="width: 60%; background: linear-gradient(90deg, var(--info), var(--teal));"></div>
+                </div>
+            </div>
+            <div class="okr-bar">
+                <div class="okr-bar-header">
+                    <span class="okr-bar-label">New branch onboarding time</span>
+                    <span class="okr-bar-values">Baseline: <span style="color:var(--danger-text);">4 weeks</span> &rarr; Target: <span style="color:var(--pill-success-text);">2 days</span></span>
+                </div>
+                <div class="okr-bar-track">
+                    <div class="okr-bar-fill" style="width: 93%; background: linear-gradient(90deg, var(--chart-5), var(--primary));"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h3 style="font-size:0.88rem; font-weight:600; margin-bottom:12px; display:flex; align-items:center; gap:8px;"><i class="ri-line-chart-line" style="color:var(--primary);"></i> ROI</h3>
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-card-icon" style="background: var(--purple-light); color: var(--purple);"><i class="ri-funds-line"></i></div>
+        <div class="stat-card-info">
+            <div class="stat-card-number">R$ 2.1M-2.8M</div>
+            <div class="stat-card-label">Investment (3 years)</div>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-card-icon" style="background: var(--success-light); color: var(--pill-success-text);"><i class="ri-coin-line"></i></div>
+        <div class="stat-card-info">
+            <div class="stat-card-number">R$ 500K-700K</div>
+            <div class="stat-card-label">Annual Savings</div>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-card-icon" style="background: var(--info-light); color: var(--pill-info-text);"><i class="ri-timer-flash-line"></i></div>
+        <div class="stat-card-info">
+            <div class="stat-card-number">14 months</div>
+            <div class="stat-card-label">Payback Period</div>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-card-icon" style="background: var(--warning-light); color: var(--pill-warning-text);"><i class="ri-percent-line"></i></div>
+        <div class="stat-card-info">
+            <div class="stat-card-number">75%-100%</div>
+            <div class="stat-card-label">ROI in 3 Years</div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- REG-PROD-06: BUSINESS MODEL -->
+<!-- ============================================================ -->
+<div class="region-separator">
+    <span class="id-badge">REG-PROD-06</span>
+    <span class="region-title">Business Model</span>
+    <span class="line"></span>
+    <span class="pill pill-info">Pricing Table (3 Tiers)</span>
+</div>
+
+<div class="pricing-grid">
+    <div class="pricing-card">
+        <div class="pricing-plan-name">Starter</div>
+        <div class="pricing-price">R$ 2,500 <small>/month</small></div>
+        <div class="pricing-desc">Up to 5 branches &middot; 3 users</div>
+        <ul class="pricing-features">
+            <li><i class="ri-check-line"></i> Basic consolidation</li>
+            <li><i class="ri-check-line"></i> Single currency</li>
+            <li><i class="ri-check-line"></i> P&L report</li>
+            <li><i class="ri-check-line"></i> Email support</li>
+        </ul>
+    </div>
+    <div class="pricing-card featured">
+        <div class="pricing-plan-name">Pro</div>
+        <div class="pricing-price">R$ 6,500 <small>/month</small></div>
+        <div class="pricing-desc">Up to 20 branches &middot; 10 users</div>
+        <ul class="pricing-features">
+            <li><i class="ri-check-line"></i> Everything in Starter</li>
+            <li><i class="ri-check-line"></i> Multi-currency</li>
+            <li><i class="ri-check-line"></i> Intercompany elimination</li>
+            <li><i class="ri-check-line"></i> API access</li>
+            <li><i class="ri-check-line"></i> Full audit trail</li>
+        </ul>
+    </div>
+    <div class="pricing-card">
+        <div class="pricing-plan-name">Enterprise</div>
+        <div class="pricing-price">Custom</div>
+        <div class="pricing-desc">Unlimited branches &middot; Unlimited users</div>
+        <ul class="pricing-features">
+            <li><i class="ri-check-line"></i> Everything in Pro</li>
+            <li><i class="ri-check-line"></i> SSO integration</li>
+            <li><i class="ri-check-line"></i> 99.9% SLA</li>
+            <li><i class="ri-check-line"></i> Dedicated support</li>
+            <li><i class="ri-check-line"></i> Custom rules engine</li>
+        </ul>
+    </div>
+</div>
+
+<h3 style="font-size:0.88rem; font-weight:600; margin-bottom:12px; display:flex; align-items:center; gap:8px;"><i class="ri-bar-chart-grouped-line" style="color:var(--primary);"></i> SaaS Metrics (12-month projection)</h3>
+<div class="saas-metrics">
+    <div class="saas-metric"><div class="saas-metric-value">R$ 120K</div><div class="saas-metric-label">MRR</div></div>
+    <div class="saas-metric"><div class="saas-metric-value">R$ 1.44M</div><div class="saas-metric-label">ARR</div></div>
+    <div class="saas-metric"><div class="saas-metric-value">R$ 234K</div><div class="saas-metric-label">Avg LTV</div></div>
+    <div class="saas-metric"><div class="saas-metric-value">R$ 18K</div><div class="saas-metric-label">Avg CAC</div></div>
+    <div class="saas-metric"><div class="saas-metric-value">&lt; 2%</div><div class="saas-metric-label">Monthly Churn</div></div>
+    <div class="saas-metric"><div class="saas-metric-value">13x</div><div class="saas-metric-label">LTV / CAC</div></div>
+</div>
+
+<!-- ============================================================ -->
+<!-- REG-PROD-07: SCOPE -->
+<!-- ============================================================ -->
+<div class="region-separator">
+    <span class="id-badge">REG-PROD-07</span>
+    <span class="region-title">Scope</span>
+    <span class="line"></span>
+    <span class="pill pill-info">Split Card (In / Out)</span>
+</div>
+
+<div class="scope-objective">
+    <strong><i class="ri-focus-3-line" style="margin-right:6px;"></i>Objective:</strong> Build the FinTrack Pro MVP that automates financial consolidation for 3 Acme Corp branches, eliminating the manual process and reducing close time from D+8 to D+3.
+</div>
+
+<div class="scope-split">
+    <div class="scope-col scope-in">
+        <div class="scope-col-title"><i class="ri-checkbox-circle-line"></i> In Scope (Will Be Done)</div>
+        <ul>
+            <li><i class="ri-check-line"></i><span>API integration with SAP R/3 for 3 branches (SP, RJ, MG)</span></li>
+            <li><i class="ri-check-line"></i><span>Intercompany elimination engine with configurable rules</span></li>
+            <li><i class="ri-check-line"></i><span>Automatic consolidation with consolidated P&L generation</span></li>
+            <li><i class="ri-check-line"></i><span>Executive dashboard with drill-down by branch</span></li>
+            <li><i class="ri-check-line"></i><span>Complete audit trail (log of all transformations)</span></li>
+        </ul>
+    </div>
+    <div class="scope-col scope-out">
+        <div class="scope-col-title"><i class="ri-close-circle-line"></i> Out of Scope (Will Not Be Done)</div>
+        <ul>
+            <li><i class="ri-close-line"></i><span>International branches (4 countries) &mdash; Phase 2</span></li>
+            <li><i class="ri-close-line"></i><span>Balance sheet consolidation &mdash; MVP focuses on P&L only</span></li>
+            <li><i class="ri-close-line"></i><span>Mobile app &mdash; low priority, analysts work on desktop</span></li>
+            <li><i class="ri-close-line"></i><span>Custom reports &mdash; MVP delivers standard reports</span></li>
+        </ul>
+    </div>
+</div>
+
+<div class="scope-hypothesis">
+    <strong><i class="ri-lightbulb-flash-line" style="margin-right:6px;"></i>Central Hypothesis:</strong> If we automate data collection and intercompany elimination for 3 branches, we can reduce monthly close from D+8 to D+3 with zero material errors &mdash; validating the technical approach before scaling to 12 branches.
+</div>
+
+<!-- ============================================================ -->
+<!-- REG-PROD-08: ROADMAP -->
+<!-- ============================================================ -->
+<div class="region-separator">
+    <span class="id-badge">REG-PROD-08</span>
+    <span class="region-title">Roadmap</span>
+    <span class="line"></span>
+    <span class="pill pill-info">Horizontal Timeline with Phases</span>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <div class="card-header-icon" style="background: var(--primary-light); color: var(--primary);"><i class="ri-road-map-line"></i></div>
+        <span class="card-title">Product Roadmap &mdash; 4 Phases</span>
+    </div>
+    <div class="card-body">
+        <div class="roadmap-timeline">
+            <!-- Phase 0 -->
+            <div class="roadmap-phase">
+                <div class="phase-diamond"><i class="ri-flask-line"></i></div>
+                <div class="phase-content">
+                    <div class="phase-name">Phase 0 &mdash; Sprint 0</div>
+                    <div class="phase-period">May/2026</div>
+                    <div class="phase-duration">2 weeks</div>
+                    <ul class="phase-epics">
+                        <li><i class="ri-arrow-right-s-fill"></i> SAP R/3 integration PoC (SP branch)</li>
+                        <li><i class="ri-arrow-right-s-fill"></i> Infrastructure setup (AWS + CI/CD)</li>
+                        <li><i class="ri-arrow-right-s-fill"></i> Architecture definition & ADRs</li>
+                    </ul>
+                    <div class="phase-milestone"><i class="ri-flag-line"></i> PoC approved &rarr; Go to Phase 1</div>
+                </div>
+            </div>
+            <!-- Phase 1 -->
+            <div class="roadmap-phase">
+                <div class="phase-diamond"><i class="ri-rocket-2-line"></i></div>
+                <div class="phase-content">
+                    <div class="phase-name">Phase 1 &mdash; MVP</div>
+                    <div class="phase-period">Jun &mdash; Sep/2026</div>
+                    <div class="phase-duration">16 weeks</div>
+                    <ul class="phase-epics">
+                        <li><i class="ri-arrow-right-s-fill"></i> Data ingestion via SAP API (3 branches)</li>
+                        <li><i class="ri-arrow-right-s-fill"></i> Intercompany elimination engine</li>
+                        <li><i class="ri-arrow-right-s-fill"></i> Consolidated P&L generation</li>
+                        <li><i class="ri-arrow-right-s-fill"></i> Executive dashboard</li>
+                        <li><i class="ri-arrow-right-s-fill"></i> Audit trail</li>
+                    </ul>
+                    <div class="phase-milestone"><i class="ri-flag-line"></i> 3 error-free closes &rarr; Go to Phase 2</div>
+                </div>
+            </div>
+            <!-- Phase 2 -->
+            <div class="roadmap-phase">
+                <div class="phase-diamond"><i class="ri-expand-up-down-line"></i></div>
+                <div class="phase-content">
+                    <div class="phase-name">Phase 2 &mdash; Scale</div>
+                    <div class="phase-period">Oct &mdash; Dec/2026</div>
+                    <div class="phase-duration">12 weeks</div>
+                    <ul class="phase-epics">
+                        <li><i class="ri-arrow-right-s-fill"></i> Integrate remaining 9 branches</li>
+                        <li><i class="ri-arrow-right-s-fill"></i> Multi-currency FX engine</li>
+                        <li><i class="ri-arrow-right-s-fill"></i> Balance sheet consolidation</li>
+                        <li><i class="ri-arrow-right-s-fill"></i> Custom reports</li>
+                    </ul>
+                    <div class="phase-milestone"><i class="ri-flag-line"></i> 12 branches live + audit OK</div>
+                </div>
+            </div>
+            <!-- Phase 3 -->
+            <div class="roadmap-phase">
+                <div class="phase-diamond"><i class="ri-global-line"></i></div>
+                <div class="phase-content">
+                    <div class="phase-name">Phase 3 &mdash; Maturity</div>
+                    <div class="phase-period">Q1/2027</div>
+                    <div class="phase-duration">8 weeks</div>
+                    <ul class="phase-epics">
+                        <li><i class="ri-arrow-right-s-fill"></i> International branches (4 countries)</li>
+                        <li><i class="ri-arrow-right-s-fill"></i> Automated IFRS 16 compliance</li>
+                        <li><i class="ri-arrow-right-s-fill"></i> Alerts & anomaly detection</li>
+                        <li><i class="ri-arrow-right-s-fill"></i> External BI integration API</li>
+                    </ul>
+                    <div class="phase-milestone"><i class="ri-flag-line"></i> Full international rollout</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- REG-PROD-09: PRODUCT VISION -->
+<!-- ============================================================ -->
+<div class="region-separator">
+    <span class="id-badge">REG-PROD-09</span>
+    <span class="region-title">Product Vision</span>
+    <span class="line"></span>
+    <span class="pill pill-info">Quote-Style Card</span>
+</div>
+
+<div class="vision-quote">
+    <p>FinTrack Pro transforms financial consolidation from a manual, slow, and error-prone process into an automated, auditable, and real-time operation. Controllership teams stop being spreadsheet operators and become strategic business analysts.</p>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <div class="card-header-icon" style="background: var(--purple-light); color: var(--purple);"><i class="ri-eye-line"></i></div>
+        <span class="card-title">Where we will be in 3 years (2029)</span>
+    </div>
+    <div class="card-body">
+        <div class="vision-3y">
+            <p>In 2029, FinTrack Pro will be the reference platform for financial consolidation of mid-market companies in Latin America. Over 200 companies will use the platform to consolidate data from thousands of branches in real time, with automatic compliance for IFRS, CPC, and local regulations.</p>
+            <p>The platform will have evolved from a consolidation tool into a <strong style="color:var(--purple);">financial intelligence hub</strong>:</p>
+        </div>
+        <div class="vision-caps">
+            <div class="vision-cap"><i class="ri-line-chart-line"></i><span>Close prediction (estimate results before official close)</span></div>
+            <div class="vision-cap"><i class="ri-robot-line"></i><span>ML-powered anomaly detection for atypical entries</span></div>
+            <div class="vision-cap"><i class="ri-bar-chart-horizontal-line"></i><span>Anonymous benchmarking across same-segment clients</span></div>
+            <div class="vision-cap"><i class="ri-store-line"></i><span>Marketplace of connectors for regional ERPs</span></div>
+        </div>
+    </div>
+</div>
+
+<h3 style="font-size:0.88rem; font-weight:600; margin: 16px 0 12px; display:flex; align-items:center; gap:8px;"><i class="ri-compass-3-line" style="color:var(--purple);"></i> Product Principles</h3>
+<ul class="vp-principles">
+    <li><span class="num" style="background:var(--purple);">1</span><span><strong>The controller is the hero</strong> &mdash; every feature must empower the controller, never complicate their work</span></li>
+    <li><span class="num" style="background:var(--purple);">2</span><span><strong>Reliable data or nothing</strong> &mdash; we'd rather delay a feature than deliver non-traceable data</span></li>
+    <li><span class="num" style="background:var(--purple);">3</span><span><strong>Complexity in the engine, simplicity on screen</strong> &mdash; complex IFRS rules abstracted into simple configurations</span></li>
+    <li><span class="num" style="background:var(--purple);">4</span><span><strong>Latin America first</strong> &mdash; prioritize LatAm regulations, currencies, and ERPs before global expansion</span></li>
+    <li><span class="num" style="background:var(--purple);">5</span><span><strong>Open by default</strong> &mdash; open APIs, flexible exports, zero data lock-in</span></li>
+</ul>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="container">&copy; 2026 mAInd Tech</div>
+</footer>
+
+<script>
+function toggleTheme() {
+    const html = document.documentElement;
+    const icon = document.getElementById('theme-icon');
+    const label = document.getElementById('theme-label');
+    if (html.getAttribute('data-theme') === 'dark') {
+        html.setAttribute('data-theme', 'light');
+        icon.className = 'ri-sun-line';
+        label.textContent = 'Dark';
+    } else {
+        html.setAttribute('data-theme', 'dark');
+        icon.className = 'ri-moon-line';
+        label.textContent = 'Light';
+    }
+}
+</script>
+
+</body>
+</html>

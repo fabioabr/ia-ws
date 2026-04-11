@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Risk Regions Preview</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+    <style>
+/* ====== DESIGN TOKENS (dark default) ====== */
+:root {
+    --primary: #4DA8DA;
+    --primary-dark: #3A8BB8;
+    --primary-light: rgba(77, 168, 218, 0.12);
+    --secondary: #B9B7BD;
+    --success: #0ED145;
+    --success-light: rgba(14, 209, 69, 0.12);
+    --success-border: rgba(14, 209, 69, 0.3);
+    --warning: #F4AC00;
+    --warning-light: rgba(244, 172, 0, 0.12);
+    --warning-border: rgba(244, 172, 0, 0.3);
+    --danger: #8B1A1A;
+    --danger-light: rgba(139, 26, 26, 0.15);
+    --danger-border: rgba(139, 26, 26, 0.35);
+    --info: #2EB5F5;
+    --info-light: rgba(46, 181, 245, 0.12);
+    --info-border: rgba(46, 181, 245, 0.3);
+    --bg: #1A1923;
+    --card-bg: #2E2D32;
+    --text: #E0DFE3;
+    --text-muted: #88878C;
+    --border: #3E3D44;
+    --purple: #9B96FF;
+    --purple-light: rgba(155, 150, 255, 0.12);
+    --orange: #FF9473;
+    --teal: #2DD4BF;
+    --chart-1: #4DA8DA;
+    --chart-2: #2EB5F5;
+    --chart-3: #0ED145;
+    --chart-4: #FF6B6B;
+    --chart-5: #A78BFA;
+    --header-bg: linear-gradient(135deg, #2E2D32 0%, #252428 50%, #1A1923 100%);
+    --card-header-bg: #252428;
+    --th-bg: #252428;
+    --th-bg-hover: #36353B;
+    --card-shadow: 0 2px 12px rgba(46, 181, 245, 0.06), 0 1px 4px rgba(0,0,0,0.4);
+    --progress-track: #3E3D44;
+    --alert-warning-text: #f0c040;
+    --danger-text: #E85D54;
+    --alert-danger-text: #E85D54;
+    --alert-info-text: #5FC8F8;
+    --alert-success-text: #3DE06A;
+    --pill-success-text: #3DE06A;
+    --pill-info-text: #5FC8F8;
+    --pill-warning-text: #f0c040;
+}
+
+/* ====== LIGHT THEME ====== */
+[data-theme="light"] {
+    --primary: #4DA8DA;
+    --primary-dark: #3A8BB8;
+    --primary-light: rgba(77, 168, 218, 0.1);
+    --secondary: #88878C;
+    --success: #0A9E35;
+    --success-light: rgba(10, 158, 53, 0.08);
+    --success-border: rgba(10, 158, 53, 0.25);
+    --warning: #E67E22;
+    --warning-light: rgba(230, 126, 34, 0.12);
+    --warning-border: rgba(230, 126, 34, 0.35);
+    --danger: #E74C3C;
+    --danger-light: rgba(231, 76, 60, 0.10);
+    --danger-border: rgba(231, 76, 60, 0.30);
+    --info: #1E95CC;
+    --info-light: rgba(30, 149, 204, 0.08);
+    --info-border: rgba(30, 149, 204, 0.25);
+    --bg: #E0DFE3;
+    --card-bg: #ffffff;
+    --text: #1A1923;
+    --text-muted: #88878C;
+    --border: #B9B7BD;
+    --purple: #7B76FE;
+    --purple-light: rgba(123, 118, 254, 0.08);
+    --orange: #FE7C58;
+    --teal: #00D8D8;
+    --chart-1: #4DA8DA;
+    --chart-2: #1E95CC;
+    --chart-3: #0A9E35;
+    --chart-4: #D44040;
+    --chart-5: #7C6BD4;
+    --header-bg: linear-gradient(135deg, #2E2D32 0%, #252428 50%, #1A1923 100%);
+    --card-header-bg: rgba(77, 168, 218, 0.12);
+    --th-bg: rgba(77, 168, 218, 0.12);
+    --th-bg-hover: rgba(77, 168, 218, 0.22);
+    --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0,0,0,0.06);
+    --progress-track: #B9B7BD;
+    --alert-warning-text: #C0392B;
+    --alert-danger-text: #C0392B;
+    --alert-info-text: #1670A0;
+    --alert-success-text: #087A28;
+    --pill-success-text: #087A28;
+    --pill-info-text: #1670A0;
+    --pill-warning-text: #C0392B;
+    --danger-text: #C0392B;
+}
+
+/* ====== RESET ====== */
+html, body, div, span, h1, h2, h3, h4, h5, h6, p, a, ul, ol, li,
+header, footer, section, article, button, table, tr, td, th { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+/* ====== HEADER ====== */
+.header { background: linear-gradient(135deg, #2E2D32 0%, #252428 50%, #1A1923 100%); color: white; padding: 32px 0; position: relative; overflow: hidden; }
+.header::before { content: ''; position: absolute; top: -50%; right: -10%; width: 500px; height: 500px; background: rgba(255,255,255,0.03); border-radius: 50%; z-index: 0; }
+.header-content { position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+.header-left { display: flex; align-items: center; gap: 14px; }
+.header-icon { width: 44px; height: 44px; border-radius: 12px; background: rgba(255,107,107,0.2); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; color: #FF6B6B; }
+.header h1 { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.5px; }
+.header .subtitle { font-size: 0.88rem; opacity: 0.7; font-weight: 300; margin-top: 2px; }
+.header-right { display: flex; align-items: center; gap: 10px; }
+.header-badge { background: rgba(255,255,255,0.15); padding: 6px 14px; border-radius: 8px; font-size: 0.78rem; display: flex; align-items: center; gap: 6px; backdrop-filter: blur(10px); color: white; cursor: pointer; border: none; font-family: 'Poppins', sans-serif; transition: background 0.2s; }
+.header-badge:hover { background: rgba(255,255,255,0.25); }
+.region-count { background: rgba(255,107,107,0.25); padding: 4px 12px; border-radius: 8px; font-size: 0.75rem; font-weight: 600; color: #FF6B6B; }
+
+/* ====== SECTION ====== */
+.section { margin-top: 32px; margin-bottom: 32px; }
+.section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid var(--border); }
+.section-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+.section-title { font-size: 1.15rem; font-weight: 600; flex: 1; }
+.region-badge { background: var(--card-header-bg); padding: 3px 10px; border-radius: 8px; font-size: 0.65rem; font-weight: 700; color: var(--text-muted); letter-spacing: 0.5px; font-family: monospace; border: 1px solid var(--border); }
+
+/* ====== CARDS ====== */
+.card { background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border); box-shadow: var(--card-shadow); overflow: hidden; margin-bottom: 20px; transition: box-shadow 0.2s, border-color 0.2s; }
+.card:hover { border-color: var(--primary); }
+.card-header { display: flex; align-items: center; gap: 10px; padding: 14px 18px; border-bottom: 1px solid var(--border); background: var(--card-header-bg); }
+.card-header-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+.card-title { font-weight: 600; font-size: 0.95rem; flex: 1; }
+.card-body { padding: 20px; }
+
+/* ====== CHART CONTAINER ====== */
+.chart-container { position: relative; max-width: 520px; margin: 0 auto; }
+.chart-container.wide { max-width: 100%; }
+
+/* ====== TABLES ====== */
+.table-wrapper { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+th { text-align: left; padding: 10px 14px; background: var(--th-bg); font-weight: 600; border-bottom: 2px solid var(--border); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.3px; color: var(--text-muted); }
+td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+tr:hover { background: var(--primary-light); }
+
+/* ====== PILLS ====== */
+.pill { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: 600; }
+.pill-danger { background: var(--danger-light); color: var(--alert-danger-text); border: 1px solid var(--danger-border); }
+.pill-warning { background: var(--warning-light); color: var(--pill-warning-text); border: 1px solid var(--warning-border); }
+.pill-info { background: var(--info-light); color: var(--pill-info-text); border: 1px solid var(--info-border); }
+.pill-success { background: var(--success-light); color: var(--pill-success-text); border: 1px solid var(--success-border); }
+
+/* ====== HYPOTHESIS CARDS ====== */
+.hyp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+.hyp-card { background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border); padding: 18px; transition: border-color 0.2s, box-shadow 0.2s; }
+.hyp-card:hover { box-shadow: var(--card-shadow); }
+.hyp-card.severity-critica { border-left: 4px solid var(--alert-danger-text); }
+.hyp-card.severity-alta { border-left: 4px solid var(--pill-warning-text); }
+.hyp-card.severity-media { border-left: 4px solid var(--pill-info-text); }
+.hyp-card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.hyp-card-id { font-size: 0.72rem; font-weight: 700; color: var(--text-muted); font-family: monospace; }
+.hyp-card-body h4 { font-size: 0.88rem; font-weight: 600; margin-bottom: 8px; line-height: 1.4; }
+.hyp-card-meta { display: flex; flex-direction: column; gap: 6px; margin-top: 12px; }
+.hyp-card-meta-item { display: flex; align-items: flex-start; gap: 8px; font-size: 0.78rem; color: var(--text-muted); }
+.hyp-card-meta-item i { margin-top: 2px; font-size: 0.85rem; flex-shrink: 0; }
+.hyp-card-meta-item strong { color: var(--text); font-weight: 600; }
+
+/* ====== INTRO TEXT ====== */
+.intro-text { font-size: 0.85rem; color: var(--text); line-height: 1.6; opacity: 0.85; margin-bottom: 24px; padding: 14px 18px; background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border); border-left: 3px solid var(--primary); }
+
+/* ====== FOOTER ====== */
+.footer { background: linear-gradient(135deg, #2E2D32 0%, #252428 50%, #1A1923 100%); color: white; padding: 28px 0; position: relative; overflow: hidden; margin-top: 40px; }
+.footer::before { content: ''; position: absolute; bottom: -50%; left: -10%; width: 500px; height: 500px; background: rgba(255,255,255,0.03); border-radius: 50%; z-index: 0; }
+.footer-content { position: relative; z-index: 1; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+.footer-left { font-size: 0.82rem; opacity: 0.7; }
+.footer-right { font-size: 0.72rem; opacity: 0.5; display: flex; align-items: center; gap: 6px; }
+.footer-seal { display: flex; align-items: center; gap: 8px; margin-top: 16px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.12); font-size: 0.7rem; opacity: 0.5; justify-content: center; width: 100%; }
+
+/* ====== RESPONSIVE ====== */
+@media (max-width: 768px) {
+    .header h1 { font-size: 1.1rem; }
+    .hyp-grid { grid-template-columns: 1fr; }
+    .chart-container { max-width: 100%; }
+}
+
+/* ====== PRINT ====== */
+@media print {
+    body { background: white; color: #1A1923; }
+    .header { background: #2E2D32 !important; }
+    .card { break-inside: avoid; }
+}
+    </style>
+</head>
+<body>
+
+<!-- ====== HEADER ====== -->
+<header class="header">
+    <div class="container">
+        <div class="header-content">
+            <div class="header-left">
+                <div class="header-icon"><i class="ri-alarm-warning-line"></i></div>
+                <div>
+                    <h1>Risk Regions</h1>
+                    <div class="subtitle">Preview dos 4 regions do grupo Risk</div>
+                </div>
+            </div>
+            <div class="header-right">
+                <span class="region-count">4 regions</span>
+                <div class="header-badge" onclick="toggleTheme()" title="Alternar tema">
+                    <i id="theme-icon" class="ri-sun-line"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="container">
+
+    <!-- ================================================================== -->
+    <!-- REG-RISK-01: Risk Matrix (Bubble Chart)                            -->
+    <!-- ================================================================== -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-icon bg-danger"><i class="ri-bubble-chart-line"></i></div>
+            <div class="section-title">Risk Matrix</div>
+            <span class="region-badge">REG-RISK-01</span>
+        </div>
+        <p class="intro-text">Consolida todos os riscos identificados durante o discovery em uma matriz unica, com scores calculados (probabilidade x impacto). Bubble chart com eixo X = probabilidade, Y = impacto e tamanho = score.</p>
+        <div class="card">
+            <div class="card-header">
+                <div class="card-header-icon bg-danger"><i class="ri-bubble-chart-fill"></i></div>
+                <span class="card-title">Probabilidade x Impacto</span>
+                <span class="pill pill-danger">5 riscos</span>
+            </div>
+            <div class="card-body">
+                <div class="chart-container wide" style="max-width:680px; margin:0 auto;">
+                    <canvas id="riskBubbleChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- REG-RISK-02: Technical Risks (Table with severity badges)          -->
+    <!-- ================================================================== -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-icon bg-orange" style="background:var(--orange);color:#1A1923;"><i class="ri-code-s-slash-line"></i></div>
+            <div class="section-title">Technical Risks</div>
+            <span class="region-badge">REG-RISK-02</span>
+        </div>
+        <p class="intro-text">Riscos especificamente tecnicos identificados durante a analise arquitetural, incluindo dependencias de terceiros, limitacoes de stack e desafios de integracao.</p>
+        <div class="card">
+            <div class="card-header">
+                <div class="card-header-icon" style="background:rgba(255,148,115,0.2);color:var(--orange);"><i class="ri-shield-cross-line"></i></div>
+                <span class="card-title">Riscos Tecnicos Detalhados</span>
+                <span class="pill pill-warning">4 riscos</span>
+            </div>
+            <div class="card-body">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Risco</th>
+                                <th>Area</th>
+                                <th>Prob.</th>
+                                <th>Impacto</th>
+                                <th>Mitigacao</th>
+                                <th>Fallback</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="font-family:monospace;font-weight:700;color:var(--text-muted);">TRISK-01</td>
+                                <td>API do Open Finance com latencia >2s em horario de pico</td>
+                                <td><span class="pill pill-info">Integracao</span></td>
+                                <td><span class="pill pill-danger">Alta</span></td>
+                                <td><span class="pill pill-danger">Critico</span></td>
+                                <td style="font-size:0.78rem;">Cache agressivo + request coalescing</td>
+                                <td style="font-size:0.78rem;">Exibir dados com delay de ate 15min</td>
+                            </tr>
+                            <tr>
+                                <td style="font-family:monospace;font-weight:700;color:var(--text-muted);">TRISK-02</td>
+                                <td>PostgreSQL atingir limite de conexoes com multi-tenancy</td>
+                                <td><span class="pill pill-info">Infraestrutura</span></td>
+                                <td><span class="pill pill-warning">Media</span></td>
+                                <td><span class="pill pill-warning">Alto</span></td>
+                                <td style="font-size:0.78rem;">PgBouncer + connection pooling por tenant</td>
+                                <td style="font-size:0.78rem;">Migrar para modelo database-per-tenant</td>
+                            </tr>
+                            <tr>
+                                <td style="font-family:monospace;font-weight:700;color:var(--text-muted);">TRISK-03</td>
+                                <td>Auth0 free tier insuficiente antes do break-even</td>
+                                <td><span class="pill pill-info">Licenca</span></td>
+                                <td><span class="pill pill-warning">Media</span></td>
+                                <td><span class="pill pill-info">Medio</span></td>
+                                <td style="font-size:0.78rem;">Monitorar MAU e migrar plano com 30 dias de antecedencia</td>
+                                <td style="font-size:0.78rem;">Implementar auth proprio com Keycloak</td>
+                            </tr>
+                            <tr>
+                                <td style="font-family:monospace;font-weight:700;color:var(--text-muted);">TRISK-04</td>
+                                <td>Bundle size do SPA acima de 500KB</td>
+                                <td><span class="pill pill-info">Performance</span></td>
+                                <td><span class="pill pill-success">Baixa</span></td>
+                                <td><span class="pill pill-info">Medio</span></td>
+                                <td style="font-size:0.78rem;">Code splitting por rota + lazy loading</td>
+                                <td style="font-size:0.78rem;">SSR com Next.js</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- REG-RISK-03: Unvalidated Hypotheses (Cards with severity badges)   -->
+    <!-- ================================================================== -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-icon" style="background:var(--warning-light);color:var(--pill-warning-text);"><i class="ri-question-line"></i></div>
+            <div class="section-title">Unvalidated Hypotheses</div>
+            <span class="region-badge">REG-RISK-03</span>
+        </div>
+        <p class="intro-text">Hipoteses criticas que sustentam o projeto mas que ainda nao foram validadas com dados reais. Cards com bordas coloridas por severidade: Critica = vermelho, Alta = laranja, Media = amarelo.</p>
+        <div class="hyp-grid">
+
+            <!-- HYP-01 Critica -->
+            <div class="hyp-card severity-critica">
+                <div class="hyp-card-header">
+                    <span class="hyp-card-id">HYP-01</span>
+                    <span class="pill pill-danger">Critica</span>
+                </div>
+                <div class="hyp-card-body">
+                    <h4>PMEs aceitam pagar R$ 149/mes por gestao financeira automatizada</h4>
+                    <div class="hyp-card-meta">
+                        <div class="hyp-card-meta-item">
+                            <i class="ri-alarm-warning-line" style="color:var(--alert-danger-text);"></i>
+                            <span><strong>Risco se falsa:</strong> Modelo de receita inviavel; necessidade de pivotar pricing</span>
+                        </div>
+                        <div class="hyp-card-meta-item">
+                            <i class="ri-flask-line" style="color:var(--primary);"></i>
+                            <span><strong>Validacao:</strong> Landing page com pre-cadastro + entrevistas com 30 PMEs</span>
+                        </div>
+                        <div class="hyp-card-meta-item">
+                            <i class="ri-calendar-line" style="color:var(--text-muted);"></i>
+                            <span><strong>Prazo:</strong> Antes do MVP</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- HYP-02 Alta -->
+            <div class="hyp-card severity-alta">
+                <div class="hyp-card-header">
+                    <span class="hyp-card-id">HYP-02</span>
+                    <span class="pill pill-warning">Alta</span>
+                </div>
+                <div class="hyp-card-body">
+                    <h4>Open Finance tera cobertura de 80% dos bancos ate o lancamento</h4>
+                    <div class="hyp-card-meta">
+                        <div class="hyp-card-meta-item">
+                            <i class="ri-alarm-warning-line" style="color:var(--pill-warning-text);"></i>
+                            <span><strong>Risco se falsa:</strong> Funcionalidade core com cobertura parcial</span>
+                        </div>
+                        <div class="hyp-card-meta-item">
+                            <i class="ri-flask-line" style="color:var(--primary);"></i>
+                            <span><strong>Validacao:</strong> Consultar roadmap BACEN + testar APIs dos 5 maiores bancos</span>
+                        </div>
+                        <div class="hyp-card-meta-item">
+                            <i class="ri-calendar-line" style="color:var(--text-muted);"></i>
+                            <span><strong>Prazo:</strong> Sprint 2</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- HYP-03 Alta -->
+            <div class="hyp-card severity-alta">
+                <div class="hyp-card-header">
+                    <span class="hyp-card-id">HYP-03</span>
+                    <span class="pill pill-warning">Alta</span>
+                </div>
+                <div class="hyp-card-body">
+                    <h4>Um time de 5 pessoas consegue entregar o MVP em 4 meses</h4>
+                    <div class="hyp-card-meta">
+                        <div class="hyp-card-meta-item">
+                            <i class="ri-alarm-warning-line" style="color:var(--pill-warning-text);"></i>
+                            <span><strong>Risco se falsa:</strong> Atraso no lancamento e estouro de budget</span>
+                        </div>
+                        <div class="hyp-card-meta-item">
+                            <i class="ri-flask-line" style="color:var(--primary);"></i>
+                            <span><strong>Validacao:</strong> Validar com spike tecnico nas primeiras 2 sprints</span>
+                        </div>
+                        <div class="hyp-card-meta-item">
+                            <i class="ri-calendar-line" style="color:var(--text-muted);"></i>
+                            <span><strong>Prazo:</strong> Sprint 2</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- HYP-04 Media -->
+            <div class="hyp-card severity-media">
+                <div class="hyp-card-header">
+                    <span class="hyp-card-id">HYP-04</span>
+                    <span class="pill pill-info">Media</span>
+                </div>
+                <div class="hyp-card-body">
+                    <h4>Usuarios preferem dashboard visual a relatorios em PDF</h4>
+                    <div class="hyp-card-meta">
+                        <div class="hyp-card-meta-item">
+                            <i class="ri-alarm-warning-line" style="color:var(--pill-info-text);"></i>
+                            <span><strong>Risco se falsa:</strong> Investimento em UX sem retorno se preferencia for PDF</span>
+                        </div>
+                        <div class="hyp-card-meta-item">
+                            <i class="ri-flask-line" style="color:var(--primary);"></i>
+                            <span><strong>Validacao:</strong> Teste A/B com 50 usuarios beta</span>
+                        </div>
+                        <div class="hyp-card-meta-item">
+                            <i class="ri-calendar-line" style="color:var(--text-muted);"></i>
+                            <span><strong>Prazo:</strong> Mes 2 pos-lancamento</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- REG-RISK-04: Feasibility Analysis (Radar Chart)                    -->
+    <!-- ================================================================== -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-icon" style="background:var(--purple-light);color:var(--purple);"><i class="ri-radar-line"></i></div>
+            <div class="section-title">Feasibility Analysis</div>
+            <span class="region-badge">REG-RISK-04</span>
+        </div>
+        <p class="intro-text">Avalia a viabilidade do projeto em 4 dimensoes: Tecnica, Financeira, Operacional e Regulatoria. Radar chart mostrando o perfil de viabilidade como area preenchida. Veredicto consolidado: Viavel com Ressalvas.</p>
+        <div class="card">
+            <div class="card-header">
+                <div class="card-header-icon" style="background:var(--purple-light);color:var(--purple);"><i class="ri-radar-fill"></i></div>
+                <span class="card-title">Perfil de Viabilidade</span>
+                <span class="pill pill-warning">Viavel com Ressalvas</span>
+            </div>
+            <div class="card-body">
+                <div class="chart-container" style="max-width:440px;">
+                    <canvas id="feasibilityRadar"></canvas>
+                </div>
+                <div style="margin-top:20px; display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:12px;">
+                    <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--card-header-bg);border-radius:8px;border:1px solid var(--border);">
+                        <span style="font-size:1.2rem;color:var(--success);">5</span>
+                        <div>
+                            <div style="font-size:0.78rem;font-weight:600;">Tecnica</div>
+                            <div style="font-size:0.68rem;color:var(--text-muted);">Viavel</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--card-header-bg);border-radius:8px;border:1px solid var(--border);">
+                        <span style="font-size:1.2rem;color:var(--pill-warning-text);">3</span>
+                        <div>
+                            <div style="font-size:0.78rem;font-weight:600;">Financeira</div>
+                            <div style="font-size:0.68rem;color:var(--text-muted);">Viavel com Ressalvas</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--card-header-bg);border-radius:8px;border:1px solid var(--border);">
+                        <span style="font-size:1.2rem;color:var(--primary);">4</span>
+                        <div>
+                            <div style="font-size:0.78rem;font-weight:600;">Operacional</div>
+                            <div style="font-size:0.68rem;color:var(--text-muted);">Viavel</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--card-header-bg);border-radius:8px;border:1px solid var(--border);">
+                        <span style="font-size:1.2rem;color:var(--pill-warning-text);">3</span>
+                        <div>
+                            <div style="font-size:0.78rem;font-weight:600;">Regulatoria</div>
+                            <div style="font-size:0.68rem;color:var(--text-muted);">Viavel com Ressalvas</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<!-- ====== FOOTER ====== -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-left">
+                <strong>Risk Regions Preview</strong> — Discovery to Go
+            </div>
+            <div class="footer-right">
+                <i class="ri-time-line"></i> Gerado em 2026-04-11
+            </div>
+        </div>
+        <div class="footer-seal">
+            <i class="ri-shield-check-line"></i>
+            Preview de componentes visuais para as 4 regions do grupo Risk
+        </div>
+    </div>
+</footer>
+
+<script>
+// ====== THEME TOGGLE ======
+function toggleTheme() {
+    var html = document.documentElement;
+    var icon = document.getElementById('theme-icon');
+    if (html.getAttribute('data-theme') === 'light') {
+        html.removeAttribute('data-theme');
+        icon.className = 'ri-sun-line';
+        localStorage.setItem('risk-preview-theme', 'dark');
+    } else {
+        html.setAttribute('data-theme', 'light');
+        icon.className = 'ri-moon-line';
+        localStorage.setItem('risk-preview-theme', 'light');
+    }
+    updateChartThemes();
+}
+(function() {
+    var saved = localStorage.getItem('risk-preview-theme');
+    if (saved === 'light') {
+        document.documentElement.setAttribute('data-theme', 'light');
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('theme-icon').className = 'ri-moon-line';
+        });
+    }
+})();
+
+// ====== CHART HELPERS ======
+function isLight() {
+    return document.documentElement.getAttribute('data-theme') === 'light';
+}
+function gridColor() { return isLight() ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.1)'; }
+function labelColor() { return isLight() ? '#1A1923' : '#E0DFE3'; }
+
+// ====== RISK BUBBLE CHART (REG-RISK-01) ======
+var bubbleCtx = document.getElementById('riskBubbleChart').getContext('2d');
+var riskData = [
+    { id: 'RISK-01', label: 'Open Finance instavel', x: 4, y: 5, r: 20, severity: 'Critico' },
+    { id: 'RISK-02', label: 'Churn >5% 1o tri', x: 3, y: 4, r: 12, severity: 'Alto' },
+    { id: 'RISK-03', label: 'Vazamento dados', x: 2, y: 5, r: 10, severity: 'Medio' },
+    { id: 'RISK-04', label: 'Atraso App Store', x: 2, y: 3, r: 6, severity: 'Medio' },
+    { id: 'RISK-05', label: 'Turnover dev-chave', x: 2, y: 2, r: 4, severity: 'Baixo' }
+];
+
+function severityColor(sev) {
+    switch(sev) {
+        case 'Critico': return { bg: 'rgba(232, 93, 84, 0.65)', border: '#E85D54' };
+        case 'Alto': return { bg: 'rgba(240, 192, 64, 0.55)', border: '#f0c040' };
+        case 'Medio': return { bg: 'rgba(95, 200, 248, 0.45)', border: '#5FC8F8' };
+        case 'Baixo': return { bg: 'rgba(61, 224, 106, 0.40)', border: '#3DE06A' };
+        default: return { bg: 'rgba(184,184,184,0.4)', border: '#999' };
+    }
+}
+
+var bubbleChart = new Chart(bubbleCtx, {
+    type: 'bubble',
+    data: {
+        datasets: riskData.map(function(r) {
+            var c = severityColor(r.severity);
+            return {
+                label: r.id + ' — ' + r.label,
+                data: [{ x: r.x, y: r.y, r: r.r * 1.2 }],
+                backgroundColor: c.bg,
+                borderColor: c.border,
+                borderWidth: 2
+            };
+        })
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        plugins: {
+            legend: {
+                position: 'bottom',
+                labels: {
+                    color: labelColor(),
+                    font: { family: 'Poppins', size: 11 },
+                    padding: 14,
+                    usePointStyle: true,
+                    pointStyle: 'circle'
+                }
+            },
+            tooltip: {
+                backgroundColor: 'rgba(26,25,35,0.95)',
+                titleFont: { family: 'Poppins', weight: '600' },
+                bodyFont: { family: 'Poppins' },
+                callbacks: {
+                    label: function(ctx) {
+                        var d = riskData[ctx.datasetIndex];
+                        return d.id + ': Prob=' + d.x + ' Imp=' + d.y + ' Score=' + d.r + ' (' + d.severity + ')';
+                    }
+                }
+            }
+        },
+        scales: {
+            x: {
+                title: { display: true, text: 'Probabilidade', color: labelColor(), font: { family: 'Poppins', size: 12, weight: '600' } },
+                min: 0, max: 6,
+                ticks: { stepSize: 1, color: labelColor(), font: { family: 'Poppins', size: 11 } },
+                grid: { color: gridColor() }
+            },
+            y: {
+                title: { display: true, text: 'Impacto', color: labelColor(), font: { family: 'Poppins', size: 12, weight: '600' } },
+                min: 0, max: 6,
+                ticks: { stepSize: 1, color: labelColor(), font: { family: 'Poppins', size: 11 } },
+                grid: { color: gridColor() }
+            }
+        }
+    }
+});
+
+// ====== FEASIBILITY RADAR (REG-RISK-04) ======
+var radarCtx = document.getElementById('feasibilityRadar').getContext('2d');
+var feasibilityRadar = new Chart(radarCtx, {
+    type: 'radar',
+    data: {
+        labels: ['Tecnica', 'Financeira', 'Operacional', 'Regulatoria'],
+        datasets: [{
+            label: 'Score de Viabilidade',
+            data: [5, 3, 4, 3],
+            backgroundColor: 'rgba(77, 168, 218, 0.25)',
+            borderColor: '#4DA8DA',
+            borderWidth: 2,
+            pointBackgroundColor: '#4DA8DA',
+            pointBorderColor: '#fff',
+            pointBorderWidth: 1,
+            pointRadius: 5
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        plugins: {
+            legend: {
+                labels: { color: labelColor(), font: { family: 'Poppins', size: 12 } }
+            }
+        },
+        scales: {
+            r: {
+                min: 0, max: 5,
+                ticks: {
+                    stepSize: 1,
+                    color: labelColor(),
+                    backdropColor: 'transparent',
+                    font: { family: 'Poppins', size: 10 }
+                },
+                pointLabels: {
+                    color: labelColor(),
+                    font: { family: 'Poppins', size: 12, weight: '600' }
+                },
+                grid: { color: gridColor() },
+                angleLines: { color: gridColor() }
+            }
+        }
+    }
+});
+
+// ====== UPDATE CHARTS ON THEME CHANGE ======
+function updateChartThemes() {
+    var lc = labelColor();
+    var gc = gridColor();
+
+    // Bubble chart
+    bubbleChart.options.scales.x.title.color = lc;
+    bubbleChart.options.scales.x.ticks.color = lc;
+    bubbleChart.options.scales.x.grid.color = gc;
+    bubbleChart.options.scales.y.title.color = lc;
+    bubbleChart.options.scales.y.ticks.color = lc;
+    bubbleChart.options.scales.y.grid.color = gc;
+    bubbleChart.options.plugins.legend.labels.color = lc;
+    bubbleChart.update();
+
+    // Radar
+    feasibilityRadar.options.scales.r.ticks.color = lc;
+    feasibilityRadar.options.scales.r.pointLabels.color = lc;
+    feasibilityRadar.options.scales.r.grid.color = gc;
+    feasibilityRadar.options.scales.r.angleLines.color = gc;
+    feasibilityRadar.options.plugins.legend.labels.color = lc;
+    feasibilityRadar.update();
+}
+</script>
+
+</body>
+</html>
