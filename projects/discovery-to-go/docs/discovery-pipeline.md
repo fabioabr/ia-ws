@@ -2,7 +2,7 @@
 title: Discovery Pipeline v0.5
 description: Guia completo do Discovery Pipeline v0.5 — 3 fases (Discovery, Challenge, Delivery) com reunião conjunta temática e Human Review entre fases
 project-name: discovery-to-go
-version: 01.00.000
+version: 02.00.000
 status: ativo
 author: claude-code
 category: how-to
@@ -88,6 +88,7 @@ runs/run-{n}/
 │       ├── report-templates/                 ← templates de output
 │       │   ├── final-report-template.md
 │       │   └── human-review-template.md
+│       ├── html-layout.md                    ← layout de regions do HTML
 │       └── rules/                            ← políticas da run
 │           ├── iteration-policy.md
 │           └── scoring-thresholds.md
@@ -318,12 +319,82 @@ flowchart LR
 
 | Arquivo | Descrição |
 |---------|-----------|
-| `delivery/delivery-report.md` | Relatório consolidado final |
-| `delivery/delivery-report.html` | Versão HTML auto-contida |
+| `delivery/delivery-report.md` | Relatório consolidado com marcadores de region |
+| `delivery/report-plan.md` | Plano visual por region (gerado pelo report-planner) |
+| `delivery/delivery-report.html` | Versão HTML com regions visuais renderizadas |
 
 ### State Snapshot
 
 Snapshot final appendado em `pipeline-state.md` — resumo de token consumption e sign-off.
+
+---
+
+## 📦 Information Regions
+
+O delivery report é organizado em **regions** — blocos de informação independentes, cada um com identidade, schema e representação visual próprios.
+
+### Conceito
+
+- Cada region tem um ID único (ex: `REG-EXEC-01`, `REG-PROD-02`, `REG-RISK-01`)
+- O catálogo completo está em `base-artifacts/templates/report-regions/README.md` (85 regions em 14 grupos)
+- O `delivery-report.md` é sempre **completo** (todas as regions com dados reais)
+- O `delivery-report.html` renderiza apenas as regions selecionadas no `html-layout.md`
+
+### Marcadores de region
+
+O consolidator marca cada seção do delivery-report.md com comentários HTML:
+
+```markdown
+<!-- region: REG-EXEC-01 -->
+## Overview One-Pager
+{conteúdo da region}
+<!-- /region: REG-EXEC-01 -->
+```
+
+### Seleção de regions
+
+O discovery-blueprint do context-template define quais regions são:
+- **Obrigatórias** — sempre presentes (28 universais + privacy quando há PII)
+- **Opcionais** — incluídas quando há dados suficientes
+- **Domain-specific** — exclusivas do tipo de projeto (ex: REG-DOM-SAAS-01 Pricing)
+
+### Fluxo de geração
+
+```
+consolidator                    report-planner               html-writer
+delivery-report.md         →    report-plan.md          →    delivery-report.html
+(conteúdo + marcadores)         (plano visual por region)     (HTML com regions visuais)
+                                      ↑
+                                html-layout.md
+                                (ordem, layout, grid)
+```
+
+### html-layout.md
+
+Define quais regions aparecem no HTML, em que ordem e com que layout:
+- `full-width` — ocupa toda a largura
+- `grid-2`, `grid-3`, `grid-4` — grid responsivo
+- `sidebar` — conteúdo + sidebar
+
+Arquivo default: `dtg-artifacts/templates/customization/html-layout.md`
+Override por cliente: `custom-artifacts/{client}/config/html-layout.md`
+
+### report-plan.md
+
+Artefato intermediário gerado pelo report-planner. Para cada region, especifica:
+- Tipo de visualização (card, tabela, chart, timeline)
+- Tecnologia (HTML/CSS ou Chart.js)
+- Configuração (eixos, cores, labels)
+
+Prioridade: HTML/CSS puro > Chart.js > Card informativo. Mermaid não é usado.
+
+### chart-specialist
+
+Skill consultora que recomenda qual tipo de visualização usar para cada region. Suas recomendações estão documentadas em cada arquivo de region em `base-artifacts/templates/report-regions/{grupo}/{region}.md`.
+
+### Previews visuais
+
+HTMLs de referência mostrando como cada grupo de regions é renderizado estão em `base-artifacts/templates/report-regions/_previews/` (15 arquivos HTML).
 
 ---
 
@@ -383,6 +454,15 @@ O pipeline usa context-templates (em `base-artifacts/context-templates/`):
 | `datalake-ingestion` | Pipelines de dados / ETL |
 | `process-documentation` | Documentação de processos existentes |
 | `web-microservices` | Aplicações web com microserviços |
+| `system-integration` | Integração entre sistemas (ESB, iPaaS, APIs) |
+| `migration-modernization` | Migração e modernização de legados |
+| `ai-ml` | Inteligência artificial e Machine Learning |
+| `mobile-app` | Aplicações mobile (nativo, híbrido, PWA) |
+| `process-automation` | Automação de processos (RPA, BPM, workflow) |
+| `platform-engineering` | Infraestrutura, DevOps e platform engineering |
+
+> [!tip] Templates múltiplos
+> Projetos podem usar **múltiplos templates simultaneamente**. Por exemplo, um projeto SaaS com pipeline de dados pode combinar os packs `saas` + `datalake-ingestion`. O orchestrator faz o merge dos concerns e specialists de todos os packs selecionados.
 
 Cada pack tem:
 - `context.md` — concerns, perguntas recomendadas, checklist por bloco temático
@@ -442,5 +522,6 @@ O orchestrator auto-detecta o pack a partir de sinais no briefing. Se ambíguo, 
 
 | Versão | Data | Descrição |
 |--------|------|-----------|
+| 02.00.000 | 2026-04-11 | Listados todos os 10 context-templates (antes apenas 4). Adicionada seção Information Regions com conceito, marcadores, seleção, fluxo de geração, html-layout.md, report-plan.md, chart-specialist e previews. Scaffold atualizado com html-layout.md. Outputs da Fase 3 atualizados com report-plan.md e marcadores de region. |
 | 01.01.000 | 2026-04-11 | Adicionado report-planner à Fase 3 (sub-fase 3.3). html-writer passa a ser sub-fase 3.4. Atualizado diagrama, tabela de sub-fases e tabela de skills. |
 | 01.00.000 | 2026-04-10 | Reescrita completa para Pipeline v0.5. Substitui documento do Pipeline v2 (3 sub-etapas com mini-ciclos) pelo novo formato de 3 fases (Discovery com reunião conjunta, Challenge com auditor + 10th-man em paralelo, Delivery com md-writer + consolidator + report-planner + html-writer). Novas opções de Human Review (Re-executar, Refazer, Avançar, Abortar). Scaffold de runs. Context-templates globais. |
