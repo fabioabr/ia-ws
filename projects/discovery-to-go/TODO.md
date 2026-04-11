@@ -65,29 +65,58 @@ Menciona "até 4 arquivos" por pack e lista apenas 4 packs. Agora são 10 packs 
 
 ---
 
-## 8. Catálogo de information cards para o delivery report
+## 8. Catálogo de information regions para o delivery report
 
-Criar um catálogo completo de **todos os tipos de informação** que podem ser gerados num processo de discovery — independente do tipo de projeto. Cada tipo de informação será um **card** reutilizável (como componentes de um dashboard).
+Criar um catálogo completo de **todos os tipos de informação** que podem ser gerados num processo de discovery — independente do tipo de projeto. Cada tipo de informação será uma **region** reutilizável que aparece tanto no `.md` final quanto no `.html` visual.
 
-**Objetivo:** permitir que os report-profiles dos blueprints referenciem quais cards incluir no delivery report, e que o `html-writer` renderize cada card com um template visual próprio (layout, ícones, cores, formatação).
+### Conceito
 
-**Exemplos de cards:**
+O delivery report (`.md`) é **completo** — contém todas as informações do discovery em texto puro. O report HTML (`.html`) renderiza essas informações como **regions visuais** (cards, tabelas, diagramas, KPIs, checklists) configuráveis por projeto.
 
-| Categoria | Cards |
-|-----------|-------|
-| Produto | Problema e contexto, Personas, Jornadas de usuário, Proposta de valor, OKRs/ROI, Modelo de negócio, MVP scope, Roadmap |
-| Organização | Stakeholders, Estrutura de equipe, RACI, Metodologia, On-call, Change management |
-| Técnico | Stack tecnológica, Arquitetura macro (diagrama), Integrações, Decisões arquiteturais (ADRs), Build vs Buy |
-| Segurança | Classificação de dados, Criptografia, Autenticação/autorização, Compliance/regulação |
-| Privacidade | Dados pessoais mapeados, Base legal LGPD, DPO, Retenção, Direito ao esquecimento |
-| Financeiro | TCO 3 anos, Break-even, Custo por componente, Projeção de receita |
-| Riscos | Matriz de riscos (impacto x probabilidade), Mitigações, Riscos residuais |
-| Qualidade | Score do auditor (5 dimensões), Questões do 10th-man, Gaps identificados |
-| Backlog | Épicos priorizados (MoSCoW/RICE), User stories MVP, Dependências |
-| Métricas | KPIs de negócio, KPIs técnicos, SLAs, Targets |
-| Narrativa | Overview executivo (one-pager), Como chegamos aqui, Próximos passos |
+```
+discovery-blueprint.md          delivery-report.md           delivery-report.html
+(define quais regions)    →     (conteúdo completo)     →   (regions visuais)
+       ↑                                                          ↑
+custom-artifacts/                                         html-layout.md
+(override por cliente)                                    (quais regions, ordem, layout)
+```
 
-**Entregáveis:**
-1. `catalog/information-cards.md` — catálogo completo de cards com nome, descrição, schema de dados, exemplo
-2. Cada blueprint referencia quais cards são relevantes para aquele tipo de projeto
-3. No futuro: templates HTML por card (componentes visuais reutilizáveis para o `html-writer`)
+### Camadas
+
+| Camada | O que define | Quem configura |
+|--------|-------------|----------------|
+| **Catálogo de regions** | Todas as regions possíveis com nome, schema, template visual | Global (dtg-artifacts) |
+| **Discovery blueprint** | Quais regions são relevantes para aquele tipo de projeto | Por context-template |
+| **HTML layout** | Quais regions aparecem no HTML, em que ordem e com que layout | Por projeto (custom-artifacts) |
+| **Delivery report (.md)** | Conteúdo completo — todas as regions com dados reais | Gerado pelo consolidator |
+| **Delivery report (.html)** | Renderização visual das regions selecionadas | Gerado pelo html-writer |
+
+### Exemplos de regions
+
+| Categoria | Regions |
+|-----------|---------|
+| Executivo | Overview one-pager, Product brief, Decisão de continuidade, Próximos passos |
+| Produto | Problema e contexto, Personas (JTBD), Jornadas de usuário, Proposta de valor (elevator pitch), Visão do produto, OKRs/ROI, Modelo de negócio, MVP scope (dentro/fora), Roadmap (faseamento) |
+| Pesquisa | Relatório de entrevistas, Mapa de oportunidades (OST), Dados quantitativos, Citações representativas, Hipóteses não validadas |
+| Organização | Mapa de stakeholders, Estrutura de equipe, RACI, Metodologia, Composição de equipe necessária, On-call, Change management |
+| Técnico | Stack tecnológica, Arquitetura macro (diagrama C4 L1), Arquitetura de containers (C4 L2), Integrações, ADRs (Architecture Decision Records), Build vs Buy |
+| Segurança | Classificação de dados, Criptografia (at-rest/in-transit), Autenticação/autorização, Compliance/regulação |
+| Privacidade | Dados pessoais mapeados, Base legal LGPD, DPO, Política de retenção, Direito ao esquecimento, Sub-operadores |
+| Financeiro | TCO 3 anos (por componente), Break-even analysis, Custo por componente/camada, Projeção de receita, Estimativa de esforço (T-shirt) |
+| Riscos | Matriz de riscos (impacto x probabilidade), Risk register (score + dono + mitigação), Riscos técnicos, Hipóteses críticas em aberto |
+| Qualidade | Score do auditor (5 dimensões), Questões do 10th-man, Gaps identificados, Checklist de conclusão |
+| Backlog | Épicos priorizados (MoSCoW/RICE), User stories de alto nível, Dependências entre épicos, Critérios de Go/No-Go |
+| Métricas | KPIs de negócio, KPIs técnicos, SLAs/SLOs, Targets por fase, DORA metrics (se platform) |
+| Narrativa | Como chegamos aqui (história das iterações), Condições para prosseguir, Assinaturas de aprovação |
+| Domain-specific | Modelo comercial e pricing (SaaS), Medallion architecture (datalake), Mapa de serviços (microservices), Mapa de integrações (integration), Roadmap de migração (migration), Pipeline ML (AI/ML), Estratégia mobile (mobile), Roadmap de automação (RPA/BPM), Arquitetura da plataforma (platform) |
+
+### Referência
+
+O documento `docs/product-discovery-deliverables.md` serve como base teórica para a definição das regions — baseado em frameworks de Marty Cagan, Teresa Torres, JTBD, C4, ADRs.
+
+### Entregáveis
+
+1. **`dtg-artifacts/catalog/information-regions.md`** — catálogo completo de regions com: id, nome, descrição, schema de dados esperado, template visual de referência
+2. **Atualizar cada discovery-blueprint** para referenciar quais regions são obrigatórias/opcionais para aquele tipo de projeto
+3. **`dtg-artifacts/templates/customization/html-layout.md`** — template default de layout do HTML (quais regions, ordem, grid) — customizável por projeto em `custom-artifacts/{client}/config/html-layout.md`
+4. **Templates HTML por region** — componentes visuais reutilizáveis que o `html-writer` usa para renderizar cada region (card, table, KPI, diagram, checklist, etc.)
