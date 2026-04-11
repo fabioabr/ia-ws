@@ -84,11 +84,17 @@ discovery-to-go/
 │   │   └── variables/                     ← report-variables.md (empresa, footer, selo)
 │   ├── behavior/rules/                    ← regras globais (skill-structure, etc.)
 │   ├── conventions/                       ← 30+ convenções (frontmatter, markdown, naming, colors, etc.)
-│   ├── context-templates/                 ← context-templates por domínio tecnológico
-│   │   ├── saas/                          ← context.md + specialists.md
+│   ├── context-templates/                 ← 10 blueprints de discovery por domínio
+│   │   ├── saas/                          ← discovery-blueprint.md (documento único)
 │   │   ├── datalake-ingestion/
 │   │   ├── process-documentation/
-│   │   └── web-microservices/
+│   │   ├── web-microservices/
+│   │   ├── system-integration/
+│   │   ├── migration-modernization/
+│   │   ├── ai-ml/
+│   │   ├── mobile-app/
+│   │   ├── process-automation/
+│   │   └── platform-engineering/
 │   ├── skills/                            ← 8 skills globais (po, solution-architect, etc.)
 │   ├── support-tools/                     ← ferramentas (md-validator Python)
 │   ├── CLAUDE.md                          ← entry point do workspace global
@@ -241,22 +247,22 @@ O humano também pode:
 
 ## Context-Templates
 
-Domínios tecnológicos que enriquecem a entrevista da Fase 1 com perguntas, concerns e especialistas específicos do tipo de projeto:
+Blueprints de discovery por domínio tecnológico. Cada template é um **documento único e auto-contido** (`discovery-blueprint.md`) que cobre: componentes do projeto, concerns, perguntas, decisões, antipatterns, especialistas disponíveis e perfil do delivery report.
 
-| Pack | Quando usar | Exemplo de sinais no briefing |
-|------|-------------|-------------------------------|
-| `saas` | Projetos SaaS multi-tenant | "plataforma SaaS", "multi-tenant", "billing" |
-| `datalake-ingestion` | Pipelines de dados / ETL | "ingestão de dados", "bronze/silver/gold", "ETL" |
-| `process-documentation` | Documentação de processos existentes | "documentar processo", "mapeamento", "AS-IS/TO-BE" |
-| `web-microservices` | Aplicações web com microserviços | "microserviços", "API gateway", "container" |
+O orchestrator auto-detecta o(s) template(s) a partir de sinais no briefing. **Um projeto pode usar mais de um template** (ex: SaaS + datalake-ingestion). O briefing também pode declarar explicitamente via `context-templates: [saas, datalake-ingestion]`.
 
-Cada pack contém até 4 arquivos:
-- **`context.md`** — concerns, perguntas recomendadas por bloco temático, checklist de cobertura
-- **`specialists.md`** — catálogo de custom-specialists disponíveis para o domínio
-- **`report-profile.md`** — seções extras, métricas obrigatórias, diagramas e ênfases para o delivery report
-- **`discovery-blueprint.md`** — guia por componentes do projeto: o que descobrir em cada parte da solução (piloto: datalake-ingestion)
-
-O orchestrator auto-detecta o pack a partir de sinais no briefing. Se ambíguo, roda em modo genérico.
+| Pack | Quando usar | Sinais no briefing |
+|------|-------------|-------------------|
+| `saas` | Projetos SaaS multi-tenant | "plataforma", "tenant", "billing", "subscription" |
+| `datalake-ingestion` | Pipelines de dados / ETL | "datalake", "ETL", "bronze/silver/gold", "Spark" |
+| `process-documentation` | Documentação de processos | "documentar processo", "SOP", "AS-IS/TO-BE" |
+| `web-microservices` | Aplicações web com microserviços | "microserviços", "API gateway", "Kubernetes" |
+| `system-integration` | Integração entre sistemas | "integração", "middleware", "ESB", "iPaaS" |
+| `migration-modernization` | Migração e modernização | "migração", "legado", "cloud migration", "re-platform" |
+| `ai-ml` | IA e Machine Learning | "machine learning", "LLM", "modelo preditivo", "MLOps" |
+| `mobile-app` | Aplicações mobile | "app", "mobile", "iOS", "Android", "Flutter" |
+| `process-automation` | Automação de processos | "RPA", "automação", "BPM", "workflow", "UiPath" |
+| `platform-engineering` | Infraestrutura e DevOps | "DevOps", "platform", "CI/CD", "Kubernetes", "Terraform" |
 
 ---
 
@@ -308,9 +314,8 @@ runs/run-{n}/
 │   ├── briefing.md                       ← input do humano
 │   ├── config.md                         ← configuração da run
 │   └── customization/
-│       ├── current-context/              ← context-template copiado
-│       │   ├── {pack}.md
-│       │   └── {pack}-specialists.md
+│       ├── current-context/              ← context-template(s) copiado(s)
+│       │   └── {pack}-discovery-blueprint.md
 │       ├── report-templates/             ← templates de output
 │       │   ├── final-report-template.md
 │       │   └── human-review-template.md
@@ -413,7 +418,7 @@ O projeto herda recursos do workspace global (`E:\Workspace`). O manifesto compl
 | Categoria | Quantidade | Exemplos |
 |-----------|-----------|----------|
 | Global Skills | 8 | po, solution-architect, html-writer, md-validator |
-| Context-Templates | 4 domínios | saas, datalake-ingestion, web-microservices, process-documentation |
+| Context-Templates | 10 domínios | saas, datalake-ingestion, web-microservices, system-integration, ai-ml, mobile-app, etc. |
 | Assets | 7 recursos | logos, design system, playground, variáveis |
 | Conventions | 30+ arquivos | frontmatter, markdown, naming, colors, typography |
 | Behavior Rules | 2 | skill-structure, index |

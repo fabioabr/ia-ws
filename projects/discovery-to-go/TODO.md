@@ -53,15 +53,15 @@ Adicionado `.$*.bkp` e `.$*.dtmp` ao `.gitignore`.
 
 ---
 
-## 6. Arquivo `product-discovery-deliverables.md`
+## ~~6. Arquivo `product-discovery-deliverables.md`~~ DONE
 
-`docs/product-discovery-deliverables.md` — arquivo untracked. Precisa ser commitado ou descartado.
+Mantido em `docs/` como referência teórica para o catálogo de information regions (item 8).
 
 ---
 
-## 7. README.md — seção Context-Templates desatualizada
+## ~~7. README.md — seção Context-Templates desatualizada~~ DONE
 
-Menciona "até 4 arquivos" por pack e lista apenas 4 packs. Agora são 10 packs e o formato é documento único. Atualizar.
+Atualizado: 10 packs listados, formato documento único, multi-template, scaffold corrigido, dependências atualizadas.
 
 ---
 
