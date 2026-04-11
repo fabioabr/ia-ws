@@ -25,7 +25,8 @@ Global skills available via `/skill-name`:
 | md-writer | Formats any .md following all conventions |
 | md-validator | Validates .md files against workspace conventions |
 | skill-writer | Creates/formats SKILL.md (Obsidian + Claude + OpenCode + Antigravity) |
-| html-writer | Converts .md to self-contained HTML reports |
+| html-writer | Converts .md to self-contained HTML reports (supports region-based rendering) |
+| chart-specialist | Data visualization consultant — recommends chart types per region |
 | diagram-drawio | Generates draw.io diagrams |
 | get-flaticon | Downloads icons from Flaticon |
 | po | Product analysis — vision, personas, value, organization |

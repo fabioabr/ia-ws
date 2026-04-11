@@ -2,9 +2,9 @@
 name: html-writer
 argument-hint: "<source.md> [--output path] [--template name]"
 title: html-writer
-description: "Converte documentos .md em relatorios HTML auto-contidos seguindo o Design System do workspace. Use SEMPRE que precisar: gerar um relatorio HTML a partir de um .md, converter documento markdown para apresentacao visual, criar report HTML com dark/light theme, ou gerar HTML auto-contido com logos e estilos inline. O HTML gerado funciona abrindo direto no navegador, sem servidor. NAO use para: formatar o .md em si (use md-writer), validar convencoes (use md-validator), ou gerar diagramas (use diagram-drawio)."
+description: "Converte documentos .md em relatórios HTML auto-contidos seguindo o Design System do workspace. Use SEMPRE que precisar: gerar um relatório HTML a partir de um .md, converter documento markdown para apresentação visual, criar report HTML com dark/light theme, ou gerar HTML auto-contido com logos e estilos inline. O HTML gerado funciona abrindo direto no navegador, sem servidor. NÃO use para: formatar o .md em si (use md-writer), validar convenções (use md-validator), ou gerar diagramas (use diagram-drawio)."
 project-name: global
-version: 01.01.000
+version: 02.00.000
 author: claude-code
 license: MIT
 status: ativo
@@ -156,6 +156,102 @@ Quando o conteúdo tiver tabelas com notas percentuais, scores ou métricas:
 - `[[wikilink]]` → remover a formatação de link (converter para texto simples ou link interno `#`)
 - Não gerar links quebrados
 
+### 4.5. Renderização por Regions (Delivery Reports)
+
+Quando o `.md` fonte contiver **marcadores de region** (`<!-- region: REG-XXXX-NN -->`), o html-writer opera em **modo regions** — cada bloco é renderizado com o template visual recomendado pelo chart-specialist.
+
+#### Como detectar modo regions
+
+Se o frontmatter contiver o campo `regions: [...]` OU o conteúdo tiver marcadores `<!-- region: -->`, ativar modo regions.
+
+#### Leitura do html-layout.md
+
+Ler o arquivo `html-layout.md` para determinar:
+- **Quais regions** renderizar (regions no `.md` que não estão no layout são omitidas do HTML)
+- **Em que ordem** (a ordem do layout prevalece sobre a ordem do `.md`)
+- **Com que disposição** (full-width, grid-2, grid-3, grid-4, sidebar)
+
+Prioridade de leitura:
+1. `{project}/setup/customization/html-layout.md` (override do cliente)
+2. `dtg-artifacts/templates/customization/html-layout.md` (default)
+3. Se nenhum existir: renderizar todas as regions na ordem do `.md` como full-width
+
+#### Templates visuais por region
+
+Cada region tem uma recomendação de visualização no catálogo (`base-artifacts/templates/report-regions/{grupo}/{region}.md` → seção "Recomendação do Chart Specialist"). Aplicar:
+
+| Veredicto | Como renderizar |
+|-----------|----------------|
+| **CARD** | Componente card do Design System (card-header + card-body) com ícone e conteúdo |
+| **TABELA** | `<table>` estilizada com badges, pills e cores semânticas conforme dados |
+| **GRÁFICO (Chart.js)** | `<canvas>` com Chart.js inline — tipos: radar, bubble, pie, donut, line, stacked bar |
+| **GRÁFICO (HTML/CSS)** | Barras horizontais, progress bars, timelines, heatmaps — tudo em CSS puro |
+
+Prioridade de tecnologia: **HTML/CSS puro > Chart.js > Card informativo**
+
+#### Layouts de grid
+
+```html
+<!-- full-width -->
+<div class="region-row">
+    <div class="region-col-12">...</div>
+</div>
+
+<!-- grid-2 -->
+<div class="region-row">
+    <div class="region-col-6">...</div>
+    <div class="region-col-6">...</div>
+</div>
+
+<!-- grid-3 -->
+<div class="region-row">
+    <div class="region-col-4">...</div>
+    <div class="region-col-4">...</div>
+    <div class="region-col-4">...</div>
+</div>
+
+<!-- grid-4 -->
+<div class="region-row">
+    <div class="region-col-3">...</div>
+    <div class="region-col-3">...</div>
+    <div class="region-col-3">...</div>
+    <div class="region-col-3">...</div>
+</div>
+```
+
+CSS para o grid:
+```css
+.region-row { display: flex; gap: 16px; margin-bottom: 20px; flex-wrap: wrap; }
+.region-col-12 { flex: 0 0 100%; }
+.region-col-6 { flex: 0 0 calc(50% - 8px); }
+.region-col-4 { flex: 0 0 calc(33.333% - 11px); }
+.region-col-3 { flex: 0 0 calc(25% - 12px); }
+@media (max-width: 768px) {
+    .region-col-6, .region-col-4, .region-col-3 { flex: 0 0 100%; }
+}
+```
+
+#### Chart.js (quando necessário)
+
+Incluir CDN apenas se houver regions que usam Chart.js:
+```html
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+```
+
+Regions que usam Chart.js (conforme chart-specialist):
+- REG-EXEC-03 (radar 4 eixos)
+- REG-FIN-01 (stacked bar)
+- REG-FIN-02 (line com crossover)
+- REG-FIN-04 (line)
+- REG-RISK-01 (bubble)
+- REG-RISK-04 (radar 4 eixos)
+- REG-QUAL-01 (radar 5 eixos)
+- REG-PESQ-05 (donut)
+
+#### Previews de referência
+
+HTMLs de referência com exemplos visuais de cada grupo estão em `base-artifacts/templates/report-regions/_previews/`. Consultar para entender como cada region deve ser renderizada.
+
 ### 5. Header
 
 Seguir o padrão do playground:
@@ -222,7 +318,8 @@ Aplicar os breakpoints e container definidos em `conventions/responsive/breakpoi
 
 ## 🚫 Constraints
 
-- Nunca omitir seções, tabelas ou informações do `.md` fonte — todo conteúdo deve estar no HTML
+- Em modo regions: renderizar apenas as regions listadas no `html-layout.md` — o `.md` é completo, o HTML é configurável
+- Em modo padrão (sem regions): nunca omitir seções, tabelas ou informações do `.md` fonte
 - Usar exclusivamente cores, tipografia e componentes do Design System carregado — não inventar estilos
 - Acentuação pt-BR é obrigatória em todo texto renderizado
 - O HTML deve funcionar abrindo o arquivo direto no navegador, sem servidor
@@ -258,4 +355,5 @@ Usar `$ARGUMENTS` no corpo para capturar o caminho do(s) arquivo(s) .md passados
 
 | Versão | Data | Descrição |
 |--------|------|-----------|
+| 02.00.000 | 2026-04-11 | Adição de modo regions: renderização por regions com marcadores, leitura de html-layout.md, grid responsivo, Chart.js condicional, referência a previews |
 | 01.01.000 | 2026-04-10 | Adequação ao skill-schema com herança de document-schema; adição de campos title, project-name, area, created, license; emojis em H2; seções Documentos Relacionados e Histórico |
