@@ -49,14 +49,10 @@ Lista de ações concretas e priorizadas que devem ser executadas imediatamente 
 **Críticas:** 2 | **Alta:** 2 | **Média:** 1
 **Com dependência:** 3 | **Independentes:** 2
 
-### Formatos de exibição possíveis
+### Recomendação do Chart Specialist
 
-| Formato | Descrição | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Lista numerada com descrição narrativa de cada ação, responsável e prazo inline | Quando incluído em corpo de e-mail ou ata de reunião como parágrafo de encerramento |
-| Tabela | Grid com colunas de ação, responsável, prazo, prioridade e dependência | Formato padrão — quando o público precisa de visão completa e rastreável de todas as ações |
-| Checklist (kanban) | Cards agrupados por status (pendente, em andamento, concluído) com badges de prioridade | Quando as ações serão acompanhadas ao longo do tempo e o foco é tracking de progresso |
-| Timeline (Gantt simplificado) | Barras horizontais mostrando ações no eixo temporal com dependências visuais | Quando é importante visualizar sobreposições de prazo e sequenciamento entre ações dependentes |
-
-> [!info] Avaliação pendente
-> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.
+**Veredicto:** TABELA
+**Tipo:** Tabela com priority badges + timeline horizontal
+**Tecnologia:** HTML/CSS
+**Justificativa:** Com 5 ações estruturadas contendo responsável, prazo, prioridade e dependências, a representação ideal é uma tabela HTML estilizada com badges coloridos de prioridade (Critica=vermelho, Alta=laranja, Media=amarelo) e uma timeline horizontal CSS (barras proporcionais ao prazo) abaixo da tabela para visualizar o sequenciamento temporal e sobreposicoes entre ações.
+**Alternativa:** Tabela simples sem timeline (HTML/CSS) — quando o foco é apenas rastreabilidade das ações sem necessidade de visualização temporal

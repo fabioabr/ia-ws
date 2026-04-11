@@ -67,14 +67,10 @@ Dados quantitativos coletados durante o discovery que dimensionam o problema e f
 - **Impacto anual estimado:** R$ 500K -- R$ 700K em 4 componentes (horas desperdiçadas R$ 230K, retrabalho R$ 80K, oportunidade R$ 150K, risco regulatório R$ 40K--R$ 240K)
 - **3 benchmarks de mercado:** fechamento automatizado (D+2), Oracle HFM (R$ 4,2M/3 anos), SAP BPC (R$ 3,8M/3 anos)
 
-### Formatos de exibição possíveis
+### Recomendação do Chart Specialist
 
-| Formato | Descrição | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Narrativa analítica contextualizando cada métrica com sua fonte e relevância para a decisão | Quando o relatório precisa guiar o leitor pela lógica do dimensionamento do problema |
-| Tabela | Tabelas estruturadas para métricas, composição do custo e benchmarks com alinhamento numérico | Quando stakeholders precisam consultar valores específicos rapidamente ou exportar dados |
-| Bar chart | Gráfico de barras comparando componentes do custo anual ou métricas atuais vs. benchmark | Quando é necessário evidenciar a magnitude das diferenças e o peso relativo de cada componente |
-| KPI cards | Cards de destaque com valor principal, variação e indicador visual (cor/ícone) para cada métrica-chave | Quando o objetivo é um dashboard executivo com leitura rápida dos números mais importantes |
-
-> [!info] Avaliação pendente
-> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.
+**Veredicto:** TABELA
+**Tipo:** Tabela + stat cards
+**Tecnologia:** HTML/CSS
+**Justificativa:** Com 7 métricas-chave, tabelas estruturadas preservam a rastreabilidade fonte-valor, enquanto stat cards destacam os KPIs principais (D+8, R$ 500K-700K) para leitura executiva rápida. Se houver 5+ métricas com comparação atual vs. benchmark, complementar com bar chart (Chart.js).
+**Alternativa:** Bar chart (Chart.js) — quando a prioridade é evidenciar visualmente a magnitude das diferenças entre componentes de custo ou métricas atuais vs. benchmark

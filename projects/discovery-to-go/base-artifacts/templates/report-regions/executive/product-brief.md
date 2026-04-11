@@ -85,13 +85,10 @@ Plataforma web de consolidação financeira automatizada que centraliza dados de
 **Investimento:** R$ 680K — R$ 850K (MVP) / R$ 2,1M — R$ 2,8M (TCO 3 anos)
 **Recomendação:** Prosseguir com build customizado (ROI positivo em 14 meses)
 
-### Formatos de exibição possíveis
+### Recomendação do Chart Specialist
 
-| Formato | Descrição | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Narrativa em seções com parágrafos explicativos, listas e destaques | Formato padrão — quando o público precisa entender o raciocínio completo de problema-solução-investimento |
-| Tabela | Resumo estruturado com campos-chave lado a lado (problema, solução, investimento, recomendação) | Quando o brief será incluído em um portfólio de projetos para comparação rápida |
-| Callout cards | Cards visuais por seção com ícones, destaques de métricas e badge de recomendação | Quando apresentado em formato de slide ou dashboard executivo e o foco está nas métricas-chave |
-
-> [!info] Avaliação pendente
-> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.
+**Veredicto:** CARD
+**Tipo:** Card layout com seções narrativas + stat cards para KPIs
+**Tecnologia:** HTML/CSS
+**Justificativa:** O conteúdo combina narrativa qualitativa (problema, solução, recomendação) com 4 métricas-chave quantificáveis (-80% tempo, zero erros, compliance SOX, fechamento D+2). A melhor abordagem é um layout de cards por seção com stat cards destacados para os KPIs de resultado esperado e investimento, tudo em HTML/CSS puro sem necessidade de biblioteca de gráficos.
+**Alternativa:** Tabela resumo (HTML/CSS) — quando o brief for incluído em portfólio de projetos para comparação lado a lado

@@ -47,13 +47,10 @@ unvalidated_hypotheses:
 | HYP-03 | Time de 5 pessoas entrega MVP em 4 meses | Alta | Pendente | Sprint 2 |
 | HYP-04 | Usuários preferem dashboard visual a relatórios PDF | Média | Pendente | Mês 2 pós-lançamento |
 
-### Formatos de exibição possíveis
+### Recomendação do Chart Specialist
 
-| Formato | Descrição | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Narrativa descrevendo cada hipótese, por que é crítica, o risco se falsa e o plano de validação | Comunicação executiva onde o storytelling sobre incertezas é mais eficaz que uma lista |
-| Tabela | Matriz completa com hipótese, risco se falsa, severidade, método de validação, prazo e status | Quando o leitor precisa acompanhar o progresso de validação de cada hipótese |
-| Risk cards com severidade | Cards individuais por hipótese, coloridos por severidade (Crítica = vermelho, Alta = laranja, Média = amarelo), com risco, método e prazo | Visualização de alto impacto para destacar hipóteses não validadas como itens de ação urgentes |
-
-> [!info] Avaliação pendente
-> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.
+**Veredicto:** CARD
+**Tipo:** Cards com severity badges
+**Tecnologia:** HTML/CSS
+**Justificativa:** Hipóteses não validadas são itens de ação individuais com severidade variável; cards com bordas coloridas (Crítica = vermelho, Alta = laranja, Média = amarelo) criam urgência visual e permitem incluir risco, método de validação e prazo em layout legível.
+**Alternativa:** Tabela com severity badges (HTML/CSS) — quando o número de hipóteses for grande (>8) e o formato tabular facilitar a comparação lado a lado.

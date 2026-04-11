@@ -60,13 +60,10 @@ Fontes (APIs, CSVs, Eventos)
 Dashboards / APIs / ML Models
 ```
 
-### Formatos de exibicao possiveis
+### Recomendacao do Chart Specialist
 
-| Formato | Descricao | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Descricao narrativa de cada camada com responsabilidades, tecnologias e fluxos entre elas | Documentos de arquitetura detalhados, ADRs |
-| Tabela | Tabela com camadas em linhas e atributos (proposito, storage, formato, retencao) em colunas | Referencia rapida, documentacao tecnica |
-| Diagrama de fluxo em camadas | Fluxo vertical ou horizontal mostrando Bronze, Silver e Gold com setas de transformacao e pipelines entre camadas | Apresentacoes de arquitetura, onboarding, wikis tecnicas |
-
-> [!info] Avaliacao pendente
-> Um especialista em visualizacao de dados deve avaliar qual formato grafico melhor representa esta informacao, considerando o publico-alvo e o contexto de uso.
+**Veredicto:** CARD
+**Tipo:** Card com layers visuais
+**Tecnologia:** HTML/CSS
+**Justificativa:** A arquitetura medallion e um fluxo sequencial de 3 camadas com metadados distintos por camada (storage, formato, retencao). Cards empilhados verticalmente com setas de conexao e badges de tecnologia comunicam hierarquia e fluxo de forma clara e compacta.
+**Alternativa:** Tabela com camadas em linhas (HTML/CSS) — quando o foco for referencia rapida sem necessidade de comunicar o fluxo entre camadas.

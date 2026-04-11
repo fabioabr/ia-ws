@@ -73,15 +73,10 @@ how_we_got_here:
             Relatorio final gerado
 ```
 
-### Formatos de exibicao possiveis
+### Recomendacao do Chart Specialist
 
-| Formato | Descricao | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Narrativa cronologica com marcos destacados em negrito | Relatorios executivos, contexto detalhado do processo |
-| Tabela | Tabela com colunas Data, Evento, Tipo, Detalhes | Referencia rapida, rastreabilidade de decisoes |
-| Timeline vertical | Linha do tempo vertical com nos coloridos por tipo (execucao, rejeicao, aprovacao, convergencia) | Apresentacoes de processo, visao geral do discovery |
-| Timeline vertical com detalhes expandiveis | Timeline com cards laterais contendo detalhes de cada etapa | Relatorios detalhados, retrospectivas de processo |
-| Timeline vertical com status icons | Timeline com icones indicando tipo de evento (check, alerta, reprocesso) | Dashboards de acompanhamento de pipeline |
-
-> [!info] Avaliacao pendente
-> Um especialista em visualizacao de dados deve avaliar qual formato grafico melhor representa esta informacao, considerando o publico-alvo e o contexto de uso.
+**Veredicto:** GRAFICO
+**Tipo:** Timeline vertical
+**Tecnologia:** HTML/CSS
+**Justificativa:** Eventos cronologicos do discovery sao sequenciais e com tipos distintos (execucao, rejeicao, aprovacao, convergencia). Uma timeline vertical com nos coloridos por tipo e detalhes ao lado de cada no comunica a historia do processo de forma visual e narrativa simultaneamente.
+**Alternativa:** Tabela cronologica — quando o relatorio e puramente textual (PDF sem estilos) e a timeline nao renderiza adequadamente.

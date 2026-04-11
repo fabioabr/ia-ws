@@ -45,13 +45,10 @@ Documenta todas as integrações com sistemas externos, detalhando protocolo, di
 | Serviço de E-mail (SendGrid) | REST API | Outbound | ~2k emails/dia | 99.9%, best-effort delivery |
 | Identity Provider (Okta) | SAML 2.0 / OIDC | Inbound | ~500 logins/dia | 99.99% |
 
-### Formatos de exibição possíveis
+### Recomendação do Chart Specialist
 
-| Formato | Descrição | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Narrativa descritiva detalhando cada integração, seu protocolo, direção de fluxo e SLAs acordados | Sempre — serve como base textual acessível para qualquer público |
-| Tabela | Tabela estruturada com colunas Sistema, Protocolo, Direção, Volume e SLA | Sempre — permite comparação rápida e consulta pontual |
-| Diagrama de rede | Diagrama com o sistema central no meio e os sistemas externos ao redor, conectados por setas indicando direção (inbound/outbound/bidirecional), protocolo e volume | Quando é necessário visualizar o ecossistema de integrações de forma holística, mostrando dependências, protocolos e fluxos de dados entre sistemas |
-
-> [!info] Avaliação pendente
-> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.
+**Veredicto:** TABELA
+**Tipo:** Tabela estilizada com ícones de direção e protocolo
+**Tecnologia:** HTML/CSS
+**Justificativa:** Integrações possuem múltiplos atributos textuais (protocolo, direção, volume, SLA) que exigem leitura detalhada; uma tabela estilizada com ícones de direção (setas) e badges de protocolo oferece clareza máxima e permite comparação linha a linha.
+**Alternativa:** Diagrama de rede (via diagram-drawio) — quando o objetivo é comunicar visualmente o ecossistema de dependências para stakeholders não técnicos, gerando o diagrama como artefato separado.

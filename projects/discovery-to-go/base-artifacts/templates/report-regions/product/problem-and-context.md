@@ -64,14 +64,10 @@ Considerando o custo médio por hora dos analistas (R$ 120/h), o desperdício di
 - **Impacto financeiro:** R$ 500K-700K/ano (direto + risco + custo de oportunidade)
 - **Perfis afetados:** 4 analistas (12h/semana cada), 1 controller, 1 CFO, auditores
 
-### Formatos de exibição possíveis
+### Recomendação do Chart Specialist
 
-| Formato | Descrição | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Narrativa contextual com parágrafos descrevendo problema, quem sofre e tamanho do impacto | Quando o leitor precisa de contexto completo e nuances qualitativas |
-| Tabela | Matriz resumindo perfis afetados, tipo de impacto e métrica por perfil | Para comparação rápida entre perfis afetados |
-| Metric callout | Destaque visual de 3-4 KPIs do problema (horas, reapresentações, D+N, custo) em cards grandes | Para comunicação executiva e resumo de impacto em apresentações |
-| Gráfico de barras | Comparação entre estado atual vs. desejado (ex: D+8 vs D+2, 12h vs 2h) | Para evidenciar a magnitude do gap a ser resolvido |
-
-> [!info] Avaliação pendente
-> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.
+**Veredicto:** CARD
+**Tipo:** Card com métrica destacada
+**Tecnologia:** HTML/CSS
+**Justificativa:** Os dados são narrativos com 3-4 KPIs de impacto isolados (horas, reapresentações, D+N, custo). Um card com métricas em destaque (stat callout) comunica a gravidade do problema de forma imediata e impactante, sem necessidade de eixos ou comparações gráficas.
+**Alternativa:** Gráfico de barras horizontais (Chart.js) — quando houver 4+ métricas com baseline vs. target numérico comparável e o público precisar visualizar a magnitude do gap.

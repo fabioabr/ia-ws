@@ -66,13 +66,10 @@ service_map:
 
 **Bounded Contexts:** Infrastructure | Identity | Financial Core | Communication | Reporting | Frontend
 
-### Formatos de exibicao possiveis
+### Recomendacao do Chart Specialist
 
-| Formato | Descricao | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Descricao narrativa de cada servico com bounded context, dependencias e protocolos | ADRs, documentos de arquitetura |
-| Tabela | Tabela com servicos, contextos, tipos, protocolos e dependencias | Catalogo de servicos, inventario tecnico |
-| Diagrama de rede com boundaries | Diagrama mostrando servicos como nos, conexoes como arestas com protocolos, agrupados por bounded context | Apresentacoes de arquitetura, onboarding, planejamento de deploy e ownership |
-
-> [!info] Avaliacao pendente
-> Um especialista em visualizacao de dados deve avaliar qual formato grafico melhor representa esta informacao, considerando o publico-alvo e o contexto de uso.
+**Veredicto:** TABELA
+**Tipo:** Tabela de servicos com boundaries
+**Tecnologia:** HTML/CSS
+**Justificativa:** O mapa de servicos tem 7 microservicos com 6 atributos cada (bounded context, tipo, protocolo, dependencias, banco, owner). Uma tabela estilizada agrupada por bounded context com badges de tipo e protocolo funciona como catalogo de servicos e permite consulta rapida sem a complexidade de um diagrama de rede em HTML estatico.
+**Alternativa:** Card grid agrupado por bounded context (HTML/CSS) — quando houver poucos servicos (4-5) e o foco for visualizar as dependencias entre eles.

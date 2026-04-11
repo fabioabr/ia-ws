@@ -60,15 +60,10 @@ O inventário de classificação de dados pode ser representado como texto corri
 | Interno | 1 | Média — controle de acesso padrão |
 | Público | 1 | Baixa — sem restrições |
 
-### Formatos de exibição possíveis
+### Recomendação do Chart Specialist
 
-| Formato | Descrição | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Parágrafo narrativo resumindo a estratégia de classificação e a distribuição dos dados por nível | Para contextualizar a abordagem de classificação e fornecer visão executiva |
-| Tabela detalhada | Tabela com dado, classificação e tratamento requerido | Para documentação completa e referência técnica |
-| Heatmap por sensibilidade | Mapa de calor com gradiente de cores por nível de classificação (vermelho = Restrito, amarelo = Interno, verde = Público) | Para visualização rápida da distribuição de sensibilidade e priorização de controles |
-| Gráfico de barras empilhadas | Barras agrupadas por nível de classificação mostrando quantidade de dados | Para apresentações executivas e comparação entre projetos |
-| Diagrama de bolhas | Bolhas dimensionadas pela criticidade, agrupadas por classificação | Para mapear volume vs. sensibilidade em um dashboard interativo |
-
-> [!info] Avaliação pendente
-> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.
+**Veredicto:** TABELA
+**Tipo:** Tabela com badges coloridos por nível de classificação
+**Tecnologia:** HTML/CSS
+**Justificativa:** Dados categóricos com níveis de sensibilidade são melhor comunicados via tabela com badges coloridos (vermelho = Restrito, laranja = Confidencial, amarelo = Interno, verde = Público), permitindo leitura rápida do nível de risco e do tratamento associado.
+**Alternativa:** Heatmap por sensibilidade (HTML/CSS) — quando houver muitas categorias (10+) e o foco for a distribuição agregada por nível, não o detalhe individual.

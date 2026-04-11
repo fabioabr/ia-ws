@@ -60,15 +60,10 @@ As bases legais podem ser representadas como texto corrido explicando a estraté
 | Legítimo interesse (Art. 7, IX) | 2 | 33% |
 | Consentimento (Art. 7, I) | 1 | 17% |
 
-### Formatos de exibição possíveis
+### Recomendação do Chart Specialist
 
-| Formato | Descrição | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Parágrafo narrativo descrevendo a estratégia de bases legais e distribuição por tipo | Para contexto executivo e relatórios ao DPO/ANPD |
-| Tabela com badges | Tabela com badges coloridos por base legal (cada artigo com cor distinta) | Para documentação de compliance e referência em auditorias |
-| Gráfico de rosca | Gráfico circular mostrando proporção de tratamentos por base legal | Para visão rápida da distribuição de fundamentação jurídica |
-| Sankey diagram | Diagrama de fluxo ligando tratamentos às bases legais correspondentes | Para visualizar quais bases legais suportam mais operações |
-| Grouped cards | Cards agrupados por base legal, listando os tratamentos associados | Para apresentações a comitês de privacidade e compliance |
-
-> [!info] Avaliação pendente
-> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.
+**Veredicto:** TABELA
+**Tipo:** Tabela com badges coloridos por base legal
+**Tecnologia:** HTML/CSS
+**Justificativa:** Cada tratamento precisa mostrar sua base legal e justificativa textual. Badges com cores distintas por artigo da LGPD (ex.: azul = Execução de contrato, verde = Obrigação legal, amarelo = Legítimo interesse, roxo = Consentimento) permitem agrupamento visual imediato sem perder o detalhe da justificativa.
+**Alternativa:** Cards agrupados por base legal (HTML/CSS) — quando a apresentação for para comitê de privacidade e o foco for mostrar quais tratamentos se apoiam em cada base, em vez do inventário linear.

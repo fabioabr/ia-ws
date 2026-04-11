@@ -51,14 +51,10 @@ risk_matrix:
 | RISK-04 | Atraso na aprovação da App Store | 2 | 3 | 6 | Médio |
 | RISK-05 | Turnover de desenvolvedor-chave | 2 | 2 | 4 | Baixo |
 
-### Formatos de exibição possíveis
+### Recomendação do Chart Specialist
 
-| Formato | Descrição | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Narrativa descrevendo os riscos mais críticos, suas inter-relações e as estratégias de mitigação priorizadas | Comunicação executiva onde o contexto qualitativo dos riscos é mais importante que a classificação numérica |
-| Tabela | Matriz completa com probabilidade, impacto, score, severidade, mitigação e dono, como no exemplo acima | Quando o leitor precisa de todos os detalhes para acompanhamento e gestão dos riscos |
-| Bubble chart (probabilidade x impacto) | Gráfico de bolhas com eixo X = probabilidade, eixo Y = impacto, tamanho da bolha = score, cor = severidade | Visualizar a distribuição dos riscos no espaço probabilidade-impacto e identificar clusters de risco |
-| 5x5 heatmap grid | Grid 5x5 com probabilidade nas colunas e impacto nas linhas, cada célula colorida por severidade, riscos posicionados na célula correspondente | Representação clássica de risk matrix — permite identificação visual imediata das zonas críticas |
-
-> [!info] Avaliação pendente
-> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.
+**Veredicto:** GRÁFICO
+**Tipo:** Bubble chart (probabilidade x impacto)
+**Tecnologia:** Chart.js
+**Justificativa:** 5 riscos com scores calculados (prob x impacto) mapeiam naturalmente em um bubble chart com eixo X = probabilidade, Y = impacto e tamanho = score, permitindo identificação visual imediata de clusters críticos e distribuição no espaço de risco.
+**Alternativa:** Tabela com heatmap badges (HTML/CSS) — quando o relatório precisa incluir colunas adicionais como mitigação e dono, ou quando o contexto não suporta gráficos interativos.

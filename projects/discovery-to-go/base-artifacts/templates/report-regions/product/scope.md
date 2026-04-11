@@ -72,13 +72,10 @@ Construir o MVP do FinTrack Pro que automatize a consolidação financeira de 3 
 - **Hipótese central:** Automatizar coleta + eliminação de 3 filiais reduz fechamento de D+8 para D+3 com zero erros
 - **Critérios go/no-go:** 4 condições mensuráveis
 
-### Formatos de exibição possíveis
+### Recomendação do Chart Specialist
 
-| Formato | Descrição | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Narrativa do objetivo, hipótese e justificativas de inclusão/exclusão | Quando o leitor precisa entender o raciocínio por trás das decisões de escopo |
-| Tabela | Matrizes separadas para dentro/fora do escopo e critérios go/no-go | Para referência rápida e checklist de escopo |
-| Split card (in/out) | Card dividido em duas colunas — verde (dentro) e vermelho (fora) — com ícones de check/x | Para comunicação visual imediata do que está e não está no escopo |
-
-> [!info] Avaliação pendente
-> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.
+**Veredicto:** CARD
+**Tipo:** Split card (in/out) com duas colunas — verde (dentro) e vermelho (fora)
+**Tecnologia:** HTML/CSS
+**Justificativa:** O escopo é binário (dentro vs. fora) com listas curtas (5 itens in, 4 itens out). Um split card com colunas verde/vermelha e ícones check/x comunica a decisão de escopo de forma instantânea e inequívoca, eliminando ambiguidade. O objetivo e a hipótese central ficam como header do card.
+**Alternativa:** Tabela estilizada (HTML/CSS) — quando houver 10+ itens por coluna ou quando for necessário incluir colunas adicionais como prioridade, fase planejada ou responsável.

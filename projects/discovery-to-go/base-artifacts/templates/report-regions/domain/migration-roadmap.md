@@ -56,13 +56,10 @@ Phase 1: Pilot   |              |         |
                                           [========]
 ```
 
-### Formatos de exibicao possiveis
+### Recomendacao do Chart Specialist
 
-| Formato | Descricao | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Descricao narrativa de cada fase com escopo, duracao e criterios de go/no-go | Documentos de planejamento, business cases |
-| Tabela | Tabela com fases, duracao, escopo e criterios de sucesso | Referencia rapida, atas de reuniao |
-| Grafico de Gantt/Timeline | Diagrama temporal mostrando fases em sequencia com checkpoints de go/no-go entre cada uma | Apresentacoes para stakeholders, gestao de programa, acompanhamento de progresso |
-
-> [!info] Avaliacao pendente
-> Um especialista em visualizacao de dados deve avaliar qual formato grafico melhor representa esta informacao, considerando o publico-alvo e o contexto de uso.
+**Veredicto:** GRAFICO
+**Tipo:** Timeline horizontal com barras
+**Tecnologia:** HTML/CSS
+**Justificativa:** Fases de migracao sao sequenciais com duracao variavel e checkpoints de go/no-go entre elas. Uma timeline horizontal com barras proporcionais a duracao e marcadores de checkpoint comunica a progressao temporal e dependencias entre fases de forma intuitiva, sem necessidade de bibliotecas de charting.
+**Alternativa:** Tabela com fases e duracao (HTML/CSS) — quando o documento for referencia textual e nao necessitar da dimensao temporal visual.

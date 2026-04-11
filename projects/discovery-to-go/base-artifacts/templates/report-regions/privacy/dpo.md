@@ -57,15 +57,10 @@ As informações do DPO podem ser representadas como texto corrido de apresenta�
 | Telefone | +55 (11) 3000-0000 ramal 400 |
 | Responsabilidades | Validação de tratamentos, resposta a titulares (SLA 15 dias), RIPD, reporte à ANPD, review de arquitetura |
 
-### Formatos de exibição possíveis
+### Recomendação do Chart Specialist
 
-| Formato | Descrição | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Parágrafo narrativo apresentando o DPO, suas responsabilidades e canal de contato | Para contexto em relatórios executivos e documentos de governança |
-| Tabela/Card simples | Card com campos estruturados (nome, cargo, contato, responsabilidades) | Para referência rápida em dashboards e páginas de compliance |
-| Card visual com avatar | Card estilizado com foto/avatar, dados de contato e lista de responsabilidades | Para portais de privacidade voltados a titulares de dados |
-| Organograma | Posição do DPO na estrutura organizacional com linhas de reporte | Para documentação de governança e apresentações ao board |
-| Contact card interativo | Card clicável com links diretos para e-mail e telefone | Para versões digitais de relatórios e portais internos |
-
-> [!info] Avaliação pendente
-> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.
+**Veredicto:** CARD
+**Tipo:** Card informativo simples com dados de contato e responsabilidades
+**Tecnologia:** HTML/CSS
+**Justificativa:** Informações de uma única pessoa (nome, cargo, contato, responsabilidades) nao justificam tabela nem grafico. Um card informativo com layout estruturado (header com nome/cargo, corpo com contato e lista de responsabilidades) e o formato mais natural e compacto para esse tipo de dado.
+**Alternativa:** Tabela campo-valor (HTML/CSS) — quando o card precisar ser inserido dentro de uma tabela maior de stakeholders ou quando o layout nao suportar cards.

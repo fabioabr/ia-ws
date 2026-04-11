@@ -52,14 +52,10 @@ Product Owner (50%)
 - **Construção → Go-live:** Desenvolvedores Backend (2x), Desenvolvedor Frontend, QA Engineer
 - **Construção → Sustentação:** DevOps/SRE
 
-### Formatos de exibição possíveis
+### Recomendação do Chart Specialist
 
-| Formato | Descrição | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Narrativa descritiva da composição do time, dedicação e fases de cada membro | Relatórios executivos ou documentos onde diagramas não são viáveis |
-| Tabela | Tabela com papel, dedicação, fase e observações por membro | Planejamento detalhado de alocação e dimensionamento de recursos |
-| Organograma (org chart) | Diagrama hierárquico mostrando a estrutura de reporte e os papéis do time | Apresentações para stakeholders que precisam entender a cadeia de liderança e composição |
-| Diagrama de timeline | Barras horizontais por papel mostrando dedicação ao longo das fases do projeto | Quando é importante visualizar a variação de alocação ao longo do tempo |
-
-> [!info] Avaliação pendente
-> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.
+**Veredicto:** TABELA
+**Tipo:** Tabela estilizada com colunas de papel, dedicação, fase e observação
+**Tecnologia:** HTML/CSS
+**Justificativa:** Dados tabulares de papéis com dedicação percentual e fases são melhor representados em tabela estilizada, permitindo leitura rápida e comparação direta entre membros do time.
+**Alternativa:** Diagrama de timeline (barras horizontais) via Chart.js — usar quando a variação de alocação ao longo das fases for o foco principal da análise.

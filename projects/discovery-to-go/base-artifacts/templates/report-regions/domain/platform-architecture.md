@@ -69,13 +69,10 @@ platform_architecture:
 +----------------------------------------------------------+
 ```
 
-### Formatos de exibicao possiveis
+### Recomendacao do Chart Specialist
 
-| Formato | Descricao | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Descricao narrativa de cada camada da plataforma com tecnologias e responsabilidades | ADRs, documentos de arquitetura detalhados |
-| Tabela | Tabela com camadas, tecnologias e detalhes | Referencia rapida, inventario tecnologico |
-| Diagrama de arquitetura em camadas | Diagrama empilhado mostrando camadas da plataforma (IaC, Cloud, Observabilidade, CI/CD, IDP) com componentes | Apresentacoes de arquitetura, onboarding de novos times, documentacao de referencia |
-
-> [!info] Avaliacao pendente
-> Um especialista em visualizacao de dados deve avaliar qual formato grafico melhor representa esta informacao, considerando o publico-alvo e o contexto de uso.
+**Veredicto:** CARD
+**Tipo:** Card com layers
+**Tecnologia:** HTML/CSS
+**Justificativa:** A arquitetura de plataforma e um stack de camadas empilhadas (IaC, Cloud, Observabilidade, CI/CD, IDP) com componentes por camada. Cards empilhados verticalmente com fundo colorido por camada e badges de tecnologia comunicam a hierarquia e os componentes de forma visual e compacta.
+**Alternativa:** Tabela com camadas e tecnologias (HTML/CSS) — quando o formato for documentacao de referencia e a visualizacao de stack nao for necessaria.

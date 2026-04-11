@@ -63,13 +63,10 @@ developer_experience:
 | Novo banco de dados | 12 min |
 | Novo ambiente staging | 45 min |
 
-### Formatos de exibicao possiveis
+### Recomendacao do Chart Specialist
 
-| Formato | Descricao | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Descricao narrativa dos golden paths, capacidades self-service e metricas DX | Documentos de estrategia de plataforma, relatorios executivos |
-| Tabela | Tabela com golden paths, metricas e targets | Referencia operacional, acompanhamento de metas |
-| Stat cards (DORA + DX) | Cards individuais com metricas DORA e DX, mostrando valor atual, target e trend | Dashboards de platform engineering, reunioes de acompanhamento, relatorios de performance |
-
-> [!info] Avaliacao pendente
-> Um especialista em visualizacao de dados deve avaliar qual formato grafico melhor representa esta informacao, considerando o publico-alvo e o contexto de uso.
+**Veredicto:** CARD
+**Tipo:** Stat cards em grid
+**Tecnologia:** HTML/CSS
+**Justificativa:** As metricas DORA e DX sao KPIs independentes com target, valor atual e status. Stat cards em grid (3x2 para DORA + 2x1 para DX) com valor destaque, target em subtexto e badge de status (OK/ALERTA) sao o padrao para dashboards de platform engineering e permitem leitura instantanea.
+**Alternativa:** Tabela com metricas e targets (HTML/CSS) — quando as metricas precisarem ser acompanhadas de golden paths no mesmo componente visual.

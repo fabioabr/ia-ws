@@ -67,15 +67,10 @@ tenth_man_questions:
       status: "Em aberto"
 ```
 
-### Formatos de exibicao possiveis
+### Recomendacao do Chart Specialist
 
-| Formato | Descricao | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Paragrafo narrativo listando as questoes por severidade, destacando as em aberto e seus impactos potenciais | Relatorios executivos, documentos formais onde formato livre e preferido |
-| Tabela | Tabela com colunas ID, Questao, Severidade, Status e Resposta | Visao completa para revisao tecnica, rastreamento de resolucao |
-| Card list com severity badges | Cards individuais por questao, com badge colorido de severidade (vermelho=Critica, laranja=Alta, amarelo=Media) e indicador de status | Dashboards, apresentacoes visuais, revisoes de qualidade onde destaque visual de severidade e importante |
-| Lista agrupada por severidade | Questoes organizadas em grupos (Critica, Alta, Media) com contagem por grupo e indicador de questoes em aberto | Priorizacao de resolucao, reunioes de triagem |
-| Kanban por status | Colunas Em aberto, Parcialmente respondida, Respondida com cards das questoes | Acompanhamento do progresso de resolucao das questoes |
-
-> [!info] Avaliacao pendente
-> Um especialista em visualizacao de dados deve avaliar qual formato grafico melhor representa esta informacao, considerando o publico-alvo e o contexto de uso.
+**Veredicto:** CARD
+**Tipo:** Cards com severity badges
+**Tecnologia:** HTML/CSS
+**Justificativa:** Questoes do 10th-man sao itens qualitativos individuais com severidade e status variados; cards com badges coloridos (Critica = vermelho, Alta = laranja, Media = amarelo) e indicador de status criam hierarquia visual clara e destacam questoes em aberto que exigem acao.
+**Alternativa:** Tabela com severity badges (HTML/CSS) — quando o numero de questoes for grande (>10) e o rastreamento tabular de resolucao for prioritario.

@@ -88,13 +88,10 @@ Visão de faseamento do produto ao longo do tempo, mostrando a progressão do MV
 | Fase 2 — Escala | Out-Dez/2026 | 12 semanas | 4 épicos | 12 filiais + auditoria OK |
 | Fase 3 — Maturidade | Q1/2027 | 8 semanas | 4 épicos | — |
 
-### Formatos de exibição possíveis
+### Recomendação do Chart Specialist
 
-| Formato | Descrição | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Narrativa de cada fase com objetivo, épicos e marcos de decisão | Quando o leitor precisa de contexto sobre dependências e justificativas de faseamento |
-| Tabela | Matriz com fases, períodos, épicos e marcos em colunas | Para referência rápida e comparação entre fases |
-| Timeline horizontal | Diagrama de linha do tempo com fases como blocos coloridos, épicos como sub-itens e marcos como diamantes | Para apresentações executivas e comunicação de roadmap |
-
-> [!info] Avaliação pendente
-> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.
+**Veredicto:** GRÁFICO
+**Tipo:** Timeline horizontal com fases como blocos coloridos e marcos como diamantes
+**Tecnologia:** HTML/CSS
+**Justificativa:** São 4 fases sequenciais com duração, épicos e marcos de decisão. Uma timeline horizontal com blocos proporcionais à duração, sub-itens de épicos e ícones de marco comunica a progressão temporal e o faseamento de forma imediatamente compreensível para stakeholders executivos.
+**Alternativa:** Tabela estilizada (HTML/CSS) — quando o público for técnico e preferir ver todos os detalhes (épicos, datas, marcos) em formato denso e exportável.

@@ -58,15 +58,10 @@ O status de compliance pode ser representado como texto corrido com visão geral
 | Parcial | 2 | 40% |
 | Não conforme | 1 | 20% |
 
-### Formatos de exibição possíveis
+### Recomendação do Chart Specialist
 
-| Formato | Descrição | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Parágrafo narrativo com resumo do status de conformidade e próximos passos | Para visão executiva e contexto em relatórios de governança |
-| Tabela com badges de status | Tabela com badges coloridos (verde = Conforme, amarelo = Parcial, vermelho = Não conforme) | Para documentação detalhada e acompanhamento de remediações |
-| Dashboard de compliance | Painel com indicadores visuais de status por regulação e percentual geral de conformidade | Para apresentações a stakeholders e comitês de compliance |
-| Gráfico de rosca | Gráfico circular mostrando proporção de Conforme/Parcial/Não conforme | Para visão rápida do nível geral de conformidade |
-| Timeline de remediação | Linha do tempo com marcos de ações corretivas por regulação | Para acompanhamento de progresso e planejamento de sprints |
-
-> [!info] Avaliação pendente
-> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.
+**Veredicto:** TABELA
+**Tipo:** Tabela com status badges verde/amarelo/vermelho
+**Tecnologia:** HTML/CSS
+**Justificativa:** Regulamentações com status tricolor (Conforme, Parcial, Não conforme) são ideais para tabela com badges coloridos. Cada linha mostra regulação, status com badge, gap e ação corretiva, permitindo tanto visão geral do compliance quanto drill-down nos gaps específicos.
+**Alternativa:** Dashboard de compliance com indicadores (HTML/CSS) — quando houver 8+ regulamentações e o foco for o percentual geral de conformidade em vez do detalhe por regulação.

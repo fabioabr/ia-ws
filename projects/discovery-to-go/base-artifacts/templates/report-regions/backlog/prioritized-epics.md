@@ -72,15 +72,10 @@ prioritized_epics:
       target_release: "v1.1"
 ```
 
-### Formatos de exibicao possiveis
+### Recomendacao do Chart Specialist
 
-| Formato | Descricao | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Paragrafo narrativo descrevendo os epicos por ordem de prioridade, agrupados por release, com justificativa de priorizacao | Relatorios executivos, documentos de visao de produto |
-| Tabela | Tabela com colunas ID, Epico, Narrativa, Prioridade, Esforco e Release (formato atual do Exemplo) | Revisao detalhada, planejamento de sprint, documentacao tecnica |
-| Barras horizontais por prioridade | Grafico de barras horizontais com epicos no eixo Y, tamanho proporcional ao esforco, cor por prioridade MoSCoW | Visao rapida de distribuicao de esforco vs prioridade, comunicacao com stakeholders |
-| Kanban por release | Colunas por release (MVP, v1.1, v1.2) com cards dos epicos contendo badge de prioridade e esforco | Planejamento de roadmap, visao de entrega por fase |
-| Bubble chart | Bolhas posicionadas por prioridade (eixo X) e esforco (eixo Y), tamanho proporcional ao valor de negocio | Analise de trade-off prioridade vs esforco, decisoes de corte de escopo |
-
-> [!info] Avaliacao pendente
-> Um especialista em visualizacao de dados deve avaliar qual formato grafico melhor representa esta informacao, considerando o publico-alvo e o contexto de uso.
+**Veredicto:** TABELA
+**Tipo:** Tabela com priority badges
+**Tecnologia:** HTML/CSS
+**Justificativa:** Epicos priorizados sao dados tabulares com multiplas dimensoes (prioridade, esforco, release) que se beneficiam de alinhamento em colunas. Badges coloridos por prioridade MoSCoW (Must=vermelho, Should=amarelo, Could=azul, Won't=cinza) tornam a leitura imediata sem sacrificar densidade informacional.
+**Alternativa:** Kanban por release — quando a audiencia precisa de visao de roadmap agrupada por fase em vez de lista linear.

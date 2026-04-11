@@ -52,15 +52,10 @@ MVP (4 meses)          v1.1 (2 meses)         Scale (6 meses)
   Usuarios beta: >= 50    NPS beta: >= 40         Churn: < 3%
 ```
 
-### Formatos de exibicao possiveis
+### Recomendacao do Chart Specialist
 
-| Formato | Descricao | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Paragrafo descritivo com fases e metas destacadas por periodo | Relatorios narrativos, sumarios executivos |
-| Tabela | Tabela estruturada com colunas Fase, Duracao, Metrica, Target, Tipo | Referencia completa, comparacao detalhada entre fases |
-| Timeline com markers | Linha do tempo horizontal com marcadores por fase e metas associadas | Apresentacoes de roadmap, alinhamento de stakeholders |
-| Timeline vertical com agrupamento | Linha do tempo vertical agrupando metricas por fase, com indicadores de tipo | Relatorios detalhados, acompanhamento de progresso por fase |
-| Timeline + cards | Linha do tempo com cards expandiveis contendo metricas de cada fase | Dashboards interativos, planejamento de projeto |
-
-> [!info] Avaliacao pendente
-> Um especialista em visualizacao de dados deve avaliar qual formato grafico melhor representa esta informacao, considerando o publico-alvo e o contexto de uso.
+**Veredicto:** GRAFICO
+**Tipo:** Timeline com markers
+**Tecnologia:** HTML/CSS
+**Justificativa:** Targets por fase sao inerentemente temporais e sequenciais. Uma timeline horizontal com marcadores por fase, duracao proporcional e metricas listadas abaixo de cada marcador comunica a progressao e os checkpoints de forma intuitiva para stakeholders.
+**Alternativa:** Tabela agrupada por fase — quando ha muitas metricas por fase (>5) e a timeline fica visualmente sobrecarregada.

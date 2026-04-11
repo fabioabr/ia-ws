@@ -66,13 +66,10 @@ C4Container
 - **Sistemas externos:** Core Bancário, Stripe, Okta, SendGrid
 - **Fluxos:** Usuário → SPA → API Gateway → Core Service → PostgreSQL/Core Bancário/Stripe; API Gateway → Redis/Okta; Core Service → SQS → Notification Service → SendGrid
 
-### Formatos de exibição possíveis
+### Recomendação do Chart Specialist
 
-| Formato | Descrição | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Narrativa descritiva detalhando cada container interno, sua responsabilidade, tecnologia e como se conecta aos demais componentes e sistemas externos | Sempre — serve como base textual acessível para qualquer público |
-| Tabela | Tabela com colunas Container, Tecnologia, Responsabilidade e Conexões | Sempre — permite consulta rápida dos componentes e seus vínculos |
-| Diagrama C4 Container (Mermaid) | Diagrama C4 nível 2 renderizado via Mermaid, mostrando os containers dentro do boundary do sistema com seus relacionamentos internos e conexões a sistemas externos | Quando é necessário apresentar a decomposição interna do sistema, ideal para decisões de deploy, escalabilidade e ownership de componentes |
-
-> [!info] Avaliação pendente
-> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.
+**Veredicto:** CARD
+**Tipo:** Card com placeholder para diagrama
+**Tecnologia:** HTML/CSS
+**Justificativa:** Assim como o C4 L1, o diagrama de containers é espacial e relacional por natureza, não representável por gráficos de dados. O card estrutura os metadados (containers, tecnologias, fluxos) e reserva placeholder para o diagrama gerado via diagram-drawio.
+**Alternativa:** Tabela de containers (HTML/CSS) — quando o diagrama ainda não foi gerado e é necessário listar containers, tecnologias, responsabilidades e conexões de forma consultável.

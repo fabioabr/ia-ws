@@ -46,14 +46,10 @@ Avalia para cada componente-chave se é mais vantajoso construir internamente ou
 | Fila de mensagens | RabbitMQ vs AWS SQS vs Kafka | Buy (SQS) | Serverless, volume não justifica Kafka |
 | Relatórios PDF | Build custom vs Jasper vs Puppeteer | Open-Source (Puppeteer) | Flexibilidade total, custo zero |
 
-### Formatos de exibição possíveis
+### Recomendação do Chart Specialist
 
-| Formato | Descrição | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Narrativa descritiva analisando cada componente com suas opções, veredicto e justificativa detalhada | Sempre — serve como base textual acessível para qualquer público |
-| Tabela | Tabela estruturada com colunas Componente, Opções Avaliadas, Veredicto e Justificativa, com badges visuais para o veredicto (Build, Buy, Open-Source) | Sempre — permite comparação rápida entre componentes e decisões |
-| Gráfico de barras comparativo | Barras horizontais agrupadas por componente mostrando critérios de avaliação (custo, time-to-market, diferenciação, risco) para cada opção considerada | Quando é necessário justificar visualmente a escolha com base em múltiplos critérios de avaliação |
-| Matriz de decisão | Grid com componentes nas linhas e critérios nas colunas (custo, controle, time-to-market, risco, maturidade), com scores visuais (cores/ícones) para cada combinação | Quando stakeholders precisam entender o racional completo por trás de cada decisão Build vs Buy vs Open-Source |
-
-> [!info] Avaliação pendente
-> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.
+**Veredicto:** TABELA
+**Tipo:** Tabela com verdict badges (Build / Buy / Open-Source)
+**Tecnologia:** HTML/CSS
+**Justificativa:** Com 6 componentes e atributos textuais (opções, justificativa), a tabela com badges coloridos por veredicto permite scanning rápido das decisões e leitura detalhada da justificativa. A amostra não inclui scores numéricos que justifiquem gráfico.
+**Alternativa:** Gráfico de barras horizontais (Chart.js) — quando houver 4+ componentes com scores numéricos por critério (custo, risco, time-to-market), permitindo comparação visual entre opções.

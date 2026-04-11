@@ -47,15 +47,10 @@ Servico Relatorios   SLO <30s  | SLA <60s   [████████░░░] 
 Banco de Dados       SLO <100ms| SLA N/A    [█████████░░] error budget: 1% acima
 ```
 
-### Formatos de exibicao possiveis
+### Recomendacao do Chart Specialist
 
-| Formato | Descricao | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Paragrafo descritivo explicando SLIs, SLOs e SLAs de cada servico | Documentacao de arquitetura, contexto narrativo |
-| Tabela | Tabela estruturada com colunas Servico, SLI, SLO, SLA, Error Budget | Referencia tecnica completa, comparacao entre servicos |
-| Gauge charts | Indicadores circulares mostrando consumo do error budget por servico | Dashboards de operacoes, visao de saude dos servicos |
-| Status indicators | Indicadores coloridos (verde/amarelo/vermelho) por servico e metrica | Reunioes de status, visao rapida de compliance |
-| Gauge + status indicators | Gauges de error budget com semaforos de status integrados | Paineis de SRE, monitoramento continuo |
-
-> [!info] Avaliacao pendente
-> Um especialista em visualizacao de dados deve avaliar qual formato grafico melhor representa esta informacao, considerando o publico-alvo e o contexto de uso.
+**Veredicto:** TABELA
+**Tipo:** Tabela com gauge indicators
+**Tecnologia:** HTML/CSS
+**Justificativa:** SLAs/SLOs envolvem multiplas dimensoes por servico (SLI, SLO, SLA, error budget) que exigem comparacao lado a lado. Uma tabela com mini-gauges inline (barras de consumo do error budget) em cada linha combina a densidade da tabela com a leitura visual imediata dos indicadores.
+**Alternativa:** Stat cards por servico — quando ha poucos servicos (<=3) e o foco e no error budget individual de cada um.

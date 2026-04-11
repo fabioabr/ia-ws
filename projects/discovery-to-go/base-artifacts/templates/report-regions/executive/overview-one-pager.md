@@ -86,13 +86,10 @@ Aprovar orçamento da Fase 1 (MVP) e iniciar Sprint 0 com PoC de integração SA
 **Build vs Buy:** Build customizado
 **Próximo passo:** Aprovar Fase 1 + Sprint 0 (PoC SAP)
 
-### Formatos de exibição possíveis
+### Recomendação do Chart Specialist
 
-| Formato | Descrição | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Narrativa estruturada em seções com parágrafos, bullets e destaques em negrito | Formato padrão — quando o público precisa ler o contexto completo e a argumentação de cada seção |
-| Tabela | Grid resumindo campos-chave (problema, proposta, TCO, riscos, veredicto) em formato compacto | Quando o one-pager será comparado lado a lado com outros projetos em reunião de portfólio |
-| Callout cards | Cards visuais agrupados por seção (problema, proposta, riscos, recomendação) com ícones e destaques | Quando apresentado em tela (slide ou dashboard) e o público precisa absorver visualmente as seções-chave |
-
-> [!info] Avaliação pendente
-> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.
+**Veredicto:** CARD
+**Tipo:** Card layout com callout sections (hero card full-width com seções internas)
+**Tecnologia:** HTML/CSS
+**Justificativa:** O conteúdo é predominantemente narrativo e qualitativo — parágrafos, listas de stakeholders, bullets de decisões técnicas e recomendação textual. Não há série numérica que justifique gráfico; a melhor representação é um layout de cards com seções visuais (problema, proposta, TCO highlight, riscos, veredicto) usando tipografia hierárquica, bordas e ícones CSS.
+**Alternativa:** Tabela comparativa (HTML/CSS) — quando o one-pager for comparado lado a lado com outros projetos em reunião de portfólio

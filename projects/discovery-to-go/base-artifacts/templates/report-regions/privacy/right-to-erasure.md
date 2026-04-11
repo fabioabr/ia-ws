@@ -77,15 +77,10 @@ O direito à exclusão pode ser representado como texto corrido descrevendo o pr
 | Logs de auditoria | Compliance SOC 2 | Dados pessoais mascarados |
 | Dados em backups | Limitação técnica | Excluídos pela rotação (30 dias) |
 
-### Formatos de exibição possíveis
+### Recomendação do Chart Specialist
 
-| Formato | Descrição | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Parágrafo narrativo descrevendo o fluxo de exclusão, SLA e exceções | Para contextualizar o processo em documentos de governança e relatórios à ANPD |
-| Tabela de exceções | Tabela listando dados não excluídos, motivo legal e tratamento aplicado | Para documentação de compliance e referência em auditorias |
-| Diagrama de fluxo | Fluxograma detalhando cada etapa desde a solicitação até a confirmação | Para documentação técnica e treinamento de equipes de suporte |
-| Swimlane diagram | Raias separando Titular, Sistema, DPO e Sub-processadores com etapas cronológicas | Para visualizar responsabilidades de cada ator no processo |
-| BPMN diagram | Processo modelado em notação BPMN com gateways de decisão (viabilidade) | Para documentação formal de processos e integração com ferramentas de BPM |
-
-> [!info] Avaliação pendente
-> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.
+**Veredicto:** CARD
+**Tipo:** Card com passos numerados do fluxo de exclusao
+**Tecnologia:** HTML/CSS
+**Justificativa:** O direito a exclusao e um processo sequencial com 6 etapas bem definidas. Um card com passos numerados (stepper vertical), SLA destacado no header e secao de excecoes ao final comunica o fluxo de forma clara e compacta, sem a complexidade de diagramas BPMN ou swimlanes.
+**Alternativa:** Tabela de excecoes (HTML/CSS) — quando o foco for especificamente os dados que nao podem ser excluidos e seus motivos legais, em vez do fluxo completo.

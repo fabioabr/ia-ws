@@ -49,14 +49,10 @@ as_is_vs_to_be:
 | Performance | 2 | 5 |
 | Agilidade | 1 | 4 |
 
-### Formatos de exibicao possiveis
+### Recomendacao do Chart Specialist
 
-| Formato | Descricao | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Descricao narrativa de cada dimensao comparando estado atual e futuro com ganhos esperados | Relatorios executivos, business cases |
-| Tabela | Tabela lado a lado com dimensoes, estado atual, estado futuro e melhoria esperada | Documentacao tecnica, planejamento de migracao |
-| Comparativo lado a lado | Dois paineis visuais (As-Is e To-Be) com stack e metricas de cada estado | Apresentacoes para decisores, workshops de alinhamento |
-| Grafico radar/spider | Grafico radar sobrepondo as-is e to-be em multiplas dimensoes para visualizar a evolucao | Apresentacoes executivas, comparacao rapida de maturidade entre estados |
-
-> [!info] Avaliacao pendente
-> Um especialista em visualizacao de dados deve avaliar qual formato grafico melhor representa esta informacao, considerando o publico-alvo e o contexto de uso.
+**Veredicto:** CARD
+**Tipo:** Comparison cards lado-a-lado
+**Tecnologia:** HTML/CSS
+**Justificativa:** A comparacao as-is vs to-be tem 6 dimensoes com descricoes qualitativas e quantitativas. Cards lado-a-lado (As-Is a esquerda, To-Be a direita) com destaque visual nas melhorias comunicam o contraste de forma imediata e impactante para decisores.
+**Alternativa:** Radar chart (Chart.js) — quando houver 5+ dimensoes com scores numericos (como os scores 1-5 dos dados de amostra) e o objetivo for comparar maturidade geral entre estados.

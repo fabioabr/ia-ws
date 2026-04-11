@@ -52,14 +52,10 @@ rpa_coe:
 | Tempo medio execucao | < 5 min | 3.2 min | Estavel |
 | Incidentes/mes | < 2 | 1 | Melhorando |
 
-### Formatos de exibicao possiveis
+### Recomendacao do Chart Specialist
 
-| Formato | Descricao | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Descricao narrativa da estrutura do CoE com modelo, time, monitoramento e metricas | Documentos de governanca, propostas de CoE |
-| Tabela | Tabela com aspectos do CoE e suas definicoes | Referencia operacional, onboarding |
-| Dashboard de KPIs | Painel com gauges, trend lines e semaforos para cada KPI do CoE | Reunioes de acompanhamento, relatorios mensais para gestao |
-| Scorecard | Card com metricas-chave, meta vs realizado e indicadores de tendencia | Relatorios executivos, apresentacoes de resultado |
-
-> [!info] Avaliacao pendente
-> Um especialista em visualizacao de dados deve avaliar qual formato grafico melhor representa esta informacao, considerando o publico-alvo e o contexto de uso.
+**Veredicto:** CARD
+**Tipo:** Stat cards
+**Tecnologia:** HTML/CSS
+**Justificativa:** Os KPIs do CoE sao metricas independentes com meta, valor atual e tendencia. Stat cards em grid (2x3 ou 3x2) com valor grande, meta em subtexto e indicador de tendencia (seta + cor) sao o formato padrao para dashboards executivos e comunicam performance de forma imediata.
+**Alternativa:** Tabela com badges de status (HTML/CSS) — quando houver muitos KPIs (10+) e stat cards ocuparem espaco demais.

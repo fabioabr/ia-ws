@@ -61,13 +61,10 @@ Declaração clara e concisa do valor que o produto entrega, usando o formato de
 - **Princípios:** 5 itens (automatizar vs digitalizar, confiança, controller no controle, transparência, escala)
 - **Comparativo implícito:** FinTrack Pro vs Oracle HFM vs planilhas manuais
 
-### Formatos de exibição possíveis
+### Recomendação do Chart Specialist
 
-| Formato | Descrição | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Narrativa completa com elevator pitch, diferenciais e princípios em prosa | Quando o leitor precisa absorver a proposta de valor com contexto |
-| Tabela | Matriz comparativa de diferenciais vs concorrentes (FinTrack vs Oracle HFM vs manual) | Para posicionamento competitivo claro |
-| Highlight card | Card visual com elevator pitch em destaque, diferenciais como ícones/badges e princípios listados | Para apresentações executivas e pitch decks |
-
-> [!info] Avaliação pendente
-> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.
+**Veredicto:** CARD
+**Tipo:** Card com highlight (elevator pitch em destaque + badges de diferenciais)
+**Tecnologia:** HTML/CSS
+**Justificativa:** A proposta de valor é composta por texto estruturado (elevator pitch) e listas qualitativas (diferenciais e princípios). Um card com o pitch em bloco de destaque, diferenciais como badges/ícones e princípios como lista numerada comunica o posicionamento de forma visualmente hierárquica e imediata.
+**Alternativa:** Tabela comparativa (HTML/CSS) — quando o foco for posicionamento competitivo explícito e houver dados concretos de 3+ concorrentes para comparar feature a feature.

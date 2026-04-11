@@ -94,15 +94,10 @@ completion_checklist:
   completion_rate: 77
 ```
 
-### Formatos de exibicao possiveis
+### Recomendacao do Chart Specialist
 
-| Formato | Descricao | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Paragrafo resumindo a taxa de conclusao, categorias completas e itens pendentes com seus bloqueios | Relatorios executivos, comunicacao de status por email |
-| Tabela | Tabela com colunas Categoria, Item, Status e Notas (formato atual do Exemplo) | Revisao detalhada, rastreamento item a item |
-| Barra de progresso geral + checkmarks | Barra de progresso mostrando % de conclusao geral, seguida de lista com checkmarks (completo), alertas (parcial) e X (pendente) | Dashboards de projeto, visao rapida de completude |
-| Barras de progresso por categoria | Uma barra de progresso para cada categoria (Produto, Arquitetura, Financeiro, etc.) mostrando % de itens completos | Identificar categorias com maior lacuna, priorizacao de esforco |
-| Donut chart | Grafico de rosca mostrando proporcao Completo vs Parcial vs Pendente com numero total no centro | Resumo executivo, apresentacoes onde proporcao geral importa mais que detalhe |
-
-> [!info] Avaliacao pendente
-> Um especialista em visualizacao de dados deve avaliar qual formato grafico melhor representa esta informacao, considerando o publico-alvo e o contexto de uso.
+**Veredicto:** TABELA
+**Tipo:** Checklist com progress bar
+**Tecnologia:** HTML/CSS
+**Justificativa:** Itens de checklist com status (Completo/Parcial/Pendente) agrupados por categoria mapeiam naturalmente em uma lista com checkmarks, alertas e indicadores visuais, complementada por uma barra de progresso geral mostrando a taxa de conclusao — formato compacto e acionavel.
+**Alternativa:** Barras de progresso por categoria (HTML/CSS) — quando a identificacao de categorias com maior lacuna for mais importante que o detalhe item a item.

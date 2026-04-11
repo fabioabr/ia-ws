@@ -51,14 +51,10 @@ Identifica todos os stakeholders relevantes do projeto, classificando-os por ní
 - **Média/Baixa Influência + Alto Interesse:** Time de Compliance → Manter informado
 - **Baixa Influência + Baixo/Médio Interesse:** Equipe de Suporte N2 → Monitorar
 
-### Formatos de exibição possíveis
+### Recomendação do Chart Specialist
 
-| Formato | Descrição | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Narrativa descritiva listando stakeholders agrupados por estratégia de engajamento | Relatórios executivos textuais ou contextos onde gráficos não são suportados |
-| Tabela | Tabela com colunas de stakeholder, influência, interesse e engajamento | Visão detalhada para planejamento operacional de comunicação |
-| Gráfico de quadrantes (Influência x Interesse) | Matriz 2x2 posicionando cada stakeholder conforme seu nível de influência e interesse | Apresentações estratégicas para definir prioridades de engajamento e comunicação |
-| Mapa de bolhas | Bolhas posicionadas nos eixos influência/interesse, com tamanho representando criticidade | Quando há muitos stakeholders e é preciso destacar os mais críticos visualmente |
-
-> [!info] Avaliação pendente
-> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.
+**Veredicto:** TABELA
+**Tipo:** Tabela com badges de influência/interesse
+**Tecnologia:** HTML/CSS
+**Justificativa:** Com 4-6 stakeholders, uma tabela estilizada com badges coloridos por nível (Alta/Média/Baixa) comunica influência e interesse de forma clara e escaneável, sem overhead de gráfico.
+**Alternativa:** Gráfico de quadrantes (scatter) via Chart.js — usar quando houver 8+ stakeholders e a distribuição espacial nos eixos influência x interesse agregar valor analítico.

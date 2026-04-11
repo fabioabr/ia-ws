@@ -56,13 +56,10 @@ integration_map:
    ALTA         ALTA      ALTA    MEDIA    BAIXA
 ```
 
-### Formatos de exibicao possiveis
+### Recomendacao do Chart Specialist
 
-| Formato | Descricao | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Descricao narrativa de cada integracao com protocolo, volume e criticidade | Documentos de escopo, relatorios executivos |
-| Tabela | Tabela com sistemas, protocolos, direcao, volume e criticidade | Inventario de integracoes, documentacao tecnica |
-| Diagrama de rede/fluxo | Diagrama mostrando o sistema central conectado a sistemas externos com setas indicando direcao, protocolo e volume | Apresentacoes de arquitetura, analise de dependencias, identificacao de pontos de falha |
-
-> [!info] Avaliacao pendente
-> Um especialista em visualizacao de dados deve avaliar qual formato grafico melhor representa esta informacao, considerando o publico-alvo e o contexto de uso.
+**Veredicto:** TABELA
+**Tipo:** Tabela de fluxos
+**Tecnologia:** HTML/CSS
+**Justificativa:** Os dados de integracao sao multidimensionais (sistema, tipo, protocolo, direcao, volume, criticidade) e cada linha e independente. Uma tabela estilizada com badges de criticidade (cores), icones de direcao e agrupamento por tipo permite escaneamento rapido e funciona melhor que diagramas de rede em HTML estatico.
+**Alternativa:** Card grid por sistema (HTML/CSS) — quando houver poucos sistemas (3-4) e o foco for detalhar cada integracao individualmente.

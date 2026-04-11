@@ -51,15 +51,10 @@ A política de retenção pode ser representada como texto corrido resumindo a e
 | Transações financeiras | 5 anos | Migração para cold storage anonimizado | Regulatório |
 | Logs de auditoria | 5 anos | S3 Glacier → exclusão automática | Regulatório |
 
-### Formatos de exibição possíveis
+### Recomendação do Chart Specialist
 
-| Formato | Descrição | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Parágrafo narrativo descrevendo a estratégia de retenção e os princípios aplicados | Para contexto em documentos de governança e relatórios ao DPO |
-| Tabela detalhada | Tabela com dado, prazo de retenção, processo de descarte e tipo de automação | Para documentação de compliance e referência operacional |
-| Timeline horizontal | Linha do tempo mostrando os diferentes prazos de retenção em escala (minutos → anos) | Para visualização comparativa dos prazos e identificação de outliers |
-| Gantt chart | Barras horizontais representando o ciclo de vida de cada tipo de dado | Para apresentações que precisam mostrar sobreposição de prazos e janelas de descarte |
-| Diagrama de ciclo de vida | Fluxo mostrando criação → armazenamento → retenção → descarte para cada tipo de dado | Para documentação técnica e treinamento de equipes |
-
-> [!info] Avaliação pendente
-> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.
+**Veredicto:** TABELA
+**Tipo:** Tabela simples com colunas dado, retencao e processo de descarte
+**Tecnologia:** HTML/CSS
+**Justificativa:** Politica de retencao combina dados textuais (tipo de dado, processo de descarte) com prazos variados. Uma tabela simples e o formato mais direto para documentacao de compliance e referencia operacional, cobrindo todos os campos necessarios sem complexidade visual desnecessaria.
+**Alternativa:** Grafico de barras horizontais (HTML/CSS com barras puras) — quando houver 6+ itens com faixas de tempo comparaveis e o objetivo for visualizar a escala relativa dos prazos (minutos vs. anos).

@@ -51,15 +51,10 @@ CAC:        N/A → < R$ 200 (Mes 9)             ░░░░░░░░░░ 
 LTV/CAC:    N/A → >= 3:1 (Mes 12)              ░░░░░░░░░░ N/A
 ```
 
-### Formatos de exibicao possiveis
+### Recomendacao do Chart Specialist
 
-| Formato | Descricao | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Paragrafo descritivo com os KPIs destacados em negrito | Relatorios textuais simples, contexto narrativo |
-| Tabela | Tabela estruturada com colunas ID, KPI, Valor Atual, Target, Prazo, Direcao | Visao completa e comparativa de todos os KPIs |
-| Stat cards com sparklines | Cards individuais por KPI mostrando valor atual, target e tendencia ao longo do tempo | Dashboards executivos, acompanhamento periodico |
-| Gauge (velocimetro) | Indicador circular mostrando progresso percentual em direcao ao target | Apresentacoes de status, visao rapida de progresso individual |
-| Stat cards + gauge combinado | Cards com valor numerico e gauge embutido para cada KPI | Relatorios visuais ricos, paineis de acompanhamento |
-
-> [!info] Avaliacao pendente
-> Um especialista em visualizacao de dados deve avaliar qual formato grafico melhor representa esta informacao, considerando o publico-alvo e o contexto de uso.
+**Veredicto:** CARD
+**Tipo:** Stat cards com progress bar
+**Tecnologia:** HTML/CSS
+**Justificativa:** KPIs de negocio sao metricas individuais com valor atual vs target que precisam de destaque visual. Stat cards com barra de progresso (preenchimento proporcional ao avanco em direcao ao target) e seta de direcao (up/down) comunicam o status de cada KPI de forma executiva e imediata.
+**Alternativa:** Tabela com barras inline — quando ha mais de 8 KPIs e o layout de cards ocupa espaco demais.

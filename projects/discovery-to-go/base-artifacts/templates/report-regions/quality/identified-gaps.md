@@ -64,15 +64,10 @@ identified_gaps:
       status: "Aberto"
 ```
 
-### Formatos de exibicao possiveis
+### Recomendacao do Chart Specialist
 
-| Formato | Descricao | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Paragrafo descritivo listando os gaps por area, destacando impactos criticos e altos com recomendacoes | Relatorios narrativos, comunicacao executiva, emails de status |
-| Tabela | Tabela com colunas ID, Area, Gap, Impacto, Recomendacao e Status (formato atual do Exemplo) | Revisao detalhada, rastreamento de resolucao, documentacao tecnica |
-| Barras horizontais por impacto | Grafico de barras horizontais agrupando gaps por nivel de impacto (Critico, Alto, Medio, Baixo) com contagem | Visao rapida da distribuicao de severidade, priorizacao de resolucao |
-| Heatmap por area vs impacto | Matriz com areas nas linhas e niveis de impacto nas colunas, cor indicando quantidade de gaps | Identificar areas com maior concentracao de gaps criticos |
-| Lista com alert style | Cards com borda colorida por impacto (vermelho=Critico, laranja=Alto, amarelo=Medio) e barra de progresso de resolucao | Dashboards de qualidade, acompanhamento visual de gaps abertos |
-
-> [!info] Avaliacao pendente
-> Um especialista em visualizacao de dados deve avaliar qual formato grafico melhor representa esta informacao, considerando o publico-alvo e o contexto de uso.
+**Veredicto:** TABELA
+**Tipo:** Tabela com alert badges
+**Tecnologia:** HTML/CSS
+**Justificativa:** Gaps possuem dados estruturados (area, descricao, impacto, recomendacao, status) que exigem colunas detalhadas para rastreamento; alert badges coloridos por impacto (Critico = vermelho, Alto = laranja, Medio = amarelo) fornecem scanning visual rapido mantendo todas as informacoes necessarias para resolucao.
+**Alternativa:** Cards com alert style (HTML/CSS) — quando o numero de gaps for pequeno (<=4) e a apresentacao visual com bordas coloridas e barra de progresso for mais impactante que o formato tabular.

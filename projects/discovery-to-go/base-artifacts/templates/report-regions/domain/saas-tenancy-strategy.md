@@ -44,14 +44,10 @@ tenancy_strategy:
 | Schema-per-tenant | Medio | Medio | Alta | Media |
 | DB-per-tenant | Alto | Alto | Muito Alta | Alta |
 
-### Formatos de exibicao possiveis
+### Recomendacao do Chart Specialist
 
-| Formato | Descricao | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Descricao narrativa do modelo escolhido com justificativas tecnicas e trade-offs | Documentos de decisao arquitetural (ADR) ou relatorios executivos |
-| Tabela | Matriz comparativa de modelos com criterios de isolamento, custo e seguranca | Comparacao de alternativas, documentacao tecnica |
-| Diagrama de arquitetura | Diagrama mostrando a estrutura de isolamento entre tenants (DB, schema, infra) | Apresentacoes tecnicas, onboarding de novos desenvolvedores |
-| Matriz de comparacao | Grid com modelos vs criterios, usando indicadores visuais (cores, icones) | Decisoes de arquitetura, workshops de trade-off analysis |
-
-> [!info] Avaliacao pendente
-> Um especialista em visualizacao de dados deve avaliar qual formato grafico melhor representa esta informacao, considerando o publico-alvo e o contexto de uso.
+**Veredicto:** CARD
+**Tipo:** Card com comparison
+**Tecnologia:** HTML/CSS
+**Justificativa:** A escolha de tenancy e uma decisao arquitetural unica com poucos modelos (3) e multiplos trade-offs qualitativos (isolamento, custo, seguranca, complexidade). Cards comparativos lado-a-lado com badges de nivel comunicam melhor que uma tabela plana.
+**Alternativa:** Tabela comparativa com indicadores visuais (HTML/CSS) — quando houver mais de 4 modelos ou mais de 6 dimensoes de comparacao.

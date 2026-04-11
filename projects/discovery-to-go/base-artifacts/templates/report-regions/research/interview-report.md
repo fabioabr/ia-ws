@@ -90,13 +90,10 @@ Relatório estruturado das entrevistas realizadas durante o discovery, cobrindo 
 - **Padrões:** Unanimidade sobre a dor, desconfiança no processo, demanda por rastreabilidade
 - **Surpresas:** Filiais TOTVS como maior risco, CFO quer predição, analistas com workarounds sofisticados
 
-### Formatos de exibição possíveis
+### Recomendação do Chart Specialist
 
-| Formato | Descrição | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Narrativa estruturada com seções e bullet points descrevendo metodologia, achados e padrões | Quando o leitor precisa absorver o contexto completo e as nuances das entrevistas |
-| Tabela | Tabelas para perfis entrevistados, frequência de temas e cruzamento tema × entrevistado | Quando é necessário comparar dados entre perfis ou temas de forma rápida |
-| Accordion | Seções colapsáveis por tema, expandindo para revelar achados detalhados, padrões e surpresas | Quando há muitos temas e o leitor quer navegar seletivamente sem sobrecarga visual |
-
-> [!info] Avaliação pendente
-> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.
+**Veredicto:** CARD
+**Tipo:** Card com accordion por tema
+**Tecnologia:** HTML/CSS
+**Justificativa:** Dados qualitativos e textuais com múltiplos temas aninhados se beneficiam de seções colapsáveis que permitem navegação seletiva sem sobrecarga visual, preservando o contexto narrativo de cada achado.
+**Alternativa:** Tabela cruzada (HTML/CSS) — quando stakeholders precisam comparar frequência de temas entre perfis de forma rápida e tabulada

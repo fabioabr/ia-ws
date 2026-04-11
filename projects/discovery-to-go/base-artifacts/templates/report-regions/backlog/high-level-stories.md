@@ -80,15 +80,10 @@ high_level_stories:
           acceptance_criteria_count: 3
 ```
 
-### Formatos de exibicao possiveis
+### Recomendacao do Chart Specialist
 
-| Formato | Descricao | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Paragrafo narrativo descrevendo as stories por epico, com resumo dos criterios de aceite mais relevantes | Documentos de visao, comunicacao com stakeholders nao tecnicos |
-| Tabela | Tabela com colunas Epico, ID, Story, Criterios de Aceite | Revisao tecnica, refinamento de backlog |
-| Lista agrupada / accordion por epico | Stories organizadas sob cabecalhos de epico, com criterios de aceite expansiveis em cada story | Documentacao de backlog, wikis de projeto, consulta durante refinamento |
-| Treemap | Blocos por epico (area proporcional ao numero de stories), subdivididos por story | Visao de distribuicao de escopo entre epicos, identificar epicos com muitas stories |
-| Story map | Eixo horizontal com epicos, eixo vertical com stories ordenadas por prioridade dentro de cada epico | Planejamento de releases, workshops de story mapping |
-
-> [!info] Avaliacao pendente
-> Um especialista em visualizacao de dados deve avaliar qual formato grafico melhor representa esta informacao, considerando o publico-alvo e o contexto de uso.
+**Veredicto:** CARD
+**Tipo:** Cards em accordion por epico
+**Tecnologia:** HTML/CSS
+**Justificativa:** Stories agrupadas por epico sao hierarquicas por natureza. Accordions com cabecalho do epico (expandir/colapsar) permitem navegar sem sobrecarregar a pagina, e os criterios de aceite ficam acessiveis sob cada story sem poluir a visao geral.
+**Alternativa:** Tabela agrupada — quando o relatorio e estatico (PDF/impressao) e nao suporta interatividade de accordion.

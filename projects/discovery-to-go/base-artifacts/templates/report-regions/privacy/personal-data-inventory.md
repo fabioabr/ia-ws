@@ -52,15 +52,10 @@ O inventário de dados pessoais pode ser representado como texto corrido context
 | Dados de transação | PostgreSQL (`transactions`) | API Core, Relatórios | Obrigação legal (Art. 7, II) | Criptografia em repouso e trânsito |
 | Cookies de sessão | Redis (TTL 15min) | API Gateway | Consentimento (Art. 7, I) | TTL automático |
 
-### Formatos de exibição possíveis
+### Recomendação do Chart Specialist
 
-| Formato | Descrição | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Parágrafo narrativo resumindo o mapeamento de dados pessoais e sua distribuição | Para contextualizar o inventário em documentos executivos e relatórios à ANPD |
-| Tabela detalhada com status | Tabela com colunas de dado, local, acesso, base legal e nível de proteção, usando cores para indicar criticidade | Para documentação completa de compliance e auditorias LGPD |
-| Diagrama de fluxo de dados | Mapa visual mostrando dados pessoais, seus armazenamentos e fluxos entre sistemas | Para visualizar a cadeia de tratamento e identificar pontos de exposição |
-| Matriz dado × sistema | Grid cruzando tipos de dados pessoais com sistemas que os acessam | Para análise de concentração de acesso e segregação de responsabilidades |
-| Mapa de calor | Heatmap cruzando dados com nível de sensibilidade e volume de acesso | Para priorizar controles de proteção e identificar riscos |
-
-> [!info] Avaliação pendente
-> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.
+**Veredicto:** TABELA
+**Tipo:** Tabela com badges coloridos por classificação de proteção
+**Tecnologia:** HTML/CSS
+**Justificativa:** Inventário de dados pessoais é um registro estruturado com múltiplas colunas textuais (dado, local, acesso, base legal). Badges coloridos na coluna de proteção indicam visualmente o nível de criticidade, mantendo a completude necessária para auditorias LGPD.
+**Alternativa:** Matriz dado x sistema (HTML/CSS) — quando o objetivo for analisar concentração de acesso e segregação entre sistemas, em vez do inventário completo.

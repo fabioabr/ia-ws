@@ -49,14 +49,10 @@ Distribui responsabilidades claras para cada atividade-chave do projeto, elimina
 
 **Cobertura por atividade:** Todas as 7 atividades possuem pelo menos um R e um A atribuídos.
 
-### Formatos de exibição possíveis
+### Recomendação do Chart Specialist
 
-| Formato | Descrição | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Narrativa descrevendo as responsabilidades de cada papel por atividade | Documentos executivos ou atas de reunião onde a matriz completa seria excessiva |
-| Tabela | Matriz RACI completa com atividades nas linhas e papéis nas colunas | Referência operacional do dia a dia para consulta rápida de responsabilidades |
-| Heatmap (matriz de calor) | Matriz colorida onde cada célula R/A/C/I recebe uma cor distinta, destacando concentração de responsabilidades | Apresentações visuais para identificar sobrecarga de papéis ou lacunas de cobertura |
-| Gráfico de barras empilhadas | Barras por papel mostrando a proporção de R, A, C e I atribuídos | Quando é preciso comparar rapidamente a carga de responsabilidade entre papéis |
-
-> [!info] Avaliação pendente
-> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.
+**Veredicto:** TABELA
+**Tipo:** Heatmap com cores por tipo de responsabilidade (R/A/C/I)
+**Tecnologia:** HTML/CSS
+**Justificativa:** A matriz RACI é inerentemente tabular e se beneficia de color-coding por célula — cores distintas para R, A, C e I permitem identificar concentração de responsabilidades e lacunas em um único olhar.
+**Alternativa:** Gráfico de barras empilhadas via Chart.js — usar quando o objetivo for comparar a carga total de responsabilidades entre papéis, agregando contagens de R/A/C/I.

@@ -54,13 +54,10 @@ ROI acumulado Fase 1: R$ 13.000/mes
 ROI acumulado Fase 2: R$ 18.000/mes
 ```
 
-### Formatos de exibicao possiveis
+### Recomendacao do Chart Specialist
 
-| Formato | Descricao | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Descricao narrativa de cada processo com priorizacao, custo e ROI esperado | Business cases, aprovacao de investimento |
-| Tabela | Tabela com processos, volumes, custos e ROI ordenados por fase | Documentacao de planejamento, acompanhamento de progresso |
-| Gantt com anotacoes de ROI | Grafico de Gantt mostrando fases e processos no tempo, com anotacoes de ROI acumulado e economia mensal | Apresentacoes para stakeholders, gestao de programa, dashboards de acompanhamento |
-
-> [!info] Avaliacao pendente
-> Um especialista em visualizacao de dados deve avaliar qual formato grafico melhor representa esta informacao, considerando o publico-alvo e o contexto de uso.
+**Veredicto:** TABELA
+**Tipo:** Tabela com ROI + timeline
+**Tecnologia:** HTML/CSS
+**Justificativa:** Os processos priorizados tem multiplos atributos (volume, custo manual, complexidade, ROI, fase) que precisam ser comparados simultaneamente. Uma tabela estilizada com badges de complexidade, barras inline de ROI e agrupamento por fase comunica priorizacao e impacto financeiro de forma completa.
+**Alternativa:** Timeline horizontal com barras por fase (HTML/CSS) — quando a dimensao temporal for mais importante que o detalhamento de ROI por processo.

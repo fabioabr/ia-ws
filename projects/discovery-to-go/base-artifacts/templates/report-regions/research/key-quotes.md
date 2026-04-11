@@ -67,13 +67,10 @@ Citações literais dos entrevistados que capturam de forma vívida as dores, ne
 - Temas cobertos: Processo de consolidação, Qualidade e confiança, Tentativas anteriores, Rastreabilidade, Visão de futuro, Integração multi-ERP
 - Todas com source tag `INTERVIEW`
 
-### Formatos de exibição possíveis
+### Recomendação do Chart Specialist
 
-| Formato | Descrição | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Citações incorporadas em parágrafos narrativos com contexto ao redor | Quando as citações são usadas como evidência dentro de um relatório mais amplo |
-| Tabela | Tabela com colunas: Citação, Atribuição, Tema, Source Tag | Quando é necessário filtrar ou ordenar citações por tema ou perfil |
-| Blockquote cards | Cards visuais individuais com a citação em destaque, atribuição e tag de tema | Quando o objetivo é causar impacto emocional e dar voz aos entrevistados em apresentações ou dashboards |
-
-> [!info] Avaliação pendente
-> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.
+**Veredicto:** CARD
+**Tipo:** Blockquote cards
+**Tecnologia:** HTML/CSS
+**Justificativa:** Citações qualitativas precisam de destaque visual e impacto emocional — blockquote cards com tipografia grande, atribuição e tag de tema comunicam a voz dos entrevistados de forma direta e memorável.
+**Alternativa:** Tabela filtrada (HTML/CSS) — quando há volume alto de citações (10+) e o leitor precisa filtrar por tema ou perfil

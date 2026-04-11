@@ -50,14 +50,10 @@ Lista todas as tecnologias escolhidas para o projeto, organizadas por camada arq
 | Terraform | Infra (IaC) | 1.7+ | Infra versionada, módulos reutilizáveis |
 | Datadog | Observabilidade | — | APM + logs + métricas unificados |
 
-### Formatos de exibição possíveis
+### Recomendação do Chart Specialist
 
-| Formato | Descrição | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Narrativa descritiva organizando as tecnologias por camada, explicando escolhas e relações entre elas | Sempre — serve como base textual acessível para qualquer público |
-| Tabela | Tabela estruturada com colunas Tecnologia, Camada, Versão e Justificativa | Sempre — permite comparação rápida e consulta pontual |
-| Badge grid | Grade visual com badges/ícones agrupados por camada (Frontend, Backend, Dados, Infra, Observabilidade), cada badge contendo nome e versão da tecnologia | Quando a stack precisa ser comunicada de forma visual e rápida, ideal para apresentações executivas e dashboards |
-| Diagrama em camadas | Diagrama empilhado mostrando as camadas arquiteturais como blocos horizontais com as tecnologias posicionadas em cada camada | Quando é importante visualizar a relação hierárquica entre camadas e como as tecnologias se distribuem verticalmente na arquitetura |
-
-> [!info] Avaliação pendente
-> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.
+**Veredicto:** TABELA
+**Tipo:** Tabela com badges por camada
+**Tecnologia:** HTML/CSS
+**Justificativa:** Dados categorizados por camada com atributos heterogêneos (versão, justificativa) são melhor representados em tabela estilizada, onde badges coloridos por camada facilitam o scanning visual sem sacrificar a densidade de informação.
+**Alternativa:** Badge grid — quando o público é exclusivamente executivo e só precisa saber quais tecnologias existem por camada, sem detalhes de versão/justificativa.

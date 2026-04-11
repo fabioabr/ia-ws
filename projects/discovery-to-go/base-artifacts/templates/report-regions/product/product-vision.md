@@ -61,13 +61,10 @@ O time-to-value será de **2 dias** para empresas com ERPs suportados, com onboa
 - **Princípios:** 5 itens (controller como herói, dados confiáveis, complexidade abstraída, LatAm first, open by default)
 - **Time-to-value futuro:** 2 dias (self-service)
 
-### Formatos de exibição possíveis
+### Recomendação do Chart Specialist
 
-| Formato | Descrição | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Narrativa aspiracional com elevator pitch, visão de futuro e princípios | Quando o leitor precisa absorver a visão completa com contexto e inspiração |
-| Tabela | Matriz de princípios com descrição e implicação prática de cada um | Para referência rápida e alinhamento de time |
-| Quote card | Card visual com elevator pitch em destaque (estilo citação), visão 3 anos como narrativa e princípios como lista iconográfica | Para apresentações de visão de produto, pitch decks e onboarding de novos membros |
-
-> [!info] Avaliação pendente
-> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.
+**Veredicto:** CARD
+**Tipo:** Card com quote style (elevator pitch como citação em destaque + visão 3 anos + princípios)
+**Tecnologia:** HTML/CSS
+**Justificativa:** A visão de produto é essencialmente narrativa e aspiracional. Um card com o elevator pitch em estilo blockquote destacado, a visão de 3 anos como texto fluido e os princípios como lista iconográfica preserva o tom inspiracional enquanto cria hierarquia visual clara entre as seções.
+**Alternativa:** Tabela de princípios (HTML/CSS) — quando o foco for alinhamento operacional do time e cada princípio precisar de coluna adicional com implicação prática ou exemplo concreto.

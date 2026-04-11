@@ -56,14 +56,10 @@ Define o modelo de suporte e plantão para o período pós-go-live, incluindo re
 - **P1 (Crítico):** 15min (N1), 30min (N2), 1h (N3)
 - **P2 (Alto):** 1h (N1), 2h (N2)
 
-### Formatos de exibição possíveis
+### Recomendação do Chart Specialist
 
-| Formato | Descrição | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Narrativa descrevendo o modelo de suporte, níveis, horários e escalação | Contratos, SLAs formais ou documentação de onboarding |
-| Tabela | Tabela de cobertura por nível, horário, SLA e cadeia de escalação | Referência operacional para o time de suporte e gestão de incidentes |
-| Calendário / grade de horários | Grade visual semanal mostrando quais níveis cobrem cada faixa horária | War rooms, dashboards de operação ou painéis de plantão visíveis ao time |
-| Diagrama de fluxo de escalação | Fluxo visual mostrando o caminho do incidente desde N1 até a resolução | Treinamento de novos membros do suporte ou apresentação do modelo para o cliente |
-
-> [!info] Avaliação pendente
-> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.
+**Veredicto:** TABELA
+**Tipo:** Tabela com badges de turno e nível de cobertura
+**Tecnologia:** HTML/CSS
+**Justificativa:** A grade semanal de cobertura por faixa horária e nível de suporte (N1/N2/N3) é naturalmente tabular; badges coloridos por turno destacam visualmente a disponibilidade e facilitam consulta operacional rápida.
+**Alternativa:** Diagrama de fluxo de escalação via HTML/CSS — usar quando o objetivo for treinar novos membros, mostrando o caminho do incidente desde N1 até resolução.

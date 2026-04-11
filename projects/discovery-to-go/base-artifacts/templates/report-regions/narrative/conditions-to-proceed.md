@@ -52,15 +52,10 @@ Condicoes para Prosseguir (2/6 atendidas)
 [ ] CTP-05  DPO designado para LGPD                   Legal          Pendente
 ```
 
-### Formatos de exibicao possiveis
+### Recomendacao do Chart Specialist
 
-| Formato | Descricao | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Paragrafo descritivo listando condicoes e seus status | Relatorios textuais, comunicacao por e-mail |
-| Tabela | Tabela estruturada com colunas ID, Condicao, Categoria, Status, Responsavel, Prazo | Referencia completa, acompanhamento detalhado |
-| Checklist com status | Lista de verificacao com indicadores visuais (check, pendente, em andamento) agrupados por categoria | Reunioes de go/no-go, apresentacoes de status |
-| Checklist com barra de progresso | Checklist com barra geral de progresso (X de Y atendidas) | Dashboards executivos, visao rapida de prontidao |
-| Checklist agrupado por categoria | Checklists separados por categoria (Tecnica, Financeira, Legal, Organizacional) com contagem | Acompanhamento por area, delegacao de responsabilidades |
-
-> [!info] Avaliacao pendente
-> Um especialista em visualizacao de dados deve avaliar qual formato grafico melhor representa esta informacao, considerando o publico-alvo e o contexto de uso.
+**Veredicto:** CARD
+**Tipo:** Checklist com progress bar
+**Tecnologia:** HTML/CSS
+**Justificativa:** Condicoes para prosseguir sao binarias (atendida/pendente/em andamento) e exigem visao de completude. Um checklist com indicadores visuais por item e barra de progresso geral (X de Y atendidas) comunica instantaneamente o grau de prontidao do projeto para o kickoff.
+**Alternativa:** Checklist agrupado por categoria — quando ha muitas condicoes (>10) e a organizacao por area (Tecnica, Financeira, Legal) facilita a delegacao.

@@ -59,15 +59,10 @@ Os sub-operadores podem ser representados como texto corrido resumindo o cenári
 | Em negociação | 1 | 17% |
 | Pendente | 0 | 0% |
 
-### Formatos de exibição possíveis
+### Recomendação do Chart Specialist
 
-| Formato | Descrição | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Parágrafo narrativo resumindo o cenário de sub-operadores e status de DPAs | Para visão executiva e contexto em relatórios de governança |
-| Tabela com status de DPA | Tabela detalhada com badges coloridos por status (verde = Assinado, amarelo = Em negociação, vermelho = Pendente) | Para documentação de compliance e acompanhamento de contratos |
-| Mapa de fornecedores | Diagrama mostrando cada sub-operador, os dados que recebe e o status do DPA | Para visualizar a cadeia de sub-processamento e identificar riscos |
-| Gráfico de rosca | Gráfico circular mostrando proporção de DPAs por status | Para dashboards de compliance e relatórios ao DPO |
-| Risk matrix | Matriz cruzando volume de dados compartilhados com status do DPA para priorização | Para análise de risco e planejamento de ações corretivas |
-
-> [!info] Avaliação pendente
-> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.
+**Veredicto:** TABELA
+**Tipo:** Tabela com status badges verde/amarelo/vermelho para DPA
+**Tecnologia:** HTML/CSS
+**Justificativa:** Sub-operadores com status de DPA tricolor (Assinado, Em negociacao, Pendente) seguem o mesmo padrao eficaz de compliance com badges. Cada linha mostra fornecedor, dados compartilhados e status com badge colorido, permitindo identificar rapidamente riscos contratuais.
+**Alternativa:** Risk matrix (HTML/CSS) — quando houver muitos sub-operadores (10+) e o objetivo for priorizar acoes cruzando volume de dados com status do DPA.

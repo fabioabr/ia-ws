@@ -73,15 +73,10 @@ auditor_score:
   overall_status: "Reprovado"
 ```
 
-### Formatos de exibicao possiveis
+### Recomendacao do Chart Specialist
 
-| Formato | Descricao | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Paragrafo resumindo o score geral, dimensoes aprovadas e reprovadas, e proximos passos | Relatorios textuais, emails executivos, contextos onde grafico nao e possivel |
-| Tabela | Tabela com colunas Dimensao, Nota, Piso, Status e Feedback (formato atual do Exemplo) | Visao detalhada para revisao tecnica, comparacao lado a lado das dimensoes |
-| Radar chart (5 dimensoes) | Grafico radar com os 5 eixos representando as dimensoes, overlay da linha de piso minimo | Visao holistica do equilibrio entre dimensoes; destaca visualmente desequilibrios |
-| Gauge por dimensao | Um medidor (gauge) individual para cada dimensao, com zona verde (acima do piso) e vermelha (abaixo) | Dashboards interativos, visualizacao rapida de aprovado/reprovado por dimensao |
-| Stat cards | Cards individuais com nota grande, nome da dimensao e indicador visual de status | Resumo executivo, dashboards, apresentacoes com visao rapida |
-
-> [!info] Avaliacao pendente
-> Um especialista em visualizacao de dados deve avaliar qual formato grafico melhor representa esta informacao, considerando o publico-alvo e o contexto de uso.
+**Veredicto:** GRAFICO
+**Tipo:** Radar chart com 5 eixos
+**Tecnologia:** Chart.js
+**Justificativa:** 5 dimensoes com scores numericos (0-10) e linha de piso minimo mapeiam perfeitamente em um radar chart com overlay, permitindo visao holistica do equilibrio entre dimensoes e identificacao imediata de quais estao abaixo do piso.
+**Alternativa:** Stat cards com gauge (HTML/CSS) — quando o relatorio e estatico e a comparacao aprovado/reprovado por dimensao individual importa mais que o perfil geral.

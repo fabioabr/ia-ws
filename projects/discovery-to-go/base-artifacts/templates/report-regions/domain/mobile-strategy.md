@@ -52,14 +52,10 @@ mobile_strategy:
 | Offline | 4/5 | 4/5 | 5/5 | 3/5 |
 | Custo | Medio | Medio | Alto | Baixo |
 
-### Formatos de exibicao possiveis
+### Recomendacao do Chart Specialist
 
-| Formato | Descricao | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Descricao narrativa da estrategia mobile com justificativas para cada decisao | Business cases, documentos de estrategia |
-| Tabela | Tabela com aspectos e decisoes tomadas | Referencia rapida, documentacao tecnica |
-| Matriz de comparacao | Grid comparando abordagens (nativo, hibrido, cross-platform, PWA) em multiplos criterios | Decisoes de abordagem, workshops de arquitetura |
-| Badge grid | Grid visual com badges/icones para plataformas, features e capacidades | Decks executivos, resumos visuais de capacidades |
-
-> [!info] Avaliacao pendente
-> Um especialista em visualizacao de dados deve avaliar qual formato grafico melhor representa esta informacao, considerando o publico-alvo e o contexto de uso.
+**Veredicto:** TABELA
+**Tipo:** Tabela comparativa com badges
+**Tecnologia:** HTML/CSS
+**Justificativa:** A comparacao de plataformas mobile envolve 4 abordagens vs 6 criterios com scores e valores qualitativos. Uma tabela comparativa com badges coloridos para scores (4/5, 5/5) e custo permite comparacao direta e justifica a decisao tomada de forma objetiva.
+**Alternativa:** Radar chart (Chart.js) — quando os criterios tiverem todos scores numericos uniformes e a comparacao visual de perfil entre abordagens for mais relevante que os valores individuais.

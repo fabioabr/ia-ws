@@ -46,13 +46,10 @@ data_contracts:
 | Eventos Kafka | Avro | 3.2.0 | `Ativa` | Publisher |
 | Open Finance | OpenAPI | v1 | `Em migracao` | BACEN |
 
-### Formatos de exibicao possiveis
+### Recomendacao do Chart Specialist
 
-| Formato | Descricao | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Descricao narrativa de cada contrato com formato, versionamento e politicas | ADRs, documentacao de governanca de APIs |
-| Tabela com badges de versao | Tabela com integracoes, formato, versao atual (badge), status e owner | Catalogo de contratos, dashboards de integracao, portais de API |
-| Matriz de compatibilidade | Grid mostrando compatibilidade entre versoes de contratos e sistemas consumidores | Planejamento de deprecacao, analise de impacto de breaking changes |
-
-> [!info] Avaliacao pendente
-> Um especialista em visualizacao de dados deve avaliar qual formato grafico melhor representa esta informacao, considerando o publico-alvo e o contexto de uso.
+**Veredicto:** TABELA
+**Tipo:** Tabela com version badges
+**Tecnologia:** HTML/CSS
+**Justificativa:** Contratos de dados sao itens catalogaveis com atributos discretos (formato, versao, status, owner). Uma tabela com badges coloridos para versao e status (ativa/em migracao) oferece escaneamento rapido e funciona como catalogo de referencia.
+**Alternativa:** Matriz de compatibilidade (HTML/CSS) — quando o foco for planejamento de deprecacao e a relacao entre versoes e consumidores for mais importante que o catalogo.

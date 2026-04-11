@@ -63,15 +63,10 @@ tco:
 
 Faixa de sensibilidade: R$ 1.518.400 (otimista) — R$ 1.898.000 (esperado) — R$ 2.467.400 (pessimista)
 
-### Formatos de exibição possíveis
+### Recomendação do Chart Specialist
 
-| Formato | Descrição | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Narrativa descrevendo a evolução do TCO ao longo dos 3 anos, destacando os maiores centros de custo e a faixa de sensibilidade | Relatórios executivos onde o contexto qualitativo importa mais que a precisão numérica |
-| Tabela | Matriz categoria x ano com totais e faixa de sensibilidade, como no exemplo acima | Quando o leitor precisa comparar valores exatos entre categorias e períodos |
-| Stacked bar chart | Barras empilhadas por ano, cada segmento representando uma categoria de custo, com cores distintas | Visualizar a composição do custo por ano e identificar quais categorias dominam o TCO |
-| Waterfall chart | Cascata mostrando como cada categoria contribui para o total acumulado em cada ano | Destacar o impacto incremental de cada categoria no custo total |
-| Line trend chart | Linhas por categoria ao longo dos 3 anos, com área sombreada para a faixa de sensibilidade | Enfatizar tendências de crescimento e a incerteza associada às projeções |
-
-> [!info] Avaliação pendente
-> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.
+**Veredicto:** GRÁFICO + CARD
+**Tipo:** Stacked bar chart + stat card total
+**Tecnologia:** Chart.js (stacked bar) + HTML/CSS (stat card com faixa de sensibilidade)
+**Justificativa:** 4 categorias de custo cruzadas com 3 anos formam um dataset ideal para barras empilhadas — cada barra (ano) mostra a composição do custo e permite comparar tanto o total quanto a participação de cada categoria ao longo do tempo. O stat card complementa com o grand total e a faixa de sensibilidade em destaque.
+**Alternativa:** Tabela (HTML/CSS) — quando o leitor precisa dos valores exatos por célula para auditoria ou re-cálculo próprio

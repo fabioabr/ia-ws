@@ -48,14 +48,10 @@ saas_pricing:
 | Professional | 149 | 1.430 | 7 |
 | Enterprise | Sob consulta | Sob consulta | 12+ |
 
-### Formatos de exibicao possiveis
+### Recomendacao do Chart Specialist
 
-| Formato | Descricao | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Descricao narrativa de cada plano com features e posicionamento de mercado | Relatorios executivos ou documentos de contexto estrategico |
-| Tabela comparativa | Tabela com planos em colunas e features em linhas, marcando inclusao por tier | Paginas de pricing, decks de vendas, comparacao direta entre planos |
-| Grafico de barras por tier | Barras agrupadas mostrando preco mensal e anual lado a lado por plano | Apresentacoes para stakeholders que precisam visualizar a progressao de preco entre tiers |
-| Pricing cards | Cards visuais lado a lado com destaque no plano recomendado | Landing pages, materiais de marketing, apresentacoes comerciais |
-
-> [!info] Avaliacao pendente
-> Um especialista em visualizacao de dados deve avaliar qual formato grafico melhor representa esta informacao, considerando o publico-alvo e o contexto de uso.
+**Veredicto:** TABELA
+**Tipo:** Pricing table
+**Tecnologia:** HTML/CSS
+**Justificativa:** Tiers de pricing com features, precos e segmentos sao melhor comunicados em uma tabela estilizada com colunas por plano e destaque visual no plano recomendado. Pricing tables sao o padrao da industria SaaS e permitem comparacao direta.
+**Alternativa:** Pricing cards lado-a-lado (HTML/CSS) — quando o formato for para landing page ou material de marketing com menos de 4 planos.

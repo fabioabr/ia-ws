@@ -52,14 +52,10 @@ Mapeamento visual da jornada de cada persona ao longo do processo que o produto 
 | 5. Revisão | Envia para controller revisar | Email + Excel | Expectativa | Sim | Sim |
 | 6. Entrega | Controller aprova e repassa ao CFO | Email + PowerPoint | Alívio | Sim | Sim |
 
-### Formatos de exibição possíveis
+### Recomendação do Chart Specialist
 
-| Formato | Descrição | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Narrativa sequencial descrevendo cada passo da jornada com contexto e dores | Quando o leitor precisa entender o fluxo completo com nuances |
-| Tabela | Matriz com etapas nas linhas e dimensões (ação, touchpoint, emoção, dor) nas colunas | Para análise comparativa entre etapas |
-| Stepped timeline / flowchart | Diagrama de fluxo horizontal com etapas sequenciais, ícones de emoção e marcadores de dor/oportunidade | Para apresentações e comunicação visual da jornada completa |
-| Swimlane diagram | Raias por persona/sistema mostrando interações e handoffs entre atores | Para evidenciar dependências e gargalos entre personas |
-
-> [!info] Avaliação pendente
-> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.
+**Veredicto:** GRÁFICO
+**Tipo:** Timeline horizontal com etapas sequenciais
+**Tecnologia:** HTML/CSS
+**Justificativa:** A jornada é um processo sequencial com 6 etapas, cada uma com múltiplas dimensões (ação, touchpoint, emoção, dor, oportunidade). Uma timeline horizontal com cards por etapa, ícones de emoção e badges de dor/oportunidade preserva a linearidade do fluxo e permite absorver todas as dimensões sem perder a sequência.
+**Alternativa:** Tabela estilizada (HTML/CSS) — quando houver múltiplas jornadas para comparar lado a lado ou quando o público preferir formato analítico denso em vez de visual.

@@ -52,15 +52,10 @@ cost_per_component:
 | Auth0 (Business plan) | License | R$ 1.500 | R$ 18.000 |
 | Datadog (Pro) | License | R$ 900 | R$ 10.800 |
 
-### Formatos de exibição possíveis
+### Recomendação do Chart Specialist
 
-| Formato | Descrição | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Narrativa descrevendo os principais centros de custo, proporções e oportunidades de otimização | Relatórios onde o contexto de cada componente é mais relevante que a comparação visual |
-| Tabela | Matriz componente x custo com tipo e notas, como no exemplo acima | Quando o leitor precisa de valores exatos e detalhes por componente |
-| Pie chart | Gráfico de pizza mostrando a proporção de cada componente no custo total mensal/anual | Visualizar rapidamente a distribuição percentual dos custos — ideal para até 6-8 componentes |
-| Treemap | Retângulos proporcionais ao custo de cada componente, agrupados por tipo (compute, storage, license) | Quando há muitos componentes e se deseja mostrar hierarquia por tipo + proporção de custo |
-| Stacked bar chart | Barras empilhadas agrupadas por tipo de componente (compute, storage, network, license) | Comparar custos entre tipos de componente e identificar a categoria dominante |
-
-> [!info] Avaliação pendente
-> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.
+**Veredicto:** GRÁFICO
+**Tipo:** Horizontal bar chart
+**Tecnologia:** HTML/CSS (barras proporcionais com largura percentual)
+**Justificativa:** 6 componentes com custos absolutos são perfeitamente representados por barras horizontais ordenadas do maior para o menor — o label do componente fica legível à esquerda e a barra comunica a magnitude relativa sem necessidade de biblioteca JS. HTML/CSS puro é mais leve e mantém controle total do layout.
+**Alternativa:** Pie chart (Chart.js) — quando o foco da análise for a proporção percentual de cada componente no custo total em vez da comparação absoluta entre valores

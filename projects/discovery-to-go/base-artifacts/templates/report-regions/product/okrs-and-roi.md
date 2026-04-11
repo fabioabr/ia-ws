@@ -88,15 +88,10 @@ Objetivos e resultados-chave (OKRs) que definem o sucesso do produto em termos m
 | Payback | — | 14 meses | ROI |
 | ROI 3 anos | — | 75%-100% | ROI |
 
-### Formatos de exibição possíveis
+### Recomendação do Chart Specialist
 
-| Formato | Descrição | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Narrativa descrevendo objetivos, metas e análise de ROI em prosa | Quando o leitor precisa de contexto e premissas detalhadas |
-| Tabela | Matrizes separadas para OKRs (baseline vs target) e ROI (investimento vs retorno) | Para consulta rápida de metas e valores |
-| Gráfico de barras | Barras comparando baseline vs target por KR, evidenciando a magnitude da melhoria | Para comunicação visual do impacto esperado |
-| Gauge / velocímetro | Indicadores de progresso circular por KR mostrando % de avanço em relação ao target | Para dashboards de acompanhamento pós-lançamento |
-| Gráfico de payback | Linha acumulada de investimento vs economia ao longo do tempo, com ponto de breakeven | Para justificar investimento a stakeholders financeiros |
-
-> [!info] Avaliação pendente
-> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.
+**Veredicto:** CARD
+**Tipo:** Progress bars + stat cards (OKRs como barras de progresso baseline-to-target, ROI como stat cards)
+**Tecnologia:** HTML/CSS
+**Justificativa:** São 4 OKRs com baseline/target claros e 4 métricas de ROI. Progress bars comunicam visualmente a magnitude do gap por KR, enquanto stat cards destacam os números de ROI. Com menos de 5 OKRs, barras de progresso HTML/CSS são mais leves e legíveis que um gráfico Chart.js.
+**Alternativa:** Gráfico de barras agrupadas (Chart.js) — quando houver 5+ OKRs ou quando for necessário comparar múltiplos cenários de ROI lado a lado com escala numérica precisa.

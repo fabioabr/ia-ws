@@ -62,14 +62,10 @@ revenue_projection:
 
 Resumo anual: Ano 1 ARR R$ 750.960 — Ano 2 ARR R$ 1.876.000 (+150%) — Ano 3 ARR R$ 3.500.000 (+87%).
 
-### Formatos de exibição possíveis
+### Recomendação do Chart Specialist
 
-| Formato | Descrição | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Narrativa descrevendo a trajetória de receita, premissas de crescimento e marcos de ARR por ano | Comunicação com stakeholders não-técnicos onde o storytelling financeiro é prioritário |
-| Tabela | Matriz mês a mês com novos clientes, base total, MRR e churn, como no exemplo acima | Quando o leitor precisa dos números exatos para cada período e quer fazer suas próprias análises |
-| Line chart | Linha mostrando a evolução do MRR ao longo dos meses, com marcadores nos marcos principais | Visualizar a curva de crescimento da receita e identificar pontos de inflexão |
-| Area chart | Área preenchida sob a curva de MRR, opcionalmente segmentada por plano (Professional vs Starter) | Enfatizar o volume acumulado de receita e a composição por plano ao longo do tempo |
-
-> [!info] Avaliação pendente
-> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.
+**Veredicto:** GRÁFICO
+**Tipo:** Line chart
+**Tecnologia:** Chart.js
+**Justificativa:** A progressão mensal do MRR é uma série temporal contínua com tendência de crescimento — o line chart é o formato nativo para esse tipo de dado, permitindo identificar a curva de aceleração, pontos de inflexão e projetar visualmente a trajetória futura. Marcadores nos meses-chave (1, 3, 6, 12) reforçam os marcos de receita.
+**Alternativa:** Area chart (Chart.js) — quando houver segmentação por plano (Professional vs Starter) e o objetivo for mostrar a composição da receita ao longo do tempo

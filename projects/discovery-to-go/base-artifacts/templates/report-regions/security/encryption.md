@@ -51,15 +51,10 @@ A estratégia de criptografia pode ser representada como texto corrido resumindo
 | Campos sensíveis (CPF, dados bancários) | AES-256-GCM (application-level) | Envelope encryption via AWS KMS, rotação trimestral | Ativo |
 | Backups | AES-256 | Mesma CMK do banco, criptografia por padrão | Ativo |
 
-### Formatos de exibição possíveis
+### Recomendação do Chart Specialist
 
-| Formato | Descrição | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Parágrafo narrativo resumindo a cobertura de criptografia por camada | Para visão executiva e contexto em documentos de compliance |
-| Tabela com status | Tabela listando camada, método, gestão de chaves e status (Ativo/Pendente/Planejado) | Para documentação técnica completa e auditorias de segurança |
-| Matriz de cobertura | Grid visual com ícones de cadeado mostrando quais camadas têm criptografia ativa | Para dashboards de postura de segurança |
-| Diagrama em camadas | Diagrama mostrando as camadas do sistema com indicadores de criptografia em cada nível | Para apresentações de arquitetura de segurança |
-| Scorecard | Card com percentual de cobertura e indicadores por tipo (trânsito, repouso, aplicação) | Para relatórios executivos de conformidade |
-
-> [!info] Avaliação pendente
-> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.
+**Veredicto:** TABELA
+**Tipo:** Tabela simples com colunas camada, método e gestão de chaves
+**Tecnologia:** HTML/CSS
+**Justificativa:** Dados de criptografia são técnicos e textuais (algoritmos, protocolos, políticas de chaves), sem valores numéricos ou categorias que justifiquem gráficos. Uma tabela simples e limpa é o formato mais eficiente para referência técnica e auditorias.
+**Alternativa:** Scorecard com percentual de cobertura (HTML/CSS) — quando o público for executivo e o objetivo for mostrar a postura geral de criptografia em vez do detalhe por camada.

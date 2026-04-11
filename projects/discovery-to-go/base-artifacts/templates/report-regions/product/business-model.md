@@ -77,14 +77,10 @@ SaaS B2B com pricing por filial consolidada. Receita recorrente mensal (MRR) com
 | Churn mensal | < 2% |
 | LTV/CAC | 13x |
 
-### Formatos de exibição possíveis
+### Recomendação do Chart Specialist
 
-| Formato | Descrição | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Narrativa do modelo de negócio com detalhamento de canais e estratégia de pricing | Quando o leitor precisa entender a lógica por trás do modelo |
-| Tabela | Matrizes separadas para planos (features por tier) e métricas SaaS | Para comparação direta entre planos e consulta de métricas |
-| Pricing table | Cards lado a lado por plano com preço, features incluídas e CTA, estilo página de pricing | Para apresentações comerciais e validação de posicionamento |
-| Gráfico de barras | Barras comparando métricas SaaS (LTV vs CAC, MRR projetado) | Para comunicação visual de unit economics |
-
-> [!info] Avaliação pendente
-> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.
+**Veredicto:** TABELA
+**Tipo:** Pricing table (cards lado a lado por tier com features, preço e limites)
+**Tecnologia:** HTML/CSS
+**Justificativa:** São 3 planos com atributos comparáveis (preço, filiais, usuários, features). Uma pricing table estilo SaaS com colunas por tier permite comparação direta e é o padrão visual que stakeholders e clientes reconhecem imediatamente. As métricas SaaS complementam como stat cards abaixo.
+**Alternativa:** Gráfico de barras (Chart.js) — quando o foco for unit economics (LTV vs CAC, MRR projetado) e o público for investidores que precisam de visualização quantitativa das métricas financeiras.

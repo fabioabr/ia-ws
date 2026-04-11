@@ -55,13 +55,10 @@ Documentacao de Processos
 Total: 66 documentos | 5 tipos | 4 categorias
 ```
 
-### Formatos de exibicao possiveis
+### Recomendacao do Chart Specialist
 
-| Formato | Descricao | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Descricao narrativa de cada tipo de documento com categoria, publico e lifecycle | Documentos de governanca, manuais de qualidade |
-| Tabela | Tabela com tipos, categorias, publico, frequencia de revisao e lifecycle | Referencia operacional, treinamentos |
-| Treemap/Diagrama de hierarquia | Visualizacao hierarquica mostrando categorias, tipos e quantidade de documentos em cada nivel | Dashboards de gestao documental, apresentacoes sobre maturidade de processos |
-
-> [!info] Avaliacao pendente
-> Um especialista em visualizacao de dados deve avaliar qual formato grafico melhor representa esta informacao, considerando o publico-alvo e o contexto de uso.
+**Veredicto:** TABELA
+**Tipo:** Tabela com badges
+**Tecnologia:** HTML/CSS
+**Justificativa:** A taxonomia de documentos tem 5 tipos com atributos categoricos (categoria, publico, revisao, lifecycle). Uma tabela estilizada com badges coloridos para categoria e frequencia de revisao permite escaneamento rapido e funciona como catalogo de referencia para consulta operacional.
+**Alternativa:** Card grid agrupado por categoria (HTML/CSS) — quando o foco for visualizar a hierarquia (categorias > tipos > quantidade) em vez do detalhamento por tipo.

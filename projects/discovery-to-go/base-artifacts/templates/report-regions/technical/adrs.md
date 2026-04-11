@@ -57,14 +57,10 @@ Registra as decisões arquiteturais significativas do projeto no formato ADR. Ca
 | ADR-003 | SQS como fila de mensagens | Aceita | 2025-02 | Serverless, volume atual não justifica Kafka |
 | ADR-004 | Puppeteer para geração de PDF | Aceita | 2025-02 | Flexibilidade de layout, custo zero de licença |
 
-### Formatos de exibição possíveis
+### Recomendação do Chart Specialist
 
-| Formato | Descrição | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Narrativa descritiva apresentando cada decisão arquitetural com seu contexto, alternativas e consequências | Sempre — serve como base textual acessível para qualquer público |
-| Tabela | Tabela resumo com colunas ID, Título, Status, Data e Decisão | Sempre — permite visão consolidada e consulta rápida de todas as decisões |
-| Timeline | Linha do tempo horizontal ou vertical posicionando cada ADR cronologicamente, com status visual (cores/ícones para Aceita, Proposta, Substituída, Depreciada) | Quando é importante visualizar a evolução temporal das decisões arquiteturais e seus status ao longo do projeto |
-| Accordion | Seções expansíveis/colapsáveis, uma por ADR, com título e status visíveis e conteúdo completo (contexto, decisão, alternativas, consequências) acessível ao expandir | Quando o público precisa navegar entre múltiplas ADRs sem poluição visual, ideal para documentação interativa e relatórios HTML |
-
-> [!info] Avaliação pendente
-> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.
+**Veredicto:** CARD
+**Tipo:** Cards em accordion (expansíveis/colapsáveis)
+**Tecnologia:** HTML/CSS
+**Justificativa:** ADRs contêm blocos de texto estruturado (contexto, decisão, alternativas, consequências) que não cabem em células de tabela nem se traduzem em gráficos. Accordions com badges de status permitem navegação limpa entre múltiplas decisões sem poluição visual.
+**Alternativa:** Tabela resumo (HTML/CSS) — quando se precisa apenas de uma visão consolidada (ID, título, status, data) sem o conteúdo completo de cada ADR.

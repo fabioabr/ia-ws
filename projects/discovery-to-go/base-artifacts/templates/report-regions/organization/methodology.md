@@ -59,14 +59,10 @@ Descreve o framework de trabalho adotado, a cadência de entregas e as cerimôni
 
 **Stack de ferramentas:** Jira (gestão), Slack (comunicação), Confluence + Git (documentação), Figma (design)
 
-### Formatos de exibição possíveis
+### Recomendação do Chart Specialist
 
-| Formato | Descrição | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Narrativa descritiva do framework, cadência, cerimônias e ferramentas adotadas | Propostas comerciais, documentos executivos ou onboarding de novos membros |
-| Tabela | Tabela de cerimônias com dia, duração e participantes | Referência rápida para o time sobre a agenda recorrente do sprint |
-| Card / ficha resumo | Blocos visuais organizados por categoria (framework, cadência, cerimônias, ferramentas) | Dashboards de projeto, wikis ou painéis de onboarding visual |
-| Diagrama de fluxo do sprint | Fluxo visual mostrando a sequência de cerimônias ao longo das 2 semanas | Apresentações de kickoff para alinhar o ritmo do projeto com todos os envolvidos |
-
-> [!info] Avaliação pendente
-> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.
+**Veredicto:** CARD
+**Tipo:** Card informativo com seções agrupadas (framework, cadência, cerimônias, ferramentas)
+**Tecnologia:** HTML/CSS
+**Justificativa:** Dados descritivos e categóricos de metodologia não possuem dimensão numérica para gráfico; blocos visuais organizados por categoria comunicam o processo de forma clara e compacta.
+**Alternativa:** Tabela estilizada via HTML/CSS — usar quando o foco for exclusivamente a agenda de cerimônias e for necessária comparação lado a lado de dia, duração e participantes.

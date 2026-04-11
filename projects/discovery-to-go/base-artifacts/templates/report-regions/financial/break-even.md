@@ -55,13 +55,10 @@ break_even:
 
 Break-even no mês 14: investimento acumulado de R$ 780.000 cruzado pela receita acumulada de R$ 795.000. Confiança: Média.
 
-### Formatos de exibição possíveis
+### Recomendação do Chart Specialist
 
-| Formato | Descrição | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Narrativa explicando o ponto de equilíbrio, as premissas e o impacto de variações nos parâmetros-chave | Comunicação executiva onde o contexto e as condicionantes são mais importantes que o gráfico |
-| Tabela | Tabela mês a mês com investimento acumulado e receita acumulada, destacando a linha de cruzamento | Quando o leitor precisa dos valores exatos para cada período |
-| Line chart com crossover | Duas linhas (investimento acumulado e receita acumulada) com destaque no ponto de interseção (break-even) | Visualização padrão para break-even — mostra claramente o momento de cruzamento e a velocidade de retorno |
-
-> [!info] Avaliação pendente
-> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.
+**Veredicto:** GRÁFICO
+**Tipo:** Line chart com crossover
+**Tecnologia:** Chart.js
+**Justificativa:** Duas linhas (investimento acumulado vs. receita acumulada) convergindo e cruzando no mês 14 comunicam instantaneamente o ponto de equilíbrio — é o formato canônico para break-even analysis. A anotação no ponto de interseção e o preenchimento da área entre as curvas reforçam a mensagem sem poluir o gráfico.
+**Alternativa:** Tabela (HTML/CSS) — quando o público precisa dos valores exatos mês a mês para validação das premissas

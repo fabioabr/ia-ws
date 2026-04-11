@@ -47,15 +47,10 @@ Taxa de erro API:    ●──────── < 0.1% mensal           [=-----
 Build + Deploy:      ──────●── < 10min (95% deploys)  [======----] target
 ```
 
-### Formatos de exibicao possiveis
+### Recomendacao do Chart Specialist
 
-| Formato | Descricao | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Paragrafo descritivo com metricas tecnicas em destaque | Documentacao tecnica, contexto narrativo |
-| Tabela | Tabela estruturada com colunas ID, KPI, Target, SLA, Como Medir | Visao completa e referencia tecnica |
-| Stat cards | Cards individuais por KPI com valor target e SLA associado | Dashboards de operacoes, paineis de monitoramento |
-| Line charts (serie temporal) | Graficos de linha mostrando evolucao de cada metrica ao longo do tempo | Acompanhamento de tendencias, reunioes de engineering review |
-| Stat cards + line charts | Cards com valor atual e mini-grafico de tendencia embutido | Dashboards tecnicos com historico visual |
-
-> [!info] Avaliacao pendente
-> Um especialista em visualizacao de dados deve avaliar qual formato grafico melhor representa esta informacao, considerando o publico-alvo e o contexto de uso.
+**Veredicto:** CARD
+**Tipo:** Stat cards
+**Tecnologia:** HTML/CSS
+**Justificativa:** KPIs tecnicos sao metricas pontuais com target e SLA que precisam de leitura rapida em contexto de monitoramento. Stat cards com valor target em destaque, SLA como subtexto e indicador visual de conformidade sao o formato padrao para dashboards de operacoes.
+**Alternativa:** Tabela estruturada — quando o relatorio e para referencia tecnica e precisa de todas as colunas (ID, KPI, Target, SLA, Como Medir) em formato compacto.

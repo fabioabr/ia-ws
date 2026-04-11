@@ -71,13 +71,10 @@ Legenda: R = Responsible, A = Accountable, C = Consulted, I = Informed
 | Documentos dentro da validade | >= 95% | 91% |
 | Acessos unicos/mes | >= 5 | 6.2 |
 
-### Formatos de exibicao possiveis
+### Recomendacao do Chart Specialist
 
-| Formato | Descricao | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Descricao narrativa do modelo de governanca com papeis, ciclos e metricas | Politicas internas, documentos de qualidade |
-| Tabela | Tabela RACI com atividades e papeis | Definicao de responsabilidades, onboarding de times |
-| RACI heatmap | Matriz RACI com cores indicando nivel de envolvimento por papel e atividade | Workshops de governanca, apresentacoes para gestao, definicao de processos |
-
-> [!info] Avaliacao pendente
-> Um especialista em visualizacao de dados deve avaliar qual formato grafico melhor representa esta informacao, considerando o publico-alvo e o contexto de uso.
+**Veredicto:** GRAFICO + CARD
+**Tipo:** Heatmap RACI + stat cards
+**Tecnologia:** HTML/CSS
+**Justificativa:** Este arquivo tem dois conjuntos de dados distintos. A matriz RACI e ideal como heatmap com cores por nivel de envolvimento (R=azul forte, A=verde, C=amarelo, I=cinza), permitindo visualizar responsabilidades de forma instantanea. As metricas de adocao sao KPIs independentes que funcionam melhor como stat cards com valor atual, target e badge de status.
+**Alternativa:** Tabela RACI classica + tabela de metricas (HTML/CSS) — quando o relatorio for mais textual e nao necessitar de destaque visual para os indicadores.

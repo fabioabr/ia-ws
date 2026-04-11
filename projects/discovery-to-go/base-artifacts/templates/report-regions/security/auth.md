@@ -67,15 +67,10 @@ Usuário → Login Page → Okta (SAML 2.0)
 | Administrador | Sim | Sim | Sim | Sim | Sim |
 | Auditor (read-only) | Sim | Sim | Nao | Nao | Nao |
 
-### Formatos de exibição possíveis
+### Recomendação do Chart Specialist
 
-| Formato | Descrição | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Parágrafo narrativo descrevendo o modelo de autenticação, MFA e estratégia de autorização | Para contextualizar a abordagem de segurança de acesso em documentos executivos |
-| Tabela RBAC | Matriz de papéis vs. permissões com marcadores visuais (Sim/Não) | Para referência técnica de controle de acesso e auditorias |
-| Diagrama de fluxo | Fluxograma mostrando as etapas desde o login até a sessão autenticada com RBAC | Para documentação técnica e onboarding de desenvolvedores |
-| Swimlane diagram | Raias separando Usuário, IdP (Okta), Aplicação e RBAC Engine | Para visualizar responsabilidades de cada componente no fluxo de autenticação |
-| Checklist card | Card com ícones de status para cada mecanismo (SSO, MFA, SCIM, RBAC) | Para dashboards de postura de segurança e relatórios de compliance |
-
-> [!info] Avaliação pendente
-> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.
+**Veredicto:** CARD
+**Tipo:** Card com checklist de mecanismos de segurança
+**Tecnologia:** HTML/CSS
+**Justificativa:** Autenticação e autorização são um conjunto de políticas e métodos (SSO, MFA, SCIM, RBAC) que funcionam como checklist de postura de segurança. Um card estruturado com ícones de status para cada mecanismo comunica o cenário completo de forma compacta e imediatamente escaneável.
+**Alternativa:** Tabela RBAC (HTML/CSS) — quando o foco principal for a matriz detalhada de papéis vs. permissões para auditoria técnica.

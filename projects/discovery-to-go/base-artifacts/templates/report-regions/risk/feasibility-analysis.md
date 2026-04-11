@@ -52,13 +52,10 @@ feasibility_analysis:
 
 Veredicto consolidado: Viável com Ressalvas. Condições-chave: validar hipóteses HYP-01 e HYP-02, designar DPO, monitorar churn <3%.
 
-### Formatos de exibição possíveis
+### Recomendação do Chart Specialist
 
-| Formato | Descrição | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Narrativa descrevendo cada dimensão de viabilidade, seu veredicto e as condições para sustentá-lo | Relatórios executivos onde o raciocínio por trás de cada veredicto é mais importante que a comparação visual |
-| Tabela | Matriz dimensão x veredicto x justificativa x condições, como no exemplo acima | Quando o leitor precisa dos detalhes completos de cada dimensão para tomada de decisão |
-| Radar chart (4 dimensões) | Gráfico radar com 4 eixos (Técnica, Financeira, Operacional, Regulatória), scores de 1-5, área preenchida mostrando o perfil de viabilidade | Visualizar o equilíbrio entre as dimensões e identificar rapidamente quais áreas são mais fracas |
-
-> [!info] Avaliação pendente
-> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.
+**Veredicto:** GRÁFICO
+**Tipo:** Radar chart com 4 eixos
+**Tecnologia:** Chart.js
+**Justificativa:** 4 dimensões com scores numéricos (1-5) mapeiam perfeitamente em um radar chart que mostra o perfil de viabilidade como área preenchida, permitindo identificação imediata de desequilíbrios entre Técnica, Financeira, Operacional e Regulatória.
+**Alternativa:** Status badges grid (HTML/CSS) — quando o relatório é estático e os veredictos textuais (Viável / Viável com Ressalvas / Inviável) importam mais que a comparação numérica entre dimensões.

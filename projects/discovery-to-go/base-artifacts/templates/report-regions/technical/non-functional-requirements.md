@@ -52,13 +52,10 @@ Consolida os requisitos não funcionais que direcionam decisões de arquitetura 
 | Recuperação | RPO | < 1 hora | — |
 | Recuperação | RTO | < 4 horas | — |
 
-### Formatos de exibição possíveis
+### Recomendação do Chart Specialist
 
-| Formato | Descrição | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Narrativa descritiva organizando os requisitos por categoria, explicando metas, SLAs e impacto nas decisões de arquitetura | Sempre — serve como base textual acessível para qualquer público |
-| Tabela | Tabela estruturada com colunas Categoria, Requisito, Valor e SLA, com badges de severidade | Sempre — permite consulta rápida e comparação objetiva entre requisitos |
-| Gauge charts por categoria | Gráficos do tipo gauge (velocímetro) agrupados por categoria (Performance, Disponibilidade, Escalabilidade, Segurança, Recuperação), mostrando o valor-alvo em relação a faixas de referência (crítico, aceitável, ideal) | Quando é necessário comunicar visualmente o nível de exigência de cada categoria para stakeholders técnicos e executivos, facilitando a identificação de áreas mais restritivas |
-
-> [!info] Avaliação pendente
-> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.
+**Veredicto:** TABELA
+**Tipo:** Tabela com severity badges por categoria
+**Tecnologia:** HTML/CSS
+**Justificativa:** Requisitos possuem valores heterogêneos (porcentagens, tempos, contagens) com unidades distintas, tornando gráficos comparativos enganosos. A tabela com badges coloridos por categoria (Performance, Segurança, Recuperação) permite consulta objetiva e priorização visual.
+**Alternativa:** Gráfico de barras agrupado (Chart.js) — quando houver valores current vs target para os mesmos requisitos, permitindo visualizar gaps entre estado atual e meta.

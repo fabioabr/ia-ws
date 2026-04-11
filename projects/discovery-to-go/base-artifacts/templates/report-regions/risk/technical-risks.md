@@ -47,13 +47,10 @@ technical_risks:
 | TRISK-03 | Auth0 free tier insuficiente antes do break-even | Licença | Média | Médio |
 | TRISK-04 | Bundle size do SPA acima de 500KB | Performance | Baixa | Médio |
 
-### Formatos de exibição possíveis
+### Recomendação do Chart Specialist
 
-| Formato | Descrição | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Narrativa descrevendo cada risco técnico, seu contexto arquitetural, mitigação e fallback | Relatórios onde o leitor precisa entender o raciocínio técnico por trás de cada risco |
-| Tabela | Matriz completa com área, probabilidade, impacto, mitigação e fallback, como no exemplo acima | Quando o leitor precisa de todos os detalhes para planejamento técnico e priorização |
-| Horizontal bar chart por severidade | Barras horizontais por risco técnico, comprimento proporcional à severidade (combinação de probabilidade e impacto), coloridas por área | Comparar visualmente a gravidade relativa dos riscos técnicos e identificar os que exigem ação imediata |
-
-> [!info] Avaliação pendente
-> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.
+**Veredicto:** TABELA
+**Tipo:** Tabela com severity badges
+**Tecnologia:** HTML/CSS
+**Justificativa:** Riscos técnicos possuem dados categóricos (área, probabilidade, impacto) com mitigação e fallback textuais que exigem colunas detalhadas; badges coloridos por severidade (Crítico = vermelho, Alto = laranja, Médio = amarelo) fornecem scanning visual rápido sem sacrificar o conteúdo.
+**Alternativa:** Horizontal bar chart (Chart.js) — quando a comparação relativa de severidade importa mais que os detalhes de mitigação e fallback.

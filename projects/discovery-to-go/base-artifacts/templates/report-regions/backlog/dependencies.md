@@ -69,15 +69,10 @@ dependencies:
       epics: ["EP-04", "EP-05"]
 ```
 
-### Formatos de exibicao possiveis
+### Recomendacao do Chart Specialist
 
-| Formato | Descricao | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Paragrafo descrevendo a sequencia de execucao, dependencias criticas e oportunidades de paralelismo | Relatorios executivos, comunicacao textual de planejamento |
-| Tabela | Tabela com colunas De, Para, Tipo e Descricao (formato atual do Exemplo) | Documentacao tecnica, rastreamento formal de dependencias |
-| Grafo direcionado / network diagram | Nos representando epicos, arestas direcionadas mostrando dependencias com cor por tipo (blocks=vermelho, enables=azul, recommends=cinza) | Visao principal de dependencias, planejamento de releases, identificacao de caminho critico |
-| Diagrama de faixas (swimlane) por grupo | Faixas horizontais representando grupos de execucao paralela, com epicos posicionados em suas respectivas faixas | Planejamento de timeline, comunicacao de sequenciamento com o time |
-| Gantt simplificado | Barras horizontais por epico com setas de dependencia, agrupadas por fase de execucao | Planejamento de cronograma, visao de sequenciamento temporal |
-
-> [!info] Avaliacao pendente
-> Um especialista em visualizacao de dados deve avaliar qual formato grafico melhor representa esta informacao, considerando o publico-alvo e o contexto de uso.
+**Veredicto:** TABELA
+**Tipo:** Tabela de dependencias
+**Tecnologia:** HTML/CSS
+**Justificativa:** Grafos direcionados sao visualmente ideais para dependencias, porem complexos de renderizar de forma confiavel em HTML estatico. Uma tabela com colunas De, Para, Tipo (com badges coloridos: blocks=vermelho, enables=azul) e grupos de execucao paralela listados abaixo entrega a mesma informacao de forma previsivel e acessivel.
+**Alternativa:** Diagrama de swimlanes por grupo — quando houver suporte a bibliotecas de renderizacao SVG no pipeline de geracao.

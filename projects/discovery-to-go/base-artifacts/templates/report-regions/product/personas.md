@@ -93,14 +93,10 @@ Perfis representativos dos usuários do produto, construídos a partir de entrev
 | Juliana Ferreira | Controller | Diária | 3 | 2 | Power user operacional |
 | Marcos Oliveira | Analista Financeiro | Diária | 3 | 2 | Executor operacional |
 
-### Formatos de exibição possíveis
+### Recomendação do Chart Specialist
 
-| Formato | Descrição | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Descrição narrativa de cada persona com JTBD, dores e ganhos em prosa | Quando o leitor precisa de contexto profundo sobre motivações e comportamentos |
-| Tabela | Matriz comparativa de personas com colunas para cargo, dores, ganhos e frequência | Para visão comparativa rápida entre personas |
-| Grid de persona cards | Cards visuais lado a lado, cada um com foto/avatar, nome, cargo, JTBD e dores principais | Para apresentações a stakeholders e workshops de alinhamento |
-| Mapa de empatia | Quadrantes (pensa, sente, faz, diz) por persona | Para aprofundamento em workshops de design |
-
-> [!info] Avaliação pendente
-> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.
+**Veredicto:** CARD
+**Tipo:** Grid de persona cards
+**Tecnologia:** HTML/CSS
+**Justificativa:** Personas são entidades qualitativas com atributos heterogêneos (JTBD, dores, ganhos, comportamentos). Um grid de cards lado a lado com avatar, nome, cargo e bullets de JTBD/dores permite escaneamento rápido e comparação visual entre perfis sem forçar os dados em eixos numéricos.
+**Alternativa:** Tabela comparativa (HTML/CSS) — quando houver 5+ personas e o foco for comparar uma dimensão específica (ex.: frequência de uso ou quantidade de dores) entre todos os perfis.

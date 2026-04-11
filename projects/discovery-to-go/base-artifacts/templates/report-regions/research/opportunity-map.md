@@ -94,13 +94,10 @@ graph TD
 - **4 experimentos** vinculados às soluções com prazos de 3 dias a 3 semanas
 - **Classificação esforço/impacto:** Alto/Alto, Médio/Médio, Baixo/Baixo, Baixo/Médio
 
-### Formatos de exibição possíveis
+### Recomendação do Chart Specialist
 
-| Formato | Descrição | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Narrativa hierárquica descrevendo objetivo, oportunidades, soluções e experimentos em seções aninhadas | Quando o leitor precisa entender a lógica e evidências por trás de cada ramificação |
-| Tabela | Tabela cruzando oportunidades × soluções com colunas de esforço, impacto e experimento | Quando stakeholders precisam comparar soluções lado a lado para priorização |
-| Tree diagram | Diagrama em árvore (Mermaid/draw.io) mostrando a hierarquia Objetivo > Oportunidades > Soluções > Experimentos | Quando é necessário visualizar o espaço de solução completo e as relações hierárquicas de forma intuitiva |
-
-> [!info] Avaliação pendente
-> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.
+**Veredicto:** GRÁFICO
+**Tipo:** Tree layout com cards aninhados
+**Tecnologia:** HTML/CSS
+**Justificativa:** A hierarquia Objetivo > Oportunidades > Soluções > Experimentos exige representação visual em árvore com cards aninhados e conectores CSS, preservando a navegabilidade e os detalhes de esforço/impacto em cada nó.
+**Alternativa:** Tabela hierárquica (HTML/CSS) — quando o espaço horizontal é limitado ou o relatório será impresso

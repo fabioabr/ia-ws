@@ -51,14 +51,10 @@ data_quality:
 | Consistencia | N/A | 98% | 100% |
 | Freshness | < 5min | < 30min | < 1h |
 
-### Formatos de exibicao possiveis
+### Recomendacao do Chart Specialist
 
-| Formato | Descricao | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Descricao narrativa de cada dimensao de qualidade com regras, thresholds e estrategia de teste | Documentacao de governanca, politicas de dados |
-| Tabela | Tabela com dimensoes, regras e thresholds por camada | Referencia operacional, checklists de qualidade |
-| Heatmap de cobertura | Mapa de calor com dimensoes de qualidade (linhas) vs camadas (colunas), cores indicando nivel de conformidade | Dashboards de monitoramento, reports de qualidade para stakeholders |
-| Indicadores de status | Cards ou badges com status (verde/amarelo/vermelho) por dimensao e camada | Dashboards operacionais, alertas visuais em tempo real |
-
-> [!info] Avaliacao pendente
-> Um especialista em visualizacao de dados deve avaliar qual formato grafico melhor representa esta informacao, considerando o publico-alvo e o contexto de uso.
+**Veredicto:** GRAFICO
+**Tipo:** Heatmap
+**Tecnologia:** HTML/CSS
+**Justificativa:** Os dados de amostra mostram cobertura de qualidade por dimensao (linhas) vs camada (colunas) com valores percentuais numericos. Um heatmap com cores graduadas (vermelho-amarelo-verde) permite identificar instantaneamente gaps de qualidade e areas criticas. Se os scores forem numericos puros, barras horizontais por dimensao agrupadas por camada tambem funcionam bem.
+**Alternativa:** Horizontal bars agrupadas por camada (HTML/CSS) — quando houver muitas dimensoes (8+) ou quando a comparacao entre camadas for mais importante que a visao geral.

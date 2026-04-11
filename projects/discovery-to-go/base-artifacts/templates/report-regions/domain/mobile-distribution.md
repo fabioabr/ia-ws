@@ -59,13 +59,10 @@ mobile_distribution:
 | Ativacao (cadastro) | 2.000 | 5.000 | 7.000 |
 | Retencao D7 | 1.200 | 2.800 | 4.000 |
 
-### Formatos de exibicao possiveis
+### Recomendacao do Chart Specialist
 
-| Formato | Descricao | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Descricao narrativa da estrategia de distribuicao por plataforma | Documentos de estrategia, planejamento de lancamento |
-| Tabela | Tabela comparativa iOS vs Android com ferramentas e metricas por plataforma | Documentacao tecnica, referencia operacional |
-| Grafico de funil | Funil mostrando conversao de download ate ativacao, por plataforma | Dashboards de growth, relatorios de marketing, analise de conversao |
-
-> [!info] Avaliacao pendente
-> Um especialista em visualizacao de dados deve avaliar qual formato grafico melhor representa esta informacao, considerando o publico-alvo e o contexto de uso.
+**Veredicto:** GRAFICO
+**Tipo:** Horizontal bars decrescentes
+**Tecnologia:** HTML/CSS
+**Justificativa:** Os dados de amostra mostram um funil de conversao (impressoes, downloads, instalacoes, ativacao, retencao) com valores decrescentes por plataforma. Barras horizontais decrescentes empilhadas por etapa com cores por plataforma (iOS/Android) comunicam a queda de conversao de forma intuitiva sem necessidade de Chart.js.
+**Alternativa:** Tabela comparativa iOS vs Android (HTML/CSS) — quando os dados de funil nao estiverem disponiveis e o foco for ferramentas e configuracoes por plataforma.

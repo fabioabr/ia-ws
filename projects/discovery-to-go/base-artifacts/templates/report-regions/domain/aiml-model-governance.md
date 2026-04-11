@@ -58,14 +58,10 @@ model_governance:
 | Compliance LGPD | Consentimentos validos | 99.8% | >= 99% | OK |
 | Model versions | Versoes no MLflow | 12 | N/A | INFO |
 
-### Formatos de exibicao possiveis
+### Recomendacao do Chart Specialist
 
-| Formato | Descricao | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Descricao narrativa de cada aspecto de governanca com politicas e frequencias | Politicas de governanca, documentos de compliance |
-| Tabela | Tabela com aspectos, metricas, thresholds e status | Checklists de auditoria, revisoes periodicas |
-| Dashboard de monitoramento | Painel com gauges, semaforos e trend lines para cada aspecto de governanca | Monitoramento continuo, reunioes de operacao de modelos |
-| Indicadores de status | Cards com status (verde/amarelo/vermelho) por aspecto e modelo | Relatorios executivos, alertas visuais para gestao |
-
-> [!info] Avaliacao pendente
-> Um especialista em visualizacao de dados deve avaliar qual formato grafico melhor representa esta informacao, considerando o publico-alvo e o contexto de uso.
+**Veredicto:** CARD
+**Tipo:** Card com checklist/status
+**Tecnologia:** HTML/CSS
+**Justificativa:** Os itens de governanca sao aspectos independentes com metricas, thresholds e status (OK/ALERTA). Cards com indicadores semaforo (verde/amarelo/vermelho) por aspecto, mostrando valor atual vs threshold, comunicam conformidade de forma imediata e sao faceis de escanear.
+**Alternativa:** Tabela com badges de status (HTML/CSS) — quando houver muitos aspectos (10+) e a densidade de informacao exigir formato mais compacto.

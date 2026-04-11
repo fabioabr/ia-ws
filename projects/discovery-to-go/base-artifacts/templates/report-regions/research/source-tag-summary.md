@@ -66,13 +66,10 @@ Resumo da distribuição das fontes de informação utilizadas no discovery, cla
 - **Blocos com maior inferência:** Diagramas C4 (50%), Segurança e privacidade (45%), Negócio (35%)
 - **Blocos com maior confiança:** Organização (90% BRIEFING), Produto (80% BRIEFING)
 
-### Formatos de exibição possíveis
+### Recomendação do Chart Specialist
 
-| Formato | Descrição | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Narrativa explicando a distribuição geral e destacando áreas de alta inferência que requerem validação | Quando o contexto e as implicações de cada percentual precisam ser comunicados em detalhe |
-| Tabela | Tabela com colunas por source tag e linhas por bloco, incluindo total geral e destaques condicionais | Quando stakeholders precisam consultar a distribuição exata por bloco rapidamente |
-| Pie chart / Donut | Gráfico de pizza ou donut mostrando a proporção BRIEFING/RAG/INFERENCE na visão geral e por bloco | Quando o objetivo é comunicar visualmente a composição das fontes e evidenciar a proporção de inferência |
-
-> [!info] Avaliação pendente
-> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.
+**Veredicto:** GRÁFICO
+**Tipo:** Donut chart
+**Tecnologia:** Chart.js
+**Justificativa:** Três proporções (BRIEFING 65%, INFERENCE 25%, RAG 10%) formam um todo de 100% — o donut chart comunica instantaneamente a composição relativa e destaca visualmente a fatia de inferência que requer validação.
+**Alternativa:** Stacked bar chart (Chart.js) — quando a distribuição por bloco do discovery precisa ser comparada lado a lado em uma única visualização

@@ -61,13 +61,10 @@ Re-treinamento automatico
 | Previsao fluxo | MAPE 8.2% | R2 0.87 | - | Producao |
 | Anomalias | - | FPR 3.1% | 0.93 | Staging |
 
-### Formatos de exibicao possiveis
+### Recomendacao do Chart Specialist
 
-| Formato | Descricao | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Descricao narrativa de cada modelo com tipo, abordagem, metricas e ciclo de vida | Documentos de estrategia, relatorios executivos |
-| Tabela | Tabela com modelos, tipos, frameworks e metricas-alvo | Referencia tecnica, catalogo de modelos |
-| Diagrama de pipeline | Fluxo mostrando etapas do ciclo de vida ML (dados, treino, validacao, deploy, monitoramento) | Apresentacoes de arquitetura ML, onboarding do time de data science |
-
-> [!info] Avaliacao pendente
-> Um especialista em visualizacao de dados deve avaliar qual formato grafico melhor representa esta informacao, considerando o publico-alvo e o contexto de uso.
+**Veredicto:** CARD
+**Tipo:** Card com etapas
+**Tecnologia:** HTML/CSS
+**Justificativa:** O pipeline ML e um fluxo sequencial de etapas (dados, pre-processamento, treino, validacao, deploy, monitoramento) com loop de re-treinamento. Cards conectados horizontalmente com setas e icones por etapa comunicam o ciclo de vida de forma clara, incluindo o feedback loop de drift.
+**Alternativa:** Tabela de modelos com metricas (HTML/CSS) — quando o foco for o catalogo de modelos e suas metricas, nao o pipeline.

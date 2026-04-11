@@ -56,13 +56,10 @@ C4Context
 - **Sistemas externos:** Core Bancário (Temenos), Gateway de Pagamentos (Stripe), ERP Financeiro (SAP), Identity Provider (Okta), Serviço de E-mail (SendGrid)
 - **Relacionamentos:** Usuário consulta dashboards e cria relatórios; Admin gerencia usuários e regras; FinTrack consulta saldos, processa cobranças, envia lançamentos, autentica via SSO, dispara notificações
 
-### Formatos de exibição possíveis
+### Recomendação do Chart Specialist
 
-| Formato | Descrição | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Narrativa descritiva explicando os atores, o sistema central e os sistemas externos com seus relacionamentos | Sempre — serve como base textual acessível para qualquer público |
-| Tabela | Tabela com colunas Ator/Sistema, Tipo (Pessoa, Sistema Interno, Sistema Externo) e Relacionamento | Sempre — permite consulta rápida dos elementos e seus vínculos |
-| Diagrama C4 Context (Mermaid) | Diagrama de contexto C4 nível 1 renderizado via Mermaid, mostrando o sistema central rodeado por atores e sistemas externos com setas de relacionamento rotuladas | Quando é necessário apresentar a visão de mais alto nível da arquitetura, ideal para stakeholders não técnicos e alinhamento sobre escopo e fronteiras do sistema |
-
-> [!info] Avaliação pendente
-> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.
+**Veredicto:** CARD
+**Tipo:** Card com placeholder para diagrama
+**Tecnologia:** HTML/CSS
+**Justificativa:** Diagramas de arquitetura C4 são inerentemente visuais e espaciais, não redutíveis a tabelas ou gráficos de dados. O card exibe os metadados (atores, sistemas, relacionamentos) em formato estruturado e reserva um placeholder para o diagrama renderizado separadamente via diagram-drawio.
+**Alternativa:** Tabela de elementos (HTML/CSS) — quando o diagrama ainda não foi gerado e é necessário listar atores, sistemas e relacionamentos de forma consultável.

@@ -70,15 +70,10 @@ go_no_go_criteria:
       status: "Pendente"
 ```
 
-### Formatos de exibicao possiveis
+### Recomendacao do Chart Specialist
 
-| Formato | Descricao | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Paragrafo descrevendo os criterios de decisao, quais foram atingidos e quais estao pendentes ou em risco | Relatorios executivos, atas de reuniao de go/no-go |
-| Tabela | Tabela com colunas ID, Criterio, Valor-Alvo, Prazo, Como Medir e Status (formato atual do Exemplo) | Documentacao formal, rastreamento detalhado de criterios |
-| Traffic light dashboard (semaforo) | Indicadores semaforo (verde=Atingido, amarelo=Em risco, vermelho=Nao atingido, cinza=Pendente) para cada criterio | Visao principal para reunioes de decisao, dashboards executivos, apresentacoes de steering committee |
-| Scorecard com barras de progresso | Card por criterio com barra de progresso mostrando proximidade do valor-alvo e indicador de prazo | Acompanhamento de evolucao ao longo do tempo, dashboards operacionais |
-| Timeline com marcos | Linha do tempo com marcos (deadlines) e indicadores de status em cada ponto | Visao temporal de quando cada criterio deve ser atingido, planejamento de gates |
-
-> [!info] Avaliacao pendente
-> Um especialista em visualizacao de dados deve avaliar qual formato grafico melhor representa esta informacao, considerando o publico-alvo e o contexto de uso.
+**Veredicto:** CARD
+**Tipo:** Traffic light cards
+**Tecnologia:** HTML/CSS
+**Justificativa:** Criterios de go/no-go sao decisoes binarias ou de status que exigem leitura instantanea. Cards com indicadores semaforo (verde=Atingido, amarelo=Em risco, vermelho=Nao atingido, cinza=Pendente) comunicam a situacao em segundos, ideal para steering committees e reunioes de decisao.
+**Alternativa:** Tabela com badges de status — quando ha muitos criterios (>10) e a densidade de cards se torna incomoda.

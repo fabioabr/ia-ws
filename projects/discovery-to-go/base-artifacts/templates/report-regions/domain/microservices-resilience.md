@@ -60,14 +60,10 @@ Request --> [Timeout] --> [Retry] --> [Circuit Breaker] --> Servico Externo
 Kafka Event --> [Consumer] --> [Retry 3x] --> [DLQ] --> [Alerta Slack]
 ```
 
-### Formatos de exibicao possiveis
+### Recomendacao do Chart Specialist
 
-| Formato | Descricao | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Descricao narrativa de cada pattern com contexto de aplicacao e justificativa | ADRs, documentacao de arquitetura |
-| Tabela | Tabela com patterns, onde aplicado, configuracao e fallback | Referencia tecnica, checklists de resiliencia |
-| Matriz de patterns | Grid mostrando quais patterns estao aplicados em quais servicos/integracoes | Analise de cobertura de resiliencia, revisoes de arquitetura |
-| Diagrama de fluxo | Fluxo mostrando a cadeia de patterns (timeout, retry, circuit breaker, fallback) e como interagem | Onboarding tecnico, troubleshooting, documentacao de comportamento em falha |
-
-> [!info] Avaliacao pendente
-> Um especialista em visualizacao de dados deve avaliar qual formato grafico melhor representa esta informacao, considerando o publico-alvo e o contexto de uso.
+**Veredicto:** TABELA
+**Tipo:** Tabela com pattern badges
+**Tecnologia:** HTML/CSS
+**Justificativa:** Os padroes de resiliencia sao 6 itens independentes com 4 atributos cada (aplicacao, configuracao, fallback). Uma tabela estilizada com badges coloridos por pattern type e icones de fallback permite referencia rapida e funciona como checklist de resiliencia para o time de engenharia.
+**Alternativa:** Card grid por pattern (HTML/CSS) — quando o publico for menos tecnico e cada pattern precisar de mais contexto explicativo.

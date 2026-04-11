@@ -56,13 +56,10 @@ effort_estimation:
 
 Total estimado: 12-18 sprints (6-9 meses). Time: 2 backend, 1 frontend, 1 QA, 1 PO (parcial).
 
-### Formatos de exibição possíveis
+### Recomendação do Chart Specialist
 
-| Formato | Descrição | Quando usar |
-|---------|-----------|-------------|
-| Texto corrido | Narrativa descrevendo os épicos, suas complexidades relativas e o esforço total estimado com premissas | Relatórios executivos onde o contexto das estimativas importa mais que a comparação visual |
-| Tabela | Matriz épico x complexidade x T-shirt x sprints com premissas, como no exemplo acima | Quando o leitor precisa de detalhes por épico para planejamento de roadmap |
-| Horizontal bar chart (T-shirt) | Barras horizontais por épico, comprimento proporcional ao tamanho T-shirt (XS=1, S=2, M=3, L=4, XL=5), coloridas por complexidade | Comparar visualmente o esforço relativo entre épicos e identificar os mais custosos |
-
-> [!info] Avaliação pendente
-> Um especialista em visualização de dados deve avaliar qual formato gráfico melhor representa esta informação, considerando o público-alvo e o contexto de uso.
+**Veredicto:** GRÁFICO
+**Tipo:** Horizontal bar chart com badges
+**Tecnologia:** HTML/CSS
+**Justificativa:** 5 epics com T-shirt sizes mapeiam naturalmente para barras horizontais de comprimento proporcional (XS=1, S=2, M=3, L=4, XL=5). Badges coloridos por complexidade (verde=Baixa, amarelo=Media, laranja=Alta, vermelho=Muito Alta) junto ao label do epic comunicam esforco e risco numa unica leitura. HTML/CSS puro permite controle total sobre badges e barras sem dependencia externa.
+**Alternativa:** Tabela (HTML/CSS) — quando o publico precisar ver sprints estimados e premissas por epic lado a lado para planejamento detalhado de roadmap
