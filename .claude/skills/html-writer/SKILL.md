@@ -4,7 +4,7 @@ argument-hint: "<source.md> [--output path] [--template name]"
 title: html-writer
 description: "Converte documentos .md em relatórios HTML auto-contidos seguindo o Design System do workspace. Use SEMPRE que precisar: gerar um relatório HTML a partir de um .md, converter documento markdown para apresentação visual, criar report HTML com dark/light theme, ou gerar HTML auto-contido com logos e estilos inline. O HTML gerado funciona abrindo direto no navegador, sem servidor. NÃO use para: formatar o .md em si (use md-writer), validar convenções (use md-validator), ou gerar diagramas (use diagram-drawio)."
 project-name: global
-version: 02.01.000
+version: 02.02.000
 author: claude-code
 license: MIT
 status: ativo
@@ -52,6 +52,22 @@ Antes de gerar o HTML, carregue as convenções abaixo para obter tokens e defin
 ## 📋 Instructions
 
 ### 1. Preparação — Carregar referências
+
+> [!danger] Regra obrigatória — playground.html é a base
+> O CSS do playground.html (`assets/ui-ux/playground.html`) DEVE ser copiado integralmente para cada HTML gerado. NÃO reinvente estilos — use as classes existentes do Design System:
+>
+> **Classes obrigatórias do playground:**
+> - Layout: `.container`, `.header`, `.header-content`, `.header-top`, `.header-left`, `.header-right`
+> - Cards: `.card`, `.card-header`, `.card-header-icon`, `.card-title`, `.card-badge`, `.card-body`
+> - Stat cards: `.stats-grid`, `.stat-card`, `.stat-card-icon`, `.stat-card-info`, `.stat-card-number`, `.stat-card-label`
+> - Alerts: `.alert`, `.alert-warning`, `.alert-danger`, `.alert-info`, `.alert-success`
+> - Pills/Badges: `.pill`, `.pill-success`, `.pill-info`, `.pill-warning`, `.pill-danger`
+> - Tabs: `.tabs-nav`, `.tab-btn`, `.tab-btn.active`, `.tab-content`, `.tab-content.active`
+> - Tables: styled `<table>` with `th` using `var(--th-bg)`
+> - Intro text: `.intro-text`
+> - Footer: `.footer`
+>
+> O agente DEVE ler o playground.html **INTEIRO** (não só 200 linhas) e extrair TODO o bloco `<style>`. Componentes custom (scenario bars, radar, timeline) são **adições** ao CSS base — nunca substituições.
 
 > [!danger] Regra de prioridade para assets (variables, logos, ui-ux)
 > A caracterização visual do **projeto** tem prioridade sobre o Workspace global. Para **todo asset** (variables, logos, design system, playground), aplicar:
@@ -184,7 +200,7 @@ Cada region tem uma recomendação de visualização no catálogo (`base-artifac
 |-----------|----------------|
 | **CARD** | Componente card do Design System (card-header + card-body) com ícone e conteúdo |
 | **TABELA** | `<table>` estilizada com badges, pills e cores semânticas conforme dados |
-| **GRÁFICO (Chart.js)** | `<canvas>` com Chart.js inline — tipos: radar, bubble, pie, donut, line, stacked bar |
+| **GRÁFICO (Chart.js)** | `<canvas>` com Chart.js inline — tipos: radar, bubble, pie, donut, line |
 | **GRÁFICO (HTML/CSS)** | Barras horizontais, progress bars, timelines, heatmaps — tudo em CSS puro |
 
 Prioridade de tecnologia: **HTML/CSS puro > Chart.js > Card informativo**
@@ -196,6 +212,20 @@ Prioridade de tecnologia: **HTML/CSS puro > Chart.js > Card informativo**
 > - **Progress bars, gauges** → HTML/CSS puro
 >
 > SVG inline só é aceito para ícones custom quando Remix Icon não tem o ícone necessário.
+
+> [!danger] Gráficos de barras = SEMPRE HTML/CSS horizontal
+> Chart.js NÃO é usado para gráficos de barras (simples, agrupadas, empilhadas). Barras são SEMPRE renderizadas em HTML/CSS com orientação horizontal.
+>
+> CSS padrão para barras:
+> ```css
+> .bar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+> .bar-label { width: 120px; font-size: 0.75rem; text-align: right; flex-shrink: 0; }
+> .bar-track { flex: 1; background: var(--border); border-radius: 4px; height: 20px; overflow: hidden; }
+> .bar-fill { height: 100%; border-radius: 4px; transition: width 0.3s; }
+> .bar-value { width: 60px; font-size: 0.72rem; text-align: right; }
+> ```
+>
+> Chart.js fica APENAS para: radar, pie/donut, line/area, scatter, bubble.
 
 #### Layouts de grid
 
@@ -239,6 +269,56 @@ CSS para o grid:
 }
 ```
 
+#### Navegação por tabs (executive e complete)
+
+| Setup | Navegação |
+|-------|-----------|
+| `essential` (one-pager) | **SEM tabs** — página única contínua |
+| `executive` | **COM tabs** — cada seção do html-layout.md vira uma aba |
+| `complete` | **COM tabs** — mesma estrutura, mais abas |
+
+Usar as classes do playground.html:
+```html
+<div class="tabs-nav">
+    <button class="tab-btn active" data-tab="produto">
+        <i class="ri-lightbulb-line"></i> Produto
+        <span class="tab-count">6</span>
+    </button>
+    <button class="tab-btn" data-tab="financeiro">
+        <i class="ri-money-dollar-circle-line"></i> Financeiro
+        <span class="tab-count">3</span>
+    </button>
+    ...
+</div>
+<div class="tab-content active" id="produto">
+    <!-- regions desta seção -->
+</div>
+<div class="tab-content" id="financeiro">
+    <!-- regions desta seção -->
+</div>
+```
+
+**Tabs padrão para executive:**
+- Produto e Valor (ícone: ri-lightbulb-line)
+- Organização (ícone: ri-team-line)
+- Financeiro (ícone: ri-money-dollar-circle-line)
+- Riscos e Qualidade (ícone: ri-shield-check-line)
+- Decisão (ícone: ri-checkbox-circle-line)
+- Domain-specific (ícone: ri-apps-line) — se houver
+- Glossário (ícone: ri-book-open-line) — se houver
+
+**JS para tabs:**
+```javascript
+document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById(btn.dataset.tab).classList.add('active');
+    });
+});
+```
+
 #### Chart.js (quando necessário)
 
 Incluir CDN apenas se houver regions que usam Chart.js:
@@ -248,7 +328,6 @@ Incluir CDN apenas se houver regions que usam Chart.js:
 
 Regions que usam Chart.js (conforme chart-specialist):
 - REG-EXEC-03 (radar 4 eixos)
-- REG-FIN-01 (stacked bar)
 - REG-FIN-02 (line com crossover)
 - REG-FIN-04 (line)
 - REG-RISK-01 (bubble)
@@ -312,6 +391,23 @@ Preencher com variáveis carregadas na etapa de Preparação (respeitando a orde
 
 > [!danger] Regra inviolável
 > O relatório é **exclusivamente em pt-BR**. Toda acentuação portuguesa **deve** ser respeitada (não usar "organizacao" — usar "organização"). O conteúdo fonte em .md pode não ter acentos nos campos técnicos (tags, nomes de arquivo), mas o conteúdo textual renderizado DEVE ter acentuação correta.
+
+> [!danger] Reforço — acentuação é OBRIGATÓRIA em TODOS os textos
+> Esta regra se aplica a TODOS os textos gerados — títulos de seções, labels de tabelas, labels de gráficos, tooltips, legendas, badges, cards, e texto corrido. Exemplos de erros comuns:
+>
+> | ERRADO | CORRETO |
+> |--------|---------|
+> | Descricao | Descrição |
+> | Organizacao | Organização |
+> | Projecao | Projeção |
+> | Cenarios | Cenários |
+> | Analise | Análise |
+> | Financeiro (ok) | Financeiro (ok) |
+> | Tecnico | Técnico |
+> | Viabilidade (ok) | Viabilidade (ok) |
+> | Estimativa (ok) | Estimativa (ok) |
+>
+> Se o texto fonte (.md) não tem acentos, o html-writer DEVE corrigir ao renderizar.
 
 - Seletor de idioma visível no header com 3 bandeiras (BR, US, ES)
 - **PT** ativo e selecionado por padrão
@@ -384,6 +480,7 @@ Usar `$ARGUMENTS` no corpo para capturar o caminho do(s) arquivo(s) .md passados
 
 | Versão | Data | Descrição |
 |--------|------|-----------|
+| 02.02.000 | 2026-04-12 | P33: playground.html é base obrigatória — CSS copiado integralmente, classes listadas. P34: barras sempre HTML/CSS horizontal, REG-FIN-01 removido do Chart.js |
 | 02.01.000 | 2026-04-11 | P12: glossário e tooltips de siglas com `<abbr>`. P13/P15: proibição explícita de SVG inline para gráficos de dados |
 | 02.00.000 | 2026-04-11 | Adição de modo regions: renderização por regions com marcadores, leitura de html-layout.md, grid responsivo, Chart.js condicional, referência a previews |
 | 01.01.000 | 2026-04-10 | Adequação ao skill-schema com herança de document-schema; adição de campos title, project-name, area, created, license; emojis em H2; seções Documentos Relacionados e Histórico |

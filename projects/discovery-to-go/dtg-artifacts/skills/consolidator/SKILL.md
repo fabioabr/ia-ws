@@ -344,6 +344,7 @@ O tom do conteúdo gerado DEVE ser adaptado ao report-setup selecionado:
 - Nunca reescrever análises técnicas dos especialistas — apenas consolidar e contextualizar.
 - Nunca questionar decisões já validadas pelo Challenge (auditor + 10th-man).
 - Nunca inventar métricas, riscos ou dados que não estão nos drafts, logs ou memory.
+- Todo texto no delivery-report.md DEVE ter acentuação PT-BR correta — "Descrição" não "Descricao", "Organização" não "Organizacao". Se dados de entrada não têm acentos, corrigir ao consolidar.
 - Overview one-pager deve caber em UMA página — ser executivo, não técnico denso.
 - Questões residuais do 10th-man são sempre incluídas, mesmo com aprovação.
 - Toda narrativa começa no briefing e termina no delivery — fechar o loop.

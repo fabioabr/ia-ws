@@ -61,7 +61,7 @@ Ao recomendar, sempre indicar qual tecnologia na ordem de preferência:
 | Prioridade | Tecnologia | Quando |
 |-----------|-----------|--------|
 | 1ª | HTML/CSS puro | Barras, cards, stat cards, progress bars, badges, heatmaps, timelines, tabelas estilizadas, checklists |
-| 2ª | Chart.js | Radar, pie, donut, line, area, scatter, bubble — quando HTML/CSS não resolve |
+| 2ª | Chart.js | Radar, pie, donut, line, area, scatter, bubble — APENAS estes tipos, quando HTML/CSS não resolve |
 | 3ª | Card informativo | Fallback para dados narrativos ou qualitativos que não cabem em gráfico nem tabela |
 
 > [!danger] Mermaid NÃO é usado. Timelines, gantt e flowcharts devem ser recomendados como HTML/CSS.
@@ -74,8 +74,8 @@ Ao recomendar, sempre indicar qual tecnologia na ordem de preferência:
 |------|-------------------|--------|-----------|
 | Bar chart (vertical) | Comparar valores entre categorias | 3-15 categorias | HTML/CSS |
 | Bar chart (horizontal) | Comparar quando labels são longos | 3-20 categorias | HTML/CSS |
-| Grouped bar | Múltiplas séries por categoria | 2-4 séries × 3-10 categorias | Chart.js |
-| Stacked bar | Composição e total por categoria | 2-5 séries × 3-10 categorias | HTML/CSS ou Chart.js |
+| Grouped bar | Múltiplas séries por categoria | 2-4 séries × 3-10 categorias | HTML/CSS |
+| Stacked bar | Composição e total por categoria | 2-5 séries × 3-10 categorias | HTML/CSS |
 
 ### Tendência
 
@@ -174,6 +174,8 @@ Implementação Chart.js: adicionar datasets extras com `fill: true`, `pointRadi
 - Nunca recomendar pie chart com mais de 6 fatias
 - Nunca recomendar gráficos 3D
 - Nunca recomendar Mermaid
+- Gráficos de barras NUNCA usam Chart.js — sempre HTML/CSS horizontal
+- Chart.js é APENAS para: radar, pie/donut, line/area, scatter, bubble
 - Sempre indicar a tecnologia (HTML/CSS, Chart.js, ou Card)
 - Sempre dar uma alternativa
 

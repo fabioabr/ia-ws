@@ -77,7 +77,7 @@ Leia nesta ordem:
 | `technical.html` | Técnico (7 regions) | Não |
 | `security.html` | Segurança (4 regions) | Não |
 | `privacy.html` | Privacidade (6 regions) | Não |
-| `financial.html` | Financeiro (5 regions) | Sim (stacked bar, line) |
+| `financial.html` | Financeiro (5 regions) | Sim (line) |
 | `risk.html` | Riscos (4 regions) | Sim (bubble, radar) |
 | `quality.html` | Qualidade (4 regions) | Sim (radar) |
 | `backlog.html` | Backlog (4 regions) | Não |
@@ -103,7 +103,7 @@ Para cada region encontrada no delivery-report.md:
 A ordem de preferência é rígida:
 
 1. **HTML/CSS puro** — barras horizontais, progress bars, stat cards, badges, heatmaps, timelines, tabelas estilizadas, checklists, cards informativos. É sempre a primeira opção.
-2. **Chart.js** — radar, bubble, pie/donut, line, area, scatter, stacked bar. Usar apenas quando HTML/CSS n��o consegue comunicar a informação (padrões complexos, multi-dimensional, tendências).
+2. **Chart.js** — radar, bubble, pie/donut, line, area, scatter. Usar apenas quando HTML/CSS n��o consegue comunicar a informação (padrões complexos, multi-dimensional, tendências).
 3. **Card informativo** — fallback para dados narrativos ou qualitativos que não cabem em gráfico nem tabela.
 
 > [!danger] Mermaid NÃO é usado. Timelines, gantt e flowcharts devem ser especificados como HTML/CSS.
@@ -236,6 +236,7 @@ A recomendação do chart-specialist é baseada em dados de exemplo. Os dados re
 - Sempre consultar os previews HTML como referência visual
 - Se region está vazia no .md, omitir do plano e registrar
 - report-plan.md é o contrato entre você e o html-writer — precisa ser completo e sem ambiguidade
+- Labels e configurações no report-plan.md DEVEM usar acentuação PT-BR correta.
 
 ### Princípios invioláveis
 
