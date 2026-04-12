@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veezoozin — Executive One-Pager</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+/* ====== DESIGN TOKENS (dark default) ====== */
+:root {
+    --primary: #4DA8DA;
+    --primary-dark: #3A8BB8;
+    --primary-light: rgba(77, 168, 218, 0.12);
+    --secondary: #B9B7BD;
+    --success: #0ED145;
+    --success-light: rgba(14, 209, 69, 0.12);
+    --success-border: rgba(14, 209, 69, 0.3);
+    --warning: #F4AC00;
+    --warning-light: rgba(244, 172, 0, 0.12);
+    --warning-border: rgba(244, 172, 0, 0.3);
+    --danger: #8B1A1A;
+    --danger-light: rgba(139, 26, 26, 0.15);
+    --danger-border: rgba(139, 26, 26, 0.35);
+    --info: #2EB5F5;
+    --info-light: rgba(46, 181, 245, 0.12);
+    --info-border: rgba(46, 181, 245, 0.3);
+    --bg: #1A1923;
+    --card-bg: #2E2D32;
+    --text: #E0DFE3;
+    --text-muted: #88878C;
+    --border: #3E3D44;
+    --purple: #9B96FF;
+    --purple-light: rgba(155, 150, 255, 0.12);
+    --orange: #FF9473;
+    --teal: #2DD4BF;
+    --chart-1: #4DA8DA;
+    --chart-2: #2EB5F5;
+    --chart-3: #0ED145;
+    --chart-4: #FF6B6B;
+    --chart-5: #A78BFA;
+    --header-bg: linear-gradient(135deg, #2E2D32 0%, #252428 50%, #1A1923 100%);
+    --card-header-bg: #252428;
+    --th-bg: #252428;
+    --th-bg-hover: #36353B;
+    --card-shadow: 0 2px 12px rgba(46, 181, 245, 0.06), 0 1px 4px rgba(0,0,0,0.4);
+    --progress-track: #3E3D44;
+    --alert-warning-text: #f0c040;
+    --danger-text: #E85D54;
+    --alert-danger-text: #E85D54;
+    --alert-info-text: #5FC8F8;
+    --alert-success-text: #3DE06A;
+    --pill-success-text: #3DE06A;
+    --pill-info-text: #5FC8F8;
+    --pill-warning-text: #f0c040;
+    --gold: #FFD700;
+    --gold-light: rgba(255, 215, 0, 0.12);
+    --gold-border: rgba(255, 215, 0, 0.35);
+}
+
+/* ====== LIGHT THEME ====== */
+[data-theme="light"] {
+    --primary: #4DA8DA;
+    --primary-dark: #3A8BB8;
+    --primary-light: rgba(77, 168, 218, 0.1);
+    --secondary: #88878C;
+    --success: #0A9E35;
+    --success-light: rgba(10, 158, 53, 0.08);
+    --success-border: rgba(10, 158, 53, 0.25);
+    --warning: #E67E22;
+    --warning-light: rgba(230, 126, 34, 0.12);
+    --warning-border: rgba(230, 126, 34, 0.35);
+    --danger: #E74C3C;
+    --danger-light: rgba(231, 76, 60, 0.10);
+    --danger-border: rgba(231, 76, 60, 0.30);
+    --info: #1E95CC;
+    --info-light: rgba(30, 149, 204, 0.08);
+    --info-border: rgba(30, 149, 204, 0.25);
+    --bg: #E0DFE3;
+    --card-bg: #ffffff;
+    --text: #1A1923;
+    --text-muted: #88878C;
+    --border: #B9B7BD;
+    --purple: #7B76FE;
+    --purple-light: rgba(123, 118, 254, 0.08);
+    --orange: #FE7C58;
+    --teal: #00D8D8;
+    --chart-1: #4DA8DA;
+    --chart-2: #1E95CC;
+    --chart-3: #0A9E35;
+    --chart-4: #D44040;
+    --chart-5: #7C6BD4;
+    --header-bg: linear-gradient(135deg, #2E2D32 0%, #252428 50%, #1A1923 100%);
+    --card-header-bg: rgba(77, 168, 218, 0.12);
+    --th-bg: rgba(77, 168, 218, 0.12);
+    --th-bg-hover: rgba(77, 168, 218, 0.22);
+    --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0,0,0,0.06);
+    --progress-track: #B9B7BD;
+    --alert-warning-text: #C0392B;
+    --alert-danger-text: #C0392B;
+    --alert-info-text: #1670A0;
+    --alert-success-text: #087A28;
+    --pill-success-text: #087A28;
+    --pill-info-text: #1670A0;
+    --pill-warning-text: #C0392B;
+    --danger-text: #C0392B;
+    --gold: #B8860B;
+    --gold-light: rgba(184, 134, 11, 0.12);
+    --gold-border: rgba(184, 134, 11, 0.35);
+}
+
+/* ====== RESET ====== */
+html, body, div, span, h1, h2, h3, h4, h5, h6, p, a, img, ul, ol, li,
+header, footer, nav, section, article, aside, button, input, select, textarea,
+table, tr, td, th, form, label, fieldset, legend { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+/* ====== HEADER ====== */
+.header { background: linear-gradient(135deg, #2E2D32 0%, #252428 50%, #1A1923 100%); color: white; padding: 28px 0 20px; position: relative; overflow: hidden; }
+.header::before { content: ''; position: absolute; top: -50%; right: -10%; width: 500px; height: 500px; background: rgba(255,255,255,0.03); border-radius: 50%; z-index: 0; }
+.header-content { position: relative; z-index: 1; }
+.header-top { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+.header-left h1 { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.5px; }
+.header-left .subtitle { font-size: 0.88rem; opacity: 0.75; font-weight: 300; margin-top: 2px; }
+.header-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.header-badge { background: rgba(255,255,255,0.12); padding: 4px 12px; border-radius: 8px; font-size: 0.72rem; display: inline-flex; align-items: center; gap: 5px; backdrop-filter: blur(10px); color: rgba(255,255,255,0.85); }
+.header-badge.badge-danger { background: rgba(139, 26, 26, 0.6); color: #FF8A80; border: 1px solid rgba(139, 26, 26, 0.8); }
+.header-badge.badge-gold { background: rgba(255, 215, 0, 0.15); color: #FFD700; border: 1px solid rgba(255, 215, 0, 0.4); }
+.header-right { display: flex; align-items: center; gap: 8px; }
+
+/* ====== THEME TOGGLE ====== */
+.theme-toggle { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; padding: 6px 12px; color: white; cursor: pointer; font-family: 'Poppins', sans-serif; font-size: 0.78rem; display: flex; align-items: center; gap: 6px; transition: all 0.2s; }
+.theme-toggle:hover { background: rgba(255,255,255,0.22); }
+
+/* ====== DANGER BANNER ====== */
+.danger-banner { background: var(--danger-light); border: 1px solid var(--danger-border); border-left: 4px solid var(--danger); padding: 14px 20px; margin: 20px 0; border-radius: 8px; }
+.danger-banner-title { font-size: 0.88rem; font-weight: 700; color: var(--danger-text); display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+.danger-banner-body { font-size: 0.78rem; color: var(--text); opacity: 0.85; line-height: 1.6; }
+
+/* ====== SECTION ====== */
+.section { margin-top: 28px; }
+.section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 2px solid var(--border); }
+.section-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+.section-title { font-size: 1.05rem; font-weight: 600; flex: 1; }
+.region-badge { background: var(--bg); padding: 2px 10px; border-radius: 12px; font-size: 0.65rem; font-weight: 600; color: var(--text-muted); border: 1px solid var(--border); white-space: nowrap; }
+
+/* ====== CARDS ====== */
+.card { background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border); box-shadow: var(--card-shadow); overflow: hidden; margin-bottom: 16px; transition: border-color 0.2s; }
+.card:hover { border-color: var(--primary); }
+.card-header { display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-bottom: 1px solid var(--border); background: var(--card-header-bg); }
+.card-header-icon { width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; flex-shrink: 0; }
+.card-title { font-weight: 600; font-size: 0.88rem; flex: 1; }
+.card-body { padding: 16px; }
+
+/* ====== STATS GRID ====== */
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 16px; }
+.stat-card { background: var(--card-bg); border-radius: 10px; padding: 14px 16px; box-shadow: var(--card-shadow); border: 1px solid var(--border); display: flex; align-items: center; gap: 12px; transition: border-color 0.2s; }
+.stat-card:hover { border-color: var(--primary); }
+.stat-card-icon { width: 38px; height: 38px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+.stat-card-info { flex: 1; }
+.stat-card-number { font-size: 1rem; font-weight: 700; line-height: 1.2; }
+.stat-card-label { font-size: 0.68rem; color: var(--text-muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.3px; }
+
+/* ====== ALERTS ====== */
+.alert { padding: 10px 14px; border-radius: 8px; font-size: 0.78rem; display: flex; align-items: flex-start; gap: 8px; margin-bottom: 10px; border: 1px solid; line-height: 1.5; }
+.alert i { font-size: 1rem; flex-shrink: 0; margin-top: 2px; }
+.alert-warning { background: var(--warning-light); border-color: var(--warning-border); color: var(--alert-warning-text); }
+.alert-danger { background: var(--danger-light); border-color: var(--danger-border); color: var(--alert-danger-text); }
+.alert-info { background: var(--info-light); border-color: var(--info-border); color: var(--alert-info-text); }
+
+/* ====== PILLS ====== */
+.pill { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 0.68rem; font-weight: 600; white-space: nowrap; }
+.pill-success { background: var(--success-light); color: var(--pill-success-text); border: 1px solid var(--success-border); }
+.pill-info { background: var(--info-light); color: var(--pill-info-text); border: 1px solid var(--info-border); }
+.pill-warning { background: var(--warning-light); color: var(--pill-warning-text); border: 1px solid var(--warning-border); }
+.pill-danger { background: var(--danger-light); color: var(--alert-danger-text); border: 1px solid var(--danger-border); }
+.pill-gold { background: var(--gold-light); color: var(--gold); border: 1px solid var(--gold-border); }
+.pill-purple { background: var(--purple-light); color: var(--purple); border: 1px solid rgba(155, 150, 255, 0.3); }
+
+/* ====== TABLES ====== */
+.table-wrapper { overflow-x: auto; border-radius: 8px; }
+table { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
+th { text-align: left; padding: 8px 12px; background: var(--th-bg); font-weight: 600; border-bottom: 2px solid var(--border); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.3px; color: var(--text-muted); }
+td { padding: 8px 12px; border-bottom: 1px solid var(--border); }
+tr:hover { background: var(--primary-light); }
+th.center, td.center { text-align: center; }
+
+/* ====== PROBLEM GRID ====== */
+.problem-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 14px; }
+.problem-card { background: var(--bg); border-radius: 10px; padding: 14px; border: 1px solid var(--border); }
+.problem-card-title { font-size: 0.82rem; font-weight: 600; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+.problem-card-desc { font-size: 0.72rem; color: var(--text-muted); line-height: 1.5; }
+.impact-row { display: flex; align-items: center; gap: 8px; font-size: 0.75rem; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border); }
+.impact-arrow { color: var(--success); font-weight: 700; }
+
+/* ====== TCO BAR CHART (CSS) ====== */
+.bar-chart { display: flex; align-items: flex-end; gap: 24px; justify-content: center; padding: 16px 0; height: 220px; }
+.bar-group { display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1; max-width: 200px; }
+.bar-stack { display: flex; flex-direction: column-reverse; width: 100%; border-radius: 6px 6px 0 0; overflow: hidden; position: relative; }
+.bar-segment { width: 100%; transition: opacity 0.2s; position: relative; }
+.bar-segment:hover { opacity: 0.85; }
+.bar-label { font-size: 0.72rem; font-weight: 600; margin-top: 4px; }
+.bar-total { font-size: 0.68rem; color: var(--text-muted); }
+.bar-legend { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 8px; }
+.bar-legend-item { display: flex; align-items: center; gap: 4px; font-size: 0.68rem; color: var(--text-muted); }
+.bar-legend-color { width: 10px; height: 10px; border-radius: 3px; }
+
+/* ====== SCENARIO BARS (CSS grouped) ====== */
+.scenario-chart { display: flex; align-items: flex-end; gap: 12px; justify-content: center; padding: 16px 0; height: 200px; }
+.scenario-group { display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1; max-width: 140px; }
+.scenario-bars { display: flex; gap: 4px; align-items: flex-end; width: 100%; justify-content: center; }
+.scenario-bar { width: 36px; border-radius: 4px 4px 0 0; transition: opacity 0.2s; position: relative; }
+.scenario-bar:hover { opacity: 0.85; }
+.scenario-label { font-size: 0.7rem; font-weight: 600; text-align: center; }
+.scenario-coverage { font-size: 0.62rem; color: var(--text-muted); text-align: center; }
+.scenario-group.highlight { border: 2px solid var(--gold); border-radius: 8px; padding: 4px 6px 0; background: var(--gold-light); }
+
+/* ====== RISK TABLE ====== */
+.severity-critical { background: var(--danger-light); color: var(--danger-text); }
+.severity-high { background: var(--warning-light); color: var(--alert-warning-text); }
+.severity-medium { background: rgba(244, 172, 0, 0.08); color: var(--alert-warning-text); }
+
+/* ====== GO/NO-GO ====== */
+.go-badge { display: inline-flex; align-items: center; gap: 8px; padding: 10px 24px; border-radius: 12px; font-size: 1rem; font-weight: 700; background: var(--gold-light); color: var(--gold); border: 2px solid var(--gold-border); margin-bottom: 16px; }
+.radar-container { display: flex; gap: 20px; flex-wrap: wrap; align-items: flex-start; }
+.radar-chart { flex: 1; min-width: 280px; }
+.radar-conditions { flex: 1; min-width: 260px; }
+.condition-item { display: flex; align-items: flex-start; gap: 8px; padding: 6px 0; font-size: 0.78rem; border-bottom: 1px solid var(--border); }
+.condition-item:last-child { border-bottom: none; }
+.condition-checkbox { width: 18px; height: 18px; border: 2px solid var(--border); border-radius: 4px; flex-shrink: 0; margin-top: 2px; }
+
+/* ====== CSS RADAR ====== */
+.css-radar { position: relative; width: 260px; height: 260px; margin: 0 auto; }
+.radar-bg { position: absolute; border-radius: 50%; border: 1px solid var(--border); top: 50%; left: 50%; transform: translate(-50%, -50%); }
+.radar-bg.r1 { width: 260px; height: 260px; background: rgba(14, 209, 69, 0.06); }
+.radar-bg.r2 { width: 195px; height: 195px; background: rgba(244, 172, 0, 0.06); }
+.radar-bg.r3 { width: 130px; height: 130px; background: rgba(139, 26, 26, 0.08); }
+.radar-axis { position: absolute; font-size: 0.62rem; font-weight: 600; color: var(--text-muted); white-space: nowrap; }
+.radar-dot { position: absolute; width: 8px; height: 8px; border-radius: 50%; background: var(--primary); border: 2px solid var(--card-bg); z-index: 2; }
+.radar-value { position: absolute; font-size: 0.6rem; font-weight: 700; color: var(--primary); z-index: 3; }
+.radar-zone-legend { display: flex; gap: 12px; justify-content: center; margin-top: 8px; font-size: 0.62rem; color: var(--text-muted); }
+.radar-zone-legend span { display: flex; align-items: center; gap: 4px; }
+.radar-zone-legend .dot { width: 8px; height: 8px; border-radius: 50%; }
+.radar-zone-legend .dot-green { background: rgba(14, 209, 69, 0.4); }
+.radar-zone-legend .dot-yellow { background: rgba(244, 172, 0, 0.4); }
+.radar-zone-legend .dot-red { background: rgba(139, 26, 26, 0.5); }
+
+/* ====== BUILD VS BUY ====== */
+.badge-build { background: var(--info-light); color: var(--pill-info-text); border: 1px solid var(--info-border); padding: 2px 8px; border-radius: 10px; font-size: 0.65rem; font-weight: 700; }
+.badge-buy { background: var(--success-light); color: var(--pill-success-text); border: 1px solid var(--success-border); padding: 2px 8px; border-radius: 10px; font-size: 0.65rem; font-weight: 700; }
+
+/* ====== TIMELINE ====== */
+.timeline { position: relative; padding-left: 24px; }
+.timeline::before { content: ''; position: absolute; left: 8px; top: 0; bottom: 0; width: 2px; background: var(--border); }
+.timeline-group { margin-bottom: 16px; }
+.timeline-group-label { font-size: 0.72rem; font-weight: 700; padding: 3px 10px; border-radius: 6px; display: inline-block; margin-bottom: 8px; margin-left: -24px; }
+.timeline-group-label.blocker { background: var(--danger-light); color: var(--danger-text); }
+.timeline-group-label.pre-dev { background: var(--warning-light); color: var(--alert-warning-text); }
+.timeline-group-label.during-dev { background: var(--success-light); color: var(--pill-success-text); }
+.timeline-item { position: relative; padding: 6px 0 6px 8px; font-size: 0.75rem; line-height: 1.5; }
+.timeline-item::before { content: ''; position: absolute; left: -20px; top: 10px; width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--border); background: var(--card-bg); }
+.timeline-item.blocker::before { border-color: var(--danger-text); background: var(--danger-light); }
+.timeline-item.pre-dev::before { border-color: var(--alert-warning-text); background: var(--warning-light); }
+.timeline-item.during-dev::before { border-color: var(--pill-success-text); background: var(--success-light); }
+.timeline-meta { font-size: 0.65rem; color: var(--text-muted); }
+
+/* ====== FOOTER ====== */
+.footer { background: linear-gradient(135deg, #2E2D32 0%, #252428 50%, #1A1923 100%); color: white; padding: 24px 0; margin-top: 32px; }
+.footer-content { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+.footer-left { font-size: 0.78rem; opacity: 0.7; }
+.footer-right { font-size: 0.68rem; opacity: 0.5; text-align: right; }
+
+/* ====== ABBR ====== */
+abbr[title] { text-decoration: underline dotted; text-underline-offset: 2px; cursor: help; }
+
+/* ====== RESPONSIVE ====== */
+@media (max-width: 768px) {
+    .header-top { flex-direction: column; align-items: flex-start; }
+    .problem-grid { grid-template-columns: 1fr; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .radar-container { flex-direction: column; }
+    .scenario-chart { height: auto; flex-wrap: wrap; }
+    .bar-chart { height: auto; flex-wrap: wrap; }
+}
+@media (max-width: 480px) {
+    .stats-grid { grid-template-columns: 1fr; }
+    .container { padding: 0 12px; }
+}
+
+/* ====== PRINT ====== */
+@media print {
+    body { background: white; color: #1A1923; }
+    .theme-toggle { display: none; }
+    .card { break-inside: avoid; }
+    .section { break-inside: avoid; }
+}
+    </style>
+</head>
+<body>
+
+<!-- ====== HEADER ====== -->
+<header class="header">
+    <div class="container">
+        <div class="header-content">
+            <div class="header-top">
+                <div class="header-left">
+                    <div>
+                        <h1><i class="ri-database-2-line"></i> Veezoozin — Executive One-Pager</h1>
+                        <div class="subtitle">Plataforma SaaS conversational-first | <abbr title="Natural Language to SQL">NL-to-SQL</abbr> para BigQuery</div>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+                        <i class="ri-moon-line" id="theme-icon"></i>
+                        <span id="theme-label">Light</span>
+                    </button>
+                </div>
+            </div>
+            <div class="header-badges">
+                <span class="header-badge"><i class="ri-cloud-line"></i> SaaS + AI/ML</span>
+                <span class="header-badge"><i class="ri-git-branch-line"></i> v01</span>
+                <span class="header-badge"><i class="ri-calendar-line"></i> 2026-04-11</span>
+                <span class="header-badge"><i class="ri-loop-left-line"></i> Run 2</span>
+                <span class="header-badge badge-danger"><i class="ri-error-warning-line"></i> BELOW-THRESHOLD</span>
+                <span class="header-badge badge-gold"><i class="ri-shield-check-line"></i> GO CONDICIONAL</span>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="container">
+
+    <!-- ====== DANGER BANNER ====== -->
+    <div class="danger-banner">
+        <div class="danger-banner-title">
+            <i class="ri-alarm-warning-line"></i>
+            [BELOW-THRESHOLD] + [VIABILIDADE-NEGATIVA]
+        </div>
+        <div class="danger-banner-body">
+            <strong>Scores abaixo do threshold.</strong> Auditor: 71,4% | 10th-man: 57,8% | Threshold: &ge;90% (poc).<br>
+            <strong>Viabilidade financeira negativa.</strong> Receita projetada (R$ 2,4M) cobre apenas 23,3% do <abbr title="Total Cost of Ownership">TCO</abbr> (R$ 10,5M) em 3 anos no cenario base. O cenario mais viavel (D) atinge break-even mensal no mes ~24, com cobertura de 59% e deficit de R$ 4,8M.<br>
+            Em modo real, o pipeline teria pausado para revisao humana obrigatoria.
+        </div>
+    </div>
+
+    <!-- ====== REG-EXEC-01: RESUMO EXECUTIVO ====== -->
+    <section class="section">
+        <div class="section-header">
+            <div class="section-icon" style="background: var(--primary-light); color: var(--primary);">
+                <i class="ri-dashboard-3-line"></i>
+            </div>
+            <div class="section-title">Resumo Executivo</div>
+            <span class="region-badge">REG-EXEC-01</span>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-card-icon" style="background: var(--danger-light); color: var(--danger-text);">
+                    <i class="ri-money-dollar-circle-line"></i>
+                </div>
+                <div class="stat-card-info">
+                    <div class="stat-card-number">R$ 10,5M</div>
+                    <div class="stat-card-label"><abbr title="Total Cost of Ownership">TCO</abbr> 3 anos</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-card-icon" style="background: var(--warning-light); color: var(--alert-warning-text);">
+                    <i class="ri-line-chart-line"></i>
+                </div>
+                <div class="stat-card-info">
+                    <div class="stat-card-number">R$ 2,4M — 7,0M</div>
+                    <div class="stat-card-label">Receita (base — D)</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-card-icon" style="background: var(--gold-light); color: var(--gold);">
+                    <i class="ri-timer-line"></i>
+                </div>
+                <div class="stat-card-info">
+                    <div class="stat-card-number">Mes ~24 (D)</div>
+                    <div class="stat-card-label">Break-even mensal</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-card-icon" style="background: var(--info-light); color: var(--pill-info-text);">
+                    <i class="ri-shield-check-line"></i>
+                </div>
+                <div class="stat-card-info">
+                    <div class="stat-card-number">71,4%</div>
+                    <div class="stat-card-label">Score Auditor</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-card-icon" style="background: var(--purple-light); color: var(--purple);">
+                    <i class="ri-user-search-line"></i>
+                </div>
+                <div class="stat-card-info">
+                    <div class="stat-card-number">57,8%</div>
+                    <div class="stat-card-label">Score 10th-man</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-card-icon" style="background: var(--success-light); color: var(--pill-success-text);">
+                    <i class="ri-rocket-line"></i>
+                </div>
+                <div class="stat-card-info">
+                    <div class="stat-card-number">R$ 346K</div>
+                    <div class="stat-card-label">Investimento <abbr title="Minimum Viable Product">MVP</abbr></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="alert alert-info">
+            <i class="ri-checkbox-circle-line"></i>
+            <span><strong>Destaques:</strong> Pipeline <abbr title="Natural Language to SQL">NL-to-SQL</abbr> com 8 etapas + privacy guard, <abbr title="Lei Geral de Protecao de Dados">LGPD</abbr> profundo completo, Build vs Buy disciplinado (6 componentes), arquitetura modular monolith, 56 decisoes rastreadas (D1-D56).</span>
+        </div>
+        <div class="alert alert-danger">
+            <i class="ri-error-warning-line"></i>
+            <span><strong>Alertas:</strong> Viabilidade financeira negativa no cenario base, mercado sem <abbr title="Total Addressable Market / Serviceable Available Market / Serviceable Obtainable Market">TAM/SAM/SOM</abbr>, go-to-market ausente, moat replicavel em 6-12 meses, cenario D depende de premissas otimistas simultaneas.</span>
+        </div>
+    </section>
+
+    <!-- ====== REG-PROD-01: PROBLEMA CENTRAL ====== -->
+    <section class="section">
+        <div class="section-header">
+            <div class="section-icon" style="background: var(--warning-light); color: var(--alert-warning-text);">
+                <i class="ri-focus-3-line"></i>
+            </div>
+            <div class="section-title">Problema Central</div>
+            <span class="region-badge">REG-PROD-01</span>
+        </div>
+
+        <div class="problem-grid">
+            <div class="problem-card">
+                <div class="problem-card-title">
+                    <i class="ri-lock-line" style="color: var(--danger-text);"></i>
+                    Barreira tecnica
+                </div>
+                <div class="problem-card-desc">Gestores dependem de times de dados. Uma pergunta simples vira ticket que leva dias.</div>
+                <div class="impact-row"><span class="impact-arrow">&#8594;</span> Decisoes atrasadas, custo operacional alto</div>
+            </div>
+            <div class="problem-card">
+                <div class="problem-card-title">
+                    <i class="ri-question-line" style="color: var(--alert-warning-text);"></i>
+                    Falta de contexto
+                </div>
+                <div class="problem-card-desc">Ferramentas de BI nao entendem vocabulario do cliente. "Churn" significa coisas diferentes.</div>
+                <div class="impact-row"><span class="impact-arrow">&#8594;</span> Respostas imprecisas, retrabalho</div>
+            </div>
+            <div class="problem-card">
+                <div class="problem-card-title">
+                    <i class="ri-bar-chart-box-line" style="color: var(--purple);"></i>
+                    Dados sem acao
+                </div>
+                <div class="problem-card-desc">Usuario recebe tabelas brutas sem insights. Falta camada de interpretacao.</div>
+                <div class="impact-row"><span class="impact-arrow">&#8594;</span> Dados acessados mas nao utilizados</div>
+            </div>
+            <div class="problem-card">
+                <div class="problem-card-title">
+                    <i class="ri-translate-2" style="color: var(--teal);"></i>
+                    Multi-idioma
+                </div>
+                <div class="problem-card-desc">Empresas latinas operam em PT-BR, EN-US e Espanhol simultaneamente.</div>
+                <div class="impact-row"><span class="impact-arrow">&#8594;</span> Exclusao de usuarios, adocao limitada</div>
+            </div>
+        </div>
+
+        <div class="card" style="border-left: 3px solid var(--success);">
+            <div class="card-body" style="padding: 10px 16px;">
+                <div style="display: flex; gap: 24px; flex-wrap: wrap; font-size: 0.75rem;">
+                    <div><strong>Tempo de resposta:</strong> dias <span style="color: var(--success);">&#8594;</span> segundos</div>
+                    <div><strong>Acesso a dados:</strong> 5-10% <span style="color: var(--success);">&#8594;</span> 100% dos colaboradores</div>
+                    <div><strong>Tickets BI:</strong> <span style="color: var(--success);">&#8595; 60-80%</span> de reducao</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== REG-FIN-01: TCO ====== -->
+    <section class="section">
+        <div class="section-header">
+            <div class="section-icon" style="background: var(--danger-light); color: var(--danger-text);">
+                <i class="ri-funds-line"></i>
+            </div>
+            <div class="section-title"><abbr title="Total Cost of Ownership">TCO</abbr> — 3 Anos</div>
+            <span class="region-badge">REG-FIN-01</span>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <!-- CSS Stacked Bar Chart -->
+                <div class="bar-chart">
+                    <!-- Ano 1: R$ 1.845K -->
+                    <div class="bar-group">
+                        <div class="bar-stack" style="height: 100%;">
+                            <div class="bar-segment" style="height: 73.2%; background: var(--chart-1);" title="Equipe: R$ 1.350K (73,2%)"></div>
+                            <div class="bar-segment" style="height: 9.8%; background: var(--chart-5);" title="LLM APIs: R$ 180K (9,8%)"></div>
+                            <div class="bar-segment" style="height: 10.3%; background: var(--chart-3);" title="Marketing: R$ 190K (10,3%)"></div>
+                            <div class="bar-segment" style="height: 4.5%; background: var(--orange);" title="Infra GCP: R$ 83K (4,5%)"></div>
+                            <div class="bar-segment" style="height: 2.3%; background: var(--secondary);" title="SaaS: R$ 42K (2,3%)"></div>
+                        </div>
+                        <div class="bar-label">Ano 1</div>
+                        <div class="bar-total">R$ 1,85M</div>
+                    </div>
+                    <!-- Ano 2: R$ 3.927K -->
+                    <div class="bar-group">
+                        <div class="bar-stack" style="height: 100%;">
+                            <div class="bar-segment" style="height: 64.2%; background: var(--chart-1);" title="Equipe: R$ 2.520K (64,2%)"></div>
+                            <div class="bar-segment" style="height: 12.8%; background: var(--chart-5);" title="LLM APIs: R$ 504K (12,8%)"></div>
+                            <div class="bar-segment" style="height: 12.2%; background: var(--chart-3);" title="Marketing: R$ 480K (12,2%)"></div>
+                            <div class="bar-segment" style="height: 7.9%; background: var(--orange);" title="Infra GCP: R$ 310K (7,9%)"></div>
+                            <div class="bar-segment" style="height: 2.9%; background: var(--secondary);" title="SaaS: R$ 113K (2,9%)"></div>
+                        </div>
+                        <div class="bar-label">Ano 2</div>
+                        <div class="bar-total">R$ 3,93M</div>
+                    </div>
+                    <!-- Ano 3: R$ 5.408K (max = baseline for heights) -->
+                    <div class="bar-group">
+                        <div class="bar-stack" style="height: 100%;">
+                            <div class="bar-segment" style="height: 57.7%; background: var(--chart-1);" title="Equipe: R$ 3.120K (57,7%)"></div>
+                            <div class="bar-segment" style="height: 14.4%; background: var(--chart-5);" title="LLM APIs: R$ 780K (14,4%)"></div>
+                            <div class="bar-segment" style="height: 13.3%; background: var(--chart-3);" title="Marketing: R$ 720K (13,3%)"></div>
+                            <div class="bar-segment" style="height: 10.7%; background: var(--orange);" title="Infra GCP: R$ 580K (10,7%)"></div>
+                            <div class="bar-segment" style="height: 3.8%; background: var(--secondary);" title="SaaS: R$ 208K (3,8%)"></div>
+                        </div>
+                        <div class="bar-label">Ano 3</div>
+                        <div class="bar-total">R$ 5,41M</div>
+                    </div>
+                </div>
+                <div class="bar-legend">
+                    <div class="bar-legend-item"><div class="bar-legend-color" style="background: var(--chart-1);"></div> Equipe (66,5%)</div>
+                    <div class="bar-legend-item"><div class="bar-legend-color" style="background: var(--chart-5);"></div> <abbr title="Large Language Model">LLM</abbr> APIs (13,9%)</div>
+                    <div class="bar-legend-item"><div class="bar-legend-color" style="background: var(--chart-3);"></div> Marketing (13,2%)</div>
+                    <div class="bar-legend-item"><div class="bar-legend-color" style="background: var(--orange);"></div> Infra GCP (9,3%)</div>
+                    <div class="bar-legend-item"><div class="bar-legend-color" style="background: var(--secondary);"></div> SaaS (3,5%)</div>
+                </div>
+
+                <div style="margin-top: 12px; text-align: center;">
+                    <span class="pill pill-danger" style="font-size: 0.75rem; padding: 4px 14px;">
+                        <i class="ri-error-warning-line"></i> Deficit 3a (base): R$ -8.063.000 | Receita cobre 23,3% do <abbr title="Total Cost of Ownership">TCO</abbr>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== REG-FIN-07: CENARIOS ====== -->
+    <section class="section">
+        <div class="section-header">
+            <div class="section-icon" style="background: var(--purple-light); color: var(--purple);">
+                <i class="ri-git-merge-line"></i>
+            </div>
+            <div class="section-title">Cenarios de Viabilidade</div>
+            <span class="region-badge">REG-FIN-07</span>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <!-- CSS Grouped Bar Chart -->
+                <div class="scenario-chart">
+                    <!-- Base -->
+                    <div class="scenario-group">
+                        <div class="scenario-bars">
+                            <div class="scenario-bar" style="height: 40px; background: var(--chart-3);" title="Receita: R$ 2,4M"></div>
+                            <div class="scenario-bar" style="height: 175px; background: var(--chart-4);" title="TCO: R$ 10,5M"></div>
+                        </div>
+                        <div class="scenario-label">Base</div>
+                        <div class="scenario-coverage">23%</div>
+                    </div>
+                    <!-- A (Pricing) -->
+                    <div class="scenario-group">
+                        <div class="scenario-bars">
+                            <div class="scenario-bar" style="height: 57px; background: var(--chart-3);" title="Receita: R$ 3,4M"></div>
+                            <div class="scenario-bar" style="height: 175px; background: var(--chart-4);" title="TCO: R$ 10,5M"></div>
+                        </div>
+                        <div class="scenario-label">A <span style="font-weight:400; font-size:0.6rem;">(Pricing)</span></div>
+                        <div class="scenario-coverage">33%</div>
+                    </div>
+                    <!-- B (Escopo) -->
+                    <div class="scenario-group">
+                        <div class="scenario-bars">
+                            <div class="scenario-bar" style="height: 37px; background: var(--chart-3);" title="Receita: R$ 2,2M"></div>
+                            <div class="scenario-bar" style="height: 110px; background: var(--chart-4);" title="TCO: R$ 6,6M"></div>
+                        </div>
+                        <div class="scenario-label">B <span style="font-weight:400; font-size:0.6rem;">(Escopo)</span></div>
+                        <div class="scenario-coverage">33%</div>
+                    </div>
+                    <!-- C (Crescimento) -->
+                    <div class="scenario-group">
+                        <div class="scenario-bars">
+                            <div class="scenario-bar" style="height: 82px; background: var(--chart-3);" title="Receita: R$ 4,9M"></div>
+                            <div class="scenario-bar" style="height: 198px; background: var(--chart-4);" title="TCO: R$ 11,9M"></div>
+                        </div>
+                        <div class="scenario-label">C <span style="font-weight:400; font-size:0.6rem;">(Cresc.)</span></div>
+                        <div class="scenario-coverage">42%</div>
+                    </div>
+                    <!-- D (A+C) - Highlighted -->
+                    <div class="scenario-group highlight">
+                        <div class="scenario-bars">
+                            <div class="scenario-bar" style="height: 117px; background: var(--chart-3);" title="Receita: R$ 7,0M"></div>
+                            <div class="scenario-bar" style="height: 198px; background: var(--chart-4);" title="TCO: R$ 11,9M"></div>
+                        </div>
+                        <div class="scenario-label">D <span style="font-weight:400; font-size:0.6rem;">(A+C)</span></div>
+                        <div class="scenario-coverage" style="color: var(--gold); font-weight: 600;">59%</div>
+                    </div>
+                </div>
+                <div class="bar-legend" style="margin-bottom: 12px;">
+                    <div class="bar-legend-item"><div class="bar-legend-color" style="background: var(--chart-3);"></div> Receita 3a</div>
+                    <div class="bar-legend-item"><div class="bar-legend-color" style="background: var(--chart-4);"></div> <abbr title="Total Cost of Ownership">TCO</abbr> 3a</div>
+                    <div class="bar-legend-item"><div class="bar-legend-color" style="background: var(--gold); border: 1px solid var(--gold-border);"></div> Cenario mais viavel</div>
+                </div>
+
+                <!-- Gatilhos Go/No-Go -->
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Marco</th>
+                                <th>Metrica</th>
+                                <th>Minimo</th>
+                                <th>Acao se nao atingir</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="pill pill-danger">Mes 8</span></td>
+                                <td>Tenants pagantes</td>
+                                <td class="center">&ge; 8 Pro + 1 Ent</td>
+                                <td>Rever pricing/posicionamento, considerar pivot</td>
+                            </tr>
+                            <tr>
+                                <td><span class="pill pill-warning">Mes 12</span></td>
+                                <td><abbr title="Monthly Recurring Revenue">MRR</abbr></td>
+                                <td class="center">&ge; R$ 30K</td>
+                                <td>Rever equipe, considerar cenario B</td>
+                            </tr>
+                            <tr>
+                                <td><span class="pill pill-warning">Mes 18</span></td>
+                                <td><abbr title="Monthly Recurring Revenue">MRR</abbr></td>
+                                <td class="center">&ge; R$ 80K</td>
+                                <td>Se &lt; R$ 50K: cenario B agressivo</td>
+                            </tr>
+                            <tr>
+                                <td><span class="pill pill-info">Mes 24</span></td>
+                                <td>Break-even mensal</td>
+                                <td class="center"><abbr title="Monthly Recurring Revenue">MRR</abbr> &ge; custos</td>
+                                <td>Captacao ou reducao para equipe minima</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== REG-RISK-01: RISCOS ====== -->
+    <section class="section">
+        <div class="section-header">
+            <div class="section-icon" style="background: var(--danger-light); color: var(--danger-text);">
+                <i class="ri-alarm-warning-line"></i>
+            </div>
+            <div class="section-title">Top 10 Riscos</div>
+            <span class="region-badge">REG-RISK-01</span>
+        </div>
+
+        <div class="card">
+            <div class="card-body" style="padding: 0;">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Risco</th>
+                                <th class="center">Prob.</th>
+                                <th class="center">Impacto</th>
+                                <th>Fonte</th>
+                                <th>Mitigacao</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><strong>Viabilidade financeira negativa</strong> — receita cobre 23% do <abbr title="Total Cost of Ownership">TCO</abbr></td>
+                                <td class="center">Alta</td>
+                                <td class="center"><span class="pill pill-danger">Critico</span></td>
+                                <td>1.8, 2.1, 2.2</td>
+                                <td>Cenario D, captacao, gatilhos Go/No-Go</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><strong>Mercado nao dimensionado</strong> — BigQuery no Brasil pode ser nicho</td>
+                                <td class="center">Alta</td>
+                                <td class="center"><span class="pill pill-danger">Critico</span></td>
+                                <td>2.2</td>
+                                <td>Dimensionar <abbr title="Total Addressable Market / Serviceable Available Market / Serviceable Obtainable Market">TAM/SAM/SOM</abbr>, validar <abbr title="Letter of Intent">LOI</abbr>s</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><strong>Precisao <abbr title="Natural Language to SQL">NL-to-SQL</abbr> &lt; 85%</strong> — realista e 65-75%</td>
+                                <td class="center">Media</td>
+                                <td class="center"><span class="pill pill-warning">Alto</span></td>
+                                <td>1.1, 2.2</td>
+                                <td>Meta &gt; 75% no <abbr title="Minimum Viable Product">MVP</abbr>, evolucao a 85% mes 6</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td><strong>Cross-tenant data leak</strong> via bug no <abbr title="Row-Level Security">RLS</abbr></td>
+                                <td class="center">Baixa</td>
+                                <td class="center"><span class="pill pill-danger">Critico</span></td>
+                                <td>1.5, 1.7</td>
+                                <td>6 camadas de isolamento, testes automatizados</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td><strong><abbr title="Data Protection Officer">DPO</abbr> acumulado pelo CTO</strong> — conflito de interesse</td>
+                                <td class="center">Alta</td>
+                                <td class="center"><span class="pill pill-warning">Alto</span></td>
+                                <td>1.6, 2.2</td>
+                                <td>Contratar <abbr title="Data Protection Officer">DPO</abbr> terceirizado (~R$ 2K/mes)</td>
+                            </tr>
+                            <tr>
+                                <td>6</td>
+                                <td><strong>Custo <abbr title="Large Language Model">LLM</abbr> APIs explode</strong> com escala</td>
+                                <td class="center">Media</td>
+                                <td class="center"><span class="pill pill-warning">Alto</span></td>
+                                <td>1.5, 1.8</td>
+                                <td>Cache 4 camadas, migracao Gemini</td>
+                            </tr>
+                            <tr>
+                                <td>7</td>
+                                <td><strong>Ausencia de go-to-market</strong> — sem vendas, sem early adopters</td>
+                                <td class="center">Alta</td>
+                                <td class="center"><span class="pill pill-warning">Alto</span></td>
+                                <td>2.2</td>
+                                <td>LOIs, SDR mes 6, partnerships</td>
+                            </tr>
+                            <tr>
+                                <td>8</td>
+                                <td><strong><abbr title="Personally Identifiable Information">PII</abbr> em chamadas <abbr title="Large Language Model">LLM</abbr></strong> sem controle</td>
+                                <td class="center">Alta</td>
+                                <td class="center"><span class="pill pill-warning">Alto</span></td>
+                                <td>1.6</td>
+                                <td>Privacy guard (D35), <abbr title="Data Processing Agreement">DPA</abbr>s com Anthropic/Google</td>
+                            </tr>
+                            <tr>
+                                <td>9</td>
+                                <td><strong>Contratar Backend Senior</strong> <abbr title="Natural Language to SQL">NL-to-SQL</abbr> — dificil</td>
+                                <td class="center">Alta</td>
+                                <td class="center"><span class="pill pill-warning">Alto</span></td>
+                                <td>1.4</td>
+                                <td>Busca imediata, fallback CTO + junior</td>
+                            </tr>
+                            <tr>
+                                <td>10</td>
+                                <td><strong>Enterprise adocao lenta</strong> — sem SSO, ciclo longo</td>
+                                <td class="center">Alta</td>
+                                <td class="center"><span class="pill pill-warning">Alto</span></td>
+                                <td>2.2</td>
+                                <td>2-3 Ent no mes 12, foco Pro/<abbr title="Product-Led Growth">PLG</abbr></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== REG-EXEC-03: GO/NO-GO ====== -->
+    <section class="section">
+        <div class="section-header">
+            <div class="section-icon" style="background: var(--gold-light); color: var(--gold);">
+                <i class="ri-shield-star-line"></i>
+            </div>
+            <div class="section-title">Go / No-Go</div>
+            <span class="region-badge">REG-EXEC-03</span>
+        </div>
+
+        <div class="go-badge">
+            <i class="ri-shield-check-line"></i>
+            GO CONDICIONAL
+        </div>
+
+        <div class="radar-container">
+            <!-- CSS Radar with zones -->
+            <div class="radar-chart">
+                <div class="css-radar">
+                    <!-- Zone backgrounds (green >= 80%, yellow 60-79%, red < 60%) -->
+                    <div class="radar-bg r1"></div>
+                    <div class="radar-bg r2"></div>
+                    <div class="radar-bg r3"></div>
+
+                    <!-- Axis labels -->
+                    <div class="radar-axis" style="top: 2px; left: 50%; transform: translateX(-50%);">Tecnico</div>
+                    <div class="radar-axis" style="top: 38%; right: -8px;">Produto</div>
+                    <div class="radar-axis" style="bottom: 12%; right: 2px;">Privacidade</div>
+                    <div class="radar-axis" style="bottom: 12%; left: 2px;">Mercado</div>
+                    <div class="radar-axis" style="top: 38%; left: -14px;">Financeiro</div>
+
+                    <!-- Data points (positioned relative to center 130,130 radius 120) -->
+                    <!-- Tecnico 85%: top -->
+                    <div class="radar-dot" style="top: 28px; left: 126px;"></div>
+                    <div class="radar-value" style="top: 18px; left: 140px;">85%</div>
+                    <!-- Produto 78%: top-right -->
+                    <div class="radar-dot" style="top: 62px; right: 26px;"></div>
+                    <div class="radar-value" style="top: 52px; right: 10px;">78%</div>
+                    <!-- Privacidade 72%: bottom-right -->
+                    <div class="radar-dot" style="bottom: 62px; right: 40px;"></div>
+                    <div class="radar-value" style="bottom: 50px; right: 24px;">72%</div>
+                    <!-- Mercado 40%: bottom-left -->
+                    <div class="radar-dot" style="bottom: 100px; left: 52px;"></div>
+                    <div class="radar-value" style="bottom: 90px; left: 36px;">40%</div>
+                    <!-- Financeiro 35%: top-left -->
+                    <div class="radar-dot" style="top: 100px; left: 40px;"></div>
+                    <div class="radar-value" style="top: 90px; left: 24px;">35%</div>
+                </div>
+                <div class="radar-zone-legend">
+                    <span><span class="dot dot-green"></span> &ge;80%</span>
+                    <span><span class="dot dot-yellow"></span> 60-79%</span>
+                    <span><span class="dot dot-red"></span> &lt;60%</span>
+                </div>
+            </div>
+
+            <!-- Conditions -->
+            <div class="radar-conditions">
+                <div style="font-size: 0.82rem; font-weight: 600; margin-bottom: 10px;">
+                    <i class="ri-checkbox-multiple-line" style="color: var(--alert-warning-text);"></i>
+                    6 Condicoes obrigatorias para GO:
+                </div>
+                <div class="condition-item">
+                    <div class="condition-checkbox"></div>
+                    <span>Definir estrategia de captacao (Pre-seed ~R$ 1,5M) com timeline e investidores-alvo</span>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-checkbox"></div>
+                    <span>Dimensionar mercado (<abbr title="Total Addressable Market / Serviceable Available Market / Serviceable Obtainable Market">TAM/SAM/SOM</abbr>) — validar 300 tenants pagantes no mes 36</span>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-checkbox"></div>
+                    <span>Confirmar pelo menos 3 <abbr title="Letter of Intent">LOI</abbr>s de early adopters antes de iniciar dev</span>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-checkbox"></div>
+                    <span>Resolver conflito de pricing: D11 (R$ 497) vs D51 (R$ 697)</span>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-checkbox"></div>
+                    <span>Contratar <abbr title="Data Protection Officer">DPO</abbr> terceirizado antes do lancamento</span>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-checkbox"></div>
+                    <span>Reduzir meta de precisao <abbr title="Natural Language to SQL">NL-to-SQL</abbr> do <abbr title="Minimum Viable Product">MVP</abbr> para &gt;75% (nao 85%)</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="alert alert-warning" style="margin-top: 12px;">
+            <i class="ri-error-warning-line"></i>
+            <span><strong>Scores:</strong> Auditor 71,4% (BELOW-THRESHOLD) | 10th-man 57,8% (BELOW-THRESHOLD) | Threshold &ge;90% (poc)</span>
+        </div>
+    </section>
+
+    <!-- ====== REG-FIN-05: BUILD VS BUY ====== -->
+    <section class="section">
+        <div class="section-header">
+            <div class="section-icon" style="background: var(--info-light); color: var(--pill-info-text);">
+                <i class="ri-hammer-line"></i>
+            </div>
+            <div class="section-title">Build vs Buy</div>
+            <span class="region-badge">REG-FIN-05</span>
+        </div>
+
+        <div class="card">
+            <div class="card-body" style="padding: 0;">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Componente</th>
+                                <th class="center">Decisao</th>
+                                <th class="center">Custo 3a</th>
+                                <th class="center"><abbr title="Time to Market">TTM</abbr></th>
+                                <th>Justificativa</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong><abbr title="Natural Language to SQL">NL-to-SQL</abbr> Engine</strong></td>
+                                <td class="center"><span class="badge-build">BUILD</span></td>
+                                <td class="center">~R$ 0</td>
+                                <td class="center">4-6 sem</td>
+                                <td>Core product, moat competitivo</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Vector Store</strong></td>
+                                <td class="center"><span class="badge-buy">BUY</span></td>
+                                <td class="center">~R$ 180K</td>
+                                <td class="center">&lt; 1 sem</td>
+                                <td>Infra, nao diferencial</td>
+                            </tr>
+                            <tr>
+                                <td><strong><abbr title="Large Language Model">LLM</abbr></strong></td>
+                                <td class="center"><span class="badge-buy">BUY</span></td>
+                                <td class="center">~R$ 1,46M</td>
+                                <td class="center">1 dia</td>
+                                <td>Claude + Gemini — qualidade + <abbr title="Time to Market">TTM</abbr></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Auth</strong></td>
+                                <td class="center"><span class="badge-buy">BUY</span></td>
+                                <td class="center">~R$ 10K</td>
+                                <td class="center">&lt; 1 sem</td>
+                                <td>Firebase Auth — seguranca critica</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Visualizacao</strong></td>
+                                <td class="center"><span class="badge-buy">BUY</span></td>
+                                <td class="center">R$ 0 (OSS)</td>
+                                <td class="center">1-2 sem</td>
+                                <td>Recharts/Nivo — nao e moat</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Billing</strong></td>
+                                <td class="center"><span class="badge-buy">BUY</span></td>
+                                <td class="center">~R$ 340K</td>
+                                <td class="center">&lt; 1 sem</td>
+                                <td>Stripe — SaaS antipattern</td>
+                            </tr>
+                            <tr style="font-weight: 600; background: var(--primary-light);">
+                                <td><strong>TOTAL</strong></td>
+                                <td class="center">1 BUILD / 5 BUY</td>
+                                <td class="center"><strong>~R$ 1,99M</strong></td>
+                                <td class="center">—</td>
+                                <td>Build apenas o diferencial</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== REG-EXEC-04: PROXIMOS PASSOS ====== -->
+    <section class="section">
+        <div class="section-header">
+            <div class="section-icon" style="background: var(--success-light); color: var(--pill-success-text);">
+                <i class="ri-route-line"></i>
+            </div>
+            <div class="section-title">Proximos Passos</div>
+            <span class="region-badge">REG-EXEC-04</span>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="timeline">
+                    <!-- Bloqueante -->
+                    <div class="timeline-group">
+                        <div class="timeline-group-label blocker"><i class="ri-forbid-line"></i> Bloqueante — antes de iniciar dev</div>
+                        <div class="timeline-item blocker">
+                            <strong>#1 Resolver viabilidade financeira</strong> — definir captacao Pre-seed ~R$ 1,5M com timeline e investidores
+                            <div class="timeline-meta">Fabio (CTO) | Antes de iniciar dev</div>
+                        </div>
+                        <div class="timeline-item blocker">
+                            <strong>#2 Dimensionar mercado</strong> — <abbr title="Total Addressable Market / Serviceable Available Market / Serviceable Obtainable Market">TAM/SAM/SOM</abbr> de <abbr title="Natural Language to SQL">NL-to-SQL</abbr> para BigQuery Brasil/LATAM
+                            <div class="timeline-meta">PO | Antes de iniciar dev</div>
+                        </div>
+                        <div class="timeline-item blocker">
+                            <strong>#3 Confirmar early adopters</strong> — obter pelo menos 3 <abbr title="Letter of Intent">LOI</abbr>s
+                            <div class="timeline-meta">Fabio + PO | Antes de iniciar dev</div>
+                        </div>
+                    </div>
+                    <!-- Antes do Dev -->
+                    <div class="timeline-group">
+                        <div class="timeline-group-label pre-dev"><i class="ri-timer-flash-line"></i> Antes do Dev — prioridade alta</div>
+                        <div class="timeline-item pre-dev">
+                            <strong>#4 Resolver pricing</strong> — D11 (R$ 497) vs D51 (R$ 697) — testar com early adopters
+                            <div class="timeline-meta">PO | Mes 1-2</div>
+                        </div>
+                        <div class="timeline-item pre-dev">
+                            <strong>#5 Contratar <abbr title="Data Protection Officer">DPO</abbr> terceirizado</strong> (~R$ 2.000/mes)
+                            <div class="timeline-meta">Fabio | Antes do lancamento</div>
+                        </div>
+                        <div class="timeline-item pre-dev">
+                            <strong>#6 Iniciar contratacao</strong> — Backend Senior <abbr title="Natural Language to SQL">NL-to-SQL</abbr> (prioridade maxima)
+                            <div class="timeline-meta">Fabio | Imediato</div>
+                        </div>
+                    </div>
+                    <!-- Durante Dev -->
+                    <div class="timeline-group">
+                        <div class="timeline-group-label during-dev"><i class="ri-code-s-slash-line"></i> Durante Dev</div>
+                        <div class="timeline-item during-dev">
+                            <strong>#7 Iniciar Sprint 1</strong> — setup GCP, monorepo, CI/CD, auth
+                            <div class="timeline-meta">Tech Lead + Fabio | Apos itens 1-3</div>
+                        </div>
+                        <div class="timeline-item during-dev">
+                            <strong>#8 Dashboard de gatilhos</strong> — KPIs Go/No-Go (mes 8, 12, 18, 24)
+                            <div class="timeline-meta">PO | Sprint 1-2</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<!-- ====== FOOTER ====== -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-left">
+                &copy; 2026 mAInd Tech — Discovery Pipeline v0.5
+            </div>
+            <div class="footer-right">
+                Veezoozin Executive One-Pager | Run 2, Iteracao 1 | 2026-04-11
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+function toggleTheme() {
+    const html = document.documentElement;
+    const icon = document.getElementById('theme-icon');
+    const label = document.getElementById('theme-label');
+    if (html.getAttribute('data-theme') === 'light') {
+        html.removeAttribute('data-theme');
+        icon.className = 'ri-moon-line';
+        label.textContent = 'Light';
+    } else {
+        html.setAttribute('data-theme', 'light');
+        icon.className = 'ri-sun-line';
+        label.textContent = 'Dark';
+    }
+}
+</script>
+
+</body>
+</html>
