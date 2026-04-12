@@ -253,6 +253,27 @@ Um projeto com projeção financeira negativa **não deveria passar** pelo gate 
 
 ---
 
+### P19. Seção SaaS Multi-Tenant e Pricing — tom técnico demais para report executivo
+
+**Severidade:** Média
+**Fase:** Fase 3.2 (Consolidator) + Fase 3.4 (HTML Writer)
+
+A seção "SaaS — Detalhamento Multi-Tenant e Pricing" (REG-DOM-SAAS-01) no `executive-report.html` usa linguagem técnica (isolamento por schema, row-level security, service accounts dedicados, etc.) que não é adequada para o público executivo.
+
+O report-setup `executive` é para **diretoria e gestão** — essas pessoas querem saber quanto custa, quais planos existem e o modelo de receita. Não querem saber sobre isolamento de banco de dados.
+
+O conteúdo técnico de multi-tenant deveria estar apenas no setup `complete` (REG-DOM-SAAS-02 Tenancy Strategy). No setup `executive`, a seção SaaS deveria focar em: planos/pricing, modelo de receita, projeção de MRR, e diferenciação entre tiers.
+
+**Ação:**
+- [ ] O consolidator deve adaptar o **tom** de cada region com base no report-setup selecionado
+- [ ] Para `executive`: focar em negócio (pricing, receita, mercado) — remover detalhes técnicos de isolamento
+- [ ] Para `complete`: manter conteúdo técnico completo
+- [ ] Adicionar regra no consolidator: ao gerar regions domain-specific para setup executive, usar tom "executivo-negócio" (não "técnico")
+- [ ] Considerar separar REG-DOM-SAAS-01 em dois: "Modelo Comercial" (executive) e "Estratégia de Tenancy" (complete)
+- [ ] O `final-report-template.md` já define tom por seção — o consolidator deveria respeitar isso para regions domain-specific também
+
+---
+
 ### P18. Radar chart — falta preenchimento visual das faixas da escala
 
 **Severidade:** Baixa
@@ -364,6 +385,7 @@ P15 (effort SVG fix)      ← HTML/CSS no lugar de SVG
 P16 (mitigações detalhadas)← especialistas propõem resolução
 P17 (10th-man layout)     ← igualar ao layout do auditor
 P18 (radar grid lines)    ← regiões visuais na escala
+P19 (SaaS section too technical) ← adaptar tom ao público
  ↓
 P9-P11 (docs + config)   ← polish final
 ```
