@@ -67,8 +67,9 @@ blockquote{border-left:3px solid var(--primary);padding:12px 16px;margin:12px 0;
 <button class="tab-btn active" data-tab="produto"><i class="ri-lightbulb-line"></i> Produto <span class="tab-count">8</span></button>
 <button class="tab-btn" data-tab="organizacao"><i class="ri-team-line"></i> Organização <span class="tab-count">3</span></button>
 <button class="tab-btn" data-tab="financeiro"><i class="ri-money-dollar-circle-line"></i> Financeiro <span class="tab-count">7</span></button>
-<button class="tab-btn" data-tab="riscos"><i class="ri-shield-check-line"></i> Riscos e Qualidade <span class="tab-count">5</span></button>
-<button class="tab-btn" data-tab="decisao"><i class="ri-checkbox-circle-line"></i> Backlog e Decisão <span class="tab-count">5</span></button>
+<button class="tab-btn" data-tab="riscos"><i class="ri-shield-check-line"></i> Riscos <span class="tab-count">5</span></button>
+<button class="tab-btn" data-tab="decisao"><i class="ri-checkbox-circle-line"></i> Backlog e Decisão <span class="tab-count">3</span></button>
+<button class="tab-btn" data-tab="auditoria"><i class="ri-robot-line"></i> Auditoria IA <span class="tab-count">2</span></button>
 <button class="tab-btn" data-tab="dominio"><i class="ri-apps-line"></i> Domínio <span class="tab-count">5</span></button>
 <button class="tab-btn" data-tab="glossario"><i class="ri-book-open-line"></i> Glossário <span class="tab-count">1</span></button>
 </div>
@@ -78,6 +79,7 @@ blockquote{border-left:3px solid var(--primary);padding:12px 16px;margin:12px 0;
 <button class="mobile-menu-item" data-tab="financeiro"><i class="ri-money-dollar-circle-line"></i> Financeiro</button>
 <button class="mobile-menu-item" data-tab="riscos"><i class="ri-shield-check-line"></i> Riscos</button>
 <button class="mobile-menu-item" data-tab="decisao"><i class="ri-checkbox-circle-line"></i> Decisão</button>
+<button class="mobile-menu-item" data-tab="auditoria"><i class="ri-robot-line"></i> Auditoria IA</button>
 <button class="mobile-menu-item" data-tab="dominio"><i class="ri-apps-line"></i> Domínio</button>
 <button class="mobile-menu-item" data-tab="glossario"><i class="ri-book-open-line"></i> Glossário</button>
 <button class="mobile-menu-item" onclick="toggleTheme()"><i class="ri-sun-line"></i> Alternar tema</button>
@@ -743,26 +745,6 @@ blockquote{border-left:3px solid var(--primary);padding:12px 16px;margin:12px 0;
 </tbody></table></div>
 </div></div></div>
 
-<!-- REG-QUAL-01: Auditor -->
-<div class="section"><div class="section-header"><div class="section-icon bg-warning"><i class="ri-shield-check-line"></i></div><div class="section-title">Auditor — 87,15%</div><div class="card-badge reg-badge" style="background:var(--border);color:var(--text-muted);font-size:.6rem;margin-left:auto;">REG-QUAL-01</div></div>
-<div class="region-row">
-<div class="region-col-6">
-<div class="stat-card" style="margin-bottom:16px;border-left:3px solid var(--warning);"><div class="stat-card-icon bg-warning"><i class="ri-shield-check-line"></i></div><div class="stat-card-info"><div class="stat-card-number" style="color:var(--warning);font-size:1.6rem;">87,15%</div><div class="stat-card-label">APROVADO COM RESSALVAS</div></div></div>
-<div class="table-wrapper"><table><thead><tr><th>Dimensão</th><th>Peso</th><th>Score</th><th>Piso</th><th>Status</th></tr></thead><tbody>
-<tr><td>Completude</td><td>25%</td><td class="dash-num">90%</td><td class="dash-num">80%</td><td><span class="pill pill-success">OK</span></td></tr>
-<tr><td>Fundamentação</td><td>25%</td><td class="dash-num">75%</td><td class="dash-num">70%</td><td><span class="pill pill-success">OK</span></td></tr>
-<tr><td>Coerência</td><td>20%</td><td class="dash-num">90%</td><td class="dash-num">70%</td><td><span class="pill pill-success">OK</span></td></tr>
-<tr><td>Profundidade</td><td>15%</td><td class="dash-num">78%</td><td class="dash-num">60%</td><td><span class="pill pill-success">OK</span></td></tr>
-<tr><td>Neutralidade</td><td>15%</td><td class="dash-num">100%</td><td class="dash-num">70%</td><td><span class="pill pill-success">OK</span></td></tr>
-<tr style="font-weight:700;"><td>Total + Bônus</td><td></td><td class="dash-num">87,15%</td><td></td><td></td></tr>
-</tbody></table></div>
-</div>
-<div class="region-col-6">
-<canvas id="chartAuditor" style="width:100%;max-height:300px;"></canvas>
-</div>
-</div>
-</div>
-
 <!-- REG-RISK-04: Viabilidade -->
 <div class="section"><div class="section-header"><div class="section-icon bg-warning"><i class="ri-checkbox-multiple-line"></i></div><div class="section-title">Análise de Viabilidade</div><div class="card-badge reg-badge" style="background:var(--border);color:var(--text-muted);font-size:.6rem;margin-left:auto;">REG-RISK-04</div></div>
 <div class="card"><div class="card-body">
@@ -820,10 +802,69 @@ blockquote{border-left:3px solid var(--primary);padding:12px 16px;margin:12px 0;
 </tbody></table></div>
 </div></div></div>
 
+<!-- REG-EXEC-03: Go/No-Go -->
+<div class="section"><div class="section-header"><div class="section-icon bg-purple"><i class="ri-compass-3-line"></i></div><div class="section-title">Decisão de Continuidade (Go/No-Go)</div><div class="card-badge reg-badge" style="background:var(--border);color:var(--text-muted);font-size:.6rem;margin-left:auto;">REG-EXEC-03</div></div>
+<div class="stats-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:16px;">
+    <div class="stat-card" style="border-left:3px solid var(--danger);"><div class="stat-card-info"><div class="stat-card-number" style="color:var(--danger-text);">ALTO RISCO</div><div class="stat-card-label">Value (mercado quer?)</div></div></div>
+    <div class="stat-card" style="border-left:3px solid var(--warning);"><div class="stat-card-info"><div class="stat-card-number" style="color:var(--warning);">MÉDIO RISCO</div><div class="stat-card-label">Usability (usuário consegue?)</div></div></div>
+    <div class="stat-card" style="border-left:3px solid var(--warning);"><div class="stat-card-info"><div class="stat-card-number" style="color:var(--warning);">MÉDIO RISCO</div><div class="stat-card-label">Feasibility (conseguimos?)</div></div></div>
+    <div class="stat-card" style="border-left:3px solid var(--danger);"><div class="stat-card-info"><div class="stat-card-number" style="color:var(--danger-text);">ALTO RISCO</div><div class="stat-card-label">Viability (se sustenta?)</div></div></div>
+</div>
+<div class="card"><div class="card-body">
+    <div class="stat-card" style="margin-bottom:16px;border:2px solid var(--warning);"><div class="stat-card-icon bg-warning"><i class="ri-compass-3-line"></i></div><div class="stat-card-info"><div class="stat-card-number" style="color:var(--warning);font-size:1.2rem;">AVANÇAR COM CONDIÇÕES</div><div class="stat-card-label">Recomendação</div></div></div>
+    <h3>Condições Obrigatórias</h3>
+    <ol>
+        <li><strong>Semana 1-4:</strong> Desenvolvimento fundação EM PARALELO com validação de mercado e consultoria jurídica</li>
+        <li><strong>Semana 8 (decision point):</strong> Walking skeleton funcional? 3+ <abbr class="acronym" title="Letter of Intent">LOIs</abbr>? Consultoria <abbr class="acronym" title="Lei Geral de Proteção de Dados (Lei 13.709/2018)">LGPD</abbr> positiva? Se 2 de 3 são "não", PAUSAR.</li>
+        <li><strong>Antes do lançamento:</strong> Política de privacidade publicada, <abbr class="acronym" title="Data Processing Agreement">DPAs</abbr> assinados, decisão sobre <abbr class="acronym" title="Data Protection Officer / Encarregado">DPO</abbr></li>
+    </ol>
+    <div class="stat-card" style="margin-top:16px;border-left:3px solid var(--warning);"><div class="stat-card-icon bg-warning"><i class="ri-money-dollar-circle-line"></i></div><div class="stat-card-info"><div class="stat-card-number" style="color:var(--warning);">R$190K-R$250K</div><div class="stat-card-label">Capital Necessário até Break-even</div></div></div>
+</div></div></div>
+
+<!-- REG-EXEC-04: Próximos Passos -->
+<div class="section"><div class="section-header"><div class="section-icon bg-success"><i class="ri-route-line"></i></div><div class="section-title">Próximos Passos</div><div class="card-badge reg-badge" style="background:var(--border);color:var(--text-muted);font-size:.6rem;margin-left:auto;">REG-EXEC-04</div></div>
+<div class="card"><div class="card-body">
+<div class="table-wrapper"><table><thead><tr><th>#</th><th>Ação</th><th>Responsável</th><th>Prazo</th><th>Prioridade</th><th style="text-align:right;">Custo</th></tr></thead><tbody>
+<tr><td>1</td><td><strong>Iniciar desenvolvimento fundação</strong> (auth, infra, BYOK)</td><td>Fabio</td><td>S1-4</td><td><span class="pill pill-danger">Crítica</span></td><td class="dash-num">R$0</td></tr>
+<tr><td>2</td><td><strong>Criar landing page + waitlist</strong></td><td>Fabio</td><td>S1</td><td><span class="pill pill-danger">Crítica</span></td><td class="dash-num">R$0</td></tr>
+<tr><td>3</td><td><strong>10 entrevistas de problem-fit</strong></td><td>Fabio</td><td>S1-4</td><td><span class="pill pill-danger">Crítica</span></td><td class="dash-num">R$0</td></tr>
+<tr><td>4</td><td><strong>Consultoria jurídica <abbr class="acronym" title="Lei Geral de Proteção de Dados (Lei 13.709/2018)">LGPD</abbr></strong></td><td>Fabio</td><td>S1-4</td><td><span class="pill pill-danger">Crítica</span></td><td class="dash-num">R$3-8K</td></tr>
+<tr><td>5</td><td>Configurar GitHub Projects</td><td>Fabio</td><td>S0</td><td><span class="pill pill-warning">Alta</span></td><td class="dash-num">R$0</td></tr>
+<tr><td>6</td><td><strong>Decision point semana 8</strong></td><td>Fabio</td><td>S8</td><td><span class="pill pill-danger">Crítica</span></td><td class="dash-num">R$0</td></tr>
+<tr><td>7</td><td>Provisionar infra <abbr class="acronym" title="Google Cloud Platform">GCP</abbr> com Terraform</td><td>Fabio</td><td>S1-2</td><td><span class="pill pill-warning">Alta</span></td><td class="dash-num">R$250/mês</td></tr>
+<tr><td>8</td><td>Budget alerts no <abbr class="acronym" title="Google Cloud Platform">GCP</abbr> Billing</td><td>Fabio</td><td>S1</td><td><span class="pill pill-warning">Alta</span></td><td class="dash-num">R$0</td></tr>
+<tr><td>9</td><td>Política de Privacidade e Termos</td><td>Fabio + advogado</td><td>S12-14</td><td><span class="pill pill-danger">Crítica</span></td><td class="dash-num">R$3-8K</td></tr>
+<tr><td>10</td><td>Assinar <abbr class="acronym" title="Data Processing Agreement">DPAs</abbr></td><td>Fabio</td><td>S10-12</td><td><span class="pill pill-danger">Crítica</span></td><td class="dash-num">R$0-3K</td></tr>
+</tbody></table></div>
+</div></div></div>
+</div><!-- /tab decisao -->
+
+<!-- ============== TAB 6: AUDITORIA IA ============== -->
+<div class="tab-content" id="auditoria">
+
+<!-- REG-QUAL-01: Auditor -->
+<div class="section"><div class="section-header"><div class="section-icon bg-warning"><i class="ri-shield-check-line"></i></div><div class="section-title">Auditor — 87,15%</div><div class="card-badge reg-badge" style="background:var(--border);color:var(--text-muted);font-size:.6rem;margin-left:auto;">REG-QUAL-01</div></div>
+<div class="region-row">
+<div class="region-col-6">
+<div class="stat-card" style="margin-bottom:16px;border-left:3px solid var(--warning);"><div class="stat-card-icon bg-warning"><i class="ri-shield-check-line"></i></div><div class="stat-card-info"><div class="stat-card-number" style="color:var(--warning);font-size:1.6rem;">87,15%</div><div class="stat-card-label">APROVADO COM RESSALVAS</div></div></div>
+<div class="table-wrapper"><table><thead><tr><th>Dimensão</th><th>Peso</th><th>Score</th><th>Piso</th><th>Status</th></tr></thead><tbody>
+<tr><td>Completude</td><td>25%</td><td class="dash-num">90%</td><td class="dash-num">80%</td><td><span class="pill pill-success">OK</span></td></tr>
+<tr><td>Fundamentação</td><td>25%</td><td class="dash-num">75%</td><td class="dash-num">70%</td><td><span class="pill pill-success">OK</span></td></tr>
+<tr><td>Coerência</td><td>20%</td><td class="dash-num">90%</td><td class="dash-num">70%</td><td><span class="pill pill-success">OK</span></td></tr>
+<tr><td>Profundidade</td><td>15%</td><td class="dash-num">78%</td><td class="dash-num">60%</td><td><span class="pill pill-success">OK</span></td></tr>
+<tr><td>Neutralidade</td><td>15%</td><td class="dash-num">100%</td><td class="dash-num">70%</td><td><span class="pill pill-success">OK</span></td></tr>
+<tr style="font-weight:700;"><td>Total + Bônus</td><td></td><td class="dash-num">87,15%</td><td></td><td></td></tr>
+</tbody></table></div>
+</div>
+<div class="region-col-6">
+<canvas id="chartAuditor" style="width:100%;max-height:300px;"></canvas>
+</div>
+</div>
+</div>
+
 <!-- REG-QUAL-02: 10th-man -->
 <div class="section"><div class="section-header"><div class="section-icon bg-danger"><i class="ri-spy-line"></i></div><div class="section-title">10th-man — 41,85%</div><div class="card-badge reg-badge" style="background:var(--border);color:var(--text-muted);font-size:.6rem;margin-left:auto;">REG-QUAL-02</div></div>
 <div class="stat-card" style="margin-bottom:16px;border-left:3px solid var(--danger);"><div class="stat-card-icon bg-danger"><i class="ri-spy-line"></i></div><div class="stat-card-info"><div class="stat-card-number" style="color:var(--danger-text);font-size:1.6rem;">41,85%</div><div class="stat-card-label">REJEITADO — 3 de 3 floors violados</div></div></div>
-
 <div class="region-row">
 <div class="region-col-6">
 <div class="table-wrapper" style="margin-bottom:16px;"><table><thead><tr><th>Dimensão</th><th>Score</th><th>Floor</th><th>Status</th></tr></thead><tbody>
@@ -836,7 +877,6 @@ blockquote{border-left:3px solid var(--primary);padding:12px 16px;margin:12px 0;
 <canvas id="chart10thMan" style="width:100%;max-height:250px;"></canvas>
 </div>
 </div>
-
 <h3 style="margin:16px 0 12px;">Ressalvas do 10th-man</h3>
 <div class="caveat-card">
     <div class="caveat-title"><span class="pill pill-danger" style="margin-right:8px;">CRITICAL</span> Q1 — Validação de mercado inexistente</div>
@@ -886,44 +926,9 @@ blockquote{border-left:3px solid var(--primary);padding:12px 16px;margin:12px 0;
 </div>
 </div>
 
-<!-- REG-EXEC-03: Go/No-Go -->
-<div class="section"><div class="section-header"><div class="section-icon bg-purple"><i class="ri-compass-3-line"></i></div><div class="section-title">Decisão de Continuidade (Go/No-Go)</div><div class="card-badge reg-badge" style="background:var(--border);color:var(--text-muted);font-size:.6rem;margin-left:auto;">REG-EXEC-03</div></div>
-<div class="stats-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:16px;">
-    <div class="stat-card" style="border-left:3px solid var(--danger);"><div class="stat-card-info"><div class="stat-card-number" style="color:var(--danger-text);">ALTO RISCO</div><div class="stat-card-label">Value (mercado quer?)</div></div></div>
-    <div class="stat-card" style="border-left:3px solid var(--warning);"><div class="stat-card-info"><div class="stat-card-number" style="color:var(--warning);">MÉDIO RISCO</div><div class="stat-card-label">Usability (usuário consegue?)</div></div></div>
-    <div class="stat-card" style="border-left:3px solid var(--warning);"><div class="stat-card-info"><div class="stat-card-number" style="color:var(--warning);">MÉDIO RISCO</div><div class="stat-card-label">Feasibility (conseguimos?)</div></div></div>
-    <div class="stat-card" style="border-left:3px solid var(--danger);"><div class="stat-card-info"><div class="stat-card-number" style="color:var(--danger-text);">ALTO RISCO</div><div class="stat-card-label">Viability (se sustenta?)</div></div></div>
-</div>
-<div class="card"><div class="card-body">
-    <div class="stat-card" style="margin-bottom:16px;border:2px solid var(--warning);"><div class="stat-card-icon bg-warning"><i class="ri-compass-3-line"></i></div><div class="stat-card-info"><div class="stat-card-number" style="color:var(--warning);font-size:1.2rem;">AVANÇAR COM CONDIÇÕES</div><div class="stat-card-label">Recomendação</div></div></div>
-    <h3>Condições Obrigatórias</h3>
-    <ol>
-        <li><strong>Semana 1-4:</strong> Desenvolvimento fundação EM PARALELO com validação de mercado e consultoria jurídica</li>
-        <li><strong>Semana 8 (decision point):</strong> Walking skeleton funcional? 3+ <abbr class="acronym" title="Letter of Intent">LOIs</abbr>? Consultoria <abbr class="acronym" title="Lei Geral de Proteção de Dados (Lei 13.709/2018)">LGPD</abbr> positiva? Se 2 de 3 são "não", PAUSAR.</li>
-        <li><strong>Antes do lançamento:</strong> Política de privacidade publicada, <abbr class="acronym" title="Data Processing Agreement">DPAs</abbr> assinados, decisão sobre <abbr class="acronym" title="Data Protection Officer / Encarregado">DPO</abbr></li>
-    </ol>
-    <div class="stat-card" style="margin-top:16px;border-left:3px solid var(--warning);"><div class="stat-card-icon bg-warning"><i class="ri-money-dollar-circle-line"></i></div><div class="stat-card-info"><div class="stat-card-number" style="color:var(--warning);">R$190K-R$250K</div><div class="stat-card-label">Capital Necessário até Break-even</div></div></div>
-</div></div></div>
+</div><!-- /tab auditoria -->
 
-<!-- REG-EXEC-04: Próximos Passos -->
-<div class="section"><div class="section-header"><div class="section-icon bg-success"><i class="ri-route-line"></i></div><div class="section-title">Próximos Passos</div><div class="card-badge reg-badge" style="background:var(--border);color:var(--text-muted);font-size:.6rem;margin-left:auto;">REG-EXEC-04</div></div>
-<div class="card"><div class="card-body">
-<div class="table-wrapper"><table><thead><tr><th>#</th><th>Ação</th><th>Responsável</th><th>Prazo</th><th>Prioridade</th><th style="text-align:right;">Custo</th></tr></thead><tbody>
-<tr><td>1</td><td><strong>Iniciar desenvolvimento fundação</strong> (auth, infra, BYOK)</td><td>Fabio</td><td>S1-4</td><td><span class="pill pill-danger">Crítica</span></td><td class="dash-num">R$0</td></tr>
-<tr><td>2</td><td><strong>Criar landing page + waitlist</strong></td><td>Fabio</td><td>S1</td><td><span class="pill pill-danger">Crítica</span></td><td class="dash-num">R$0</td></tr>
-<tr><td>3</td><td><strong>10 entrevistas de problem-fit</strong></td><td>Fabio</td><td>S1-4</td><td><span class="pill pill-danger">Crítica</span></td><td class="dash-num">R$0</td></tr>
-<tr><td>4</td><td><strong>Consultoria jurídica <abbr class="acronym" title="Lei Geral de Proteção de Dados (Lei 13.709/2018)">LGPD</abbr></strong></td><td>Fabio</td><td>S1-4</td><td><span class="pill pill-danger">Crítica</span></td><td class="dash-num">R$3-8K</td></tr>
-<tr><td>5</td><td>Configurar GitHub Projects</td><td>Fabio</td><td>S0</td><td><span class="pill pill-warning">Alta</span></td><td class="dash-num">R$0</td></tr>
-<tr><td>6</td><td><strong>Decision point semana 8</strong></td><td>Fabio</td><td>S8</td><td><span class="pill pill-danger">Crítica</span></td><td class="dash-num">R$0</td></tr>
-<tr><td>7</td><td>Provisionar infra <abbr class="acronym" title="Google Cloud Platform">GCP</abbr> com Terraform</td><td>Fabio</td><td>S1-2</td><td><span class="pill pill-warning">Alta</span></td><td class="dash-num">R$250/mês</td></tr>
-<tr><td>8</td><td>Budget alerts no <abbr class="acronym" title="Google Cloud Platform">GCP</abbr> Billing</td><td>Fabio</td><td>S1</td><td><span class="pill pill-warning">Alta</span></td><td class="dash-num">R$0</td></tr>
-<tr><td>9</td><td>Política de Privacidade e Termos</td><td>Fabio + advogado</td><td>S12-14</td><td><span class="pill pill-danger">Crítica</span></td><td class="dash-num">R$3-8K</td></tr>
-<tr><td>10</td><td>Assinar <abbr class="acronym" title="Data Processing Agreement">DPAs</abbr></td><td>Fabio</td><td>S10-12</td><td><span class="pill pill-danger">Crítica</span></td><td class="dash-num">R$0-3K</td></tr>
-</tbody></table></div>
-</div></div></div>
-</div><!-- /tab decisao -->
-
-<!-- ============== TAB 6: DOMÍNIO ============== -->
+<!-- ============== TAB 7: DOMÍNIO ============== -->
 <div class="tab-content" id="dominio">
 
 <!-- REG-TECH-06: Build vs Buy -->

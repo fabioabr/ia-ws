@@ -2,7 +2,7 @@
 title: "Report Setup — Executivo"
 description: "Setup intermediário: gera One-Pager + Relatório Executivo com visão corporativa, custos, prazos e organização — sem detalhes de tecnologia e sistemas."
 project-name: discovery-to-go
-version: 01.00.000
+version: 02.00.000
 status: ativo
 author: claude-code
 category: report-setup
@@ -23,7 +23,7 @@ Setup intermediário que gera **dois HTMLs**: o One-Pager (do setup essencial) +
 | Arquivo | Conteúdo |
 |---------|----------|
 | `one-pager.html` | Página única executiva (mesmo do setup essencial) |
-| `executive-report.html` | Relatório corporativo: produto, organização, financeiro, riscos, backlog |
+| `executive-report.html` | Relatório corporativo com 8 tabs: produto, organização, financeiro, riscos, backlog/decisão, auditoria IA, domínio, glossário |
 
 ## Regions incluídas
 
@@ -40,55 +40,87 @@ Setup intermediário que gera **dois HTMLs**: o One-Pager (do setup essencial) +
 | 7 | REG-FIN-05 | full-width | Estimativa de esforço |
 | 8 | REG-EXEC-04 | full-width | Próximos passos |
 
-### Executive Report
+### Executive Report (8 tabs)
 
-#### Seção 1 — Produto e Valor
-
-| # | Region | Layout | O que mostra |
-|---|--------|--------|-------------|
-| 9 | REG-EXEC-02 | full-width | Product brief completo |
-| 10 | REG-PROD-04 | full-width | Proposta de valor (elevator pitch) |
-| 11 | REG-PROD-02 | grid-2 | Personas (cards com perfil e dores) |
-| 12 | REG-PROD-05 | full-width | OKRs e ROI (métricas de sucesso) |
-| 13 | REG-PROD-06 | full-width | Modelo de negócio (se aplicável) |
-
-#### Seção 2 — Organização
+#### Tab 1 — Produto (8 cards)
 
 | # | Region | Layout | O que mostra |
 |---|--------|--------|-------------|
-| 14 | REG-ORG-01 | full-width | Mapa de stakeholders |
-| 15 | REG-ORG-02 | full-width | Estrutura de equipe |
-| 16 | REG-ORG-04 | full-width | Metodologia (se definida) |
+| 9 | REG-NARR-01 | full-width | Como chegamos aqui — timeline do discovery (dentro da Tab 1, não pré-tabs) |
+| 10 | REG-EXEC-02 | full-width | Product brief completo |
+| 11 | REG-PROD-01 | full-width | Problema e contexto |
+| 12 | REG-PROD-04 | full-width | Proposta de valor (elevator pitch) |
+| 13 | REG-PROD-02 | grid-2 | Personas (cards com perfil, dores e ganhos) |
+| 14 | REG-PROD-07 | full-width | Escopo IN/OUT (split card verde/vermelho) |
+| 15 | REG-PROD-05 | full-width | Modelo de negócio (pricing table se SaaS) |
+| 16 | REG-PROD-06 | full-width | Roadmap (timeline horizontal HTML/CSS) |
+| 17 | REG-PROD-08 | full-width | OKRs e métricas de sucesso |
 
-#### Seção 3 — Financeiro e Prazos
-
-| # | Region | Layout | O que mostra |
-|---|--------|--------|-------------|
-| 17 | REG-FIN-01 | full-width | TCO 3 anos detalhado (tabela + chart) |
-| 18 | REG-FIN-02 | full-width | Break-even analysis (se aplicável) |
-| 19 | REG-FIN-05 | full-width | Estimativa de esforço detalhada |
-| 20 | REG-FIN-07 | full-width | Financial Scenarios (quando cenários alternativos existirem) |
-| 21 | REG-PROD-08 | full-width | Roadmap (faseamento MVP → Fase 2 → N) |
-
-#### Seção 4 — Riscos e Decisão
+#### Tab 2 — Organização (3 cards)
 
 | # | Region | Layout | O que mostra |
 |---|--------|--------|-------------|
-| 22 | REG-RISK-01 | full-width | Matriz de riscos completa |
-| 23 | REG-RISK-03 | full-width | Hipóteses não validadas |
-| 24 | REG-BACK-01 | full-width | Backlog priorizado (épicos com MoSCoW) |
-| 25 | REG-QUAL-01 | sidebar | Score do auditor (radar) |
-| 26 | REG-QUAL-02 | full-width | Questões do 10th-man |
+| 18 | REG-ORG-01 | full-width | Mapa de stakeholders |
+| 19 | REG-ORG-02 | full-width | Estrutura de equipe (papéis, dedicação, horas) |
+| 20 | REG-ORG-04 | full-width | Metodologia (Kanban, Scrum, etc.) |
 
-#### Seção 5 — Narrativa
+#### Tab 3 — Financeiro (7 cards)
 
 | # | Region | Layout | O que mostra |
 |---|--------|--------|-------------|
-| 27 | REG-NARR-01 | full-width | Como chegamos aqui (timeline das iterações) |
-| 28 | REG-EXEC-03 | full-width | Go/No-Go detalhado (4 dimensões + condições) |
-| 29 | REG-EXEC-04 | full-width | Próximos passos |
+| 21 | REG-FIN-01 | full-width | TCO 3 anos detalhado (tabela + horizontal bars) |
+| 22 | REG-FIN-02 | full-width | Break-even analysis |
+| 23 | REG-FIN-04 | full-width | Receita vs custo (Chart.js line — único line chart) |
+| 24 | REG-FIN-05 | full-width | Projeção de receita (tabela) |
+| 25 | REG-FIN-06 | grid-3 | Estimativa de esforço (stat cards) |
+| 26 | REG-FIN-07 | full-width | Cenários financeiros (horizontal bars HTML/CSS) |
+| 27 | REG-PLAN-01 | full-width | Gantt relativo (horizontal bars + tabela de detalhamento obrigatória) |
 
-**Total: 29 regions** (8 no one-pager, 21 exclusivas do executive report)
+#### Tab 4 — Riscos (5 cards)
+
+| # | Region | Layout | O que mostra |
+|---|--------|--------|-------------|
+| 28 | REG-RISK-01 | full-width | Matriz de riscos top 10 (tabela com severity badges) |
+| 29 | REG-RISK-02 | full-width | Riscos técnicos |
+| 30 | REG-RISK-03 | full-width | Hipóteses não validadas + perguntas residuais |
+| 31 | REG-RISK-04 | full-width | Análise de viabilidade (veredicto por dimensão) |
+| 32 | REG-EXEC-07 | full-width | Premissas (lista com ícones de atenção) |
+
+#### Tab 5 — Backlog e Decisão (3 cards)
+
+| # | Region | Layout | O que mostra |
+|---|--------|--------|-------------|
+| 33 | REG-BACK-01 | full-width | Backlog MVP priorizado (tabela MoSCoW) |
+| 34 | REG-EXEC-03 | full-width | Go/No-Go (4 dimensões + condições para prosseguir) |
+| 35 | REG-EXEC-04 | full-width | Próximos passos (tabela com ações, responsável, prazo) |
+
+#### Tab 6 — Auditoria IA (2 cards)
+
+| # | Region | Layout | O que mostra |
+|---|--------|--------|-------------|
+| 36 | REG-QUAL-01 | full-width | Score do Auditor — radar chart (Chart.js) com zones coloridas + tabela de scores por dimensão + ressalvas detalhadas |
+| 37 | REG-QUAL-02 | full-width | Ressalvas do 10th-man — radar 3 eixos (Chart.js) + caveat cards com 5 campos (title, dimension, description, why_important, recommendation) |
+
+> [!info] Por que tab separada?
+> Auditor e 10th-man são agentes de IA da Fase 2 (Challenge). Ambos fazem validação independente do material. Agrupar numa tab "Auditoria IA" deixa claro que são avaliações automatizadas, separadas dos riscos de negócio (Tab 4) e das decisões humanas (Tab 5).
+
+#### Tab 7 — Domínio (5 cards)
+
+| # | Region | Layout | O que mostra |
+|---|--------|--------|-------------|
+| 38 | REG-TECH-06 | full-width | Build vs Buy (tabela com coluna Decisão separada: BUILD/BUY/HYBRID badges) |
+| 39 | REG-SEC-01 | full-width | Classificação de dados |
+| 40 | REG-SEC-02 | full-width | Autenticação e autorização |
+| 41 | REG-SEC-04 | full-width | Compliance e regulação |
+| 42 | REG-PRIV-01 | full-width | LGPD detalhado (quando há PII) |
+
+#### Tab 8 — Glossário (1 card)
+
+| # | Region | Layout | O que mostra |
+|---|--------|--------|-------------|
+| 43 | REG-NARR-04 | full-width | Glossário de siglas e termos (tabela alfabética com filtro de busca) |
+
+**Total: 35 regions no executive report + 9 no one-pager = 44 cards renderizados**
 
 ## O que NÃO está incluído
 
