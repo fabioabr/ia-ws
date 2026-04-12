@@ -441,7 +441,7 @@ O orchestrator detecta e carrega automaticamente. Ver `custom-artifacts/README.m
 
 ## Dependências do Workspace
 
-O projeto herda recursos do workspace global (`E:\Workspace`). O manifesto completo está em `docs/dependency-manifest.md` e cobre:
+O projeto herda recursos do workspace global (`E:\Workspace`). O manifesto completo está em `docs/reference/dependency-manifest.md` e cobre:
 
 | Categoria | Quantidade | Exemplos |
 |-----------|-----------|----------|
@@ -463,7 +463,7 @@ A camada `base-artifacts/` é a cópia local dessas dependências. Pode ser sinc
 3. Acompanhe as 3 fases + 3 Human Reviews
 4. Colete o `delivery/delivery-report.md` + `.html`
 
-Guia detalhado passo a passo em `docs/quick-start.md`.
+Guia detalhado passo a passo em `docs/guides/quick-start.md`.
 
 ---
 
@@ -471,10 +471,10 @@ Guia detalhado passo a passo em `docs/quick-start.md`.
 
 | Documento | O que contém |
 |-----------|-------------|
-| `docs/discovery-pipeline.md` | Guia completo do pipeline — fases, blocos, diagramas, agentes, outputs |
-| `docs/quick-start.md` | Como iniciar e conduzir uma run de ponta a ponta (8 passos) |
-| `docs/logging-process.md` | Tipos de log, formato de entradas, regras de imutabilidade |
-| `docs/dependency-manifest.md` | Mapeamento de todas as dependências do workspace global |
+| `docs/guides/discovery-pipeline.md` | Guia completo do pipeline — fases, blocos, diagramas, agentes, outputs |
+| `docs/guides/quick-start.md` | Como iniciar e conduzir uma run de ponta a ponta (8 passos) |
+| `docs/guides/logging-process.md` | Tipos de log, formato de entradas, regras de imutabilidade |
+| `docs/reference/dependency-manifest.md` | Mapeamento de todas as dependências do workspace global |
 | `docs/diagrams/pipeline.drawio` | Diagrama completo do pipeline (editável no draw.io) |
 
 ---

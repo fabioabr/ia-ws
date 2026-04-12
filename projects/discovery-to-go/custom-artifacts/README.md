@@ -173,4 +173,4 @@ custom-artifacts/
 - `templates/customization/` — Defaults de configuração (fallback)
 - `context-templates/` — Context-templates globais por domínio tecnológico
 - `skills/orchestrator/SKILL.md` — Como o orchestrator carrega custom-artifacts
-- `docs/quick-start.md` — Como iniciar uma run (campo `client` no briefing)
+- `docs/guides/quick-start.md` — Como iniciar uma run (campo `client` no briefing)

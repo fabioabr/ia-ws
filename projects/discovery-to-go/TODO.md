@@ -80,7 +80,7 @@ Estabelecer processo recorrente para manter base-artifacts sincronizado:
 
 - [ ] Criar script ou skill de sincronização automática
 - [ ] Definir quando sincronizar (antes de cada run? após cada commit?)
-- [ ] Documentar no `docs/dependency-manifest.md`
+- [ ] Documentar no `docs/reference/dependency-manifest.md`
 
 ---
 

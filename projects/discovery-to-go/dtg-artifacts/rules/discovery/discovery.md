@@ -23,7 +23,7 @@ Processo obrigatório e sequencial de discovery que **antecede qualquer trabalho
 > [!danger] Regra fundamental
 > **Nenhum projeto inicia sem completar as 3 fases com aprovação humana em cada uma.** Este processo é obrigatório e sequencial.
 
-> [!info] Para o guia detalhado passo a passo, consulte [[docs/discovery-pipeline]]
+> [!info] Para o guia detalhado passo a passo, consulte [[docs/guides/discovery-pipeline]]
 
 ---
 
@@ -266,7 +266,7 @@ O discovery so esta completo quando:
 
 ## 🔗 Documentos Relacionados
 
-- [[docs/discovery-pipeline]] — Guia detalhado passo a passo do Pipeline v0.5
+- [[docs/guides/discovery-pipeline]] — Guia detalhado passo a passo do Pipeline v0.5
 - [[rules/iteration-loop/iteration-loop]] — Iteracoes, limites, criterios de convergencia
 - [[rules/analyst-discovery-log/analyst-discovery-log]] — Log cronologico obrigatorio da reuniao tematica
 - [[rules/audit-log/audit-log]] — Log de auditoria

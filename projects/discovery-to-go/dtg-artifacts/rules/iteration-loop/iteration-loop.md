@@ -231,7 +231,7 @@ Cada iteração e fase tem seu consumo de tokens rastreado:
 
 ## Documentos Relacionados
 
-- [[docs/discovery-pipeline]] — Guia completo do Pipeline v0.5 com 3 fases
+- [[docs/guides/discovery-pipeline]] — Guia completo do Pipeline v0.5 com 3 fases
 - [[templates/customization/human-review-template]] — Template do Human Review que pausa o pipeline entre fases
 - [[templates/customization/iteration-policy]] — Política de iteração configurável (limites, estagnação, defaults) — copiada para `setup/customization/rules/`
 - [[rules/audit-log/audit-log]] — Regra de registro de auditoria

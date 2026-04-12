@@ -11,4 +11,4 @@ Copy this folder into `custom-artifacts/{client-name}/` and populate the files w
 ## Related
 
 - `custom-artifacts/README.md` — Full guide on client customization structure
-- `docs/quick-start.md` — How to start a pipeline run
+- `docs/guides/quick-start.md` — How to start a pipeline run

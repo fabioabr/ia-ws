@@ -15,4 +15,4 @@ Open `pipeline.drawio` in [draw.io](https://app.diagrams.net/) (desktop or web).
 
 ## Related
 
-- `docs/discovery-pipeline.md` — Written guide covering phases, blocks, agents, and outputs
+- `docs/guides/discovery-pipeline.md` — Written guide covering phases, blocks, agents, and outputs
