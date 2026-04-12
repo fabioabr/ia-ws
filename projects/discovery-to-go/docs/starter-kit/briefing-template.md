@@ -163,6 +163,9 @@ Descreva o problema central em 2-5 parágrafos. Foque no **problema**, não na s
 | **Nível de detalhe do report** | {complete} | `essential` (one-pager) / `executive` (corporativo) / `complete` (tudo) |
 | **Rigor da validação** | {padrão} | `padrão` (≥90%) / `alto-risco` (≥95%) / `poc` (≥80%) |
 | **Tipo de projeto** | {auto-detect} | Declare ou deixe auto-detect pelo conteúdo deste briefing |
+| **Simulação do cliente** | {sim} | `sim` (IA simula o cliente na Fase 1) / `não` (cliente humano responde) |
+
+> **Simulação do cliente:** Quando `sim`, a IA simula as respostas do cliente durante a entrevista usando este briefing como base. Útil para testes ou quando o cliente não está disponível. Quando `não`, o pipeline pausa e espera o cliente humano responder.
 
 ---
 

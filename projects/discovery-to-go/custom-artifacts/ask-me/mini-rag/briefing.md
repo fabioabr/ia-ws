@@ -182,6 +182,12 @@ Time mAInd Tech (execução) + CTO (decisão de arquitetura e investimento)
 | **Nível de detalhe do report** | executive | `essential` / `executive` / `complete` |
 | **Rigor da validação** | padrão | `padrão` (≥90%) / `alto-risco` (≥95%) / `poc` (≥80%) |
 | **Tipo de projeto** | saas + ai-ml + datalake-ingestion | Multi-template: SaaS (multi-tenant, billing) + AI/ML (NL-to-SQL, LLM, embeddings) + Datalake (consulta a bancos analíticos) |
+| **Simulação do cliente** | sim | `sim` (IA simula o cliente usando o briefing como base) / `não` (cliente humano real responde durante a Fase 1) |
+
+> [!info] Simulação do cliente
+> Quando `sim`, o agente **customer** simula as respostas do cliente durante a entrevista da Fase 1, baseando-se neste briefing + knowledge base + RAG. Útil para testes, dry runs e quando o cliente humano não está disponível. Toda resposta simulada é marcada com `[BRIEFING]`, `[RAG]` ou `[INFERENCE]` para rastreabilidade.
+>
+> Quando `não`, o pipeline pausa nas perguntas da Fase 1 e espera que o cliente humano real responda.
 
 ---
 
