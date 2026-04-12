@@ -1,8 +1,8 @@
 ---
 title: TODO
-description: Lista de pendências do projeto Discovery To Go
+description: Lista de pendências do projeto Discovery To Go — problemas identificados no teste end-to-end (Veezoozin run-1)
 project-name: discovery-to-go
-version: 05.00.000
+version: 06.00.000
 status: ativo
 author: claude-code
 category: todo
@@ -10,18 +10,21 @@ area: tecnologia
 tags:
   - todo
   - pendencia
+  - pipeline-issues
 created: 2026-04-11
 updated: 2026-04-11
 ---
 
 # TODO — Discovery To Go
 
+20 problemas identificados durante o primeiro teste end-to-end (Veezoozin run-1). Organizados em 4 categorias por área de impacto.
+
 ---
 
 ## Concluídos
 
 <details>
-<summary>Todos os itens concluídos (clique para expandir)</summary>
+<summary>25 itens concluídos nesta sessão (clique para expandir)</summary>
 
 - ~~1. Consolidar packs no formato único~~ DONE
 - ~~2. Sample run atualizado~~ DONE
@@ -36,427 +39,450 @@ updated: 2026-04-11
 - ~~11. Sample run com regions~~ DONE
 - ~~12. CLAUDE.md + chart-specialist~~ DONE
 - ~~13. Sync base-artifacts~~ DONE
-- ~~14. Teste end-to-end (Veezoozin)~~ DONE — com 11 problemas documentados
+- ~~14. Teste end-to-end (Veezoozin)~~ DONE
 - ~~15. Report setups (essential/executive/complete)~~ DONE
 - ~~16. Report Planner skill~~ DONE
 - ~~17. quick-start.md com report setups~~ DONE
 - ~~18. README.md seções atualizadas~~ DONE
-- ~~READMEs em todas as subpastas (117)~~ DONE
+- ~~READMEs em 117 subpastas~~ DONE
 - ~~Client template scaffold~~ DONE
 - ~~Starter-kit com briefing template~~ DONE
 - ~~Docs organizados (guides/ + reference/ + diagrams/)~~ DONE
-- ~~Auditoria de consistência (10 issues corrigidas)~~ DONE
-- ~~discovery-pipeline.md v02 (regions, 10 packs, report-planner)~~ DONE
-- ~~Orchestrator: auto-detect + simulação de cliente~~ DONE
+- ~~Auditoria de consistência (10 issues)~~ DONE
+- ~~discovery-pipeline.md v02~~ DONE
+- ~~Orchestrator: auto-detect + simulação~~ DONE
 
 </details>
 
 ---
 
-## Problemas do teste end-to-end (Veezoozin run-1)
+## Categoria A — Infraestrutura do Pipeline
 
-Issues identificadas durante o primeiro pipeline completo. Organizadas por prioridade.
-
----
-
-### P1. Orchestrator não é executável — scaffold manual
-
-**Severidade:** Alta
-**Fase:** Setup
-
-O orchestrator é uma skill (instrução em SKILL.md), não código executável. O scaffold da run (pastas, cópias de templates, config.md, pipeline-state.md) foi criado manualmente via bash.
-
-**Ação:**
-- [ ] Criar um script Python ou bash (`scripts/create-run.sh`) que materializa o scaffold automaticamente
-- [ ] Recebe: path do briefing + client name
-- [ ] Cria: `custom-artifacts/{client}/runs/run-{n}/` com toda a estrutura
-- [ ] Detecta context-templates do briefing e copia os blueprints
-- [ ] Gera config.md e pipeline-state.md iniciais
-- [ ] Documentar no quick-start.md
+Problemas na mecânica de execução do pipeline — scaffold, logs, gates, estados.
 
 ---
 
-### P2. Interview.md não gerado
+### P1. Scaffold da run é manual — não existe automação
 
-**Severidade:** Alta
-**Fase:** Fase 1
+**Severidade:** Alta | **Fase:** Setup | **Detectado:** Início da execução
 
-O pipeline exige um log cronológico da entrevista (`interview.md`) com formato de tabela e emojis conforme a regra `analyst-discovery-log`. O teste pulou isso — os agentes geraram os results diretamente sem registrar o diálogo.
+**O que aconteceu:** O orchestrator é uma skill (SKILL.md com instruções), não código executável. Para rodar o pipeline foi necessário criar manualmente via bash: a estrutura de pastas (`setup/`, `iterations/`, `delivery/`), copiar os blueprints para `current-context/`, copiar os templates de customização, e criar `config.md` e `pipeline-state.md`.
+
+**O que deveria ter acontecido:** Um comando como `./scripts/create-run.sh --briefing briefing.md --client veezoozin` deveria materializar toda a estrutura automaticamente, lendo o frontmatter do briefing para detectar context-templates, report-setup, e outras configurações.
+
+**Impacto:** Sem automação, cada nova run exige ~20 comandos manuais de cópia e criação de pastas. Propenso a erros (esquecer de copiar um blueprint, usar path errado, etc.).
 
 **Ação:**
-- [ ] Cada agente da Fase 1 deve gerar um trecho de interview log
-- [ ] Consolidar num único `iterations/iteration-{i}/logs/interview.md`
-- [ ] Formato: tabela com colunas `Quem | Diálogo` e source tags
+- [ ] Criar script `support-tools/create-run/create-run.sh` (ou Python) que:
+  - Recebe: `--briefing <path>` e `--client <name>`
+  - Lê frontmatter do briefing (context-templates, report-setup, client-simulation, scoring)
+  - Cria `custom-artifacts/{client}/runs/run-{n}/` com toda a estrutura
+  - Copia blueprints de `context-templates/` para `current-context/`
+  - Copia templates de `dtg-artifacts/templates/customization/` para `setup/customization/`
+  - Gera `config.md` e `pipeline-state.md` a partir do briefing
+  - Auto-incrementa o número da run
+- [ ] Documentar uso no `docs/guides/quick-start.md`
+- [ ] Adicionar ao catálogo de support-tools
 
 ---
 
-### P3. Scores abaixo do threshold — pipeline seguiu mesmo assim
+### P2. Log da entrevista (interview.md) não foi gerado
 
-**Severidade:** Alta
-**Fase:** Fase 2 → Fase 3
+**Severidade:** Alta | **Fase:** Fase 1 | **Detectado:** Fim da Fase 1
 
-O auditor deu 82% e o 10th-man deu 62%. O threshold padrão é ≥90%. O pipeline deveria ter parado para HR Review, mas seguiu direto para Fase 3 (porque o teste roda sem pausas).
+**O que aconteceu:** A regra `analyst-discovery-log` exige um log cronológico da entrevista com formato de tabela (colunas `Quem | Diálogo`), emojis por persona, e source tags (`[BRIEFING]`, `[RAG]`, `[INFERENCE]`). O teste gerou os 8 result files diretamente sem registrar o diálogo simulado entre os especialistas e o customer.
+
+**O que deveria ter acontecido:** Cada bloco temático deveria produzir um trecho de log com as perguntas do especialista, as respostas do customer (com source tags), observações e decisões. O orchestrator deveria consolidar os 8 trechos em um único `iterations/iteration-1/logs/interview.md`.
+
+**Impacto:** Sem o interview.md, perde-se a rastreabilidade de como cada informação foi obtida. O auditor não consegue verificar se as `[INFERENCE]` são justificadas. O humano no HR Review não consegue revisar o diálogo.
 
 **Ação:**
-- [ ] Documentar no orchestrator que em modo simulação (`client-simulation: sim`), o pipeline registra o score mas avança com flag `[BELOW-THRESHOLD]`
-- [ ] Em modo real (`client-simulation: não`), o pipeline DEVE pausar para HR Review quando score < threshold
-- [ ] Gerar hr-loop-round{N}-pass{M}.md mesmo em modo simulação (com decisão automática "AVANÇAR — simulação")
+- [ ] Cada agente da Fase 1 deve gerar, junto com o result file, um trecho de log de entrevista
+- [ ] Formato: tabela `| Quem | Diálogo |` com emojis (🧑‍💼 PO, 🏗️ Architect, 🔒 Security, 👤 Customer)
+- [ ] Cada resposta do customer marcada com `[BRIEFING]`, `[RAG]` ou `[INFERENCE]`
+- [ ] Orchestrator consolida em `iterations/iteration-{i}/logs/interview.md`
+- [ ] Em modo simulação, o log é gerado com nota: "[SIMULADO — customer gerado por IA]"
 
 ---
 
-### P4. Inconsistência financeira entre blocos 1.3 e 1.8
+### P3. Pipeline seguiu para Fase 3 com scores abaixo do threshold
 
-**Severidade:** Alta
-**Fase:** Fase 1
+**Severidade:** Alta | **Fase:** Fase 2 → Fase 3 | **Detectado:** Transição entre fases
 
-ARR projetado diverge 2.6x entre blocos 1.3 (R$ 460K) e 1.8 ($32K USD). Break-even diverge de mês 3 para mês 14-18. Isso foi detectado pelo auditor mas não corrigido.
+**O que aconteceu:** O auditor deu 82% e o 10th-man deu 62%. O threshold padrão configurado é ≥90%. O pipeline deveria ter pausado para HR Review antes de avançar para a Fase 3, mas seguiu direto porque o teste roda em modo simulação sem pausas.
+
+**O que deveria ter acontecido:** Mesmo em modo simulação (`client-simulation: sim`), o pipeline deveria ter: (1) registrado o score no pipeline-state.md, (2) gerado um `hr-loop-round2-pass1.md` com flag `[BELOW-THRESHOLD]`, (3) registrado a decisão simulada "AVANÇAR — simulação, score abaixo do threshold aceito automaticamente", (4) incluído callout `[!danger]` no delivery report sinalizando que o material não passou nos gates.
+
+**Impacto:** O delivery report final recomenda "GO CONDICIONAL" sem deixar explícito que os gates de qualidade não foram atingidos. Um stakeholder que leia apenas o report pode não perceber que o material tem ressalvas significativas.
 
 **Ação:**
-- [ ] Adicionar regra no orchestrator: ao fim da Fase 1, validar consistência financeira entre blocos
-- [ ] Se divergência > 20%, sinalizar automaticamente antes do HR Review
-- [ ] Considerar cross-validation automática entre blocos como pré-check antes da Fase 2
+- [ ] Em modo simulação: registrar score + gerar HR loop log + avançar com flag `[BELOW-THRESHOLD]`
+- [ ] Em modo real: PAUSAR obrigatoriamente quando score < threshold
+- [ ] O delivery report deve incluir banner `[!danger]` quando gerado com scores abaixo do threshold
+- [ ] O Go/No-Go (REG-EXEC-03) deve refletir fielmente os scores — se abaixo, veredicto não pode ser "GO"
+
+---
+
+### P7. HR Review logs não foram gerados
+
+**Severidade:** Média | **Fase:** Entre fases | **Detectado:** Revisão pós-pipeline
+
+**O que aconteceu:** Os arquivos `hr-loop-round{N}-pass{M}.md` — que registram a decisão do humano em cada pausa — não foram criados. São 3 pausas (após Fase 1, 2 e 3) e nenhuma gerou log.
+
+**O que deveria ter acontecido:** Mesmo em simulação, cada pausa de HR Review deveria gerar um arquivo com: observações (vazias em simulação), decisão ("AVANÇAR — simulação"), scores das fases anteriores, e timestamp.
+
+**Impacto:** Sem os logs de HR Review, a trilha de auditoria do pipeline está incompleta. Não há registro formal de que o humano (ou simulação) autorizou o avanço.
+
+**Ação:**
+- [ ] Gerar `hr-loop-round1-pass1.md` após Fase 1 com decisão simulada
+- [ ] Gerar `hr-loop-round2-pass1.md` após Fase 2 com scores e flag `[BELOW-THRESHOLD]` se aplicável
+- [ ] Gerar `hr-loop-round3-pass1.md` após Fase 3 com resultado final
+- [ ] Usar o template `human-review-template.md` como base
+
+---
+
+### P11. pipeline-state.md não foi atualizado durante a execução
+
+**Severidade:** Baixa | **Fase:** Todas | **Detectado:** Revisão pós-pipeline
+
+**O que aconteceu:** O pipeline-state.md foi criado no setup com metadata inicial mas não recebeu snapshots ao longo da execução. O pipeline exige que seja append-only — um snapshot é adicionado ao final após cada fase com: status, scores, decisão do HR, tokens consumidos.
+
+**O que deveria ter acontecido:** 3 snapshots appendados: (1) após Fase 1 com resumo dos 8 blocos, (2) após Fase 2 com scores do auditor e 10th-man, (3) após Fase 3 com artefatos gerados e resultado final.
+
+**Impacto:** O pipeline-state.md é a "memória viva" da run. Sem snapshots, não há registro cronológico do que aconteceu. Iterações futuras não teriam contexto do que foi feito anteriormente.
+
+**Ação:**
+- [ ] Após cada fase, appendar snapshot com: fase, status, scores (se aplicável), decisão HR, tokens
+- [ ] No final, appendar snapshot de conclusão com lista de artefatos gerados e resultado
+- [ ] O script de scaffold (P1) pode incluir helper para append de snapshots
+
+---
+
+## Categoria B — Qualidade da Fase 1 (Discovery)
+
+Problemas na execução da Fase 1 — agentes, entrevista, consistência, blueprints.
+
+---
+
+### P4. Inconsistência financeira grave entre blocos 1.3 e 1.8
+
+**Severidade:** Alta | **Fase:** Fase 1 | **Detectado:** Fase 2 (auditor)
+
+**O que aconteceu:** O bloco 1.3 (Valor e OKRs, gerado pelo PO) projeta ARR de R$ 460K e break-even no mês 3. O bloco 1.8 (TCO e Build vs Buy, gerado pelo solution-architect) projeta ARR equivalente a ~R$ 175K e break-even no mês 14-18. Divergência de **2.6x no ARR** e **5x no break-even**. Os dois blocos foram gerados por agentes diferentes, em paralelo, sem validação cruzada.
+
+**O que deveria ter acontecido:** O orchestrator deveria fazer uma cross-validation entre blocos financeiros ao fim da Fase 1. Se valores divergem mais de 20%, sinalizar automaticamente e pedir que os agentes conciliem antes de avançar para o HR Review.
+
+**Impacto:** O stakeholder recebe um delivery report com números contraditórios. A credibilidade do discovery é comprometida. O auditor detectou (e penalizou na dimensão Consistência — 72%) mas não houve correção.
+
+**Ação:**
+- [ ] Adicionar passo de cross-validation no orchestrator entre blocos 1.3 e 1.8
+- [ ] Se divergência > 20% em ARR, TCO, break-even ou team cost → flag automático `[INCONSISTÊNCIA-FINANCEIRA]`
+- [ ] Forçar conciliação antes de avançar (solution-architect é source of truth para TCO; PO ajusta projeções)
+- [ ] Considerar rodar os blocos financeiros em sequência (não paralelo) para que 1.8 tenha acesso ao output de 1.3
 
 ---
 
 ### P5. Customer não operou como agente separado
 
-**Severidade:** Média
-**Fase:** Fase 1
+**Severidade:** Média | **Fase:** Fase 1 | **Detectado:** Durante execução
 
-O customer (simulador do cliente) deveria ser um agente independente respondendo perguntas dos especialistas (PO, architect, security). No teste, cada agente fez tudo sozinho — entrevistou e respondeu.
+**O que aconteceu:** O pipeline define que o customer é um agente independente que simula o cliente — respondendo perguntas dos especialistas com dados do briefing, marcados com source tags. No teste, cada agente (PO, architect, security) fez tudo sozinho: entrevistou e respondeu. Não houve interação entre agentes.
+
+**O que deveria ter acontecido:** O PO pergunta → o customer responde com `[BRIEFING]` ou `[INFERENCE]` → o PO analisa a resposta e decide a próxima pergunta. Isso cria um diálogo rastreável (registrado no interview.md) e força transparência sobre o que é dado real vs inferido.
+
+**Impacto:** Sem o customer separado, não há separação entre "o que o cliente disse" e "o que o especialista interpretou". As source tags ficam menos confiáveis porque o mesmo agente que pergunta é quem inventa a resposta.
 
 **Ação:**
-- [ ] Na implementação real, o customer deve ser invocado como agente separado
-- [ ] Fluxo: PO faz pergunta → customer responde com [BRIEFING]/[INFERENCE] → PO analisa
-- [ ] Em modo simulação, o customer pode rodar inline mas deve gerar respostas tagueadas
+- [ ] Implementar o customer como agente separado invocado pelo orchestrator
+- [ ] Fluxo por bloco: especialista formula perguntas → customer responde → especialista analisa
+- [ ] Em modo simulação, o customer pode rodar inline mas deve gerar respostas tagueadas separadamente
+- [ ] O interview.md registra o diálogo entre especialista e customer
 
 ---
 
-### P6. Agentes não consultaram discovery-blueprints
+### P6. Agentes não consultaram os discovery-blueprints
 
-**Severidade:** Média
-**Fase:** Fase 1
+**Severidade:** Média | **Fase:** Fase 1 | **Detectado:** Revisão pós-pipeline
 
-Os 3 blueprints (saas, ai-ml, datalake-ingestion) foram copiados para `current-context/` mas os agentes não os leram. Trabalharam apenas com o briefing.
+**O que aconteceu:** Os 3 discovery-blueprints (saas, ai-ml, datalake-ingestion) foram copiados corretamente para `setup/customization/current-context/` durante o scaffold. Porém, nenhum dos 4 agentes da Fase 1 os leu — trabalharam apenas com o briefing.
+
+**O que deveria ter acontecido:** Cada agente deveria ler os blueprints relevantes antes de iniciar seu bloco. O blueprint de SaaS tem seção "Componente 1 — Produto e Modelo Comercial" que guia exatamente o que o PO deve perguntar. O blueprint de AI/ML tem "Componente 2 — Desenvolvimento de Modelos" que guia o architect no bloco de arquitetura.
+
+**Impacto:** Os agentes geraram conteúdo de qualidade (o briefing era rico), mas perderam os concerns específicos de domínio que os blueprints trazem (ex: antipatterns SaaS, edge cases de tenancy, checklist de privacy para ML). O resultado ficou genérico onde poderia ser domain-specific.
 
 **Ação:**
-- [ ] O orchestrator deve instruir cada agente a ler os blueprints antes de iniciar o bloco
-- [ ] O blueprint tem a seção de componentes específicos do domínio — deve guiar as perguntas
-- [ ] Incluir path dos blueprints no prompt de cada agente
+- [ ] O orchestrator deve incluir no prompt de cada agente: "Leia os blueprints em {paths} antes de iniciar"
+- [ ] Mapear quais blocos são cobertos por quais blueprints (já existe na seção "Mapeamento para os 8 Blocos")
+- [ ] O agente deve citar o blueprint como fonte quando usar um concern de domínio
 
 ---
 
-### P7. HR Review logs não gerados
+### P14. Projeção receita vs custo negativa — pipeline não bloqueou
 
-**Severidade:** Média
-**Fase:** Entre fases
+**Severidade:** Alta | **Fase:** Fase 2 → Fase 3 | **Detectado:** Análise do 10th-man
 
-Os arquivos `hr-loop-round{N}-pass{M}.md` não foram gerados. Em modo simulação, deveriam ser criados com decisão automática.
+**O que aconteceu:** O 10th-man identificou que no cenário "esperado" o projeto acumula **-$901K de déficit em 3 anos**. Com churn realista de 10%, o projeto **nunca atinge break-even**. Mesmo assim, o pipeline gerou um delivery report com recomendação "GO CONDICIONAL" — sugerindo que o projeto deveria prosseguir.
+
+**O que deveria ter acontecido:** Um projeto com projeção financeira negativa em 3 anos é, por definição, inviável no modelo proposto. Isso deveria ter sido flagado como `[VIABILIDADE-NEGATIVA]` e o HR Review da Fase 2 deveria exigir que o humano aceite explicitamente o risco financeiro — com justificativa registrada (ex: "investimento estratégico", "pivot de modelo previsto").
+
+**Impacto:** O stakeholder recebe um "GO CONDICIONAL" para um projeto que o próprio pipeline calculou como financeiramente inviável. Se o humano não ler os detalhes do 10th-man, pode aprovar um projeto que não se paga.
 
 **Ação:**
-- [ ] Gerar `hr-loop-round1-pass1.md` após Fase 1 (simulado: "AVANÇAR — simulação")
-- [ ] Gerar `hr-loop-round2-pass1.md` após Fase 2 (simulado, com nota do flag [BELOW-THRESHOLD])
-- [ ] Gerar `hr-loop-round3-pass1.md` após Fase 3
+- [ ] Adicionar validação automática: se receita projetada < custo projetado em 3 anos → `[VIABILIDADE-NEGATIVA]`
+- [ ] HR Review da Fase 2 deve mostrar callout `[!danger]` exigindo aceite explícito do risco
+- [ ] O auditor deve ter dimensão "Viabilidade Financeira" que verifica TCO vs receita
+- [ ] Go/No-Go (REG-EXEC-03) deve ter dimensão "Viability" como VERMELHO (não amarelo) quando projeção é negativa
+- [ ] Se humano aceita: registrar justificativa no pipeline-state.md
+- [ ] Se humano não aceita: voltar para Fase 1 para revisar modelo de negócio/pricing
+
+---
+
+### P16. Especialistas listam riscos com mitigações genéricas
+
+**Severidade:** Alta | **Fase:** Fase 1 + Fase 3 | **Detectado:** Revisão dos results
+
+**O que aconteceu:** Os riscos identificados pelos especialistas têm mitigações de 1 linha genérica. Exemplo: Risco "DPO não nomeado" → Mitigação "Nomear DPO". Risco "Accuracy NL-to-SQL incerta" → Mitigação "PoC na Sprint 0". Isso não dá ao stakeholder informação suficiente para agir.
+
+**O que deveria ter acontecido:** Cada risco deveria ter um plano de mitigação detalhado com: (1) passos concretos para resolver, (2) responsável por cada passo, (3) custo estimado da mitigação, (4) timeline, (5) consequência se não resolver a tempo. Exemplo: "DPO não nomeado → 1) Avaliar DPO interno vs consultoria externa. 2) Budget: R$ 5-15K/mês se terceirizado. 3) Contratar até semana 4 do Sprint 0. 4) Responsável: CTO. 5) Se não resolver até go-live: não lançar — blocker legal."
+
+**Impacto:** Mitigações genéricas dão falsa sensação de que os riscos estão endereçados. O stakeholder lê "PoC na Sprint 0" e assume que está coberto, mas ninguém definiu quem faz, quanto custa, e o que acontece se a PoC falhar.
+
+**Ação:**
+- [ ] Atualizar skills dos especialistas: ao identificar risco, exigir mitigação com: ação, responsável, custo, prazo, consequência
+- [ ] Atualizar regra de discovery: risco sem mitigação detalhada → penalidade na dimensão "Profundidade"
+- [ ] O auditor deve penalizar explicitamente mitigações de 1 linha
+- [ ] O consolidator deve destacar riscos com mitigação insuficiente no delivery report
+- [ ] Considerar sub-seção "Plano de Mitigação" dentro de REG-RISK-01 e REG-RISK-02
+
+---
+
+## Categoria C — Qualidade do HTML (Fase 3)
+
+Problemas na renderização visual dos relatórios HTML.
 
 ---
 
 ### P8. md-writer (Fase 3.1) foi pulado
 
-**Severidade:** Média
-**Fase:** Fase 3
+**Severidade:** Média | **Fase:** Fase 3 | **Detectado:** Durante execução
 
-O pipeline-md-writer deveria rodar antes do consolidator para polir os drafts. No teste, o consolidator leu os results brutos diretamente.
+**O que aconteceu:** O pipeline define 4 sub-fases na Fase 3: md-writer → consolidator → report-planner → html-writer. No teste, o md-writer (3.1) foi pulado — o consolidator leu os result files brutos diretamente, sem polimento.
 
-**Ação:**
-- [ ] Incluir passo 3.1 (md-writer) na execução — polir os 8 drafts antes de consolidar
-- [ ] Gerar arquivos intermediários em `delivery/intermediate/` ou manter em results/
-- [ ] Consolidator deve ler os drafts polidos, não os brutos
+**O que deveria ter acontecido:** O md-writer deveria ter lido os 8 result files da Fase 1 e gerado versões polidas (formatação Obsidian, frontmatter padronizado, emojis semânticos, siglas expandidas, wikilinks corretos). O consolidator então leria os arquivos polidos.
 
----
-
-### P9. Path das runs não documentado
-
-**Severidade:** Baixa
-**Fase:** Estrutura
-
-As runs ficam em `custom-artifacts/{client}/runs/run-{n}/` mas isso não está documentado em nenhum lugar. O quick-start e o README referenciam `runs/run-{n}/` genérico.
+**Impacto:** O delivery-report.md foi gerado a partir de conteúdo bruto. A formatação é inconsistente entre blocos (cada agente escreveu com estilo diferente). Siglas não estão expandidas. Wikilinks podem estar quebrados.
 
 **Ação:**
-- [ ] Documentar no quick-start.md que runs ficam dentro da pasta do cliente
-- [ ] Atualizar README.md com o path correto
-- [ ] Atualizar orchestrator SKILL.md com o path
-
----
-
-### P10. config.md não puxa report-setup automaticamente
-
-**Severidade:** Baixa
-**Fase:** Setup
-
-O campo `report-setup: executive` do briefing não foi automaticamente copiado para o config.md — foi preenchido manualmente.
-
-**Ação:**
-- [ ] Script de scaffold (P1) deve ler o frontmatter do briefing e copiar `report-setup` para config.md
-- [ ] Mesmo para `context-templates`, `client-simulation`, `scoring-threshold`
-
----
-
-### P11. pipeline-state.md não atualizado ao longo do pipeline
-
-**Severidade:** Baixa
-**Fase:** Todas
-
-O pipeline-state.md foi criado no setup mas não foi atualizado com snapshots após cada fase (como o pipeline exige — append-only).
-
-**Ação:**
-- [ ] Após cada fase, appendar snapshot com: status, scores, decisão do HR, tokens consumidos
-- [ ] No final, appendar snapshot de conclusão com resultado final
+- [ ] Incluir passo 3.1 (md-writer) na execução — polir os 8 drafts
+- [ ] Gerar arquivos polidos em `delivery/intermediate/` ou sobrescrever em `results/`
+- [ ] O consolidator deve ler os polidos, não os brutos
+- [ ] O md-writer deve aplicar: frontmatter padronizado, emojis em H2, siglas expandidas, formatação consistente
 
 ---
 
 ### P12. Glossário de abreviações não gerado nos HTMLs
 
-**Severidade:** Média
-**Fase:** Fase 3.4 (HTML Writer)
+**Severidade:** Média | **Fase:** Fase 3.4 (HTML Writer) | **Detectado:** Revisão visual
 
-Os relatórios HTML usam dezenas de siglas e abreviações técnicas (TCO, MRR, ARR, LTV, CAC, LGPD, DPO, NL-to-SQL, RAG, MCP, OKR, MVP, SLA, etc.) mas não incluem:
-- Glossário de abreviações no final do HTML
-- Tooltips com a expansão da sigla ao passar o mouse (`<abbr title="Total Cost of Ownership">TCO</abbr>`)
+**O que aconteceu:** Os relatórios HTML usam dezenas de siglas técnicas (TCO, MRR, ARR, LTV, CAC, LGPD, DPO, DPA, NL-to-SQL, RAG, MCP, OKR, MVP, SLA, JTBD, etc.) sem nenhum suporte visual. Não há tooltips (`<abbr>`) ao passar o mouse sobre as siglas, nem glossário no final do documento.
 
-O workspace tem convenções de tratamento de siglas (`conventions/acronyms/`) e um banco de siglas (`acronym-bank.md`) — mas o html-writer não os usa na geração.
+**O que deveria ter acontecido:** O workspace tem convenções de tratamento de siglas (`conventions/acronyms/`) e um banco de siglas (`acronym-bank.md`) com expansões. O html-writer deveria usar esses recursos para: (1) envolver cada sigla conhecida em `<abbr title="Total Cost of Ownership">TCO</abbr>` para tooltip on hover, (2) adicionar seção "Glossário" no final do HTML listando todas as siglas usadas com suas expansões.
+
+**Impacto:** Um executivo que lê o report pela primeira vez encontra "DPA" e não sabe o que é. Precisa googlar ou perguntar. Isso reduz a acessibilidade do documento para públicos não-técnicos.
 
 **Ação:**
-- [ ] Atualizar html-writer para gerar `<abbr title="...">` em todas as siglas conhecidas
-- [ ] Consultar `base-artifacts/conventions/acronyms/acronym-bank.md` para expansões
-- [ ] Siglas não encontradas no banco → marcar com estilo diferente (ex: sublinhado pontilhado sem tooltip)
-- [ ] Adicionar seção "Glossário" no final de cada HTML com todas as siglas usadas no documento
-- [ ] Considerar gerar o glossário como uma region própria (REG-NARR-04 ou similar)
+- [ ] Atualizar html-writer para gerar `<abbr title="...">` em siglas conhecidas
+- [ ] Consultar `acronym-bank.md` para expansões
+- [ ] Siglas desconhecidas → sublinhado pontilhado sem tooltip (sinal de que precisa ser adicionada ao banco)
+- [ ] Seção "Glossário" no final de cada HTML
+- [ ] Considerar criar REG-NARR-04 (Glossary) como region própria
 
 ---
 
-### P14. Projeção Receita vs Custo negativa — pipeline não bloqueou
+### P13. TCO 3 Anos — gráfico gerado como SVG ao invés de Chart.js
 
-**Severidade:** Alta
-**Fase:** Fase 2 → Fase 3
+**Severidade:** Média | **Fase:** Fase 3.4 (HTML Writer) | **Detectado:** Revisão visual
 
-O 10th-man identificou que no cenário "esperado" o projeto acumula **-$901K de déficit em 3 anos** e com churn realista (10%) **nunca atinge break-even**. Mesmo assim o pipeline seguiu para a Fase 3 e gerou o delivery report com recomendação "GO CONDICIONAL".
+**O que aconteceu:** Na seção TCO 3 Anos (REG-FIN-01) do `executive-report.html`, o gráfico de barras empilhadas foi renderizado como SVG inline. O `report-plan.md` especificou `Chart.js stacked bar` e a prioridade de tecnologia definida é: HTML/CSS > Chart.js > Card. SVG inline **não está na lista** de tecnologias aprovadas para gráficos de dados.
 
-Um projeto com projeção financeira negativa **não deveria passar** pelo gate da Fase 2 sem que isso seja explicitamente aceito pelo humano no HR Review. O fato de o auditor ter dado 82% e o 10th-man 62% deveria ter sido suficiente para bloquear — mas o pipeline ignorou os thresholds.
+**O que deveria ter acontecido:** O html-writer deveria ter usado `<canvas>` com Chart.js (type: 'bar', stacked: true) para renderizar as 5 categorias de custo × 3 anos, conforme especificado no report-plan.md.
 
-**Ação:**
-- [ ] Adicionar validação no orchestrator: se projeção receita vs custo é negativa em 3 anos, marcar automaticamente como `[VIABILIDADE-NEGATIVA]`
-- [ ] O HR Review da Fase 2 deve destacar isso com callout `[!danger]` — exigindo que o humano aceite explicitamente o risco financeiro
-- [ ] O auditor deve ter uma dimensão extra ou sub-dimensão: "Viabilidade Financeira" que verifica se TCO < receita projetada
-- [ ] Se o humano aceita o risco (ex: "é um investimento estratégico, não visa lucro no curto prazo"), registrar a justificativa no pipeline-state.md
-- [ ] Se o humano não aceita, pipeline deve voltar para Fase 1 para revisar o modelo de negócio/pricing
-- [ ] O Go/No-Go (REG-EXEC-03) deve ter a dimensão "Viability" como VERMELHO quando projeção é negativa — não amarelo
-
----
-
-### P20. One-Pager deve funcionar como "orçamento de tempo" (sem valores)
-
-**Severidade:** Alta
-**Fase:** Report Setup + Consolidator + HTML Writer
-
-O one-pager atual é um resumo executivo genérico. Deveria funcionar como um **orçamento de projeto** — focado em tempo, esforço e escopo — sem entrar em valores financeiros. O objetivo é dar um "cheiro" do que será feito, quanto tempo leva e quem participa.
-
-**Estrutura proposta do one-pager:**
-
-#### 1. Descritivo do Projeto
-- Descrição macro (2-3 frases)
-- Objetivo (1 frase)
-- Premissas (bullets)
-- Responsáveis (tabela: nome, papel)
-
-#### 2. Qualidade e Confiança
-- Score do auditor (radar chart ou stat cards com as 5 dimensões)
-- Score do 10th-man (mesmo formato)
-- Veredicto Go/No-Go (badge)
-- Nota: "Material gerado com X% de dados do briefing, Y% inferidos"
-
-#### 3. Escopo
-- **IN** (o que está contemplado) — lista clara com bullets verdes
-- **OUT** (o que NÃO está contemplado) — lista clara com bullets vermelhos
-- Separação visual forte (split card ou duas colunas)
-
-#### 4. Atividades e Esforço
-- Tabela de atividades macro (épicos/fases)
-- Para cada atividade: roles envolvidas, horas/homem por role, valor/hora por role
-- Exemplo:
-
-| Atividade | Role | Horas | Valor/Hora |
-|-----------|------|-------|------------|
-| Setup e PoC | Tech Lead | 40h | — |
-| Setup e PoC | Dev Backend | 80h | — |
-| Ingestão NL-to-SQL | Dev Backend | 120h | — |
-| Ingestão NL-to-SQL | Dev AI/ML | 80h | — |
-| UX/Frontend | Designer | 60h | — |
-| UX/Frontend | Dev Frontend | 100h | — |
-
-> Nota: a coluna "Valor/Hora" fica vazia no report — o cliente preenche com seus valores internos ou o comercial preenche antes de enviar.
-
-#### 5. Planejamento (Gantt relativo)
-- Gráfico de Gantt **sem datas fixas** — escala relativa: Semana 1, Semana 2, ..., Semana N
-- Barras por atividade/fase
-- Dependências visuais (setas)
-- Marcos (milestones) destacados
-- Renderizado em HTML/CSS puro (barras horizontais com grid de semanas)
-
-#### 6. Totais
-- Total de horas por role
-- Total geral de horas
-- Duração total estimada (em semanas)
-- Stat cards no rodapé
+**Impacto:** SVG inline para gráficos de dados é difícil de manter, não tem tooltips interativos, não re-renderiza corretamente no toggle dark/light, e não segue o padrão estabelecido.
 
 **Ação:**
-- [ ] Redesenhar o report-setup `essential.md` com esta nova estrutura (6 blocos)
-- [ ] Criar/ajustar regions:
-  - REG-EXEC-01 → simplificar para descritivo + objetivo + premissas + responsáveis
-  - REG-QUAL-01/02 → versão compacta com scores em stat cards
-  - REG-PROD-07 → manter split card in/out
-  - REG-BACK-01 → transformar em tabela de atividades com roles e horas
-  - NOVO: REG-EXEC-05 ou REG-FIN-06 → Gantt relativo (HTML/CSS)
-  - NOVO: REG-FIN-07 ou REG-EXEC-06 → Totais de horas (stat cards)
-- [ ] Atualizar html-writer para renderizar Gantt relativo em HTML/CSS (barras com grid de semanas, sem Mermaid)
-- [ ] Atualizar report-planner para gerar plano adequado quando setup = essential
-- [ ] O one-pager NÃO mostra valores em R$ — apenas horas e semanas. O campo "Valor/Hora" é deixado vazio para preenchimento manual
-
----
-
-### P19. Seção SaaS Multi-Tenant e Pricing — tom técnico demais para report executivo
-
-**Severidade:** Média
-**Fase:** Fase 3.2 (Consolidator) + Fase 3.4 (HTML Writer)
-
-A seção "SaaS — Detalhamento Multi-Tenant e Pricing" (REG-DOM-SAAS-01) no `executive-report.html` usa linguagem técnica (isolamento por schema, row-level security, service accounts dedicados, etc.) que não é adequada para o público executivo.
-
-O report-setup `executive` é para **diretoria e gestão** — essas pessoas querem saber quanto custa, quais planos existem e o modelo de receita. Não querem saber sobre isolamento de banco de dados.
-
-O conteúdo técnico de multi-tenant deveria estar apenas no setup `complete` (REG-DOM-SAAS-02 Tenancy Strategy). No setup `executive`, a seção SaaS deveria focar em: planos/pricing, modelo de receita, projeção de MRR, e diferenciação entre tiers.
-
-**Ação:**
-- [ ] O consolidator deve adaptar o **tom** de cada region com base no report-setup selecionado
-- [ ] Para `executive`: focar em negócio (pricing, receita, mercado) — remover detalhes técnicos de isolamento
-- [ ] Para `complete`: manter conteúdo técnico completo
-- [ ] Adicionar regra no consolidator: ao gerar regions domain-specific para setup executive, usar tom "executivo-negócio" (não "técnico")
-- [ ] Considerar separar REG-DOM-SAAS-01 em dois: "Modelo Comercial" (executive) e "Estratégia de Tenancy" (complete)
-- [ ] O `final-report-template.md` já define tom por seção — o consolidator deveria respeitar isso para regions domain-specific também
-
----
-
-### P18. Radar chart — falta preenchimento visual das faixas da escala
-
-**Severidade:** Baixa
-**Fase:** Fase 3.4 (HTML Writer)
-
-O radar chart do auditor (REG-QUAL-01) mostra as linhas de grade (20, 40, 60, 80, 100) mas as **regiões entre as linhas não têm preenchimento visual**. Fica difícil perceber rapidamente em qual faixa cada ponto está.
-
-O ideal é ter faixas de cor suave (quase transparentes) entre as linhas de grade, como zonas semânticas:
-- 0-40: vermelho muito suave (zona crítica)
-- 40-70: amarelo muito suave (zona de atenção)
-- 70-90: sem preenchimento ou cinza muito suave (zona aceitável)
-- 90-100: verde muito suave (zona de excelência)
-
-Isso dá ao leitor uma noção imediata de onde os pontos estão — sem precisar ler os números.
-
-**Ação:**
-- [ ] Configurar Chart.js radar com datasets de background (faixas de cor) como layers atrás dos dados
-- [ ] Usar opacidade bem baixa (0.03-0.05) para não poluir visualmente
-- [ ] Cores: danger (0-40), warning (40-70), neutro (70-90), success (90-100)
-- [ ] Aplicar em todos os radar charts (auditor, 10th-man, go/no-go)
-- [ ] Documentar como padrão no chart-specialist skill
-
----
-
-### P17. Layout do 10th-man deve ser idêntico ao do auditor
-
-**Severidade:** Baixa
-**Fase:** Fase 3.4 (HTML Writer)
-
-No `executive-report.html`, a seção REG-QUAL-01 (Score do Auditor) tem um layout excelente — radar chart com as 5 dimensões + tabela de scores. Porém a seção REG-QUAL-02 (Questões do 10th-man) usa um layout diferente e mais simples (cards com badges).
-
-Ambas são validações da Fase 2 e deveriam ter **o mesmo padrão visual**: radar chart com as dimensões + score geral + tabela detalhada. O 10th-man também tem 3 dimensões com scores (Divergência 55%, Robustez 60%, Completude Crítica 73%) que podem ser representadas em radar chart.
-
-**Ação:**
-- [ ] Atualizar o region template de REG-QUAL-02 para incluir radar chart 3 eixos (Chart.js) com as dimensões do 10th-man
-- [ ] Manter o layout de cards com severity badges para as questões residuais (abaixo do radar)
-- [ ] Usar sidebar layout (mesmo do auditor): radar à esquerda + detalhes à direita
-- [ ] Atualizar o report-plan.md e chart-specialist recommendation de REG-QUAL-02
-
----
-
-### P16. Especialistas devem detalhar mitigação de riscos
-
-**Severidade:** Alta
-**Fase:** Fase 1 + Fase 3
-
-Os riscos identificados no discovery (LGPD blockers, accuracy NL-to-SQL, viabilidade financeira, vendor lock-in, etc.) são listados com mitigações genéricas de 1 linha (ex: "PoC na Sprint 0", "Assinar DPA"). Os especialistas (solution-architect, cyber-security-architect, po) deveriam propor **planos de mitigação detalhados** — não apenas nomear o risco.
-
-Exemplo do que falta:
-- **Risco:** "DPO não nomeado" → **Mitigação genérica:** "Nomear DPO" → **Mitigação detalhada que falta:** "1) Avaliar se DPO pode ser interno ou precisa de consultoria externa. 2) Budget estimado: R$ 5-15K/mês para DPO terceirizado. 3) Timeline: contratar até semana 4 do Sprint 0. 4) Responsável: CTO. 5) Se não resolver até go-live: não lançar — é blocker legal."
-
-**Ação:**
-- [ ] Atualizar as skills dos especialistas (solution-architect, cyber-security-architect, po) para que ao identificar um risco, proponham mitigação com: passos concretos, responsável, custo estimado, timeline, e consequência se não resolver
-- [ ] Atualizar a regra de discovery para exigir que cada risco tenha mitigação com pelo menos: ação, responsável e prazo
-- [ ] O auditor deve penalizar na dimensão "Profundidade" quando riscos têm mitigação genérica
-- [ ] O consolidator deve destacar riscos com mitigação insuficiente no delivery report
-- [ ] Considerar adicionar uma sub-seção "Plano de Mitigação" dentro de REG-RISK-01 e REG-RISK-02
+- [ ] Substituir SVG por Chart.js stacked bar em REG-FIN-01
+- [ ] Reforçar na skill html-writer: SVG inline NÃO é opção para gráficos de dados
+- [ ] SVG inline aceito apenas para: gauges simples, progress bars, ícones custom (quando HTML/CSS não resolve)
 
 ---
 
 ### P15. Estimativa de Esforço — gráfico SVG ao invés de HTML/CSS
 
-**Severidade:** Média
-**Fase:** Fase 3.4 (HTML Writer)
+**Severidade:** Média | **Fase:** Fase 3.4 (HTML Writer) | **Detectado:** Revisão visual
 
-Mesma issue do P13 — a seção Estimativa de Esforço (REG-FIN-05) no `executive-report.html` gerou barras horizontais como SVG inline ao invés de HTML/CSS puro (divs com width percentual). Barras horizontais simples são triviais em HTML/CSS e não precisam de SVG nem Chart.js.
+**O que aconteceu:** Mesma issue do P13 — a seção Estimativa de Esforço (REG-FIN-05) gerou barras horizontais como SVG inline. Barras horizontais simples são triviais em HTML/CSS puro (divs com `width: X%`) e são o caso de uso mais básico de HTML/CSS.
+
+**O que deveria ter acontecido:** Divs com CSS, cada barra com width proporcional ao valor, cor por T-shirt size (P=verde, M=azul, G=amarelo, GG=vermelho), label com horas.
 
 **Ação:**
-- [ ] Substituir SVG por divs com CSS (width proporcional, cor por T-shirt size)
-- [ ] Reforçar na skill html-writer: barras horizontais simples = HTML/CSS SEMPRE
+- [ ] Substituir SVG por HTML/CSS puro (divs com width proporcional)
+- [ ] Reforçar: barras horizontais simples = HTML/CSS SEMPRE, sem exceção
 
 ---
 
-### P13. TCO 3 Anos — gráfico SVG ao invés de HTML/CSS ou Chart.js
+### P17. Layout do 10th-man diferente do layout do auditor
 
-**Severidade:** Média
-**Fase:** Fase 3.4 (HTML Writer)
+**Severidade:** Baixa | **Fase:** Fase 3.4 (HTML Writer) | **Detectado:** Revisão visual
 
-Na seção TCO 3 Anos do `executive-report.html`, o gráfico de barras empilhadas foi gerado como SVG inline ao invés de usar Chart.js (stacked bar) ou HTML/CSS puro (barras horizontais com divs). Isso viola a prioridade de tecnologia definida: HTML/CSS > Chart.js > Card. SVG inline não está na lista.
+**O que aconteceu:** A seção REG-QUAL-01 (Score do Auditor) tem layout exemplar: radar chart com 5 dimensões à esquerda + tabela de scores à direita (sidebar layout). A seção REG-QUAL-02 (Questões do 10th-man) usa layout completamente diferente: cards com badges de severidade, sem radar chart.
 
-O `report-plan.md` especificou `Chart.js stacked bar` para REG-FIN-01, mas o html-writer gerou SVG.
+**O que deveria ter acontecido:** Ambas são validações da Fase 2 e deveriam usar o mesmo padrão visual. O 10th-man tem 3 dimensões com scores (Divergência 55%, Robustez 60%, Completude Crítica 73%) que se encaixam perfeitamente num radar chart de 3 eixos.
+
+**Impacto:** O leitor vê dois padrões visuais diferentes para o mesmo tipo de informação (validação com scores). Parece que o 10th-man é menos importante que o auditor.
 
 **Ação:**
-- [ ] Verificar o executive-report.html e confirmar se é SVG ou Chart.js
-- [ ] Se SVG: substituir por Chart.js stacked bar (conforme report-plan.md)
-- [ ] Reforçar na skill html-writer que SVG inline NÃO é uma opção para gráficos de dados — usar Chart.js
-- [ ] SVG inline só é aceito para componentes simples (gauges, progress bars) quando HTML/CSS não resolve
+- [ ] REG-QUAL-02: adicionar radar chart 3 eixos (Chart.js) com as dimensões do 10th-man
+- [ ] Manter cards com severity badges para as questões residuais (abaixo do radar)
+- [ ] Usar sidebar layout (mesmo do auditor): radar à esquerda + detalhes à direita
+- [ ] Atualizar chart-specialist recommendation e report-plan de REG-QUAL-02
+
+---
+
+### P18. Radar charts sem faixas visuais de escala
+
+**Severidade:** Baixa | **Fase:** Fase 3.4 (HTML Writer) | **Detectado:** Revisão visual
+
+**O que aconteceu:** Os radar charts (auditor, go/no-go) mostram linhas de grade (20, 40, 60, 80, 100) mas as regiões entre as linhas não têm preenchimento visual. É difícil perceber rapidamente em qual faixa cada ponto está sem ler os números.
+
+**O que deveria ter acontecido:** Faixas de cor suave (quase transparentes) entre as linhas de grade, funcionando como zonas semânticas: 0-40 vermelho suave (zona crítica), 40-70 amarelo suave (atenção), 70-90 neutro (aceitável), 90-100 verde suave (excelência). O leitor bate o olho e sabe instantaneamente se o score está na zona verde ou vermelha.
+
+**Ação:**
+- [ ] Chart.js: adicionar datasets de background com fill entre escalas (opacity 0.03-0.05)
+- [ ] Cores: danger (0-40), warning (40-70), neutro (70-90), success (90-100)
+- [ ] Aplicar em TODOS os radar charts (auditor, 10th-man, go/no-go)
+- [ ] Documentar como padrão no chart-specialist skill
+
+---
+
+### P19. Seção SaaS no executive report tem tom técnico demais
+
+**Severidade:** Média | **Fase:** Fase 3.2 + 3.4 | **Detectado:** Revisão visual
+
+**O que aconteceu:** A seção "SaaS — Detalhamento Multi-Tenant e Pricing" (REG-DOM-SAAS-01) no `executive-report.html` discute isolamento por schema, row-level security, service accounts dedicados — linguagem técnica para um público que é diretoria e gestão.
+
+**O que deveria ter acontecido:** O report-setup `executive` é para **diretoria e gestão**. A seção SaaS deveria focar em: quais planos existem, quanto custa cada um, projeção de MRR/ARR, modelo de receita, diferenciação entre tiers. Detalhes de isolamento técnico pertencem ao setup `complete` (REG-DOM-SAAS-02 Tenancy Strategy).
+
+**Impacto:** Um diretor lê sobre "service accounts dedicados por tenant com row-level security no BigQuery" e desliga. Perde a informação de negócio que está misturada no meio do conteúdo técnico.
+
+**Ação:**
+- [ ] O consolidator deve adaptar o **tom** de cada region com base no report-setup selecionado
+- [ ] Para `executive`: tom "executivo-negócio" nas regions domain-specific
+- [ ] Para `complete`: tom "técnico" mantido
+- [ ] Considerar separar REG-DOM-SAAS-01 em dois: "Modelo Comercial" (executive) e "Estratégia de Tenancy" (complete)
+
+---
+
+## Categoria D — Redesign do One-Pager
+
+Redesenho conceitual do report-setup `essential`.
+
+---
+
+### P20. One-Pager deve funcionar como orçamento de tempo (sem valores financeiros)
+
+**Severidade:** Alta | **Fase:** Report Setup + Consolidator + HTML Writer | **Detectado:** Revisão conceitual
+
+**O que aconteceu:** O one-pager atual é um resumo executivo genérico com: overview, problema, escopo, TCO, riscos, go/no-go, next steps. Funciona como "resumo do discovery" mas não como ferramenta comercial.
+
+**O que deveria ser:** O one-pager deveria funcionar como um **orçamento de projeto baseado em tempo** — sem valores em R$, apenas horas e semanas. O objetivo é dar um "cheiro" do esforço necessário para que o comercial/gestor possa estimar custos internamente (preenchendo valor/hora por role).
+
+**Estrutura proposta (6 blocos):**
+
+1. **Descritivo do Projeto** — Descrição macro (2-3 frases), objetivo (1 frase), premissas (bullets), responsáveis (tabela nome/papel)
+
+2. **Qualidade e Confiança** — Scores do auditor e 10th-man (stat cards ou radar compacto), veredicto Go/No-Go (badge), nota de confiança ("X% briefing, Y% inferido")
+
+3. **Escopo** — IN (bullets verdes) vs OUT (bullets vermelhos), separação visual forte (split card)
+
+4. **Atividades e Esforço** — Tabela com: atividade macro, roles envolvidas, horas/homem por role, coluna valor/hora vazia (para preenchimento manual)
+
+5. **Planejamento (Gantt relativo)** — Gráfico de barras horizontais sem datas fixas (Semana 1, 2, ..., N), dependências visuais, marcos destacados, renderizado em HTML/CSS puro
+
+6. **Totais** — Total de horas por role, total geral, duração em semanas (stat cards)
+
+**Ação:**
+- [ ] Redesenhar `dtg-artifacts/templates/report-setups/essential.md` com os 6 blocos
+- [ ] Criar/ajustar regions:
+  - REG-EXEC-01 → simplificar para descritivo + objetivo + premissas + responsáveis
+  - REG-QUAL-01/02 → versão compacta (stat cards, sem radar chart)
+  - REG-PROD-07 → manter split card in/out
+  - REG-BACK-01 → tabela de atividades com roles e horas (sem priorização MoSCoW)
+  - NOVO: REG-PLAN-01 → Gantt relativo (HTML/CSS barras com grid de semanas)
+  - NOVO: REG-FIN-06 → Totais de horas (stat cards)
+- [ ] Atualizar html-writer para renderizar Gantt relativo em HTML/CSS
+- [ ] Atualizar report-planner para gerar plano adequado quando setup = essential
+- [ ] One-pager NÃO mostra valores em R$ — coluna "Valor/Hora" vazia para preenchimento manual
+
+---
+
+## Categoria E — Documentação
+
+Ajustes de documentação e paths.
+
+---
+
+### P9. Path das runs não está documentado
+
+**Severidade:** Baixa | **Fase:** Estrutura | **Detectado:** Revisão pós-pipeline
+
+**O que aconteceu:** As runs ficam em `custom-artifacts/{client}/runs/run-{n}/` mas o quick-start.md, README.md e orchestrator SKILL.md referenciam `runs/run-{n}/` genérico (sem o path do cliente).
+
+**Ação:**
+- [ ] Documentar path correto no quick-start.md, README.md e orchestrator SKILL.md
+
+---
+
+### P10. config.md não herda campos do briefing automaticamente
+
+**Severidade:** Baixa | **Fase:** Setup | **Detectado:** Durante scaffold
+
+**O que aconteceu:** Os campos `report-setup`, `context-templates`, `client-simulation` e `scoring-threshold` do briefing não foram copiados automaticamente para o config.md — foram preenchidos manualmente.
+
+**Ação:**
+- [ ] O script de scaffold (P1) deve ler frontmatter do briefing e propagar para config.md
 
 ---
 
 ## Ordem sugerida de resolução
 
 ```
-P1 (scaffold script)     ← desbloqueia tudo
- ↓
-P2 (interview.md)        ← Fase 1 completa
-P5 (customer separado)   ← Fase 1 fiel ao pipeline
-P6 (blueprints lidos)    ← Fase 1 com contexto
- ↓
-P4 (cross-validation)    ← entre Fase 1 e 2
-P3 (threshold + HR logs) ← Fase 2 com gates
-P7 (HR loop logs)        ← entre fases
- ↓
-P8 (md-writer 3.1)       ← Fase 3 completa
-P12 (glossário + tooltips)← HTML com siglas expandidas
-P13 (TCO chart fix)       ← Chart.js no lugar de SVG
-P14 (receita vs custo)    ← validação de viabilidade
-P15 (effort SVG fix)      ← HTML/CSS no lugar de SVG
-P16 (mitigações detalhadas)← especialistas propõem resolução
-P17 (10th-man layout)     ← igualar ao layout do auditor
-P18 (radar grid lines)    ← regiões visuais na escala
-P19 (SaaS section too technical) ← adaptar tom ao público
-P20 (one-pager como orçamento) ← redesenhar foco e conteúdo
- ↓
-P9-P11 (docs + config)   ← polish final
+INFRAESTRUTURA:
+P1  (scaffold script)          ← desbloqueia tudo
+P11 (pipeline-state snapshots) ← tracking correto
+P7  (HR Review logs)           ← trilha de auditoria
+P3  (threshold + flags)        ← gates funcionando
+
+FASE 1:
+P2  (interview.md)             ← log da entrevista
+P5  (customer separado)        ← separação de papéis
+P6  (blueprints lidos)         ← contexto de domínio
+P4  (cross-validation)         ← consistência financeira
+P14 (viabilidade negativa)     ← gate financeiro
+P16 (mitigações detalhadas)    ← profundidade dos riscos
+
+FASE 3 — HTML:
+P8  (md-writer 3.1)            ← polimento dos drafts
+P12 (glossário + tooltips)     ← acessibilidade de siglas
+P13 (TCO: SVG → Chart.js)     ← gráfico correto
+P15 (Esforço: SVG → CSS)      ← barras corretas
+P17 (10th-man = auditor)       ← layout consistente
+P18 (radar zones)              ← faixas visuais
+P19 (SaaS tom executivo)       ← adaptar público
+
+REDESIGN:
+P20 (one-pager como orçamento) ← nova proposta de valor
+
+DOCS:
+P9  (paths documentados)       ← polish
+P10 (config herda briefing)    ← automatização
 ```
