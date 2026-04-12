@@ -253,6 +253,30 @@ Um projeto com projeção financeira negativa **não deveria passar** pelo gate 
 
 ---
 
+### P18. Radar chart — falta preenchimento visual das faixas da escala
+
+**Severidade:** Baixa
+**Fase:** Fase 3.4 (HTML Writer)
+
+O radar chart do auditor (REG-QUAL-01) mostra as linhas de grade (20, 40, 60, 80, 100) mas as **regiões entre as linhas não têm preenchimento visual**. Fica difícil perceber rapidamente em qual faixa cada ponto está.
+
+O ideal é ter faixas de cor suave (quase transparentes) entre as linhas de grade, como zonas semânticas:
+- 0-40: vermelho muito suave (zona crítica)
+- 40-70: amarelo muito suave (zona de atenção)
+- 70-90: sem preenchimento ou cinza muito suave (zona aceitável)
+- 90-100: verde muito suave (zona de excelência)
+
+Isso dá ao leitor uma noção imediata de onde os pontos estão — sem precisar ler os números.
+
+**Ação:**
+- [ ] Configurar Chart.js radar com datasets de background (faixas de cor) como layers atrás dos dados
+- [ ] Usar opacidade bem baixa (0.03-0.05) para não poluir visualmente
+- [ ] Cores: danger (0-40), warning (40-70), neutro (70-90), success (90-100)
+- [ ] Aplicar em todos os radar charts (auditor, 10th-man, go/no-go)
+- [ ] Documentar como padrão no chart-specialist skill
+
+---
+
 ### P17. Layout do 10th-man deve ser idêntico ao do auditor
 
 **Severidade:** Baixa
@@ -339,6 +363,7 @@ P14 (receita vs custo)    ← validação de viabilidade
 P15 (effort SVG fix)      ← HTML/CSS no lugar de SVG
 P16 (mitigações detalhadas)← especialistas propõem resolução
 P17 (10th-man layout)     ← igualar ao layout do auditor
+P18 (radar grid lines)    ← regiões visuais na escala
  ↓
 P9-P11 (docs + config)   ← polish final
 ```
