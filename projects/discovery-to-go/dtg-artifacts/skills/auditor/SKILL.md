@@ -206,7 +206,7 @@ def aprovar(scores, pisos):
 
 ### 5. Geração do audit-report
 
-Use o template `templates/audit-report-template.md`. Salva em `{project}/iterations/iteration-{i}/results/2-challenge/2.1-convergent-validation.md`.
+Use o template `templates/draft-templates/audit-report-template.md`. Salva em `{project}/iterations/iteration-{i}/results/2-challenge/2.1-convergent-validation.md`.
 
 **O relatório precisa ter:**
 - Veredicto (APPROVED / REJECTED)

@@ -58,7 +58,7 @@ Você é o único agente **transversal**: atua em todas as fases. Os outros 10 a
 4. `{project}/pipeline-state.md` (último snapshot) — se for retomada, leia o último snapshot appendado.
 5. `{project}/setup/customization/current-context/{pack}.md` — context-template ativo, se houver.
 
-**Se faltar briefing.md:** retorne `❌ Briefing ausente. O pipeline não inicia sem briefing inicial. Por favor, crie {project}/setup/briefing.md usando o template em projects/discovery-to-go/templates/briefing-template.md.`
+**Se faltar briefing.md:** retorne `❌ Briefing ausente. O pipeline não inicia sem briefing inicial. Por favor, crie {project}/setup/briefing.md usando o template em projects/discovery-to-go/templates/draft-templates/briefing-template.md.`
 
 **Se faltar context-template e o briefing não declarar tipo:** tente auto-detectar (ver seção "Auto-detecção de context-template"). Se não der match com nenhum dos 4 packs base, rode em modo genérico avisando explicitamente.
 

@@ -33,7 +33,7 @@ Antes de começar, certifique-se de ter:
 
 ## 🚀 Passo 1 — Criar o briefing
 
-Crie um arquivo `briefing.md` com as informações iniciais do projeto. Use o template em `dtg-artifacts/templates/briefing-template.md` como base.
+Crie um arquivo `briefing.md` com as informações iniciais do projeto. Use o template em `dtg-artifacts/templates/draft-templates/briefing-template.md` como base.
 
 O briefing deve conter no mínimo:
 - Nome do projeto
@@ -267,7 +267,7 @@ Se o cliente já tem overrides definidos em `custom-artifacts/{client}/`, o orch
 
 - `docs/discovery-pipeline.md` — Guia detalhado do processo completo
 - `docs/logging-process.md` — Como funciona o logging
-- `dtg-artifacts/templates/briefing-template.md` — Template de briefing
+- `dtg-artifacts/templates/draft-templates/briefing-template.md` — Template de briefing
 - `dtg-artifacts/templates/customization/human-review-template.md` — Template do Human Review
 
 ## 📜 Histórico de Alterações

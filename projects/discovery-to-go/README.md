@@ -434,7 +434,7 @@ A camada `base-artifacts/` é a cópia local dessas dependências. Pode ser sinc
 
 ## Quick Start
 
-1. Crie um `briefing.md` usando `dtg-artifacts/templates/briefing-template.md`
+1. Crie um `briefing.md` usando `dtg-artifacts/templates/draft-templates/briefing-template.md`
 2. Invoque `/orchestrator briefing.md`
 3. Acompanhe as 3 fases + 3 Human Reviews
 4. Colete o `delivery/delivery-report.md` + `.html`
