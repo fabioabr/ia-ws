@@ -280,12 +280,15 @@ abbr.acronym[title]:hover::after { content: attr(title); position: absolute; bot
 .region-col-6 { flex: 0 0 calc(50% - 8px); }
 
 /* ====== HAMBURGER MENU ====== */
-.hamburger-btn { display: none; width: 40px; height: 40px; border-radius: 8px; background: rgba(255,255,255,0.1); border: none; color: white; font-size: 1.2rem; cursor: pointer; align-items: center; justify-content: center; }
-.mobile-menu { display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--card-bg); border-bottom: 1px solid var(--border); z-index: 100; padding: 8px 0; }
+.hamburger-btn { display: none; position: fixed; bottom: 32px; right: 88px; width: 44px; height: 44px; border-radius: 12px; background: var(--primary); border: none; color: #fff; font-size: 1.3rem; cursor: pointer; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(46,181,245,.35); z-index: 999; transition: background .2s; }
+.hamburger-btn:hover { background: var(--primary-dark); }
+.mobile-menu { display: none; position: fixed; bottom: 90px; right: 32px; width: 260px; background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; z-index: 998; padding: 8px 0; box-shadow: 0 8px 32px rgba(0,0,0,.5); max-height: 70vh; overflow-y: auto; }
 .mobile-menu.open { display: flex; flex-direction: column; }
-.mobile-menu-item { display: flex; align-items: center; gap: 10px; padding: 12px 24px; color: var(--text); font-size: 0.85rem; cursor: pointer; border: none; background: none; width: 100%; text-align: left; font-family: 'Poppins', sans-serif; }
+.mobile-menu-item { display: flex; align-items: center; gap: 10px; padding: 12px 20px; color: var(--text); font-size: 0.85rem; cursor: pointer; border: none; background: none; width: 100%; text-align: left; font-family: 'Poppins', sans-serif; }
 .mobile-menu-item:hover { background: var(--th-bg-hover); }
 .mobile-menu-item i { font-size: 1.1rem; width: 20px; }
+.mobile-menu-divider { height: 1px; background: var(--border); margin: 4px 16px; }
+.mobile-lang-row { display: flex; gap: 6px; padding: 8px 20px; }
 
 /* ====== FIELD ROW ====== */
 .field-row { margin-bottom: 10px; }
@@ -314,6 +317,7 @@ abbr.acronym[title]:hover::after { content: attr(title); position: absolute; bot
     .scope-out { border-left: 1px solid var(--danger-border); border-top: none; border-radius: 0 0 12px 12px; }
     .region-col-6 { flex: 0 0 100%; }
     .theme-toggle { display: none !important; }
+    .lang-selector { display: none !important; }
     .hamburger-btn { display: flex; }
     .footer { text-align: center; }
     .footer .footer-content { flex-direction: column; align-items: center; gap: 8px; }
@@ -350,6 +354,7 @@ abbr.acronym[title]:hover::after { content: attr(title); position: absolute; bot
                 </div>
                 <div class="header-right">
                     <div style="display:flex; gap:8px; align-items:center;">
+                        <div class="lang-selector" style="display:flex;gap:6px;align-items:center;">
                         <button class="lang-btn active" id="lang-pt" title="Português (BR)">
                             <svg width="20" height="14" viewBox="0 0 20 14"><rect width="20" height="14" rx="1" fill="#009739"/><polygon points="10,1.5 19,7 10,12.5 1,7" fill="#FEDD00"/><circle cx="10" cy="7" r="3.2" fill="#012169"/><rect x="7.8" y="6.2" width="4.4" height="0.4" rx="0.2" fill="#fff" transform="rotate(-8 10 7)"/></svg>
                             <span>PT</span>
@@ -362,21 +367,14 @@ abbr.acronym[title]:hover::after { content: attr(title); position: absolute; bot
                             <svg width="20" height="14" viewBox="0 0 20 14"><rect width="20" height="14" rx="1" fill="#AA151B"/><rect y="3" width="20" height="8" fill="#F1BF00"/></svg>
                             <span>ES</span>
                         </button>
+                        </div>
                         <div class="header-badge theme-toggle" style="border:none;cursor:pointer" onclick="toggleTheme()" title="Alternar tema">
                             <i id="theme-icon" class="ri-sun-line"></i>
                         </div>
-                        <button class="hamburger-btn" onclick="toggleMobileMenu(event)" title="Menu">
-                            <i class="ri-menu-line" id="hamburger-icon"></i>
-                        </button>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="mobile-menu" id="mobile-menu">
-        <button class="mobile-menu-item" onclick="toggleThemeFromMobile()">
-            <i class="ri-sun-line"></i> Alternar tema
-        </button>
     </div>
 </header>
 
@@ -386,7 +384,7 @@ abbr.acronym[title]:hover::after { content: attr(title); position: absolute; bot
 <div class="container" style="padding-top:24px; padding-bottom:32px;">
 
 <!-- ====== SEÇÃO 1 — DESCRITIVO ====== -->
-<div class="section">
+<div class="section" id="descritivo">
     <div class="section-header">
         <div class="section-icon bg-primary"><i class="ri-information-line"></i></div>
         <div class="section-title">Descritivo</div><div class="section-count" style="background:var(--border);color:var(--text-muted);font-size:.6rem;margin-left:auto;padding:2px 8px;border-radius:10px;">REG-EXEC-01</div>
@@ -414,7 +412,7 @@ abbr.acronym[title]:hover::after { content: attr(title); position: absolute; bot
 </div>
 
 <!-- ====== SEÇÃO 2 — ESCOPO ====== -->
-<div class="section">
+<div class="section" id="escopo">
     <div class="section-header">
         <div class="section-icon bg-info"><i class="ri-focus-3-line"></i></div>
         <div class="section-title">Escopo</div><div class="section-count" style="background:var(--border);color:var(--text-muted);font-size:.6rem;margin-left:auto;padding:2px 8px;border-radius:10px;">REG-PROD-07</div>
@@ -451,7 +449,7 @@ abbr.acronym[title]:hover::after { content: attr(title); position: absolute; bot
 </div>
 
 <!-- ====== SEÇÃO 3 — PREMISSAS ====== -->
-<div class="section">
+<div class="section" id="premissas">
     <div class="section-header">
         <div class="section-icon bg-warning"><i class="ri-error-warning-line"></i></div>
         <div class="section-title">Premissas</div><div class="section-count" style="background:var(--border);color:var(--text-muted);font-size:.6rem;margin-left:auto;padding:2px 8px;border-radius:10px;">REG-EXEC-07</div>
@@ -554,7 +552,7 @@ abbr.acronym[title]:hover::after { content: attr(title); position: absolute; bot
 </div>
 
 <!-- ====== SEÇÃO 4 — RISCOS PRINCIPAIS ====== -->
-<div class="section">
+<div class="section" id="riscos">
     <div class="section-header">
         <div class="section-icon bg-danger"><i class="ri-alarm-warning-line"></i></div>
         <div class="section-title">Riscos Principais</div><div class="section-count" style="background:var(--border);color:var(--text-muted);font-size:.6rem;margin-left:auto;padding:2px 8px;border-radius:10px;">REG-RISK-01</div>
@@ -611,7 +609,7 @@ abbr.acronym[title]:hover::after { content: attr(title); position: absolute; bot
 </div>
 
 <!-- ====== SEÇÃO 5 — EQUIPE E PAPÉIS ====== -->
-<div class="section">
+<div class="section" id="equipe">
     <div class="section-header">
         <div class="section-icon bg-purple"><i class="ri-user-settings-line"></i></div>
         <div class="section-title">Equipe e Papéis</div><div class="section-count" style="background:var(--border);color:var(--text-muted);font-size:.6rem;margin-left:auto;padding:2px 8px;border-radius:10px;">REG-ORG-02</div>
@@ -703,7 +701,7 @@ abbr.acronym[title]:hover::after { content: attr(title); position: absolute; bot
 </div>
 
 <!-- ====== SEÇÃO 6 — ESTIMATIVA DE ESFORÇO ====== -->
-<div class="section">
+<div class="section" id="esforco">
     <div class="section-header">
         <div class="section-icon bg-teal"><i class="ri-timer-line"></i></div>
         <div class="section-title">Estimativa de Esforço</div><div class="section-count" style="background:var(--border);color:var(--text-muted);font-size:.6rem;margin-left:auto;padding:2px 8px;border-radius:10px;">REG-FIN-06</div>
@@ -757,7 +755,7 @@ abbr.acronym[title]:hover::after { content: attr(title); position: absolute; bot
 </div>
 
 <!-- ====== SEÇÃO 7 — PLANEJAMENTO (GANTT) ====== -->
-<div class="section">
+<div class="section" id="planejamento">
     <div class="section-header">
         <div class="section-icon bg-info"><i class="ri-bar-chart-horizontal-line"></i></div>
         <div class="section-title">Planejamento</div><div class="section-count" style="background:var(--border);color:var(--text-muted);font-size:.6rem;margin-left:auto;padding:2px 8px;border-radius:10px;">REG-PLAN-01</div>
@@ -894,7 +892,7 @@ abbr.acronym[title]:hover::after { content: attr(title); position: absolute; bot
 </div>
 
 <!-- ====== SEÇÃO 8 — CONFIANÇA DO MATERIAL ====== -->
-<div class="section">
+<div class="section" id="confianca">
     <div class="section-header">
         <div class="section-icon bg-orange"><i class="ri-shield-check-line"></i></div>
         <div class="section-title">Confiança dos Auditores IA</div><div class="section-count" style="background:var(--border);color:var(--text-muted);font-size:.6rem;margin-left:auto;padding:2px 8px;border-radius:10px;">REG-QUAL-01</div>
@@ -934,7 +932,7 @@ abbr.acronym[title]:hover::after { content: attr(title); position: absolute; bot
 </div>
 
 <!-- ====== GLOSSÁRIO ====== -->
-<div class="section">
+<div class="section" id="glossario">
     <div class="section-header">
         <div class="section-icon bg-secondary"><i class="ri-book-2-line"></i></div>
         <div class="section-title">Glossário de Siglas</div><div class="section-count" style="background:var(--border);color:var(--text-muted);font-size:.6rem;margin-left:auto;padding:2px 8px;border-radius:10px;">REG-NARR-04</div>
@@ -1015,6 +1013,28 @@ abbr.acronym[title]:hover::after { content: attr(title); position: absolute; bot
     </div>
 </footer>
 
+<!-- Floating hamburger + mobile menu -->
+<button class="hamburger-btn" id="hamburger-btn"><i class="ri-menu-line"></i></button>
+<div class="mobile-menu" id="mobile-menu">
+<button class="mobile-menu-item" data-section="descritivo"><i class="ri-information-line"></i> Descritivo</button>
+<button class="mobile-menu-item" data-section="escopo"><i class="ri-focus-3-line"></i> Escopo</button>
+<button class="mobile-menu-item" data-section="premissas"><i class="ri-error-warning-line"></i> Premissas</button>
+<button class="mobile-menu-item" data-section="riscos"><i class="ri-alarm-warning-line"></i> Riscos</button>
+<button class="mobile-menu-item" data-section="equipe"><i class="ri-user-settings-line"></i> Equipe</button>
+<button class="mobile-menu-item" data-section="esforco"><i class="ri-timer-line"></i> Esforço</button>
+<button class="mobile-menu-item" data-section="planejamento"><i class="ri-bar-chart-horizontal-line"></i> Planejamento</button>
+<button class="mobile-menu-item" data-section="confianca"><i class="ri-shield-check-line"></i> Confiança</button>
+<button class="mobile-menu-item" data-section="glossario"><i class="ri-book-2-line"></i> Glossário</button>
+<div class="mobile-menu-divider"></div>
+<button class="mobile-menu-item" onclick="toggleTheme();mm.classList.remove('open');hb.innerHTML='<i class=\'ri-menu-line\'></i>';"><i class="ri-sun-line"></i> Alternar tema</button>
+<div class="mobile-menu-divider"></div>
+<div class="mobile-lang-row">
+<button class="lang-btn active" title="Português"><svg width="18" height="12" viewBox="0 0 20 14"><rect width="20" height="14" rx="1" fill="#009739"/><polygon points="10,1.5 19,7 10,12.5 1,7" fill="#FEDD00"/><circle cx="10" cy="7" r="3.2" fill="#012169"/></svg><span style="font-size:.65rem;">PT</span></button>
+<button class="lang-btn" disabled style="opacity:0.35;cursor:not-allowed;"><svg width="18" height="12" viewBox="0 0 20 14"><rect width="20" height="14" rx="1" fill="#B22234"/><rect width="8" height="7.54" fill="#3C3B6E"/></svg><span style="font-size:.65rem;">EN</span></button>
+<button class="lang-btn" disabled style="opacity:0.35;cursor:not-allowed;"><svg width="18" height="12" viewBox="0 0 20 14"><rect width="20" height="14" rx="1" fill="#AA151B"/><rect y="3" width="20" height="8" fill="#F1BF00"/></svg><span style="font-size:.65rem;">ES</span></button>
+</div>
+</div>
+
 <!-- BACK TO TOP -->
 <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Voltar ao topo">
     <i class="ri-arrow-up-line"></i>
@@ -1031,23 +1051,29 @@ function toggleTheme() {
     var icon = document.getElementById('theme-icon');
     icon.className = next === 'light' ? 'ri-moon-line' : 'ri-sun-line';
 }
-function toggleThemeFromMobile() {
-    toggleTheme();
-    document.getElementById('mobile-menu').classList.remove('open');
+/* ====== FLOATING MOBILE MENU ====== */
+var hb = document.getElementById('hamburger-btn');
+var mm = document.getElementById('mobile-menu');
+if (hb) {
+    hb.addEventListener('click', function(e) {
+        e.stopPropagation();
+        mm.classList.toggle('open');
+        hb.innerHTML = mm.classList.contains('open') ? '<i class="ri-close-line"></i>' : '<i class="ri-menu-line"></i>';
+    });
+    document.addEventListener('click', function() {
+        mm.classList.remove('open');
+        hb.innerHTML = '<i class="ri-menu-line"></i>';
+    });
+    mm.querySelectorAll('.mobile-menu-item[data-section]').forEach(function(item) {
+        item.addEventListener('click', function() {
+            var sid = item.dataset.section;
+            var el = document.getElementById(sid);
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            mm.classList.remove('open');
+            hb.innerHTML = '<i class="ri-menu-line"></i>';
+        });
+    });
 }
-
-/* ====== MOBILE MENU ====== */
-function toggleMobileMenu(e) {
-    e.stopPropagation();
-    var menu = document.getElementById('mobile-menu');
-    menu.classList.toggle('open');
-    var icon = document.getElementById('hamburger-icon');
-    icon.className = menu.classList.contains('open') ? 'ri-close-line' : 'ri-menu-line';
-}
-document.addEventListener('click', function() {
-    var menu = document.getElementById('mobile-menu');
-    if (menu) menu.classList.remove('open');
-});
 
 /* ====== BACK TO TOP ====== */
 window.addEventListener('scroll', function() {
