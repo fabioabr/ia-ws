@@ -253,6 +253,19 @@ Um projeto com projeção financeira negativa **não deveria passar** pelo gate 
 
 ---
 
+### P15. Estimativa de Esforço — gráfico SVG ao invés de HTML/CSS
+
+**Severidade:** Média
+**Fase:** Fase 3.4 (HTML Writer)
+
+Mesma issue do P13 — a seção Estimativa de Esforço (REG-FIN-05) no `executive-report.html` gerou barras horizontais como SVG inline ao invés de HTML/CSS puro (divs com width percentual). Barras horizontais simples são triviais em HTML/CSS e não precisam de SVG nem Chart.js.
+
+**Ação:**
+- [ ] Substituir SVG por divs com CSS (width proporcional, cor por T-shirt size)
+- [ ] Reforçar na skill html-writer: barras horizontais simples = HTML/CSS SEMPRE
+
+---
+
 ### P13. TCO 3 Anos — gráfico SVG ao invés de HTML/CSS ou Chart.js
 
 **Severidade:** Média
@@ -287,6 +300,7 @@ P8 (md-writer 3.1)       ← Fase 3 completa
 P12 (glossário + tooltips)← HTML com siglas expandidas
 P13 (TCO chart fix)       ← Chart.js no lugar de SVG
 P14 (receita vs custo)    ← validação de viabilidade
+P15 (effort SVG fix)      ← HTML/CSS no lugar de SVG
  ↓
 P9-P11 (docs + config)   ← polish final
 ```
