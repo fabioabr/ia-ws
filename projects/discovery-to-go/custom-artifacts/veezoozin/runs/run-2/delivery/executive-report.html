@@ -451,7 +451,7 @@ code { background: var(--bg); padding: 2px 6px; border-radius: 4px; font-size: 0
                     <div class="persona-avatar" style="background: var(--primary);">MP</div>
                     <div class="persona-name">Marina — Diretora Comercial <span class="pill pill-info">P0</span></div>
                     <div class="persona-role">38 anos, MBA, nao sabe SQL</div>
-                    <div class="persona-detail"><strong><abbr title="Jobs To Be Done">JTBD</abbr>:</strong> Perguntar sobre KPIs e receber graficos prontos em segundos</div>
+                    <div class="persona-detail"><strong><abbr title="Jobs To Be Done">JTBD</abbr>:</strong> Perguntar sobre <abbr title="Key Performance Indicators">KPIs</abbr> e receber graficos prontos em segundos</div>
                     <div class="persona-detail"><strong>Frequencia:</strong> Diario (2-5/dia)</div>
                     <div class="persona-detail" style="color: var(--alert-danger-text);"><i class="ri-error-warning-line"></i> Depende de time de dados para respostas simples</div>
                     <div class="persona-detail" style="color: var(--alert-success-text);"><i class="ri-check-line"></i> Tier: Pro/Enterprise</div>
@@ -783,7 +783,7 @@ code { background: var(--bg); padding: 2px 6px; border-radius: 4px; font-size: 0
                         <tr><td><span class="pill pill-info">AI</span></td><td>Vertex AI Text Embeddings</td><td>Semantic search no schema/glossario</td></tr>
                         <tr><td><span class="pill pill-info">Servicos</span></td><td>Stripe</td><td><span class="pill pill-success" style="font-size:0.6rem;">Buy</span> Billing nativo</td></tr>
                         <tr><td><span class="pill pill-info">Servicos</span></td><td>Firebase Auth</td><td><span class="pill pill-success" style="font-size:0.6rem;">Buy</span> <abbr title="Google Cloud Platform">GCP</abbr>-native</td></tr>
-                        <tr><td><span class="pill pill-info">Servicos</span></td><td>Cloud Armor</td><td><abbr title="Web Application Firewall">WAF</abbr>, DDoS, rate limit</td></tr>
+                        <tr><td><span class="pill pill-info">Servicos</span></td><td>Cloud Armor</td><td><abbr title="Web Application Firewall">WAF</abbr>, <abbr title="Distributed Denial of Service">DDoS</abbr>, rate limit</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -805,7 +805,7 @@ code { background: var(--bg); padding: 2px 6px; border-radius: 4px; font-size: 0
                         <tr><td>1</td><td>Input</td><td>Detectar idioma, normalizar texto</td><td style="text-align:center;">&lt; 100ms</td></tr>
                         <tr><td>2</td><td>Context Assembly</td><td>Schema + glossario + historico + permissoes via embeddings</td><td style="text-align:center;">&lt; 500ms</td></tr>
                         <tr><td>3</td><td>SQL Generation</td><td><abbr title="Large Language Model">LLM</abbr> gera SQL (Claude primario, Gemini fallback)</td><td style="text-align:center;">&lt; 2s</td></tr>
-                        <tr><td>4</td><td>Validate + Guard</td><td><abbr title="Biblioteca de parsing SQL">sqlglot</abbr> parse, AST validation, <abbr title="Row-Level Security">RLS</abbr> injection, read-only check</td><td style="text-align:center;">&lt; 200ms</td></tr>
+                        <tr><td>4</td><td>Validate + Guard</td><td><abbr title="Biblioteca de parsing SQL">sqlglot</abbr> parse, <abbr title="Abstract Syntax Tree">AST</abbr> validation, <abbr title="Row-Level Security">RLS</abbr> injection, read-only check</td><td style="text-align:center;">&lt; 200ms</td></tr>
                         <tr><td>5</td><td>Execute</td><td>BigQuery read-only via service account do tenant</td><td style="text-align:center;">&lt; 2s (p50)</td></tr>
                         <tr><td>6</td><td>Result Process</td><td>Detectar tipo grafico, formatar dados, paginar</td><td style="text-align:center;">&lt; 300ms</td></tr>
                         <tr><td>7</td><td>Insight Generation</td><td><abbr title="Large Language Model">LLM</abbr> interpreta resultados com privacy guard (D35)</td><td style="text-align:center;">&lt; 1,5s</td></tr>
@@ -879,13 +879,13 @@ code { background: var(--bg); padding: 2px 6px; border-radius: 4px; font-size: 0
                     <thead><tr><th>Camada</th><th>Controle</th></tr></thead>
                     <tbody>
                         <tr><td>Transporte</td><td><abbr title="Transport Layer Security">TLS</abbr> 1.3 obrigatorio</td></tr>
-                        <tr><td>Autenticacao</td><td><abbr title="JSON Web Token">JWT</abbr> + 2FA (<abbr title="Time-based One-Time Password">TOTP</abbr>), Firebase Auth</td></tr>
+                        <tr><td>Autenticacao</td><td><abbr title="JSON Web Token">JWT</abbr> + <abbr title="Two-Factor Authentication">2FA</abbr> (<abbr title="Time-based One-Time Password">TOTP</abbr>), Firebase Auth</td></tr>
                         <tr><td>Autorizacao</td><td><abbr title="Role-Based Access Control">RBAC</abbr> + <abbr title="Row-Level Security">RLS</abbr> (controle por tabela/campo/registro)</td></tr>
-                        <tr><td>SQL Injection</td><td><abbr title="Biblioteca de parsing SQL">sqlglot</abbr> parser, AST validation, whitelist de funcoes</td></tr>
+                        <tr><td>SQL Injection</td><td><abbr title="Biblioteca de parsing SQL">sqlglot</abbr> parser, <abbr title="Abstract Syntax Tree">AST</abbr> validation, whitelist de funcoes</td></tr>
                         <tr><td>Query sandboxing</td><td>Read-only, timeout 30s, LIMIT por plano</td></tr>
                         <tr><td>Secrets</td><td>Secret Manager (<abbr title="Google Cloud Platform">GCP</abbr>), rotacao automatica</td></tr>
                         <tr><td>Criptografia at-rest</td><td>AES-256 (Google-managed)</td></tr>
-                        <tr><td><abbr title="Web Application Firewall">WAF</abbr></td><td>Cloud Armor (DDoS, rate limit)</td></tr>
+                        <tr><td><abbr title="Web Application Firewall">WAF</abbr></td><td>Cloud Armor (<abbr title="Distributed Denial of Service">DDoS</abbr>, rate limit)</td></tr>
                         <tr><td>Scanning</td><td>Container scanning (Artifact Registry) + Dependabot</td></tr>
                     </tbody>
                 </table>
@@ -894,7 +894,7 @@ code { background: var(--bg); padding: 2px 6px; border-radius: 4px; font-size: 0
                 <strong>Seguranca especifica <abbr title="Natural Language to SQL">NL-to-SQL</abbr>:</strong>
                 <ul style="margin-top: 6px; padding-left: 20px; font-size: 0.82rem;">
                     <li>Prompt injection: separacao de prompt do sistema vs input do usuario, validacao SQL independente</li>
-                    <li>SQL injection via <abbr title="Large Language Model">LLM</abbr>: <abbr title="Biblioteca de parsing SQL">sqlglot</abbr> parse, whitelist, AST validation, nenhum DML/DDL</li>
+                    <li>SQL injection via <abbr title="Large Language Model">LLM</abbr>: <abbr title="Biblioteca de parsing SQL">sqlglot</abbr> parse, whitelist, <abbr title="Abstract Syntax Tree">AST</abbr> validation, nenhum <abbr title="Data Manipulation Language">DML</abbr>/<abbr title="Data Definition Language">DDL</abbr></li>
                     <li>Data exfiltration: <abbr title="Row-Level Security">RLS</abbr> injection, LIMIT obrigatorio, log de toda query</li>
                 </ul>
             </div>
@@ -1013,7 +1013,7 @@ code { background: var(--bg); padding: 2px 6px; border-radius: 4px; font-size: 0
                         <tr><td>Vector Store</td><td style="text-align:center;"><span class="pill pill-success">BUY</span></td><td style="text-align:right;">~180.000</td><td style="text-align:center;">&lt; 1 sem</td><td>Infra, nao diferencial</td></tr>
                         <tr><td><abbr title="Large Language Model">LLM</abbr></td><td style="text-align:center;"><span class="pill pill-success">BUY</span></td><td style="text-align:right;">~1.464.000</td><td style="text-align:center;">1 dia</td><td>D3, qualidade + <abbr title="Time to Market">TTM</abbr></td></tr>
                         <tr><td>Auth</td><td style="text-align:center;"><span class="pill pill-success">BUY</span></td><td style="text-align:right;">~10.000</td><td style="text-align:center;">&lt; 1 sem</td><td>Seguranca critica</td></tr>
-                        <tr><td>Visualizacao</td><td style="text-align:center;"><span class="pill pill-success">BUY</span></td><td style="text-align:right;">0 (OSS)</td><td style="text-align:center;">1-2 sem</td><td>Nao e moat</td></tr>
+                        <tr><td>Visualizacao</td><td style="text-align:center;"><span class="pill pill-success">BUY</span></td><td style="text-align:right;">0 (<abbr title="Open Source Software">OSS</abbr>)</td><td style="text-align:center;">1-2 sem</td><td>Nao e moat</td></tr>
                         <tr><td>Billing</td><td style="text-align:center;"><span class="pill pill-success">BUY</span></td><td style="text-align:right;">~340.000</td><td style="text-align:center;">&lt; 1 sem</td><td>Antipattern #2 do blueprint <abbr title="Software as a Service">SaaS</abbr></td></tr>
                     </tbody>
                 </table>
@@ -1107,7 +1107,7 @@ code { background: var(--bg); padding: 2px 6px; border-radius: 4px; font-size: 0
                     <thead><tr><th>#</th><th>Risco</th><th style="text-align:center;">Prob.</th><th style="text-align:center;">Impacto</th><th>Fonte</th><th>Mitigacao</th></tr></thead>
                     <tbody>
                         <tr><td>1</td><td><strong>Viabilidade financeira negativa</strong> — receita cobre 23% do <abbr title="Total Cost of Ownership">TCO</abbr></td><td style="text-align:center;"><span class="severity severity-high">Alta</span></td><td style="text-align:center;"><span class="severity severity-critical">Critico</span></td><td>1.8, 2.1, 2.2</td><td>Cenario D, captacao, gatilhos Go/No-Go trimestrais</td></tr>
-                        <tr><td>2</td><td><strong>Mercado enderecavel nao dimensionado</strong></td><td style="text-align:center;"><span class="severity severity-high">Alta</span></td><td style="text-align:center;"><span class="severity severity-critical">Critico</span></td><td>2.2</td><td>Dimensionar TAM/SAM/SOM antes de iniciar</td></tr>
+                        <tr><td>2</td><td><strong>Mercado enderecavel nao dimensionado</strong></td><td style="text-align:center;"><span class="severity severity-high">Alta</span></td><td style="text-align:center;"><span class="severity severity-critical">Critico</span></td><td>2.2</td><td>Dimensionar <abbr title="Total Addressable Market">TAM</abbr>/<abbr title="Serviceable Addressable Market">SAM</abbr>/<abbr title="Serviceable Obtainable Market">SOM</abbr> antes de iniciar</td></tr>
                         <tr><td>3</td><td><strong>Precisao <abbr title="Natural Language to SQL">NL-to-SQL</abbr> &lt; 85% no <abbr title="Minimum Viable Product">MVP</abbr></strong></td><td style="text-align:center;"><span class="severity severity-medium">Media</span></td><td style="text-align:center;"><span class="severity severity-high">Alto</span></td><td>1.1, 2.2</td><td>Meta MVP &gt; 75%, feedback loop agressivo</td></tr>
                         <tr><td>4</td><td><strong>Cross-tenant data leak</strong></td><td style="text-align:center;"><span class="severity severity-low">Baixa</span></td><td style="text-align:center;"><span class="severity severity-critical">Critico</span></td><td>1.5, 1.7</td><td>6 camadas de isolamento, testes automatizados</td></tr>
                         <tr><td>5</td><td><strong><abbr title="Data Protection Officer">DPO</abbr> acumulado pelo CTO</strong></td><td style="text-align:center;"><span class="severity severity-high">Alta</span></td><td style="text-align:center;"><span class="severity severity-high">Alto</span></td><td>1.6, 2.2</td><td>Contratar <abbr title="Data Protection Officer">DPO</abbr> terceirizado (~R$ 2K/mes)</td></tr>
@@ -1150,7 +1150,7 @@ code { background: var(--bg); padding: 2px 6px; border-radius: 4px; font-size: 0
                     <div><strong>Condicoes obrigatorias para GO:</strong></div>
                     <ol class="conditions-list">
                         <li>Definir estrategia de captacao de investimento (Pre-seed ~R$ 1,5M) com timeline</li>
-                        <li>Dimensionar mercado (TAM/SAM/SOM) — validar se 300 tenants pagantes no mes 36 e alcancavel</li>
+                        <li>Dimensionar mercado (<abbr title="Total Addressable Market">TAM</abbr>/<abbr title="Serviceable Addressable Market">SAM</abbr>/<abbr title="Serviceable Obtainable Market">SOM</abbr>) — validar se 300 tenants pagantes no mes 36 e alcancavel</li>
                         <li>Confirmar pelo menos 3 <abbr title="Letters of Intent">LOIs</abbr> de early adopters antes de iniciar desenvolvimento</li>
                         <li>Resolver conflito de pricing: D11 (R$ 497) vs D51 (R$ 697)</li>
                         <li>Contratar <abbr title="Data Protection Officer">DPO</abbr> terceirizado antes do lancamento</li>
@@ -1202,7 +1202,7 @@ code { background: var(--bg); padding: 2px 6px; border-radius: 4px; font-size: 0
                     <div class="alert alert-danger" style="margin-top: 8px;"><i class="ri-close-circle-line"></i><div><strong>F1:</strong> Viabilidade financeira negativa — cenario base cobre 23% do <abbr title="Total Cost of Ownership">TCO</abbr></div></div>
                     <div class="alert alert-danger"><i class="ri-close-circle-line"></i><div><strong>F2:</strong> Inconsistencia breakeven — Bloco 1.3 (mes 10-12) vs Bloco 1.8 (nunca no cenario base)</div></div>
                     <div class="alert alert-danger"><i class="ri-close-circle-line"></i><div><strong>F3:</strong> Pricing contraditorio — D11 (R$ 497 Confirmada) vs D51 (R$ 697 Recomendacao)</div></div>
-                    <div class="alert alert-warning" style="margin-top: 4px;"><i class="ri-alarm-warning-line"></i><div><strong>F4:</strong> Mitigacoes de risco genericas | <strong>F5:</strong> Tags nao preservadas | <strong>F6:</strong> Falta TAM/SAM/SOM</div></div>
+                    <div class="alert alert-warning" style="margin-top: 4px;"><i class="ri-alarm-warning-line"></i><div><strong>F4:</strong> Mitigacoes de risco genericas | <strong>F5:</strong> Tags nao preservadas | <strong>F6:</strong> Falta <abbr title="Total Addressable Market">TAM</abbr>/<abbr title="Serviceable Addressable Market">SAM</abbr>/<abbr title="Serviceable Obtainable Market">SOM</abbr></div></div>
                 </div>
                 <div>
                     <div class="chart-container" style="max-width:320px;">
@@ -1358,7 +1358,7 @@ code { background: var(--bg); padding: 2px 6px; border-radius: 4px; font-size: 0
                 </div>
                 <div class="timeline-v-item critical">
                     <div class="item-title"><span class="severity severity-critical">Critica</span> 2. Dimensionar mercado</div>
-                    <div class="item-meta">TAM/SAM/SOM de <abbr title="Natural Language to SQL">NL-to-SQL</abbr> para BigQuery no Brasil/LATAM | <strong>PO</strong> | Antes de iniciar dev</div>
+                    <div class="item-meta"><abbr title="Total Addressable Market">TAM</abbr>/<abbr title="Serviceable Addressable Market">SAM</abbr>/<abbr title="Serviceable Obtainable Market">SOM</abbr> de <abbr title="Natural Language to SQL">NL-to-SQL</abbr> para BigQuery no Brasil/LATAM | <strong>PO</strong> | Antes de iniciar dev</div>
                 </div>
                 <div class="timeline-v-item critical">
                     <div class="item-title"><span class="severity severity-critical">Critica</span> 3. Confirmar early adopters</div>
@@ -1382,7 +1382,7 @@ code { background: var(--bg); padding: 2px 6px; border-radius: 4px; font-size: 0
                 </div>
                 <div class="timeline-v-item medium">
                     <div class="item-title"><span class="severity severity-medium">Media</span> 8. Estabelecer metricas de gatilho</div>
-                    <div class="item-meta">Dashboard com KPIs Go/No-Go (mes 8, 12, 18, 24) | <strong>PO</strong> | Sprint 1-2</div>
+                    <div class="item-meta">Dashboard com <abbr title="Key Performance Indicators">KPIs</abbr> Go/No-Go (mes 8, 12, 18, 24) | <strong>PO</strong> | Sprint 1-2</div>
                 </div>
             </div>
         </div>

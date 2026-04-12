@@ -283,7 +283,7 @@ abbr[title] { text-decoration: underline dotted; text-underline-offset: 2px; cur
     .problem-grid { grid-template-columns: 1fr; }
     .stats-grid { grid-template-columns: repeat(2, 1fr); }
     .radar-container { flex-direction: column; }
-    .scenario-chart { height: auto; flex-wrap: wrap; }
+    .scenario-h-label { width: 80px; font-size: 0.65rem; }
     .bar-chart { height: auto; flex-wrap: wrap; }
 }
 @media (max-width: 480px) {
@@ -310,7 +310,7 @@ abbr[title] { text-decoration: underline dotted; text-underline-offset: 2px; cur
                 <div class="header-left">
                     <div>
                         <h1><i class="ri-database-2-line"></i> Veezoozin — Executive One-Pager</h1>
-                        <div class="subtitle">Plataforma SaaS conversational-first | <abbr title="Natural Language to SQL">NL-to-SQL</abbr> para BigQuery</div>
+                        <div class="subtitle">Plataforma <abbr title="Software as a Service">SaaS</abbr> conversational-first | <abbr title="Natural Language to SQL">NL-to-SQL</abbr> para BigQuery</div>
                     </div>
                 </div>
                 <div class="header-right">
@@ -929,7 +929,7 @@ abbr[title] { text-decoration: underline dotted; text-underline-offset: 2px; cur
                                 <td class="center"><span class="badge-buy">BUY</span></td>
                                 <td class="center">~R$ 340K</td>
                                 <td class="center">&lt; 1 sem</td>
-                                <td>Stripe — SaaS antipattern</td>
+                                <td>Stripe — <abbr title="Software as a Service">SaaS</abbr> antipattern</td>
                             </tr>
                             <tr style="font-weight: 600; background: var(--primary-light);">
                                 <td><strong>TOTAL</strong></td>
@@ -963,15 +963,15 @@ abbr[title] { text-decoration: underline dotted; text-underline-offset: 2px; cur
                         <div class="timeline-group-label blocker"><i class="ri-forbid-line"></i> Bloqueante — antes de iniciar dev</div>
                         <div class="timeline-item blocker">
                             <strong>#1 Resolver viabilidade financeira</strong> — definir captacao Pre-seed ~R$ 1,5M com timeline e investidores
-                            <div class="timeline-meta">Fabio (CTO) | Antes de iniciar dev</div>
+                            <div class="timeline-meta">Fabio (<abbr title="Chief Technology Officer">CTO</abbr>) | Antes de iniciar dev</div>
                         </div>
                         <div class="timeline-item blocker">
-                            <strong>#2 Dimensionar mercado</strong> — <abbr title="Total Addressable Market / Serviceable Available Market / Serviceable Obtainable Market">TAM/SAM/SOM</abbr> de <abbr title="Natural Language to SQL">NL-to-SQL</abbr> para BigQuery Brasil/LATAM
-                            <div class="timeline-meta">PO | Antes de iniciar dev</div>
+                            <strong>#2 Dimensionar mercado</strong> — <abbr title="Total Addressable Market / Serviceable Available Market / Serviceable Obtainable Market">TAM/SAM/SOM</abbr> de <abbr title="Natural Language to SQL">NL-to-SQL</abbr> para BigQuery Brasil/<abbr title="Latin America">LATAM</abbr>
+                            <div class="timeline-meta"><abbr title="Product Owner">PO</abbr> | Antes de iniciar dev</div>
                         </div>
                         <div class="timeline-item blocker">
                             <strong>#3 Confirmar early adopters</strong> — obter pelo menos 3 <abbr title="Letter of Intent">LOI</abbr>s
-                            <div class="timeline-meta">Fabio + PO | Antes de iniciar dev</div>
+                            <div class="timeline-meta">Fabio + <abbr title="Product Owner">PO</abbr> | Antes de iniciar dev</div>
                         </div>
                     </div>
                     <!-- Antes do Dev -->
@@ -979,7 +979,7 @@ abbr[title] { text-decoration: underline dotted; text-underline-offset: 2px; cur
                         <div class="timeline-group-label pre-dev"><i class="ri-timer-flash-line"></i> Antes do Dev — prioridade alta</div>
                         <div class="timeline-item pre-dev">
                             <strong>#4 Resolver pricing</strong> — D11 (R$ 497) vs D51 (R$ 697) — testar com early adopters
-                            <div class="timeline-meta">PO | Mes 1-2</div>
+                            <div class="timeline-meta"><abbr title="Product Owner">PO</abbr> | Mes 1-2</div>
                         </div>
                         <div class="timeline-item pre-dev">
                             <strong>#5 Contratar <abbr title="Data Protection Officer">DPO</abbr> terceirizado</strong> (~R$ 2.000/mes)
@@ -994,12 +994,12 @@ abbr[title] { text-decoration: underline dotted; text-underline-offset: 2px; cur
                     <div class="timeline-group">
                         <div class="timeline-group-label during-dev"><i class="ri-code-s-slash-line"></i> Durante Dev</div>
                         <div class="timeline-item during-dev">
-                            <strong>#7 Iniciar Sprint 1</strong> — setup GCP, monorepo, CI/CD, auth
+                            <strong>#7 Iniciar Sprint 1</strong> — setup <abbr title="Google Cloud Platform">GCP</abbr>, monorepo, <abbr title="Continuous Integration / Continuous Delivery">CI/CD</abbr>, auth
                             <div class="timeline-meta">Tech Lead + Fabio | Apos itens 1-3</div>
                         </div>
                         <div class="timeline-item during-dev">
-                            <strong>#8 Dashboard de gatilhos</strong> — KPIs Go/No-Go (mes 8, 12, 18, 24)
-                            <div class="timeline-meta">PO | Sprint 1-2</div>
+                            <strong>#8 Dashboard de gatilhos</strong> — <abbr title="Key Performance Indicators">KPIs</abbr> Go/No-Go (mes 8, 12, 18, 24)
+                            <div class="timeline-meta"><abbr title="Product Owner">PO</abbr> | Sprint 1-2</div>
                         </div>
                     </div>
                 </div>
