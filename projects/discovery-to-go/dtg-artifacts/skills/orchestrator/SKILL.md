@@ -191,6 +191,15 @@ Os blocos DEVEM ser executados **na ordem**, com cada bloco tendo acesso ao outp
 - Bloco #8 DEVE rodar APÓS #5, #6 e #7 — precisa de stack e arquitetura definidos para calcular TCO
 - Se bloco #3 define pricing/receita, bloco #8 DEVE usar esses números como base para break-even
 
+#### Estrutura obrigatória de cada bloco
+
+Cada result file (1.1 a 1.8) DEVE conter 3 seções:
+1. **Dados coletados** — informações obtidas na entrevista (com source tags)
+2. **Análise do especialista** — interpretação, gaps, trade-offs identificados
+3. **Recomendações** — propostas concretas numeradas com justificativa
+
+Blocos que apenas coletam dados sem análise nem recomendações são considerados INCOMPLETOS pelo auditor.
+
 #### 4. cyber-security-architect sempre roda (modo profundo ou magro)
 
 Na v0.12, o `cyber-security-architect` é **obrigatório em TODO pipeline**. Ele nunca é pulado. A variação é só no **modo de execução**, decidido pelo próprio cyber-security-architect com base em briefing + contexto:

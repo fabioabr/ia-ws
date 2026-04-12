@@ -580,6 +580,68 @@ Ajustes de documentação e paths.
 
 ---
 
+### P25. Especialistas devem ser consultores ativos — não coletores passivos
+
+**Severidade:** Alta
+**Fase:** Fase 1 (Discovery)
+
+**O que aconteceu nos testes:** Os especialistas (PO, solution-architect, cyber-security-architect) operam em modo **coleta passiva** — fazem perguntas ao customer, registram as respostas, e seguem para o próximo tópico. Quando encontram uma lacuna (`[INFERENCE]` fraca ou resposta vaga), apenas documentam a lacuna e avançam.
+
+**O que deveria acontecer:** Cada especialista é um **consultor sênior** — não um entrevistador junior. Ao identificar um problema, lacuna ou risco durante a entrevista, o especialista deve **imediatamente** propor soluções, alternativas e recomendações. O discovery não é apenas "descobrir o que existe" — é "descobrir e recomendar o que fazer".
+
+**Comportamento esperado por situação:**
+
+| Situação na entrevista | Coleta passiva (ERRADO) | Consultor ativo (CORRETO) |
+|------------------------|------------------------|--------------------------|
+| Customer descreve problema | Registra o problema | Registra + propõe 2-3 abordagens de solução com prós/contras |
+| Customer não sabe responder | Marca `[INFERENCE]` e segue | Apresenta opções baseadas no domínio + recomenda a melhor + justifica |
+| Resposta vaga do customer | Aceita e documenta | Aprofunda com perguntas específicas + sugere benchmark do mercado |
+| Lacuna técnica identificada | Lista como gap | Propõe solução técnica + estima esforço + identifica riscos |
+| Risco identificado | Lista risco + mitigação genérica | Propõe plano de mitigação detalhado (P16) + alternativa se falhar |
+| Inconsistência entre respostas | Documenta conflito | Confronta o customer + propõe resolução + registra decisão |
+| Oportunidade não mencionada | Ignora | Sugere proativamente ("Considerando o domínio SaaS, vocês já pensaram em...") |
+
+**Impacto direto nas notas:**
+- **Profundidade** (auditor): sobe quando blocos têm análise + recomendação, não apenas coleta
+- **Completude** (auditor): sobe quando lacunas são preenchidas com propostas, não deixadas vazias
+- **Divergência** (10th-man): sobe quando alternativas são exploradas durante o discovery, não apenas o caminho feliz
+- **Robustez** (10th-man): sobe quando decisões são fundamentadas com prós/contras, não apenas declaradas
+
+**O que cada especialista deve fazer PROATIVAMENTE:**
+
+### PO (blocos #1-#4)
+- Propor modelo de negócio quando o briefing não define (freemium vs paid vs enterprise)
+- Sugerir personas quando o briefing é genérico ("para empresas" → propor 3-4 perfis concretos)
+- Calcular ROI preliminar quando o customer não tem números
+- Sugerir OKRs quando o customer diz "queremos ter sucesso"
+- Propor faseamento MVP quando o escopo é amplo demais
+
+### Solution Architect (blocos #5, #7, #8)
+- Recomendar stack quando o briefing diz "a definir" (baseado no context-template + team skills)
+- Propor arquitetura com diagrama quando o customer descreve funcionalidades
+- Calcular TCO mesmo quando o customer não pede (é output obrigatório)
+- Apresentar Build vs Buy para cada componente com recomendação explícita
+- Propor cenários alternativos quando a viabilidade é questionável (P22)
+- Sugerir integrações que o customer não mencionou mas que o domínio exige
+
+### Cyber Security Architect (bloco #6)
+- Classificar dados mesmo quando o customer não sabe quais são pessoais
+- Propor estratégia de DPO quando o customer não tem um
+- Mapear sub-operadores mesmo quando o customer não listou
+- Recomendar base legal LGPD por tratamento
+- Propor timeline de compliance com marcos e responsáveis
+
+**Ação:**
+- [ ] Atualizar PO SKILL.md: adicionar seção "Modo consultor ativo" com os comportamentos esperados
+- [ ] Atualizar solution-architect SKILL.md: idem
+- [ ] Atualizar cyber-security-architect SKILL.md: idem
+- [ ] Atualizar customer SKILL.md: quando o customer marca `[INFERENCE]` fraca, o especialista deve reagir propondo solução (não apenas aceitar)
+- [ ] Atualizar orchestrator SKILL.md: instruir que cada bloco deve ter seção "Recomendações do especialista" além da coleta
+- [ ] Atualizar regra discovery.md: cada bloco DEVE ter: (1) dados coletados, (2) análise do especialista, (3) recomendações com justificativa
+- [ ] Atualizar auditor SKILL.md: bonificar +5 na dimensão "Profundidade" quando bloco tem recomendações proativas
+
+---
+
 ## Ordem sugerida de resolução
 
 ```
@@ -612,6 +674,7 @@ P20 (one-pager como orçamento) ← nova proposta de valor
 FASE 1 — EXECUÇÃO:
 P23 (blocos sequenciais)         ← 1 bloco por vez, na ordem
 P24 (interview.md obrigatório)   ← sem log = fase inválida
+P25 (especialistas proativos)    ← propor soluções, não apenas coletar
 
 VIABILIDADE:
 P21 (auditor alerta receita<TCO) ← finding crítico
