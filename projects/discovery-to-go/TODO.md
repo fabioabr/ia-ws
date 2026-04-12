@@ -234,6 +234,25 @@ O workspace tem convenções de tratamento de siglas (`conventions/acronyms/`) e
 
 ---
 
+### P14. Projeção Receita vs Custo negativa — pipeline não bloqueou
+
+**Severidade:** Alta
+**Fase:** Fase 2 → Fase 3
+
+O 10th-man identificou que no cenário "esperado" o projeto acumula **-$901K de déficit em 3 anos** e com churn realista (10%) **nunca atinge break-even**. Mesmo assim o pipeline seguiu para a Fase 3 e gerou o delivery report com recomendação "GO CONDICIONAL".
+
+Um projeto com projeção financeira negativa **não deveria passar** pelo gate da Fase 2 sem que isso seja explicitamente aceito pelo humano no HR Review. O fato de o auditor ter dado 82% e o 10th-man 62% deveria ter sido suficiente para bloquear — mas o pipeline ignorou os thresholds.
+
+**Ação:**
+- [ ] Adicionar validação no orchestrator: se projeção receita vs custo é negativa em 3 anos, marcar automaticamente como `[VIABILIDADE-NEGATIVA]`
+- [ ] O HR Review da Fase 2 deve destacar isso com callout `[!danger]` — exigindo que o humano aceite explicitamente o risco financeiro
+- [ ] O auditor deve ter uma dimensão extra ou sub-dimensão: "Viabilidade Financeira" que verifica se TCO < receita projetada
+- [ ] Se o humano aceita o risco (ex: "é um investimento estratégico, não visa lucro no curto prazo"), registrar a justificativa no pipeline-state.md
+- [ ] Se o humano não aceita, pipeline deve voltar para Fase 1 para revisar o modelo de negócio/pricing
+- [ ] O Go/No-Go (REG-EXEC-03) deve ter a dimensão "Viability" como VERMELHO quando projeção é negativa — não amarelo
+
+---
+
 ### P13. TCO 3 Anos — gráfico SVG ao invés de HTML/CSS ou Chart.js
 
 **Severidade:** Média
@@ -267,6 +286,7 @@ P7 (HR loop logs)        ← entre fases
 P8 (md-writer 3.1)       ← Fase 3 completa
 P12 (glossário + tooltips)← HTML com siglas expandidas
 P13 (TCO chart fix)       ← Chart.js no lugar de SVG
+P14 (receita vs custo)    ← validação de viabilidade
  ↓
 P9-P11 (docs + config)   ← polish final
 ```
