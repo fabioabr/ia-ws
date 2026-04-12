@@ -774,6 +774,72 @@ Mas os agentes que geram o conteúdo (consolidator, report-planner, html-writer)
 
 ---
 
+### P33. Reports HTML não seguem o playground.html (Design System ignorado)
+
+**Severidade:** Alta
+**Fase:** HTML Writer
+
+**O que aconteceu:** Os HTMLs gerados (one-pager, executive-report) recriam CSS do zero — cada agente inventa seus próprios estilos, classes e tokens. O playground.html (`base-artifacts/assets/ui-ux/playground.html`) já tem um Design System completo com:
+- Tokens de cor (`:root` com `--primary`, `--bg`, `--card-bg`, etc. para dark e light)
+- Componentes prontos (`.card`, `.card-header`, `.card-body`, `.stat-card`, `.alert`, `.pill`, `.tabs-nav`, `.tab-btn`, etc.)
+- Tipografia (Poppins, tamanhos, pesos)
+- Header e footer patterns
+- Tabelas estilizadas (`.th-bg`, hover states)
+- Toggle dark/light com JS
+
+Os agentes recebem instrução para "consultar o playground.html" mas na prática copiam apenas os tokens de cor e reinventam todo o resto. O resultado é CSS inconsistente entre reports, classes diferentes para o mesmo componente, e aparência que não segue o Design System.
+
+**O que deveria acontecer:** O html-writer DEVE:
+1. **Copiar o CSS inteiro do playground.html** (tokens + componentes) para cada HTML gerado
+2. **Usar as classes do playground** (`.card`, `.stat-card`, `.alert`, `.pill`, `.tabs-nav`, etc.) em vez de inventar novas
+3. **Seguir a estrutura HTML do playground** (header, container, cards, footer)
+4. O playground é o **template de referência** — não uma sugestão, é a base obrigatória
+
+**Ação:**
+- [ ] Atualizar html-writer SKILL.md: regra explícita "COPIAR CSS do playground.html, não reinventar"
+- [ ] Listar as classes obrigatórias que devem ser usadas (card, stat-card, alert, pill, tabs-nav, tab-btn, tab-content, etc.)
+- [ ] O agente deve ler o playground.html inteiro (não só 200 linhas) e extrair TODO o CSS
+- [ ] Componentes custom (scenario bars, radar, timeline) são adições — mas a base DEVE ser o playground
+
+---
+
+### P34. TODOS os gráficos de barras devem ser horizontais em HTML/CSS
+
+**Severidade:** Média
+**Fase:** HTML Writer + Chart Specialist
+
+**O que aconteceu:** Alguns gráficos de barras foram gerados verticais (Chart.js) ou com largura desproporcional. As barras horizontais em HTML/CSS são mais legíveis (labels longos não truncam, leitura natural esquerda→direita) e mais simples de implementar.
+
+**Regra a partir de agora:**
+
+| Tipo de gráfico | Tecnologia | Orientação |
+|----------------|-----------|------------|
+| Barras simples (1 série) | HTML/CSS (`div` com `width: X%`) | **Horizontal** |
+| Barras agrupadas (2 séries) | HTML/CSS (2 divs por linha) | **Horizontal** |
+| Barras empilhadas (stacked) | HTML/CSS (divs lado a lado) | **Horizontal** |
+| Radar | Chart.js | N/A |
+| Pie/Donut | Chart.js | N/A |
+| Line/Area | Chart.js | N/A |
+
+**Chart.js NÃO é usado para gráficos de barras.** Barras são sempre HTML/CSS horizontal.
+
+**Implementação CSS padrão:**
+```css
+.bar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.bar-label { width: 120px; font-size: 0.75rem; text-align: right; flex-shrink: 0; }
+.bar-track { flex: 1; background: var(--border); border-radius: 4px; height: 20px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 4px; transition: width 0.3s; }
+.bar-value { width: 60px; font-size: 0.72rem; text-align: right; }
+```
+
+**Ação:**
+- [ ] Atualizar chart-specialist SKILL.md: barras = SEMPRE HTML/CSS horizontal, NUNCA Chart.js
+- [ ] Atualizar html-writer SKILL.md: incluir CSS padrão de barras horizontais
+- [ ] Remover qualquer menção a Chart.js bar/stacked bar nas recommendations
+- [ ] Chart.js fica APENAS para: radar, pie/donut, line/area, scatter, bubble
+
+---
+
 ## Ordem sugerida de resolução
 
 ```
@@ -810,6 +876,8 @@ P25 (especialistas proativos)    ← propor soluções, não apenas coletar
 P26-P30 (bugs visuais HTML)      ← tooltips, alerts, radar, barras, TCO chart
 P31 (tabs nos reports)           ← executive e complete precisam de tabs
 P32 (acentuação PT-BR)           ← HTMLs sem acentos
+P33 (playground.html ignorado)   ← reports não seguem o Design System
+P34 (barras sempre horizontais CSS) ← Chart.js proibido para barras
 
 VIABILIDADE:
 P21 (auditor alerta receita<TCO) ← finding crítico
