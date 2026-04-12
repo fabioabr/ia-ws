@@ -214,6 +214,26 @@ O pipeline-state.md foi criado no setup mas não foi atualizado com snapshots ap
 
 ---
 
+### P12. Glossário de abreviações não gerado nos HTMLs
+
+**Severidade:** Média
+**Fase:** Fase 3.4 (HTML Writer)
+
+Os relatórios HTML usam dezenas de siglas e abreviações técnicas (TCO, MRR, ARR, LTV, CAC, LGPD, DPO, NL-to-SQL, RAG, MCP, OKR, MVP, SLA, etc.) mas não incluem:
+- Glossário de abreviações no final do HTML
+- Tooltips com a expansão da sigla ao passar o mouse (`<abbr title="Total Cost of Ownership">TCO</abbr>`)
+
+O workspace tem convenções de tratamento de siglas (`conventions/acronyms/`) e um banco de siglas (`acronym-bank.md`) — mas o html-writer não os usa na geração.
+
+**Ação:**
+- [ ] Atualizar html-writer para gerar `<abbr title="...">` em todas as siglas conhecidas
+- [ ] Consultar `base-artifacts/conventions/acronyms/acronym-bank.md` para expansões
+- [ ] Siglas não encontradas no banco → marcar com estilo diferente (ex: sublinhado pontilhado sem tooltip)
+- [ ] Adicionar seção "Glossário" no final de cada HTML com todas as siglas usadas no documento
+- [ ] Considerar gerar o glossário como uma region própria (REG-NARR-04 ou similar)
+
+---
+
 ## Ordem sugerida de resolução
 
 ```
@@ -228,6 +248,7 @@ P3 (threshold + HR logs) ← Fase 2 com gates
 P7 (HR loop logs)        ← entre fases
  ↓
 P8 (md-writer 3.1)       ← Fase 3 completa
+P12 (glossário + tooltips)← HTML com siglas expandidas
  ↓
 P9-P11 (docs + config)   ← polish final
 ```
