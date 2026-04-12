@@ -881,6 +881,51 @@ contratação (sugerido: R$ 25K MRR para DevOps/SRE).
 
 ---
 
+### P36. Responsividade mobile — hamburger menu + footer centralizado
+
+**Severidade:** Média
+**Fase:** HTML Writer
+
+**O que aconteceu:** Quando a página é redimensionada para menos de 50% da tela (~768px ou menos):
+- As tabs continuam visíveis e quebram o layout (overflow horizontal)
+- O botão de tema fica perdido no header
+- O footer fica alinhado à esquerda
+
+**O que deveria acontecer:**
+
+#### 1) Hamburger menu (< 768px)
+- Ocultar `.tabs-nav` e o botão de tema do header
+- Mostrar um botão hamburger (☰ `ri-menu-line`) no header
+- Ao clicar: abrir menu lateral (drawer) ou dropdown com:
+  - Lista das tabs como itens de menu (com ícone e nome)
+  - Botão de tema como último item do menu
+- Ao selecionar uma tab no menu: fechar menu + ativar a tab
+
+```css
+@media (max-width: 768px) {
+    .tabs-nav { display: none; }
+    .theme-toggle { display: none; }
+    .hamburger-btn { display: flex; }
+    .mobile-menu { display: none; } /* shown via JS toggle */
+    .mobile-menu.open { display: flex; flex-direction: column; }
+}
+```
+
+#### 2) Footer centralizado (< 768px)
+```css
+@media (max-width: 768px) {
+    .footer { text-align: center; }
+    .footer-content { flex-direction: column; align-items: center; }
+}
+```
+
+**Ação:**
+- [ ] Atualizar html-writer SKILL.md: seção de responsividade com hamburger menu spec
+- [ ] Incluir no playground.html o CSS e JS do hamburger menu como padrão
+- [ ] Footer: `text-align: center` + `flex-direction: column` em mobile
+
+---
+
 ## Ordem sugerida de resolução
 
 ```
@@ -920,6 +965,7 @@ P32 (acentuação PT-BR)           ← HTMLs sem acentos
 P33 (playground.html ignorado)   ← reports não seguem o Design System
 P34 (barras sempre horizontais CSS) ← Chart.js proibido para barras
 P35 (ressalvas detalhadas)       ← auditor e 10th-man devem detalhar cada ressalva
+P36 (responsividade mobile)      ← hamburger menu + footer centralizado
 
 VIABILIDADE:
 P21 (auditor alerta receita<TCO) ← finding crítico

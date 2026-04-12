@@ -4,7 +4,7 @@ argument-hint: "<source.md> [--output path] [--template name]"
 title: html-writer
 description: "Converte documentos .md em relatórios HTML auto-contidos seguindo o Design System do workspace. Use SEMPRE que precisar: gerar um relatório HTML a partir de um .md, converter documento markdown para apresentação visual, criar report HTML com dark/light theme, ou gerar HTML auto-contido com logos e estilos inline. O HTML gerado funciona abrindo direto no navegador, sem servidor. NÃO use para: formatar o .md em si (use md-writer), validar convenções (use md-validator), ou gerar diagramas (use diagram-drawio)."
 project-name: global
-version: 02.02.000
+version: 02.03.000
 author: claude-code
 license: MIT
 status: ativo
@@ -429,6 +429,78 @@ Preencher com variáveis carregadas na etapa de Preparação (respeitando a orde
 
 Aplicar os breakpoints e container definidos em `conventions/responsive/breakpoints.md`. O relatório deve ser **legível em tela e imprimível** (considerar `@media print`).
 
+#### Responsividade mobile (< 768px)
+
+Quando a viewport é menor que 768px:
+
+**1. Hamburger menu (substitui tabs + tema):**
+- Ocultar `.tabs-nav` e `.theme-toggle` do header
+- Mostrar botão hamburger (`ri-menu-line`) no header-right
+- Ao clicar: toggle `.mobile-menu` (dropdown abaixo do header)
+- Menu contém: lista das tabs como itens + botão de tema como último item
+- Ao selecionar tab: fechar menu + ativar tab
+- Fechar ao clicar fora
+
+CSS:
+```css
+.hamburger-btn { display: none; width: 40px; height: 40px; border-radius: 8px; background: rgba(255,255,255,0.1); border: none; color: white; font-size: 1.2rem; cursor: pointer; align-items: center; justify-content: center; }
+.mobile-menu { display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--card-bg); border-bottom: 1px solid var(--border); z-index: 100; padding: 8px 0; }
+.mobile-menu.open { display: flex; flex-direction: column; }
+.mobile-menu-item { display: flex; align-items: center; gap: 10px; padding: 12px 24px; color: var(--text); font-size: 0.85rem; cursor: pointer; border: none; background: none; width: 100%; text-align: left; }
+.mobile-menu-item:hover { background: var(--th-bg-hover); }
+.mobile-menu-item.active { color: var(--primary); font-weight: 600; }
+.mobile-menu-item i { font-size: 1.1rem; width: 20px; }
+
+@media (max-width: 768px) {
+    .tabs-nav { display: none !important; }
+    .theme-toggle { display: none !important; }
+    .hamburger-btn { display: flex; }
+}
+@media (min-width: 769px) {
+    .hamburger-btn { display: none !important; }
+    .mobile-menu { display: none !important; }
+}
+```
+
+JS:
+```javascript
+const hamburgerBtn = document.querySelector('.hamburger-btn');
+const mobileMenu = document.querySelector('.mobile-menu');
+if (hamburgerBtn) {
+    hamburgerBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        mobileMenu.classList.toggle('open');
+        hamburgerBtn.innerHTML = mobileMenu.classList.contains('open')
+            ? '<i class="ri-close-line"></i>'
+            : '<i class="ri-menu-line"></i>';
+    });
+    document.addEventListener('click', () => mobileMenu.classList.remove('open'));
+    mobileMenu.querySelectorAll('.mobile-menu-item[data-tab]').forEach(item => {
+        item.addEventListener('click', () => {
+            const tabId = item.dataset.tab;
+            // activate tab
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelector(`.tab-btn[data-tab="${tabId}"]`)?.classList.add('active');
+            document.getElementById(tabId)?.classList.add('active');
+            // update mobile menu active
+            mobileMenu.querySelectorAll('.mobile-menu-item').forEach(i => i.classList.remove('active'));
+            item.classList.add('active');
+            // close menu
+            mobileMenu.classList.remove('open');
+        });
+    });
+}
+```
+
+**2. Footer centralizado:**
+```css
+@media (max-width: 768px) {
+    .footer { text-align: center; }
+    .footer .container { flex-direction: column; align-items: center; gap: 8px; }
+}
+```
+
 ## 📄 Examples
 
 ### Exemplo 1 — Conversão simples de um único .md
@@ -480,6 +552,7 @@ Usar `$ARGUMENTS` no corpo para capturar o caminho do(s) arquivo(s) .md passados
 
 | Versão | Data | Descrição |
 |--------|------|-----------|
+| 02.03.000 | 2026-04-12 | P36: responsividade mobile — hamburger menu substitui tabs+tema em viewports < 768px, footer centralizado em mobile |
 | 02.02.000 | 2026-04-12 | P33: playground.html é base obrigatória — CSS copiado integralmente, classes listadas. P34: barras sempre HTML/CSS horizontal, REG-FIN-01 removido do Chart.js |
 | 02.01.000 | 2026-04-11 | P12: glossário e tooltips de siglas com `<abbr>`. P13/P15: proibição explícita de SVG inline para gráficos de dados |
 | 02.00.000 | 2026-04-11 | Adição de modo regions: renderização por regions com marcadores, leitura de html-layout.md, grid responsivo, Chart.js condicional, referência a previews |
