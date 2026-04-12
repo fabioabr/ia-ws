@@ -1,8 +1,8 @@
 ---
 title: "Report Setup — Essencial"
-description: "Setup de estimativa de tempo: gera o One-Pager HTML com descritivo do projeto, qualidade, escopo, atividades com esforço em horas, planejamento relativo e totais. Sem valores monetários — apenas horas e semanas."
+description: "Setup de orçamento: gera o One-Pager HTML com descritivo, escopo, premissas, riscos, equipe, estimativa de esforço, planejamento e confiança. Sem valores monetários — apenas horas e semanas. Página única sem tabs."
 project-name: discovery-to-go
-version: 02.00.000
+version: 03.00.000
 status: ativo
 author: claude-code
 category: report-setup
@@ -12,82 +12,119 @@ tags:
   - essential
   - one-pager
   - time-estimate
+  - budget
 created: 2026-04-11
-updated: 2026-04-11
+updated: 2026-04-12
 ---
 
 # Report Setup — Essencial
 
-Setup focado em **estimativa de tempo** que gera um único HTML (`one-pager.html`) com as informações necessárias para dimensionar esforço e planejamento do projeto. Sem valores monetários — apenas horas e semanas. Pensado para apresentações a gestores de projeto, tech leads e sponsors que precisam entender escopo, esforço e cronograma relativo em 2 minutos.
+Setup focado em **orçamento de projeto** que gera um único HTML (`one-pager.html`) — página contínua sem tabs. Apresenta o que será feito, sob quais condições, quem faz, quanto tempo leva e quão confiável é a estimativa. Sem valores monetários — apenas horas e semanas.
+
+Lógica da ordem: **o quê** (1-2) → **sob quais condições e riscos** (3-4) → **quem e quanto** (5-6) → **quando** (7) → **quão confiável** (8).
 
 ## Outputs
 
 | Arquivo | Conteúdo |
 |---------|----------|
-| `one-pager.html` | Página única com descritivo, qualidade, escopo, atividades/esforço, planejamento e totais |
+| `one-pager.html` | Página única contínua (SEM tabs) com 8 seções |
 
 ## Regions incluídas
 
-### One-Pager
+### One-Pager (8 seções)
 
-| # | Region | Layout | O que mostra |
-|---|--------|--------|-------------|
-| 1 | REG-EXEC-01 | full-width | Descritivo do projeto — descrição, objetivo, premissas, responsáveis (simplificado, sem TCO/riscos/Build vs Buy) |
-| 2 | REG-QUAL-01 + REG-QUAL-02 | grid-2 | Qualidade e confiança — stat cards compactos com score do auditor e questões do 10th-man (sem radar chart) |
-| 3 | REG-PROD-07 | full-width | Escopo — split card dentro/fora (sem hipótese central nem critérios go/no-go) |
-| 4 | REG-BACK-01 | full-width | Atividades e esforço — tabela com papéis, horas estimadas e coluna valor/hora vazia (preenchida pelo cliente) |
-| 5 | REG-PLAN-01 | full-width | Planejamento — Gantt relativo (Semana 1, 2, ..., N) sem datas fixas, HTML/CSS |
-| 6 | REG-FIN-06 | grid-3 | Totais — stat cards com total de horas por papel e total geral |
+| # | Seção | Region | Layout | O que mostra |
+|---|-------|--------|--------|-------------|
+| 1 | Descritivo | REG-EXEC-01 | full-width | Nome do projeto, objetivo (1 frase), contexto (2-3 frases), cliente |
+| 2 | Escopo | REG-PROD-07 | full-width | IN (o que será feito) vs OUT (o que NÃO será feito) — split card verde/vermelho |
+| 3 | Premissas | REG-EXEC-07 (novo) | full-width | Condições assumidas para as estimativas (BYOK, pay-per-use, 1 dev, etc.) |
+| 4 | Riscos principais | REG-RISK-01 | full-width | Top 3-5 riscos com impacto no prazo/custo — tabela compacta com severity badges |
+| 5 | Equipe e Papéis | REG-ORG-02 | full-width | Quem faz o quê, dedicação, horas/semana por papel |
+| 6 | Estimativa de esforço | REG-FIN-06 | grid-3 | Stat cards: total de horas por papel + total geral + duração em semanas |
+| 7 | Planejamento | REG-PLAN-01 | full-width | Gantt relativo (Semana 1, 2, ..., N) com fases e marcos — HTML/CSS barras horizontais |
+| 8 | Confiança do material | REG-QUAL-01 + REG-QUAL-02 | grid-2 | Scores compactos: auditor (nota + status) e 10th-man (questões + severidade) |
 
-**Total: 6 blocos (7 regions)**
+**Total: 8 seções (9 regions)**
 
 ## Notas de renderização
 
-### Bloco 1 — Descritivo do Projeto (REG-EXEC-01 simplificado)
+### Seção 1 — Descritivo (REG-EXEC-01 simplificado)
 
-Renderizar apenas os campos:
-- **Descrição:** O que é o projeto
-- **Objetivo:** O que se pretende alcançar
-- **Premissas:** Condições assumidas para as estimativas
-- **Responsáveis:** Product Owner, Tech Lead, Sponsor
+Card informativo com:
+- **Projeto:** Nome do projeto
+- **Cliente:** Nome do cliente
+- **Objetivo:** 1 frase clara do que se pretende alcançar
+- **Contexto:** 2-3 frases sobre o problema e a solução proposta
 
-Omitir: TCO, top 3 riscos, recomendação Build vs Buy.
+Omitir: TCO, top 3 riscos, recomendação Build vs Buy, próximo passo (esses vão em seções próprias).
 
-### Bloco 2 — Qualidade e Confiança (REG-QUAL-01 + REG-QUAL-02)
+### Seção 2 — Escopo (REG-PROD-07)
 
-Renderizar como stat cards compactos lado a lado:
-- REG-QUAL-01: Score geral do auditor + status (aprovado/reprovado)
-- REG-QUAL-02: Quantidade de questões residuais do 10th-man + severidade máxima
-
-Omitir: radar chart, detalhamento por dimensão.
-
-### Bloco 3 — Escopo (REG-PROD-07)
-
-Renderizar apenas:
-- Lista "dentro do escopo" (check verde)
-- Lista "fora do escopo" (X vermelho)
+Split card com duas colunas:
+- **DENTRO** (check verde) — lista do que será feito
+- **FORA** (X vermelho) — lista explícita do que NÃO será feito
 
 Omitir: hipótese central, critérios go/no-go.
 
-### Bloco 4 — Atividades e Esforço (REG-BACK-01 adaptado)
+### Seção 3 — Premissas (REG-EXEC-07 — novo)
 
-Renderizar como tabela com colunas:
-| Atividade | Papel | Horas estimadas | Valor/hora |
-A coluna **Valor/hora** fica vazia — é preenchida manualmente pelo cliente ou comercial.
+Lista de premissas que sustentam as estimativas. Formato: bullets com ícone de atenção.
 
-### Bloco 5 — Planejamento (REG-PLAN-01)
+Exemplos:
+- "LLM é BYOK — custo de chamadas é do tenant, não do Veezoozin"
+- "Infraestrutura GCP pay-per-use — custo escala com uso"
+- "Equipe de 1 pessoa usando Claude Code como assistente"
+- "MVP em 3-4 meses com escopo reduzido"
+- "Sem contratação adicional no MVP"
 
-Gantt relativo com barras horizontais por atividade. Eixo X em semanas (Semana 1, 2, ..., N). Sem datas fixas. HTML/CSS puro.
+> [!warning] Se qualquer premissa mudar, as estimativas precisam ser recalculadas.
 
-### Bloco 6 — Totais (REG-FIN-06)
+### Seção 4 — Riscos principais (REG-RISK-01 compacto)
+
+Tabela compacta com top 3-5 riscos:
+
+| Risco | Impacto no prazo | Severidade |
+|-------|-----------------|------------|
+
+Omitir: mitigação detalhada, probabilidade numérica. Foco em: o que pode dar errado e como afeta o prazo/custo.
+
+### Seção 5 — Equipe e Papéis (REG-ORG-02 adaptado)
+
+Tabela com:
+
+| Papel | Quem | Dedicação | Horas/semana |
+|-------|------|-----------|-------------|
+
+Incluir: todos os papéis necessários (dev, design, PO, QA, etc.) mesmo que sejam a mesma pessoa.
+
+### Seção 6 — Estimativa de esforço (REG-FIN-06)
 
 Stat cards em grid:
-- Um card por papel (ex: "Backend: 320h", "Frontend: 240h", "QA: 120h")
-- Um card destacado com o total geral (ex: "Total: 680h")
+- Um card por papel (ex: "Arquitetura: 120h", "Backend: 320h", "Frontend: 160h")
+- Um card destacado com o **total geral** (ex: "Total: 680h")
+- Um card com **duração total** (ex: "16 semanas")
+
+### Seção 7 — Planejamento (REG-PLAN-01)
+
+Gantt relativo com barras horizontais HTML/CSS:
+- Eixo X em semanas (Semana 1, 2, ..., N) — sem datas fixas
+- Barras por fase/atividade macro
+- Marcos (milestones) destacados
+- Cores por tipo de atividade
+
+### Seção 8 — Confiança do material (REG-QUAL-01 + REG-QUAL-02 compacto)
+
+Dois stat cards lado a lado:
+- **Auditor:** Score geral + status (aprovado/reprovado/ressalvas)
+- **10th-man:** Nº de questões residuais + severidade máxima
+
+Nota de rodapé: "Material gerado com X% de dados do briefing, Y% inferidos pelo especialista"
+
+Omitir: radar chart, detalhamento por dimensão (esses vão no report executive).
 
 ## Quando usar
 
-- Apresentação de estimativa de esforço para sponsor ou cliente
-- Proposta comercial onde o cliente define os valores/hora
-- Dimensionamento de time e prazo para planejamento de capacity
-- Kick-off de projeto quando já se sabe o escopo mas precisa alinhar esforço
+- Proposta comercial rápida (sponsor quer saber "quanto tempo e quem")
+- Dimensionamento de equipe e prazo para capacity planning
+- Kick-off de projeto quando escopo está definido mas precisa alinhar esforço
+- Comparação de projetos em portfólio (formato padronizado)
