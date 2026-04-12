@@ -253,6 +253,23 @@ Um projeto com projeção financeira negativa **não deveria passar** pelo gate 
 
 ---
 
+### P17. Layout do 10th-man deve ser idêntico ao do auditor
+
+**Severidade:** Baixa
+**Fase:** Fase 3.4 (HTML Writer)
+
+No `executive-report.html`, a seção REG-QUAL-01 (Score do Auditor) tem um layout excelente — radar chart com as 5 dimensões + tabela de scores. Porém a seção REG-QUAL-02 (Questões do 10th-man) usa um layout diferente e mais simples (cards com badges).
+
+Ambas são validações da Fase 2 e deveriam ter **o mesmo padrão visual**: radar chart com as dimensões + score geral + tabela detalhada. O 10th-man também tem 3 dimensões com scores (Divergência 55%, Robustez 60%, Completude Crítica 73%) que podem ser representadas em radar chart.
+
+**Ação:**
+- [ ] Atualizar o region template de REG-QUAL-02 para incluir radar chart 3 eixos (Chart.js) com as dimensões do 10th-man
+- [ ] Manter o layout de cards com severity badges para as questões residuais (abaixo do radar)
+- [ ] Usar sidebar layout (mesmo do auditor): radar à esquerda + detalhes à direita
+- [ ] Atualizar o report-plan.md e chart-specialist recommendation de REG-QUAL-02
+
+---
+
 ### P16. Especialistas devem detalhar mitigação de riscos
 
 **Severidade:** Alta
@@ -321,6 +338,7 @@ P13 (TCO chart fix)       ← Chart.js no lugar de SVG
 P14 (receita vs custo)    ← validação de viabilidade
 P15 (effort SVG fix)      ← HTML/CSS no lugar de SVG
 P16 (mitigações detalhadas)← especialistas propõem resolução
+P17 (10th-man layout)     ← igualar ao layout do auditor
  ↓
 P9-P11 (docs + config)   ← polish final
 ```
