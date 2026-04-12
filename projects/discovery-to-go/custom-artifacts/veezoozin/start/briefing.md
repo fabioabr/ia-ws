@@ -77,8 +77,7 @@ O Veezoozin resolve isso com uma camada de inteligência que:
 
 | Nome / Papel | Função no projeto | Poder de decisão | Disponível? |
 |-------------|-------------------|-------------------|-------------|
-| Fabio, CTO | Sponsor e arquiteto de solução | Aprova arquitetura e orçamento | Sim, diário |
-| Time mAInd Tech | Desenvolvimento e operação | Executa | Sim, dedicado |
+| Fabio, Arquiteto de Software Sênior Full-Stack | Único desenvolvedor. Usa Claude Code como par de programação para acelerar desenvolvimento. Responsável por arquitetura, backend, frontend, infra e operação. | Total | Sim, dedicado full-time |
 
 ---
 
@@ -143,7 +142,7 @@ O Veezoozin resolve isso com uma camada de inteligência que:
 | **Orçamento** | Calcular como output — TCO para operação em GCP |
 | **Stack obrigatória** | GCP (Cloud Run, Vertex AI, Cloud SQL, BigQuery, Firestore), Python |
 | **Stack proibida** | Nenhuma explicitamente, mas preferência forte por GCP over AWS/Azure |
-| **Equipe disponível** | Contrataremos |
+| **Equipe disponível** | 1 arquiteto de software sênior full-stack (Fabio) + Claude Code como assistente de desenvolvimento. Sem plano de contratação no MVP — o objetivo é validar o produto com equipe mínima antes de investir em time. |
 | **Compliance** | LGPD obrigatória — dados dos clientes são sensíveis. Queries não podem expor dados de um tenant para outro |
 | **LLM** | Usar APIs externas (Claude API, Gemini API) — não hospedar LLM próprio. **O custo de LLM é do tenant** — cada tenant cadastra sua própria API key no painel do SaaS. O Veezoozin NÃO paga pelas chamadas LLM. |
 | **Bancos suportados no MVP** | BigQuery (expandir depois) |
@@ -198,13 +197,30 @@ Time mAInd Tech (execução) + CTO (decisão de arquitetura e investimento)
 
 ## 10. Notas livres
 
-### Modelo BYOK — Impacto no TCO
+### Modelo de equipe — 1 dev + Claude Code
+
+O projeto será desenvolvido por **uma única pessoa** (Fabio, arquiteto sênior full-stack) usando **Claude Code** como assistente de desenvolvimento. Não há plano de contratação para o MVP.
+
+**Premissas:**
+- Claude Code acelera desenvolvimento em 3-5x para um dev sênior
+- 1 pessoa full-stack pode entregar MVP de um SaaS em 3-4 meses com Claude Code
+- Sem overhead de gestão, comunicação, onboarding de equipe
+- Custo de equipe cai de R$ 6.99M (12 pessoas em 3 anos) para custo de 1 pessoa + licença Claude
+- Se o produto validar, contratações futuras são feitas com receita (não com investimento)
+- Design: usar templates/componentes prontos + Claude Code para UI (sem designer dedicado)
+
+**Impacto no TCO:**
+- Equipe: ~R$ 20K/mês (salário + Claude Pro/API) vs R$ 75-260K/mês do plano anterior
+- TCO 3 anos estimado: ~R$ 1.5-2M (vs R$ 10.5M anterior)
+- Com BYOK (LLM do tenant): remove mais ~R$ 1.46M
+- Produto pode ser viável com base de clientes muito menor
+
+### Modelo BYOK — LLM por conta do tenant
 
 O custo de chamadas LLM (Claude API, Gemini API) é **100% do tenant**. O Veezoozin não paga pelas chamadas — cada tenant cadastra sua própria API key no painel administrativo.
 
 **Impacto financeiro:**
-- Remove R$ 1.46M (13,9%) do TCO de 3 anos
-- TCO cai de R$ 10.5M para ~R$ 9.0M
+- Remove custo de LLM do TCO
 - O Veezoozin precisa suportar múltiplos provedores de LLM (Claude, Gemini, OpenAI, etc.)
 - Tenant é responsável por seu próprio consumo — Veezoozin apenas roteia as chamadas
 - Facilita onboarding: tenant já pode ter chaves de API que usa em outros produtos
