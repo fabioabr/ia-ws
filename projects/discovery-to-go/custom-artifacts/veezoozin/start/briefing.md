@@ -114,6 +114,7 @@ O Veezoozin resolve isso com uma camada de inteligência que:
 - Isolamento completo de dados entre tenants
 - Billing por consumo (queries, storage, tenants)
 - Painel administrativo por tenant
+- **BYOK (Bring Your Own Key):** Tenant cadastra suas próprias API keys de LLM (Claude, Gemini, etc.) no painel. O custo de chamadas LLM é 100% do tenant — o Veezoozin não paga pelas chamadas.
 
 ### Fora do escopo (o que NÃO será feito)
 
@@ -144,7 +145,7 @@ O Veezoozin resolve isso com uma camada de inteligência que:
 | **Stack proibida** | Nenhuma explicitamente, mas preferência forte por GCP over AWS/Azure |
 | **Equipe disponível** | Contrataremos |
 | **Compliance** | LGPD obrigatória — dados dos clientes são sensíveis. Queries não podem expor dados de um tenant para outro |
-| **LLM** | Usar APIs externas (Claude API, Gemini API) — não hospedar LLM próprio |
+| **LLM** | Usar APIs externas (Claude API, Gemini API) — não hospedar LLM próprio. **O custo de LLM é do tenant** — cada tenant cadastra sua própria API key no painel do SaaS. O Veezoozin NÃO paga pelas chamadas LLM. |
 | **Bancos suportados no MVP** | BigQuery (expandir depois) |
 | **MCP** | Suportar protocolo MCP para integração com RAGs externos |
 | **Segurança de queries** | Read-only obrigatório. Sandbox com timeout e limite de linhas. Sem acesso a DDL/DML |
@@ -196,6 +197,18 @@ Time mAInd Tech (execução) + CTO (decisão de arquitetura e investimento)
 ---
 
 ## 10. Notas livres
+
+### Modelo BYOK — Impacto no TCO
+
+O custo de chamadas LLM (Claude API, Gemini API) é **100% do tenant**. O Veezoozin não paga pelas chamadas — cada tenant cadastra sua própria API key no painel administrativo.
+
+**Impacto financeiro:**
+- Remove R$ 1.46M (13,9%) do TCO de 3 anos
+- TCO cai de R$ 10.5M para ~R$ 9.0M
+- O Veezoozin precisa suportar múltiplos provedores de LLM (Claude, Gemini, OpenAI, etc.)
+- Tenant é responsável por seu próprio consumo — Veezoozin apenas roteia as chamadas
+- Facilita onboarding: tenant já pode ter chaves de API que usa em outros produtos
+- Risco: se tenant não configura API key, o sistema não funciona — precisa de onboarding claro
 
 ### Fluxo principal do produto
 
