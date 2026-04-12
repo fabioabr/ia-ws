@@ -163,6 +163,10 @@ A nota tem **duas camadas obrigatórias**:
 > [!info] Heurística simples, ajustável
 > Esta heurística é proposta inicial. Pode ser refinada após primeiro projeto piloto.
 
+#### Penalização de mitigações genéricas
+
+Na dimensão "Profundidade", penalizar em -5 pontos para cada risco que tenha mitigação genérica (1 linha sem ação + responsável + prazo + custo + consequência). Riscos de severidade Alta com mitigação genérica: -10 pontos.
+
 #### Dimensão 5: Neutralidade da entrevista — peso 15% — piso 70%
 
 **O que mede:** quantas perguntas dos especialistas no log foram **indutivas** (carregam a resposta).

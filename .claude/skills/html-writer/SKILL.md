@@ -4,7 +4,7 @@ argument-hint: "<source.md> [--output path] [--template name]"
 title: html-writer
 description: "Converte documentos .md em relatórios HTML auto-contidos seguindo o Design System do workspace. Use SEMPRE que precisar: gerar um relatório HTML a partir de um .md, converter documento markdown para apresentação visual, criar report HTML com dark/light theme, ou gerar HTML auto-contido com logos e estilos inline. O HTML gerado funciona abrindo direto no navegador, sem servidor. NÃO use para: formatar o .md em si (use md-writer), validar convenções (use md-validator), ou gerar diagramas (use diagram-drawio)."
 project-name: global
-version: 02.00.000
+version: 02.01.000
 author: claude-code
 license: MIT
 status: ativo
@@ -189,6 +189,14 @@ Cada region tem uma recomendação de visualização no catálogo (`base-artifac
 
 Prioridade de tecnologia: **HTML/CSS puro > Chart.js > Card informativo**
 
+> [!danger] SVG inline NÃO é permitido para gráficos de dados
+> SVG inline não está na lista de tecnologias aprovadas. Para gráficos de dados:
+> - **Barras horizontais simples** → HTML/CSS puro (divs com width proporcional)
+> - **Stacked bars, line, radar, bubble, pie** → Chart.js
+> - **Progress bars, gauges** → HTML/CSS puro
+>
+> SVG inline só é aceito para ícones custom quando Remix Icon não tem o ícone necessário.
+
 #### Layouts de grid
 
 ```html
@@ -251,6 +259,27 @@ Regions que usam Chart.js (conforme chart-specialist):
 #### Previews de referência
 
 HTMLs de referência com exemplos visuais de cada grupo estão em `base-artifacts/templates/report-regions/_previews/`. Consultar para entender como cada region deve ser renderizada.
+
+### 4.6. Glossário e Tooltips de Siglas
+
+Toda sigla conhecida no texto DEVE ser envolvida em `<abbr>`:
+
+```html
+<abbr title="Total Cost of Ownership">TCO</abbr>
+```
+
+**Processo:**
+1. Consultar `base-artifacts/conventions/acronyms/acronym-bank.md` para expansões
+2. Na primeira ocorrência de cada sigla: gerar `<abbr>` com tooltip
+3. Ocorrências subsequentes: manter `<abbr>` (tooltip sempre disponível)
+4. Siglas NÃO encontradas no banco: usar estilo diferente (`text-decoration: underline dotted; cursor: help;`) sem tooltip
+5. No final de cada HTML: gerar seção "Glossário" listando todas as siglas usadas com expansões
+
+**CSS para tooltips:**
+```css
+abbr[title] { text-decoration: underline dotted; cursor: help; }
+abbr[title]:hover { text-decoration: underline solid; }
+```
 
 ### 5. Header
 
@@ -355,5 +384,6 @@ Usar `$ARGUMENTS` no corpo para capturar o caminho do(s) arquivo(s) .md passados
 
 | Versão | Data | Descrição |
 |--------|------|-----------|
+| 02.01.000 | 2026-04-11 | P12: glossário e tooltips de siglas com `<abbr>`. P13/P15: proibição explícita de SVG inline para gráficos de dados |
 | 02.00.000 | 2026-04-11 | Adição de modo regions: renderização por regions com marcadores, leitura de html-layout.md, grid responsivo, Chart.js condicional, referência a previews |
 | 01.01.000 | 2026-04-10 | Adequação ao skill-schema com herança de document-schema; adição de campos title, project-name, area, created, license; emojis em H2; seções Documentos Relacionados e Histórico |

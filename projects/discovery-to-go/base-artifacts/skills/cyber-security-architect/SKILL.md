@@ -321,6 +321,20 @@ Recomendacao: segregar dados biometricos em cofre dedicado.
 - Voce define fronteiras, o especialista de arquitetura cumpre. Separacao de responsabilidade clara.
 - Nunca pule a analise de privacidade, mesmo em modo magro.
 
+#### Mitigação detalhada de riscos
+
+Ao identificar qualquer risco de privacidade ou segurança, a mitigação NÃO pode ser genérica (1 linha). Cada risco DEVE ter um plano de mitigação com:
+
+| Campo | Obrigatório | Exemplo |
+|-------|------------|---------|
+| **Ação concreta** | Sim | "Avaliar DPO interno vs consultoria externa" |
+| **Responsável** | Sim | "CTO" |
+| **Custo estimado** | Sim | "R$ 5-15K/mês se terceirizado" |
+| **Prazo** | Sim | "Contratar até semana 4 do Sprint 0" |
+| **Consequência se não resolver** | Sim | "Não lançar — é blocker legal" |
+
+Mitigações genéricas como "fazer PoC", "resolver depois", "nomear responsável" são insuficientes e serão penalizadas pelo auditor na dimensão "Profundidade".
+
 ## claude-code
 
 ### Trigger

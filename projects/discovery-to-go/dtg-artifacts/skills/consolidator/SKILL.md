@@ -272,6 +272,21 @@ Após salvar `delivery-report.md`:
 3. O orchestrator então invoca o `html-writer` passando report-plan.md + delivery-report.md
 4. Você **não gera HTML nem plano visual** — apenas o conteúdo consolidado em .md
 
+#### Adaptação de tom por report-setup
+
+O tom do conteúdo gerado DEVE ser adaptado ao report-setup selecionado:
+
+| Setup | Tom | Público | Linguagem |
+|-------|-----|---------|-----------|
+| `essential` | Comercial | Sponsor, comercial | Horas, semanas, escopo. Sem jargão técnico. |
+| `executive` | Executivo-negócio | Diretoria, gestão | Custos, prazos, riscos, modelo de negócio. Termos técnicos explicados. |
+| `complete` | Técnico | Arquiteto, PO, dev | Stack, APIs, protocolos, patterns. Termos técnicos sem simplificação. |
+
+**Para regions domain-specific no setup `executive`:**
+- Focar em impacto de negócio, não em implementação técnica
+- Ex: REG-DOM-SAAS-01 → falar de planos e pricing, NÃO de isolamento de schema
+- Detalhes técnicos de tenancy/isolamento vão apenas no setup `complete` (REG-DOM-SAAS-02)
+
 ### 5. O que você FAZ
 
 - Lê e absorve todo o contexto do projeto (não só os markdown intermediários)

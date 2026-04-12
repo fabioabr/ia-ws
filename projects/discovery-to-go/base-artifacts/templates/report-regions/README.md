@@ -90,6 +90,7 @@ Formato: `REG-{GRUPO}-{NN}`
 | REG-PROD-07 | `product/scope.md` | Escopo | Objetivo do projeto, o que será feito (dentro), o que NÃO será feito (fora, explícito), hipótese central, critério de go/no-go | Bloco #1/#3 (po) → 1.1/1.3 | Objetivo + duas listas (dentro/fora) + hipótese | Card com objetivo + split list (in/out) | Todos |
 | REG-PROD-08 | `product/roadmap.md` | Roadmap | Faseamento: MVP → Fase 2 → Fase N com épicos por fase | Bloco #3 (po) → 1.3 | Timeline de fases com épicos | Timeline horizontal | Opcional |
 | REG-PROD-09 | `product/product-vision.md` | Visão do produto | Elevator pitch + horizonte de 3 anos + princípios de produto | Bloco #1 (po) → 1.1 | Texto narrativo | Card com quote style | Opcional |
+| REG-PLAN-01 | `product/gantt-relative.md` | Relative Gantt | Gantt chart com timeline relativa (Semana 1, 2, ..., N) — sem datas fixas | Consolidator + Backlog | Barras horizontais com grid de semanas | Timeline horizontal (HTML/CSS) | Opcional |
 
 ---
 
@@ -164,6 +165,7 @@ Formato: `REG-{GRUPO}-{NN}`
 | REG-FIN-03 | `financial/cost-per-component.md` | Custo por componente | Breakdown de custo por componente técnico (compute, storage, licenças, APIs) | Bloco #8 (arch) → 1.8 | Tabela (componente, custo/mês, custo/ano) | Table ou bar chart | Opcional |
 | REG-FIN-04 | `financial/revenue-projection.md` | Projeção de receita | Receita projetada (se aplicável) — MRR/ARR, crescimento, churn | Bloco #3/#8 → 1.3/1.8 | Tabela de projeção mensal/anual | Table ou line chart | Quando SaaS |
 | REG-FIN-05 | `financial/effort-estimation.md` | Estimativa de esforço | T-shirt sizing por épico, esforço total para MVP em sprints | Bloco #8 (arch) → 1.8 | Tabela (épico, complexidade, estimativa, premissas) | Table com badges | Todos |
+| REG-FIN-06 | `financial/total-hours.md` | Total Hours | Resumo de horas totais por papel e total geral | Consolidator | Stat cards com horas por papel + total geral | Stat cards grid (HTML/CSS) | Opcional |
 
 ---
 
@@ -256,17 +258,17 @@ Regions que só aparecem quando o context-template correspondente está carregad
 | Grupo | Regions | Default em todos |
 |-------|---------|-----------------|
 | Executivo | 4 | 4 |
-| Produto | 9 | 5 |
+| Produto | 10 | 5 |
 | Pesquisa | 5 | 0 |
 | Organização | 5 | 2 |
 | Técnico | 7 | 4 |
 | Segurança | 4 | 3 |
 | Privacidade | 6 | 0 (quando há PII: 4) |
-| Financeiro | 5 | 2 |
+| Financeiro | 6 | 2 |
 | Riscos | 4 | 3 |
 | Qualidade | 4 | 2 |
 | Backlog | 4 | 1 |
 | Métricas | 5 | 1 |
 | Narrativa | 3 | 1 |
 | Domain-specific | 20 | 0 (por context-template) |
-| **Total** | **85** | **28 universais** |
+| **Total** | **87** | **28 universais** |

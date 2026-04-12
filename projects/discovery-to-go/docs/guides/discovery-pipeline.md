@@ -66,7 +66,7 @@ flowchart LR
 
 ### O que o orchestrator faz
 
-1. **Cria o scaffold** da run em `runs/run-{n}/`
+1. **Cria o scaffold** da run em `custom-artifacts/{client}/runs/run-{n}/`
 2. **Detecta o context-template** a partir de sinais no briefing (ex: "SaaS multi-tenant" → pack `saas`)
 3. **Copia o context-template** de `base-artifacts/context-templates/{pack}/` para `{run}/setup/customization/current-context/`
 4. **Copia os defaults de customization** de `dtg-artifacts/templates/customization/` para `{run}/setup/customization/` (sub-folders: `report-templates/`, `rules/`)
@@ -76,7 +76,7 @@ flowchart LR
 ### Scaffold criado
 
 ```
-runs/run-{n}/
+custom-artifacts/{client}/runs/run-{n}/
 ├── pipeline-state.md                         ← estado + snapshots (append-only)
 ├── setup/
 │   ├── briefing.md                           ← input do humano
@@ -403,7 +403,7 @@ HTMLs de referência mostrando como cada grupo de regions é renderizado estão 
 Quando o humano escolhe **re-executar desde a 1ª fase**, o orchestrator cria uma nova iteração:
 
 ```
-runs/run-{n}/
+custom-artifacts/{client}/runs/run-{n}/
 ├── iterations/
 │   ├── iteration-1/     ← primeira tentativa (histórico preservado)
 │   │   ├── logs/

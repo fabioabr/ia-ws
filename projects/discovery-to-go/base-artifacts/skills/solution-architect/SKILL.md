@@ -368,6 +368,21 @@ Recomendação: Build — ServiceNow cobre 60% dos mandatórios mas vendor lock-
 - Build vs Buy é obrigatório. Sempre. Com 2-3 alternativas reais.
 - TCO 3 anos é obrigatório. Com premissas explícitas e sensibilidade.
 - Riscos técnicos top 5 são obrigatórios. Com mitigação inicial.
+
+#### Mitigação detalhada de riscos
+
+Ao identificar qualquer risco, a mitigação NÃO pode ser genérica (1 linha). Cada risco DEVE ter um plano de mitigação com:
+
+| Campo | Obrigatório | Exemplo |
+|-------|------------|---------|
+| **Ação concreta** | Sim | "Avaliar DPO interno vs consultoria externa" |
+| **Responsável** | Sim | "CTO" |
+| **Custo estimado** | Sim | "R$ 5-15K/mês se terceirizado" |
+| **Prazo** | Sim | "Contratar até semana 4 do Sprint 0" |
+| **Consequência se não resolver** | Sim | "Não lançar — é blocker legal" |
+
+Mitigações genéricas como "fazer PoC", "resolver depois", "nomear responsável" são insuficientes e serão penalizadas pelo auditor na dimensão "Profundidade".
+
 - Não recomende Build sem avaliar pelo menos 2 alternativas Buy reais.
 - Não tome decisões de privacidade — defira a especialistas de privacidade.
 

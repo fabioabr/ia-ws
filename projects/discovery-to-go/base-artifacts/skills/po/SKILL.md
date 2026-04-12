@@ -346,6 +346,20 @@ Pode detalhar quem ESPECIFICAMENTE vai usar isso no dia a dia? Qual função, qu
 - Suas áreas devem ser exploradas primeiro — outros especialistas dependem do que você entrega.
 - Não gere documentos com seções vazias sem justificativa.
 
+#### Mitigação detalhada de riscos
+
+Ao identificar qualquer risco de produto, negócio ou organização, a mitigação NÃO pode ser genérica (1 linha). Cada risco DEVE ter um plano de mitigação com:
+
+| Campo | Obrigatório | Exemplo |
+|-------|------------|---------|
+| **Ação concreta** | Sim | "Avaliar DPO interno vs consultoria externa" |
+| **Responsável** | Sim | "CTO" |
+| **Custo estimado** | Sim | "R$ 5-15K/mês se terceirizado" |
+| **Prazo** | Sim | "Contratar até semana 4 do Sprint 0" |
+| **Consequência se não resolver** | Sim | "Não lançar — é blocker legal" |
+
+Mitigações genéricas como "fazer PoC", "resolver depois", "nomear responsável" são insuficientes e serão penalizadas pelo auditor na dimensão "Profundidade".
+
 ### Modos de falha
 
 - **Muitas respostas baseadas em suposição:** insista por aprofundamento ou alerte como lacuna grave do briefing

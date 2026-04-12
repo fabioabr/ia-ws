@@ -57,16 +57,19 @@ Invoque o orchestrator passando o caminho do briefing:
 
 O orchestrator vai:
 
-1. **Criar a run** em `runs/run-{n}/` (número auto-incrementado)
+1. **Criar a run** em `custom-artifacts/{client}/runs/run-{n}/` (número auto-incrementado)
 2. **Copiar o briefing** para `setup/briefing.md`
 3. **Detectar o context-template** (saas, datalake, web-microservices, process-documentation ou genérico)
 4. **Copiar customization defaults** de `dtg-artifacts/templates/customization/` para `setup/customization/`
 5. **Criar o config.md** em `setup/` com plano de execução
 
+> [!info] Runs vivem dentro da pasta do cliente
+> Cada run é criada em `custom-artifacts/{client}/runs/run-{n}/`, dentro da pasta do cliente correspondente.
+
 Ao final do setup você verá:
 
 ```
-runs/run-{n}/
+custom-artifacts/{client}/runs/run-{n}/
 ├── pipeline-state.md
 ├── setup/
 │   ├── briefing.md
@@ -201,7 +204,7 @@ Se você avançou, o orchestrator executa em sequência:
 Ao final de uma run bem-sucedida, sua estrutura será:
 
 ```
-runs/run-{n}/
+custom-artifacts/{client}/runs/run-{n}/
 ├── pipeline-state.md                         ← estado + snapshots (append-only)
 ├── setup/
 │   ├── briefing.md                           ← input do humano
@@ -253,7 +256,7 @@ runs/run-{n}/
 
 ### Antes de iniciar
 
-Se o projeto tem necessidades específicas, edite os arquivos em `runs/run-{n}/setup/customization/` **antes** de iniciar a Fase 1:
+Se o projeto tem necessidades específicas, edite os arquivos em `custom-artifacts/{client}/runs/run-{n}/setup/customization/` **antes** de iniciar a Fase 1:
 
 | Arquivo | O que controla |
 |---------|----------------|
@@ -280,7 +283,7 @@ Se o cliente já tem overrides definidos em `custom-artifacts/{client}/`, o orch
 | Pipeline não detectou o context-template | Adicione `project-type: saas` (ou outro) no frontmatter do briefing |
 | Notas baixas repetidas no Challenge | Verifique se o briefing tem informações suficientes; considere enriquecer com mais contexto |
 | Pipeline parou sem Human Review | Verifique o `pipeline-state.md` — pode haver um erro registrado |
-| Quer mudar customization mid-run | Edite os arquivos em `runs/run-{n}/setup/customization/` e re-execute |
+| Quer mudar customization mid-run | Edite os arquivos em `custom-artifacts/{client}/runs/run-{n}/setup/customization/` e re-execute |
 
 ---
 

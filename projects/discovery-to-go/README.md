@@ -158,7 +158,7 @@ flowchart LR
 ### Setup
 
 O **orchestrator** recebe o briefing e prepara tudo:
-- Cria o scaffold da run (`runs/run-{n}/`)
+- Cria o scaffold da run (`custom-artifacts/{client}/runs/run-{n}/`)
 - Auto-detecta o context-template a partir de sinais no briefing
 - Copia templates de customização e context-template para a run
 - Cria `config.md` e `pipeline-state.md` (state tracker append-only)
@@ -323,10 +323,10 @@ Configurável via `report-setup` no `config.md` da run. Presets em `dtg-artifact
 
 ## Scaffold de uma Run
 
-Quando o orchestrator inicia uma nova run, materializa esta estrutura:
+Quando o orchestrator inicia uma nova run, materializa esta estrutura dentro da pasta do cliente:
 
 ```
-runs/run-{n}/
+custom-artifacts/{client}/runs/run-{n}/
 ├── pipeline-state.md                     ← estado + snapshots (append-only, imutável)
 ├── setup/
 │   ├── briefing.md                       ← input do humano

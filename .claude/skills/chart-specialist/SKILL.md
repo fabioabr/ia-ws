@@ -155,6 +155,19 @@ Ao processar regions do catálogo (`base-artifacts/templates/report-regions/`), 
 
 A análise deve confirmar ou contestar as sugestões existentes e propor a recomendação definitiva.
 
+### Padrão de radar charts — zonas de escala
+
+TODO radar chart DEVE ter faixas de cor suave (background datasets) entre as linhas de grade:
+
+| Faixa | Cor | Opacity | Significado |
+|-------|-----|---------|-------------|
+| 0-40 | `--danger` | 0.04 | Zona crítica |
+| 40-70 | `--warning` | 0.03 | Zona de atenção |
+| 70-90 | `--border` | 0.02 | Zona aceitável |
+| 90-100 | `--success` | 0.03 | Zona de excelência |
+
+Implementação Chart.js: adicionar datasets extras com `fill: true`, `pointRadius: 0`, `borderWidth: 0`, renderizados ANTES do dataset de dados real. Isso cria um background colorido que dá contexto imediato de onde cada score está.
+
 ## Constraints
 
 - Nunca recomendar gráfico quando tabela ou card comunica melhor

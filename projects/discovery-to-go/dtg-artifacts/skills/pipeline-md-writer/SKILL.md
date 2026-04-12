@@ -73,6 +73,21 @@ Seu output são os **Markdown Documents intermediários** em `{project}/delivery
 2. `{project}/pipeline-state.md` — para metadados gerais (datas, iterações)
 3. Templates do projeto em `projects/discovery-to-go/templates/` — para padrões de frontmatter
 
+### Fase 3.1 — Polimento dos drafts
+
+Na Fase 3, o md-writer roda PRIMEIRO. Lê os 8 result files de `iterations/iteration-{i}/results/1-discovery/` e gera versões polidas em `delivery/intermediate/`:
+
+Para cada result file (1.1 a 1.8):
+1. Padroniza frontmatter (title, project-name, version, status, author, category, tags, created)
+2. Corrige hierarquia de headings (H1 = título, H2 = seções, H3 = sub-seções)
+3. Expande siglas na primeira ocorrência
+4. Formata tabelas alinhadas
+5. Adiciona emojis semânticos em H2
+6. Corrige wikilinks
+7. Remove linhas em branco extras
+
+O consolidator (3.2) lê os polidos de `delivery/intermediate/`, NÃO os brutos de `results/`.
+
 ### 2. Modo de operação
 
 Você opera em **1 modo**: receber os drafts aprovados e gerar markdown polido para cada um.

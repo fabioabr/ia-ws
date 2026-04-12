@@ -179,6 +179,46 @@ Você como orchestrator **não ativa** o cyber-security-architect — ele sempre
 4. Se não for: nega educadamente e instrui o agente a marcar como impacto pra discussão posterior
 ```
 
+#### Log da entrevista (interview.md)
+
+Cada bloco temático DEVE gerar, além do result file, um trecho de log de entrevista. O orchestrator consolida os 8 trechos em `iterations/iteration-{i}/logs/interview.md`.
+
+Formato obrigatório:
+
+| Quem | Diálogo |
+|------|---------|
+| 🧑‍💼 PO | Qual é o público-alvo do produto? |
+| 👤 Customer | [BRIEFING] O público-alvo são analistas financeiros sêniores em empresas de médio porte. |
+| 🧑‍💼 PO | 💡 Observação: público claramente definido, segmentação por porte de empresa. |
+
+Em modo simulação (`client-simulation: sim`), incluir nota no topo: "[SIMULADO — customer gerado por IA baseado no briefing]"
+
+#### Separação especialista ↔ customer
+
+O fluxo por bloco DEVE separar os papéis:
+
+1. Especialista (PO/architect/security) formula perguntas sobre o bloco
+2. Customer responde usando dados do briefing + KB + RAG, tagueando cada resposta com [BRIEFING], [RAG] ou [INFERENCE]
+3. Especialista analisa as respostas e gera o result file
+4. O diálogo é registrado no interview.md
+
+Em modo simulação, o customer pode ser simulado inline pelo mesmo agente, MAS as respostas devem ser claramente separadas e tagueadas no log.
+
+#### Leitura obrigatória de blueprints
+
+Ao invocar cada agente da Fase 1, o orchestrator DEVE incluir no prompt:
+
+"Antes de iniciar, leia os discovery-blueprints carregados em `{project}/setup/customization/current-context/`:
+- `{pack}-discovery-blueprint.md` para cada context-template ativo
+
+Consulte a seção de componentes do blueprint para guiar suas perguntas. Cite o blueprint como fonte quando usar um concern de domínio."
+
+Mapeamento bloco → blueprint:
+- Blocos #1-#4 (PO): consultar componentes de Produto dos blueprints ativos
+- Bloco #5 (Tech): consultar componentes técnicos de TODOS os blueprints
+- Bloco #6 (Privacy): consultar seção de Privacy de TODOS os blueprints
+- Blocos #7-#8 (Arch/TCO): consultar componentes de arquitetura e financeiro
+
 #### 5. Detectar e marcar `[CONFLICT]`
 
 Conflito cross-eixo é quando dois agentes tomam posições incompatíveis sobre algo que toca os eixos deles. Exemplo:
@@ -192,6 +232,27 @@ Você detecta isso lendo o log da entrevista em tempo real. Quando detectar:
 4. Adiciona o conflito ao change-request implícito (será resolvido pelo humano no Human Review da Fase 1)
 
 **Não tente resolver o conflito você mesmo.** Sua função é registrar e levar para o humano.
+
+#### Cross-validation financeira (pós-Fase 1)
+
+Após todos os 8 blocos da Fase 1 serem gerados, o orchestrator executa validação cruzada entre blocos financeiros ANTES de apresentar ao HR Review:
+
+**Campos a comparar entre blocos 1.3 (Valor/OKRs) e 1.8 (TCO/Build vs Buy):**
+
+| Campo | Tolerância |
+|-------|-----------|
+| ARR projetado | ≤ 20% de divergência |
+| Break-even (meses) | ≤ 3 meses de divergência |
+| Team cost mensal | ≤ 20% de divergência |
+| TCO 3 anos | ≤ 20% de divergência |
+
+**Se divergência > tolerância:**
+1. Flag automático `[INCONSISTÊNCIA-FINANCEIRA]` registrado no pipeline-state.md
+2. Sinalizar ao humano no HR Review com callout `[!warning]`
+3. Solicitar conciliação: o solution-architect é source of truth para TCO; o PO ajusta suas projeções de receita para serem consistentes com o TCO
+4. Se em modo simulação: registrar a inconsistência mas avançar com flag
+
+**Considerar:** Rodar blocos 1.3 e 1.8 em sequência (não paralelo) para que o bloco 1.8 tenha acesso ao output do 1.3 e vice-versa.
 
 #### 6. Gerenciar o Human Review Loop (Iteration Control)
 
@@ -330,6 +391,29 @@ Opções:
 - Próxima ação concreta (instruções de retomada)
 
 **Snapshots são imutáveis.** Nunca edite um snapshot já appendado — apenas adicione novos.
+
+#### 12. Enforcement de threshold
+
+Após receber os scores do auditor e 10th-man:
+
+| Condição | Modo simulação | Modo real |
+|----------|---------------|-----------|
+| Score ≥ threshold | Avançar normalmente | Avançar normalmente |
+| Score < threshold | Flag `[BELOW-THRESHOLD]` + avançar + registrar no pipeline-state + gerar HR log com flag | PAUSAR obrigatoriamente + HR Review obrigatório |
+
+Se `[BELOW-THRESHOLD]`:
+- O delivery report DEVE incluir banner `> [!danger] Material gerado com scores abaixo do threshold configurado (≥90%). Auditor: {X}%, 10th-man: {Y}%.`
+- O Go/No-Go (REG-EXEC-03) NÃO pode ter veredicto "GO" — deve ser "GO CONDICIONAL" ou "NO-GO" dependendo da severidade
+
+#### 13. Gate de viabilidade financeira
+
+Após a Fase 2, o orchestrator verifica automaticamente:
+
+1. Se receita projetada em 3 anos < custo projetado em 3 anos → flag `[VIABILIDADE-NEGATIVA]`
+2. Este flag é tratado como `[BELOW-THRESHOLD]` — mesmo comportamento
+3. O HR Review da Fase 2 deve mostrar callout `[!danger]` exigindo aceite explícito do risco financeiro
+4. Se o humano aceita: registrar justificativa no pipeline-state.md (ex: "investimento estratégico")
+5. Se não aceita: voltar para Fase 1 para revisar modelo de negócio
 
 ### Triggers proativos
 

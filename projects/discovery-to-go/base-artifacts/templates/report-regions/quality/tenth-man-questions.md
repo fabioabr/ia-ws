@@ -67,10 +67,10 @@ tenth_man_questions:
       status: "Em aberto"
 ```
 
-### Recomendacao do Chart Specialist
+### Recomendação do Chart Specialist
 
-**Veredicto:** CARD
-**Tipo:** Cards com severity badges
-**Tecnologia:** HTML/CSS
-**Justificativa:** Questoes do 10th-man sao itens qualitativos individuais com severidade e status variados; cards com badges coloridos (Critica = vermelho, Alta = laranja, Media = amarelo) e indicador de status criam hierarquia visual clara e destacam questoes em aberto que exigem acao.
-**Alternativa:** Tabela com severity badges (HTML/CSS) — quando o numero de questoes for grande (>10) e o rastreamento tabular de resolucao for prioritario.
+**Veredicto:** GRÁFICO + CARD
+**Tipo:** Radar chart 3 eixos (Divergência, Robustez, Completude Crítica) + cards com severity badges para questões residuais
+**Tecnologia:** Chart.js (radar) + HTML/CSS (cards)
+**Justificativa:** O 10th-man tem 3 dimensões com scores numéricos — mesmo padrão do auditor (5 dimensões). Usar radar chart para consistência visual entre as duas validações da Fase 2. Cards mantidos abaixo para as questões individuais.
+**Alternativa:** Stat cards com scores (sem radar) — quando há apenas 2 dimensões ou menos
