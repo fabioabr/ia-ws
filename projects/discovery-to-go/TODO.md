@@ -12,7 +12,7 @@ tags:
   - pendencia
   - pipeline-issues
 created: 2026-04-11
-updated: 2026-04-11
+updated: 2026-04-12
 ---
 
 # TODO — Discovery To Go
@@ -926,6 +926,67 @@ contratação (sugerido: R$ 25K MRR para DevOps/SRE).
 
 ---
 
+### P37. Tooltip `<abbr>` quebra alinhamento de texto em checkboxes
+
+**Severidade:** Baixa
+**Fase:** HTML Writer
+
+O `<abbr>` dentro de itens de checkbox causa quebra de linha estranha — o parêntese "(" fica na linha de baixo. Causa: o `<abbr>` tem `display: inline` com espaços extras ao redor.
+
+**Ação:**
+- [x] CSS: `abbr { white-space: nowrap; }` para evitar quebra dentro da sigla ✅ DONE (html-writer v02.04.000)
+- [x] Verificar se há espaços extras no HTML entre `(` e `<abbr>` ✅ DONE
+
+---
+
+### P38. Build vs Buy — separar badge da solução em colunas distintas
+
+**Severidade:** Baixa
+**Fase:** HTML Writer
+
+A tabela Build vs Buy mistura o badge (BUILD/BUY) com o nome da solução na mesma coluna "DECISÃO". Fica visualmente confuso.
+
+**Deve ficar:**
+
+| Componente | Decisão | Solução | Custo | Economia |
+|-----------|---------|---------|-------|----------|
+| Autenticação | `BUY` | Firebase Auth | R$ 0 | 80h |
+| NL-to-SQL | `BUILD` | Custom pipeline | N/A | Core |
+
+**Ação:**
+- [x] Atualizar html-writer: tabela Build vs Buy com coluna "Decisão" (badge) separada de "Solução" (texto) ✅ DONE (html-writer v02.05.000)
+- [x] Atualizar region REG-TECH-06 schema para 5 colunas ✅ DONE (build-vs-buy.md atualizado)
+
+---
+
+### P39. delivery-report.md deve estar em delivery/ e ser extremamente detalhado
+
+**Severidade:** Alta
+**Fase:** Consolidator + Orchestrator
+
+**Dois problemas:**
+
+**1) Path errado:** O delivery-report.md foi gerado em `iterations/iteration-1/results/3-delivery/` mas deveria estar em `delivery/` (a pasta final de entrega). O path correto é `custom-artifacts/{client}/runs/run-{n}/delivery/delivery-report.md`.
+
+**2) Conteúdo insuficiente:** O delivery-report.md tem 729 linhas para um projeto com 78 decisões, 8 blocos e 2 validações. Deveria ter **2000+ linhas** com:
+- Explicação detalhada de CADA decisão (não apenas listagem)
+- Contexto de POR QUÊ cada decisão foi tomada
+- Alternativas consideradas e descartadas
+- Incertezas e gaps remanescentes
+- Análise do especialista para cada seção
+- Recomendações do consultor com justificativa
+- Referências cruzadas entre blocos
+
+O delivery-report.md é o **documento mestre** do discovery — quem lê apenas ele deve entender tudo sem precisar abrir os 8 blocos individuais. É o equivalente a um "livro do projeto" não um "resumo executivo".
+
+**Ação:**
+- [x] Atualizar orchestrator SKILL.md: delivery-report.md vai em `delivery/` (não em results/3-delivery/) ✅ DONE (dual-path obrigatório)
+- [x] Atualizar consolidator SKILL.md: o delivery-report DEVE ser extremamente detalhado — cada region com análise completa, decisões justificadas, alternativas descartadas, incertezas documentadas ✅ DONE (mínimo 2000 linhas, 8 regras de conteúdo)
+- [x] Copiar delivery-report.md e report-plan.md para `delivery/` (além de manter em results/3-delivery/) ✅ DONE
+- [x] O HTMLs leem de `delivery/`, não de results/ ✅ DONE
+
+---
+
 ## Ordem sugerida de resolução
 
 ```
@@ -966,6 +1027,9 @@ P33 (playground.html ignorado)   ← reports não seguem o Design System
 P34 (barras sempre horizontais CSS) ← Chart.js proibido para barras
 P35 (ressalvas detalhadas)       ← auditor e 10th-man devem detalhar cada ressalva
 P36 (responsividade mobile)      ← hamburger menu + footer centralizado
+P37 (abbr quebra texto)          ← tooltip de sigla desalinha checkbox
+P38 (Build vs Buy coluna)        ← separar badge da solução
+P39 (delivery-report.md)         ← deve estar em delivery/ + ser MUITO detalhado
 
 VIABILIDADE:
 P21 (auditor alerta receita<TCO) ← finding crítico

@@ -41,7 +41,7 @@ outputs:
   - name: delivery-report-md
     type: file
     format: markdown
-    description: "Relatório consolidado em {project}/delivery/delivery-report.md"
+    description: "Relatório consolidado salvo em DOIS locais: {project}/delivery/delivery-report.md (ativo) + {project}/iterations/iteration-{N}/results/3-delivery/delivery-report.md (archive)"
 metadata:
   pipeline-phase: 3
   role: report-specialist
@@ -99,7 +99,11 @@ O catálogo completo de regions está em `base-artifacts/templates/report-region
 
 ### 3. Passo 2 — Geração do `delivery-report.md` por regions
 
-Produz um **único arquivo `.md`** em `{project}/delivery/delivery-report.md`. O arquivo é **completo** — contém todas as regions selecionadas com dados reais, legível como texto puro.
+Produz um **único arquivo `.md`** que é salvo em **DOIS locais obrigatórios**:
+1. **`{project}/delivery/delivery-report.md`** — cópia ativa (report-planner e html-writer leem APENAS daqui)
+2. **`{project}/iterations/iteration-{N}/results/3-delivery/delivery-report.md`** — cópia de arquivo (archive da iteração)
+
+O arquivo é **completo** — contém todas as regions selecionadas com dados reais, legível como texto puro.
 
 Cada region no `.md` é marcada com um comentário HTML que o html-writer reconhece:
 
@@ -263,6 +267,65 @@ regions: [lista de REG-IDs incluídos]
 > [!info] Regions opcionais e domain-specific
 > Regions opcionais e domain-specific são inseridas nas posições indicadas no `html-layout.md`. O consolidator consulta o blueprint para saber quais incluir e onde posicionar.
 
+#### Requisitos de detalhe do delivery-report.md (P39 — OBRIGATÓRIO)
+
+> [!critical] O delivery-report.md é o ARTEFATO MAIS IMPORTANTE de todo o pipeline
+> É a **single source of truth** — o report-planner e o html-writer leem APENAS este arquivo. Tudo que não estiver aqui, com dados completos, NÃO aparecerá no relatório final. Não existe "ver seção X" nem "conforme discutido" — cada region deve ser AUTO-CONTIDA com todos os dados necessários.
+
+**Tamanho mínimo:** 2000 linhas para um projeto padrão. Projetos complexos (multi-template, 3+ iterações) devem ultrapassar 3000 linhas. Um delivery-report.md com menos de 1500 linhas é sinal de que dados foram omitidos ou resumidos indevidamente.
+
+**Regras de detalhe por tipo de conteúdo:**
+
+1. **Decisões técnicas e de produto** — para CADA decisão documentada, incluir:
+   - O que foi decidido (afirmação clara)
+   - Por que foi decidido (justificativa com dados)
+   - Quais alternativas foram consideradas (mínimo 2, com prós e contras de cada)
+   - Quais incertezas permanecem (gaps explícitos)
+   - Quem tomou a decisão ou recomendou (source tag: humano, especialista, inferência)
+
+2. **Dados financeiros (TCO, ROI, pricing, esforço)** — incluir:
+   - Breakdown completo com todas as linhas de custo/receita
+   - Cálculos mostrados (não apenas o resultado final)
+   - Premissas explícitas para cada número ("assumindo 3 devs senior a R$ 25k/mês")
+   - Análise de sensibilidade (cenário otimista, realista, pessimista)
+   - Fontes dos valores (briefing, benchmark, inferência)
+
+3. **Riscos** — para CADA risco na matriz:
+   - Descrição detalhada do risco (não apenas título)
+   - Probabilidade com justificativa (por que Alta e não Média?)
+   - Impacto quantificado quando possível (R$, dias, % de escopo)
+   - Plano de mitigação concreto (não genérico)
+   - Responsável pela mitigação (nome do papel, não "a equipe")
+   - Timeline da mitigação (quando deve ser implementada)
+   - Indicador de monitoramento (como saber se o risco se materializou)
+
+4. **Arquitetura e tecnologia** — para CADA escolha técnica:
+   - Tecnologia escolhida e versão/tier quando relevante
+   - Trade-offs explícitos (por que esta e não a alternativa?)
+   - Requisitos não-funcionais atendidos (performance, escala, disponibilidade)
+   - Dependências e integrações afetadas
+   - Riscos técnicos específicos desta escolha
+
+5. **Personas e jornadas** — para CADA persona:
+   - Perfil completo (não bullet points genéricos)
+   - JTBD com contexto situacional
+   - Dores com impacto mensurável
+   - Ganhos esperados com a solução proposta
+   - Jornada atual vs. jornada futura
+
+6. **Dados insuficientes** — quando os drafts, logs ou memory não fornecem dados suficientes para preencher uma region com profundidade:
+   - O consolidator DEVE **inferir valores razoáveis** baseados no contexto disponível
+   - Cada valor inferido DEVE ser marcado com `[INFERIDO]` seguido da justificativa
+   - Exemplo: `Custo estimado de infraestrutura: R$ 8.500/mês [INFERIDO — baseado em arquitetura similar com 3 microsserviços em AWS ECS, sem dados específicos do cliente]`
+   - NUNCA deixar uma region vazia ou com placeholder tipo "a ser definido" — sempre inferir e marcar
+
+7. **Proibições absolutas:**
+   - NUNCA usar "ver seção X" ou "conforme discutido anteriormente" — repetir os dados onde forem necessários
+   - NUNCA usar placeholders como "TBD", "a definir", "pendente de validação" sem dados inferidos
+   - NUNCA resumir uma tabela com "e outros..." — listar TODOS os itens
+   - NUNCA omitir cálculos intermediários em dados financeiros
+   - NUNCA deixar uma region com menos de 30 linhas (exceto REG-EXEC-01 overview que é propositalmente conciso)
+
 ### 4. Passo 3 — Handoff para o report-planner
 
 Após salvar `delivery-report.md`:
@@ -291,11 +354,13 @@ O tom do conteúdo gerado DEVE ser adaptado ao report-setup selecionado:
 
 - Lê e absorve todo o contexto do projeto (não só os markdown intermediários)
 - **Seleciona regions** com base no blueprint do context-template
-- Gera o `.md` com **marcadores de region** (`<!-- region: REG-XXXX-NN -->`)
+- Gera o `.md` com **marcadores de region** (`<!-- region: REG-XXXX-NN -->`) — extremamente detalhado (2000+ linhas)
+- **Salva em DOIS locais:** `delivery/delivery-report.md` (ativo) + `iterations/iteration-{N}/results/3-delivery/delivery-report.md` (archive)
 - Escreve o overview one-pager com bom estilo executivo
 - Prioriza backlog e organiza matriz de riscos
 - Faz handoff para report-planner (que depois aciona html-writer)
 - Fecha a narrativa do discovery (do briefing ao entregável)
+- **Infere valores quando dados são insuficientes**, marcando com `[INFERIDO]` — nunca deixa regions vazias
 
 ### 6. O que você NÃO faz
 
@@ -303,7 +368,7 @@ O tom do conteúdo gerado DEVE ser adaptado ao report-setup selecionado:
 - Não decide o layout visual — isso é definido no `html-layout.md`
 - Não reescreve as análises técnicas dos drafts — só consolida e dá contexto
 - Não questiona decisões do Challenge — auditor e 10th-man já validaram
-- Não inventa métricas ou riscos que não estão nos drafts ou logs
+- Não inventa métricas ou riscos sem base — mas DEVE inferir valores razoáveis quando dados são insuficientes, marcando com `[INFERIDO]`
 
 ### 7. Skills relacionados
 
@@ -343,7 +408,7 @@ O tom do conteúdo gerado DEVE ser adaptado ao report-setup selecionado:
 - Nunca gerar HTML diretamente — o report-planner e html-writer cuidam disso.
 - Nunca reescrever análises técnicas dos especialistas — apenas consolidar e contextualizar.
 - Nunca questionar decisões já validadas pelo Challenge (auditor + 10th-man).
-- Nunca inventar métricas, riscos ou dados que não estão nos drafts, logs ou memory.
+- Nunca inventar métricas, riscos ou dados sem base contextual — mas DEVE inferir valores razoáveis quando dados são insuficientes, marcando cada inferência com `[INFERIDO]` e justificativa.
 - Todo texto no delivery-report.md DEVE ter acentuação PT-BR correta — "Descrição" não "Descricao", "Organização" não "Organizacao". Se dados de entrada não têm acentos, corrigir ao consolidar.
 - Overview one-pager deve caber em UMA página — ser executivo, não técnico denso.
 - Questões residuais do 10th-man são sempre incluídas, mesmo com aprovação.
@@ -363,6 +428,9 @@ O tom do conteúdo gerado DEVE ser adaptado ao report-setup selecionado:
 3. **Toda narrativa começa no briefing e termina no delivery.** Feche o loop para quem consome o relatório entender a jornada.
 4. **Questões residuais do 10th-man são sempre incluídas.** Mesmo com aprovação, o cliente precisa saber o que ficou em aberto.
 5. **Você lê tudo — drafts, logs, memory, reports, packs.** Não consolida só os markdowns intermediários; absorve o contexto completo.
+6. **O delivery-report.md é a SINGLE SOURCE OF TRUTH.** O report-planner e o html-writer leem APENAS este arquivo. Se um dado não estiver aqui com detalhe completo, ele não existirá no relatório final. Mínimo 2000 linhas.
+7. **Salvar SEMPRE em dois locais.** `delivery/delivery-report.md` (ativo) + `iterations/iteration-{N}/results/3-delivery/delivery-report.md` (archive). Ambos obrigatórios.
+8. **Inferir é melhor que omitir.** Quando dados são insuficientes, infira valores razoáveis e marque `[INFERIDO]`. Uma region com inferências marcadas vale infinitamente mais que uma region vazia ou com placeholders.
 
 ## claude-code
 

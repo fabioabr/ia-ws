@@ -4,7 +4,7 @@ argument-hint: "<source.md> [--output path] [--template name]"
 title: html-writer
 description: "Converte documentos .md em relatórios HTML auto-contidos seguindo o Design System do workspace. Use SEMPRE que precisar: gerar um relatório HTML a partir de um .md, converter documento markdown para apresentação visual, criar report HTML com dark/light theme, ou gerar HTML auto-contido com logos e estilos inline. O HTML gerado funciona abrindo direto no navegador, sem servidor. NÃO use para: formatar o .md em si (use md-writer), validar convenções (use md-validator), ou gerar diagramas (use diagram-drawio)."
 project-name: global
-version: 02.03.000
+version: 02.05.000
 author: claude-code
 license: MIT
 status: ativo
@@ -360,6 +360,46 @@ abbr[title] { text-decoration: underline dotted; cursor: help; }
 abbr[title]:hover { text-decoration: underline solid; }
 ```
 
+#### P37 — Alinhamento de `<abbr>` em listas e checkboxes
+
+Adicionar CSS para evitar que `<abbr>` quebre o alinhamento de texto em checkboxes e listas:
+
+```css
+abbr {
+  white-space: nowrap;
+  text-decoration-style: dotted;
+  text-decoration-color: var(--text-muted);
+}
+
+li abbr, .checkbox-item abbr {
+  display: inline;
+  white-space: nowrap;
+}
+```
+
+This ensures abbreviation tooltips don't break text flow in lists and checkboxes.
+
+#### P38 — Coluna "Decisão" em tabelas Build vs Buy
+
+Tabelas de Build vs Buy (REG-TECH-06) usam 4 colunas: **Capacidade | Decisão | Solução | Justificativa**. A coluna "Decisão" contém apenas o badge (BUILD, BUY ou HYBRID) — nunca misturado com o texto da solução.
+
+Renderizar a coluna "Decisão" como badges coloridos usando as classes `.pill` do Design System:
+
+| Valor | Classe | Cor |
+|-------|--------|-----|
+| BUILD | `.pill .pill-success` | Verde (success) |
+| BUY | `.pill .pill-info` | Azul (info) |
+| HYBRID | `.pill .pill-warning` | Amarelo (warning) |
+
+HTML esperado para cada célula da coluna "Decisão":
+```html
+<td><span class="pill pill-success">BUILD</span></td>
+<td><span class="pill pill-info">BUY</span></td>
+<td><span class="pill pill-warning">HYBRID</span></td>
+```
+
+A coluna "Solução" contém apenas o nome da solução escolhida (ex: "Okta", "Stripe", "Desenvolvimento custom") — sem badge, sem negrito especial.
+
 ### 5. Header
 
 Seguir o padrão do playground:
@@ -552,6 +592,8 @@ Usar `$ARGUMENTS` no corpo para capturar o caminho do(s) arquivo(s) .md passados
 
 | Versão | Data | Descrição |
 |--------|------|-----------|
+| 02.05.000 | 2026-04-12 | P38: tabelas Build vs Buy usam coluna "Decisão" separada com badges coloridos (BUILD=success, BUY=info, HYBRID=warning) — badge não misturado na coluna "Solução" |
+| 02.04.000 | 2026-04-12 | P37: CSS fix para `<abbr>` em listas e checkboxes — `white-space: nowrap` evita quebra de alinhamento |
 | 02.03.000 | 2026-04-12 | P36: responsividade mobile — hamburger menu substitui tabs+tema em viewports < 768px, footer centralizado em mobile |
 | 02.02.000 | 2026-04-12 | P33: playground.html é base obrigatória — CSS copiado integralmente, classes listadas. P34: barras sempre HTML/CSS horizontal, REG-FIN-01 removido do Chart.js |
 | 02.01.000 | 2026-04-11 | P12: glossário e tooltips de siglas com `<abbr>`. P13/P15: proibição explícita de SVG inline para gráficos de dados |

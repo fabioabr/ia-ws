@@ -534,9 +534,16 @@ Toda saída sua segue:
 - **`auditor`** — você invoca no início da Fase 2 (Challenge) **em paralelo** com o 10th-man
 - **`10th-man`** — você invoca no início da Fase 2 (Challenge) **em paralelo** com o auditor
 - **`md-writer`** — você invoca na Fase 3 (Delivery) após o Human Review da Fase 2 aprovar. Ele gera os Markdown Documents intermediários a partir dos drafts aprovados.
-- **`consolidator`** — você invoca na Fase 3 **depois do md-writer**. Ele consome os markdown intermediários + pipeline-state + logs para produzir o `delivery-report.md` consolidado (com overview one-pager) e invoca o `report-planner` para planejar o HTML.
+- **`consolidator`** — você invoca na Fase 3 **depois do md-writer**. Ele consome os markdown intermediários + pipeline-state + logs para produzir o `delivery-report.md` consolidado (com overview one-pager) e invoca o `report-planner` para planejar o HTML. **O `delivery-report.md` é o ARTEFATO MAIS IMPORTANTE de todo o pipeline** — é a single source of truth que alimenta o report-planner e o html-writer. Deve ser extremamente detalhado (2000+ linhas para projetos padrão).
 - **`report-planner`** (skill global, fora de discovery-to-go) — **você não invoca diretamente**. Quem invoca é o `consolidator` ao fim da Fase 3. Gera o plano de report que o `html-writer` consome para produzir o HTML final.
 - **`html-writer`** (skill global, fora de discovery-to-go) — **você não invoca diretamente**. Quem invoca é o `consolidator` (ou o pipeline) após o `report-planner`. Gera o HTML visual final a partir do plano de report.
+
+> [!critical] Dual-path obrigatório para delivery-report.md (P39)
+> Após o consolidator gerar o `delivery-report.md`, o orchestrator DEVE garantir que o arquivo exista em **DOIS locais**:
+> 1. **`iterations/iteration-{N}/results/3-delivery/delivery-report.md`** — cópia de arquivo (archive da iteração)
+> 2. **`delivery/delivery-report.md`** — cópia ativa que o report-planner e html-writer consomem
+>
+> O consolidator gera em `delivery/delivery-report.md` (path primário). O orchestrator DEVE copiar para `iterations/iteration-{N}/results/3-delivery/` logo após a geração. Se o arquivo não existir em ambos os locais, a Fase 3 está INCOMPLETA — não avance para o HR Review.
 - **NÃO confunda com `pipeline-master` (v2)** — aquele é o orquestrador do pipeline antigo, não toca nele
 
 ### Modos de falha
