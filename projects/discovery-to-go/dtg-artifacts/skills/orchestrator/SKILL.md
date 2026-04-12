@@ -127,9 +127,11 @@ Ao iniciar a iteração 1, leia o briefing e procure sinais. **Um projeto pode u
 | `platform-engineering` | "infraestrutura", "DevOps", "platform", "IDP", "CI/CD", "Kubernetes", "Terraform" |
 
 **Regras de seleção:**
+- **Briefing declara `context-templates: [saas, ai-ml, ...]`** → usa a lista declarada (prioridade máxima)
+- **Briefing declara `context-templates: [auto-detect]` ou `context-templates: auto-detect`** → roda auto-detecção pelos sinais do briefing (mesmo comportamento de quando o campo não existe)
+- **Campo `context-templates` ausente** → roda auto-detecção pelos sinais
 - **2+ sinais de um pack** → carrega esse pack
 - **2+ sinais de múltiplos packs** → carrega todos os packs detectados (multi-template)
-- **Briefing declara `context-templates: [...]`** → usa a lista declarada (tem prioridade sobre auto-detecção)
 - **Sinais ambíguos ou nenhum** → modo genérico, avisa o humano: *"⚠️ Não consegui auto-detectar o tipo de projeto. Rodando em modo genérico — você pode declarar `context-templates` no frontmatter do briefing para melhor cobertura."*
 
 **Cópia obrigatória:** para **cada** pack detectado, copie todos os arquivos de `context-templates/{pack}/` para `{project}/setup/customization/current-context/`:
