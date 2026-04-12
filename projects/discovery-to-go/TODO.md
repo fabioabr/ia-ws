@@ -234,6 +234,23 @@ O workspace tem convenções de tratamento de siglas (`conventions/acronyms/`) e
 
 ---
 
+### P13. TCO 3 Anos — gráfico SVG ao invés de HTML/CSS ou Chart.js
+
+**Severidade:** Média
+**Fase:** Fase 3.4 (HTML Writer)
+
+Na seção TCO 3 Anos do `executive-report.html`, o gráfico de barras empilhadas foi gerado como SVG inline ao invés de usar Chart.js (stacked bar) ou HTML/CSS puro (barras horizontais com divs). Isso viola a prioridade de tecnologia definida: HTML/CSS > Chart.js > Card. SVG inline não está na lista.
+
+O `report-plan.md` especificou `Chart.js stacked bar` para REG-FIN-01, mas o html-writer gerou SVG.
+
+**Ação:**
+- [ ] Verificar o executive-report.html e confirmar se é SVG ou Chart.js
+- [ ] Se SVG: substituir por Chart.js stacked bar (conforme report-plan.md)
+- [ ] Reforçar na skill html-writer que SVG inline NÃO é uma opção para gráficos de dados — usar Chart.js
+- [ ] SVG inline só é aceito para componentes simples (gauges, progress bars) quando HTML/CSS não resolve
+
+---
+
 ## Ordem sugerida de resolução
 
 ```
@@ -249,6 +266,7 @@ P7 (HR loop logs)        ← entre fases
  ↓
 P8 (md-writer 3.1)       ← Fase 3 completa
 P12 (glossário + tooltips)← HTML com siglas expandidas
+P13 (TCO chart fix)       ← Chart.js no lugar de SVG
  ↓
 P9-P11 (docs + config)   ← polish final
 ```
