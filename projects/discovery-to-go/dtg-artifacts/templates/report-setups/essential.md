@@ -42,7 +42,7 @@ Lógica da ordem: **o quê** (1-2) → **sob quais condições e riscos** (3-4) 
 | 5 | Equipe e Papéis | REG-ORG-02 | full-width | Quem faz o quê, dedicação, horas/semana por papel |
 | 6 | Estimativa de esforço | REG-FIN-06 | grid-3 | Stat cards: total de horas por papel + total geral + duração em semanas |
 | 7 | Planejamento | REG-PLAN-01 | full-width | Gantt relativo (Semana 1, 2, ..., N) com fases e marcos — HTML/CSS barras horizontais |
-| 8 | Confiança do material | REG-QUAL-01 + REG-QUAL-02 | grid-2 | Scores compactos: auditor (nota + status) e 10th-man (questões + severidade) |
+| 8 | Confiança dos Auditores IA | REG-QUAL-01 + REG-QUAL-02 | grid-2 | Scores compactos: auditor (nota + status) e 10th-man (questões + severidade) |
 
 **Total: 8 seções (9 regions)**
 
@@ -112,7 +112,7 @@ Gantt relativo com barras horizontais HTML/CSS:
 - Marcos (milestones) destacados
 - Cores por tipo de atividade
 
-### Seção 8 — Confiança do material (REG-QUAL-01 + REG-QUAL-02 compacto)
+### Seção 8 — Confiança dos Auditores IA (REG-QUAL-01 + REG-QUAL-02 compacto)
 
 Dois stat cards lado a lado:
 - **Auditor:** Score geral + status (aprovado/reprovado/ressalvas)

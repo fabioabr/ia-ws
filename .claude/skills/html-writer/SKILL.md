@@ -4,7 +4,7 @@ argument-hint: "<source.md> [--output path] [--template name]"
 title: html-writer
 description: "Converte documentos .md em relatórios HTML auto-contidos seguindo o Design System do workspace. Use SEMPRE que precisar: gerar um relatório HTML a partir de um .md, converter documento markdown para apresentação visual, criar report HTML com dark/light theme, ou gerar HTML auto-contido com logos e estilos inline. O HTML gerado funciona abrindo direto no navegador, sem servidor. NÃO use para: formatar o .md em si (use md-writer), validar convenções (use md-validator), ou gerar diagramas (use diagram-drawio)."
 project-name: global
-version: 02.05.000
+version: 02.06.000
 author: claude-code
 license: MIT
 status: ativo
@@ -553,6 +553,146 @@ if (hamburgerBtn) {
 **Input:** `/report-maker E:\temp\notas\analise.md`
 **Output:** Arquivo `E:\temp\notas\analise.html` gerado. Como não foi possível identificar uma raiz de projeto com assets próprios, utilizou fallback global (`E:\Workspace\assets\`) para Design System, playground, variáveis e logos. Conteúdo em pt-BR com acentuação correta, KPI cards gerados a partir de tabelas com métricas percentuais.
 
+### P40 — Encoding: nunca usar escapes Unicode no HTML
+
+O HTML DEVE usar caracteres UTF-8 reais — NUNCA escapes como `\u00e7` (ç), `\u00e3` (ã), `\u00ed` (í). O `<meta charset="UTF-8">` já está no `<head>`, então todos os caracteres acentuados devem ser escritos diretamente.
+
+**Erros típicos a evitar:**
+| Errado | Correto |
+|--------|---------|
+| `Organiza\u00e7\u00e3o` | `Organização` |
+| `Prote\u00e7\u00e3o` | `Proteção` |
+| `Dura\u00e7\u00e3o` | `Duração` |
+| `A\u00e7\u00e3o` | `Ação` |
+
+Se gerar texto via JavaScript (JSON strings, template literals), garantir que os caracteres são UTF-8 no output, não escapes.
+
+### P41 — Chart.js: defer + guard para funcionar com file://
+
+O `<script>` do Chart.js CDN DEVE usar `defer` e `onerror` para não bloquear o HTML quando aberto via `file://`:
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"
+        defer
+        onerror="window.Chart=null;console.warn('Chart.js CDN not available')">
+</script>
+```
+
+A função `buildCharts()` DEVE ter guard no início:
+```javascript
+function buildCharts() {
+    if (typeof Chart === 'undefined') { console.warn('Chart.js not loaded'); return; }
+    // ...
+}
+```
+
+E a chamada a `buildCharts` DEVE ser protegida:
+```javascript
+if (typeof buildCharts === 'function' && typeof Chart !== 'undefined') {
+    try { buildCharts(); } catch(e) { console.warn('Charts skipped:', e); }
+}
+```
+
+Isso garante que **tabs, theme toggle e demais funcionalidades JS funcionam** mesmo sem Chart.js.
+
+### P42 — `<abbr>` NÃO deve parecer link
+
+O `<abbr class="acronym">` DEVE herdar a cor do texto ao redor — nunca usar `color:var(--primary)` que faz parecer um link clicável.
+
+```css
+/* CORRETO */
+abbr.acronym {
+    text-decoration: none;
+    border-bottom: 1px dotted var(--text-muted);
+    color: inherit;        /* herda cor do texto pai */
+    cursor: help;
+    font-weight: inherit;  /* herda peso do texto pai */
+}
+abbr.acronym:hover {
+    border-bottom-color: var(--primary);
+    border-bottom-style: solid;
+}
+
+/* ERRADO — NÃO fazer */
+abbr.acronym { color: var(--primary); font-weight: 500; }
+```
+
+### P43 — Conteúdo pre-tabs NÃO deve repetir em todas as tabs
+
+Se houver conteúdo "hero" ou "timeline" que deve aparecer apenas uma vez, ele DEVE ser colocado **dentro da primeira tab** — nunca em um container separado acima das tabs.
+
+Conteúdo fora de `<div class="tab-content">` fica visível em todas as tabs, dando a impressão de repetição.
+
+**Regra:** todo conteúdo visível DEVE estar dentro de um `tab-content` (exceto header, tabs-nav e footer).
+
+### P44 — REG-ID badge obrigatório em todo card
+
+Todo card que representa uma region DEVE ter um badge com o REG-ID alinhado à direita no header:
+
+```html
+<!-- Em card-header -->
+<div class="card-header">
+    <div class="card-header-icon bg-primary"><i class="ri-lightbulb-line"></i></div>
+    <div class="card-title">Título do Card</div>
+    <div class="card-badge reg-badge"
+         style="background:var(--border);color:var(--text-muted);font-size:.6rem;margin-left:auto;">
+        REG-EXEC-02
+    </div>
+</div>
+
+<!-- Em section-header -->
+<div class="section-header">
+    <div class="section-icon bg-primary"><i class="ri-lightbulb-line"></i></div>
+    <div class="section-title">Título da Seção</div>
+    <div class="card-badge reg-badge"
+         style="background:var(--border);color:var(--text-muted);font-size:.6rem;margin-left:auto;">
+        REG-PROD-02
+    </div>
+</div>
+```
+
+CSS necessário para alinhamento:
+```css
+.section-header { display: flex; align-items: center; }
+.section-header .reg-badge { margin-left: auto; }
+```
+
+**Regra:** cada REG-ID aparece **exatamente uma vez** — sem duplicatas.
+
+### P45 — Gantt DEVE ter tabela de detalhamento
+
+O card REG-PLAN-01 (Gantt Relativo) DEVE incluir, abaixo do grid visual de barras, uma **tabela de detalhamento** com colunas:
+
+| Épico | Descrição | Semanas | Horas est. | Dependências |
+
+Cada linha da tabela DEVE ter um indicador de cor correspondente à barra do Gantt (quadrado colorido `10×10px` antes do código do épico).
+
+### P46 — Font-size consistente entre cards
+
+Todos os cards de conteúdo (persona, escopo, riscos, etc.) DEVEM usar font-size consistente:
+
+| Elemento | Font-size |
+|----------|-----------|
+| Texto de listas (`li`, `ul`) | `.82rem` |
+| Labels (Dores, Ganhos, etc.) | `.82rem` |
+| Blockquotes em cards | `.8rem` |
+| Tabelas | `.82rem` |
+
+O `.persona-body` e similares DEVEM definir `font-size: .82rem` explicitamente — não confiar na herança do body.
+
+### P47 — Validação final antes de salvar
+
+Antes de salvar o HTML, o html-writer DEVE verificar:
+
+1. **Zero `\uXXXX`** — nenhum escape Unicode no arquivo
+2. **Zero `�`** — nenhum replacement character
+3. **Acentuação** — conferir nomes das tabs e seções: Organização, Decisão, Domínio, Ação, Proteção
+4. **Cada REG-ID** aparece exatamente 1 vez como badge (sem duplicatas)
+5. **Chart.js** tem `defer` + guard
+6. **Nenhum conteúdo** fora de `tab-content` (exceto header/nav/footer)
+7. **`<abbr>`** usa `color:inherit` (não azul)
+8. **Gantt** tem tabela de detalhamento abaixo
+
 ## 🚫 Constraints
 
 - Em modo regions: renderizar apenas as regions listadas no `html-layout.md` — o `.md` é completo, o HTML é configurável
@@ -560,10 +700,15 @@ if (hamburgerBtn) {
 - Usar exclusivamente cores, tipografia e componentes do Design System carregado — não inventar estilos
 - Acentuação pt-BR é obrigatória em todo texto renderizado
 - O HTML deve funcionar abrindo o arquivo direto no navegador, sem servidor
+- O HTML deve funcionar abrindo via `file://` — Chart.js com defer+guard (P41)
 - Logos devem ser embutidos como base64, nunca como paths relativos
 - Não gerar links quebrados a partir de wikilinks
 - Assets do projeto sempre têm prioridade sobre os globais
 - Na dúvida sobre como renderizar um componente, consultar o playground.html
+- Nunca usar escapes Unicode `\uXXXX` — sempre UTF-8 direto (P40)
+- `<abbr>` herda cor do texto, nunca azul como link (P42)
+- Todo card tem badge REG-ID, exatamente 1 vez (P44)
+- Gantt sempre com tabela de detalhamento (P45)
 
 ## 🔧 claude-code
 
@@ -592,6 +737,7 @@ Usar `$ARGUMENTS` no corpo para capturar o caminho do(s) arquivo(s) .md passados
 
 | Versão | Data | Descrição |
 |--------|------|-----------|
+| 02.06.000 | 2026-04-12 | P40-P47: encoding UTF-8 (sem escapes Unicode), Chart.js defer+guard para file://, abbr color:inherit (não azul), conteúdo dentro de tab-content (sem hero pré-tabs), REG-ID badge obrigatório em todo card, Gantt com tabela de detalhamento, font-size consistente (.82rem), checklist de validação final |
 | 02.05.000 | 2026-04-12 | P38: tabelas Build vs Buy usam coluna "Decisão" separada com badges coloridos (BUILD=success, BUY=info, HYBRID=warning) — badge não misturado na coluna "Solução" |
 | 02.04.000 | 2026-04-12 | P37: CSS fix para `<abbr>` em listas e checkboxes — `white-space: nowrap` evita quebra de alinhamento |
 | 02.03.000 | 2026-04-12 | P36: responsividade mobile — hamburger menu substitui tabs+tema em viewports < 768px, footer centralizado em mobile |

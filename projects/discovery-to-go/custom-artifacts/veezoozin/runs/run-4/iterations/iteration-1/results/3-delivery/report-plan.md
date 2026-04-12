@@ -220,7 +220,7 @@ Lógica da ordem: **o quê** (1-2) → **sob quais condições e riscos** (3-4) 
 
 ---
 
-### Seção 8 — Confiança do Material (REG-QUAL-01 + REG-QUAL-02 compacto)
+### Seção 8 — Confiança dos Auditores IA (REG-QUAL-01 + REG-QUAL-02 compacto)
 
 | # | Region | Layout | Tipo visual | Tecnologia | Configuração |
 |---|--------|--------|-------------|-----------|--------------|
