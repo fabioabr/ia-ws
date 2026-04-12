@@ -642,6 +642,76 @@ Ajustes de documentação e paths.
 
 ---
 
+### P26. Siglas sem tooltip — precisa de arquivo de siglas alimentável
+
+**Severidade:** Média | **Fase:** HTML Writer
+
+Várias siglas no one-pager e executive-report não receberam `<abbr>` tooltip (ex: PLG, RBAC, LOI, SCC). O `acronym-bank.md` existente não contém todas as siglas que aparecem nos reports de discovery.
+
+**Ação:**
+- [ ] Enriquecer `base-artifacts/conventions/acronyms/acronym-bank.md` com todas as siglas encontradas nos reports (PLG, RBAC, LOI, SCC, RLS, WAF, SSO, OIDC, SAML, CDN, etc.)
+- [ ] Criar processo: ao fim de cada pipeline run, listar siglas sem tooltip e adicioná-las ao banco
+- [ ] O html-writer deve marcar siglas sem tooltip com estilo visual diferente (sublinhado pontilhado) para fácil identificação
+
+---
+
+### P27. Alert CSS — ícone e texto desalinhados verticalmente
+
+**Severidade:** Baixa | **Fase:** HTML Writer
+
+A classe `.alert` tem `display: flex; align-items: center;` mas na prática o ícone e o texto não ficam alinhados verticalmente quando o texto quebra em múltiplas linhas.
+
+**Ação:**
+- [ ] Ajustar CSS: `.alert { display: flex; align-items: flex-start; }` com `.alert i { margin-top: 2px; }` para alinhar ícone com primeira linha
+- [ ] Ou usar `align-items: center` com `line-height` consistente entre ícone e texto
+- [ ] Atualizar no playground.html e propagar para os templates
+
+---
+
+### P28. Radar Go/No-Go — pontos não conectados + legenda incorreta
+
+**Severidade:** Média | **Fase:** HTML Writer
+
+O radar do Go/No-Go (REG-EXEC-03) no one-pager foi renderizado em CSS puro, mas:
+- a) Os pontos dos scores não estão conectados por linhas (parecem pontos soltos)
+- b) A legenda mostra cores (verde/amarelo/vermelho) que não correspondem às zonas desenhadas no fundo
+
+**Ação:**
+- [ ] Substituir o radar CSS por **Chart.js radar** (mesmo no one-pager) — é a única forma de ter pontos conectados + zonas corretas
+- [ ] Atualizar regra: radar charts SEMPRE usam Chart.js, nunca CSS puro (CSS não consegue conectar pontos num radar)
+- [ ] Garantir que a legenda do Chart.js use as mesmas cores das zonas de fundo (P18)
+- [ ] Atualizar chart-specialist e html-writer: radar = Chart.js obrigatório
+
+---
+
+### P29. Gráficos de barras verticais — preferir horizontais
+
+**Severidade:** Baixa | **Fase:** HTML Writer
+
+O gráfico de cenários de viabilidade (REG-FIN-07) usa barras verticais. Para comparação entre cenários, barras horizontais são mais legíveis (labels longos não ficam truncados, leitura natural esquerda→direita).
+
+**Ação:**
+- [ ] Atualizar chart-specialist: para comparações entre categorias com labels longos, preferir barras horizontais
+- [ ] Atualizar html-writer: barras de cenários = horizontais (HTML/CSS) ou Chart.js horizontal bar
+- [ ] Aplicar em REG-FIN-07 no próximo run
+
+---
+
+### P30. TCO 3 Anos — gráfico Chart.js não renderizado
+
+**Severidade:** Alta | **Fase:** HTML Writer
+
+O gráfico stacked bar do TCO (REG-FIN-01) no executive-report.html tem o canvas mas as barras não aparecem — apenas os labels (Ano 1, Ano 2, Ano 3) e a legenda. O Chart.js provavelmente não está inicializando corretamente (erro de JS, dados com formato errado, ou canvas com height 0).
+
+**Ação:**
+- [ ] Verificar o JS do executive-report.html: o Chart.js está sendo chamado corretamente?
+- [ ] Verificar se o canvas tem dimensões definidas (width/height)
+- [ ] Verificar se os dados estão no formato correto para Chart.js stacked bar
+- [ ] Testar isoladamente o snippet do gráfico para identificar o erro
+- [ ] Corrigir e validar que as barras aparecem em dark e light theme
+
+---
+
 ## Ordem sugerida de resolução
 
 ```
@@ -675,6 +745,7 @@ FASE 1 — EXECUÇÃO:
 P23 (blocos sequenciais)         ← 1 bloco por vez, na ordem
 P24 (interview.md obrigatório)   ← sem log = fase inválida
 P25 (especialistas proativos)    ← propor soluções, não apenas coletar
+P26-P30 (bugs visuais HTML)      ← tooltips, alerts, radar, barras, TCO chart
 
 VIABILIDADE:
 P21 (auditor alerta receita<TCO) ← finding crítico
