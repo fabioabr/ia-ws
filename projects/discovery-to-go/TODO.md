@@ -47,18 +47,58 @@ updated: 2026-04-11
 
 ## Pendências
 
-### Teste end-to-end
+### 14. Teste end-to-end do pipeline
 
-Nunca foi executado o pipeline completo de ponta a ponta. Necessário preparar um briefing e executar as 3 fases + revisões de HR para validar o fluxo real.
+Nunca foi executado o pipeline completo de ponta a ponta. Necessário:
+
+- [ ] Criar um briefing de teste (projeto simples — CRUD ou landing page)
+- [ ] Executar orchestrator → Fase 1 (Discovery) → HR Review
+- [ ] Executar Fase 2 (Challenge) → HR Review
+- [ ] Executar Fase 3 (Delivery): md-writer → consolidator → report-planner → html-writer
+- [ ] Validar que os marcadores de region (`<!-- region: REG-XXXX-NN -->`) são gerados corretamente
+- [ ] Validar que report-plan.md é gerado pelo report-planner
+- [ ] Validar que o HTML final renderiza as regions conforme o plano
+- [ ] Documentar problemas encontrados e corrigir
 
 ---
 
-### Validação de report setups
+### 15. Validação de report setups
 
-Testar os setups essential/executive/complete gerando HTMLs reais para confirmar que os presets de regions produzem relatórios coerentes.
+Testar os 3 presets gerando HTMLs reais a partir do sample run (FinTrack Pro):
+
+- [ ] `essential.md` → gerar `one-pager.html` (8 regions)
+- [ ] `executive.md` → gerar `one-pager.html` + `executive-report.html` (28 regions)
+- [ ] `complete.md` → gerar `one-pager.html` + `executive-report.html` + `full-report.html` (90 regions)
+- [ ] Comparar visualmente os 3 níveis de detalhe
+- [ ] Validar que regions domain-specific (SaaS) aparecem apenas no setup complete
 
 ---
 
-### base-artifacts periodic sync
+### 16. Processo de sync periódico de base-artifacts
 
-Estabelecer processo recorrente para manter base-artifacts sincronizado com os artefatos globais do workspace (skills, context-templates, regions).
+Estabelecer processo recorrente para manter base-artifacts sincronizado:
+
+- [ ] Criar script ou skill de sincronização automática
+- [ ] Definir quando sincronizar (antes de cada run? após cada commit?)
+- [ ] Documentar no `docs/dependency-manifest.md`
+
+---
+
+### 17. Atualizar quick-start.md com report setups
+
+O quick-start.md não menciona os 3 report setups (essential/executive/complete). Precisa:
+
+- [ ] Adicionar passo sobre escolha do report-setup na Fase 3
+- [ ] Explicar que o config.md define `report-setup: essential|executive|complete`
+- [ ] Mencionar que o cliente pode sobrescrever com html-layout.md customizado
+
+---
+
+### 18. README.md do projeto — seções desatualizadas
+
+O README.md principal ainda não documenta:
+
+- [ ] Os 3 report setups (essential/executive/complete)
+- [ ] O fluxo completo da Fase 3 com 4 sub-fases (md-writer → consolidator → report-planner → html-writer)
+- [ ] A pasta `templates/draft-templates/` (reorganização)
+- [ ] O client template scaffold (`custom-artifacts/_client-template/`)
