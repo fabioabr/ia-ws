@@ -15,6 +15,7 @@ tags:
   - saas
 created: 2026-04-11 09:00
 iteration: 1
+report-setup: complete
 ---
 
 # Iteration Setup — FinTrack Pro
@@ -93,6 +94,7 @@ Geração do relatório final de discovery consolidado a partir dos dados valida
 | Thresholds de scoring | `customization/scoring-thresholds.md` |
 | Política de iteração | `customization/iteration-policy.md` |
 | Template de HR loop | `customization/hr-loop-template.md` |
+| Layout do HTML | `customization/html-layout.md` |
 
 Todos usando configuração padrão (sem overrides para este run).
 

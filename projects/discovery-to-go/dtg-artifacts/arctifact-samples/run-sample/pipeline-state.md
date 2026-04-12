@@ -211,6 +211,15 @@ Apresentar resultados do Challenge ao humano para Human Review.
 ✅ Fase 3 — Delivery
 ```
 
+### Sub-fases executadas
+
+```
+3.1 md-writer        — Polimento dos .md individuais
+3.2 consolidator     — Consolidação em delivery-report.md
+3.3 report-planner   — Plano de regions e layout para o HTML
+3.4 html-writer      — Geração do delivery-report.html
+```
+
 ### Entregáveis gerados
 
 | Arquivo | Formato | Descrição |
@@ -242,14 +251,15 @@ Apresentar resultados do Challenge ao humano para Human Review.
 | 10th-man | 15.300 |
 | pipeline-md-writer | 12.400 |
 | consolidator | 8.600 |
+| report-planner | 3.200 |
 | html-writer | 5.200 |
-| **Total Pipeline** | **115.000** |
+| **Total Pipeline** | **118.200** |
 
 ### Estimativa de custo
 
 | Modelo | Tokens | Custo estimado |
 |--------|--------|----------------|
-| claude-sonnet-4-20250514 | 115.000 | ~$0.63 |
+| claude-sonnet-4-20250514 | 118.200 | ~$0.65 |
 
 ### Status do pipeline
 
