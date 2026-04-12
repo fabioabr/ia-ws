@@ -2,7 +2,7 @@
 title: Quick Start
 description: Guia passo a passo para iniciar um novo projeto no Discovery Pipeline v0.5 — do briefing ao delivery report
 project-name: discovery-to-go
-version: 03.00.000
+version: 03.02.000
 status: ativo
 author: claude-code
 category: how-to
@@ -170,9 +170,22 @@ Se você avançou, o orchestrator executa em sequência:
 3. **report-planner** — Planeja a visualização do HTML por regions
 4. **html-writer** — Gera a versão HTML do report
 
+> [!tip] Report Setup
+> O nível de detalhe dos HTMLs gerados é controlado pelo `report-setup` no `config.md` da run:
+>
+> | Setup | HTMLs gerados | Público |
+> |-------|--------------|---------|
+> | `essential` | `one-pager.html` (8 regions) | C-level, sponsor |
+> | `executive` | `one-pager.html` + `executive-report.html` (28 regions) | Diretoria, gestão |
+> | `complete` | `one-pager.html` + `executive-report.html` + `full-report.html` (90 regions) | Time técnico, PO |
+>
+> Default: `complete`. Presets em `dtg-artifacts/templates/report-setups/`.
+
 **Ao final da Fase 3 você terá:**
 - `delivery/delivery-report.md`
-- `delivery/delivery-report.html`
+- `delivery/one-pager.html` (sempre gerado)
+- `delivery/executive-report.html` (setup `executive` ou `complete`)
+- `delivery/full-report.html` (setup `complete`)
 - State snapshot final appendado em `pipeline-state.md`
 
 ---
@@ -227,8 +240,11 @@ runs/run-{n}/
 │               ├── 3.3-report-layout.md
 │               └── 3.4-delivery-reports.md
 └── delivery/
-    ├── delivery-report.md               ← relatório final
-    └── delivery-report.html             ← versão HTML
+    ├── delivery-report.md               ← relatório completo (.md com regions)
+    ├── report-plan.md                   ← plano visual por region
+    ├── one-pager.html                   ← resumo executivo (sempre gerado)
+    ├── executive-report.html            ← relatório corporativo (setup executive/complete)
+    └── full-report.html                 ← relatório técnico completo (setup complete)
 ```
 
 ---
@@ -245,10 +261,15 @@ Se o projeto tem necessidades específicas, edite os arquivos em `runs/run-{n}/s
 | `rules/iteration-policy.md` | Máximo de iterações, threshold de estagnação |
 | `report-templates/human-review-template.md` | Formato do Human Review apresentado a você |
 | `report-templates/final-report-template.md` | Estrutura do relatório final |
+| `html-layout.md` | Quais regions aparecem no HTML, ordem e layout |
+
+### Report Setup
+
+O `report-setup` no `config.md` define quantos HTMLs são gerados e com qual profundidade. O cliente pode sobrescrever o setup default editando o `config.md` da run antes da Fase 3, ou mantendo um override em `custom-artifacts/{client}/report-setup.md`.
 
 ### Overrides por cliente
 
-Se o cliente já tem overrides definidos em `custom-artifacts/{client}/`, o orchestrator usa esses automaticamente no lugar dos defaults.
+Se o cliente já tem overrides definidos em `custom-artifacts/{client}/`, o orchestrator usa esses automaticamente no lugar dos defaults (incluindo `report-setup`).
 
 ---
 
@@ -276,5 +297,6 @@ Se o cliente já tem overrides definidos em `custom-artifacts/{client}/`, o orch
 |--------|------|-----------|
 | 01.00.000 | 2026-04-05 | Criação do documento |
 | 02.00.000 | 2026-04-05 | Reescrita para Pipeline v2 |
+| 03.02.000 | 2026-04-11 | Adicionado report-setup (essential/executive/complete) ao Passo 7, customização de html-layout e report-setup, e atualizado folder tree do delivery com os 3 HTMLs possíveis. |
 | 03.01.000 | 2026-04-11 | Adicionado report-planner à Fase 3 (passo 7). Atualizado folder tree do resultado final com sub-fase 3.3 (report-layout) e renumeração de html-writer para 3.4. |
 | 03.00.000 | 2026-04-10 | Reescrita completa para Pipeline v0.5 — guia passo a passo de ponta a ponta com scaffold de runs, 3 fases, Human Review com 4 opções de decisão, context-templates globais |

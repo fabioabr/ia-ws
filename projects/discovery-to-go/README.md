@@ -200,9 +200,9 @@ Quatro sub-fases sequenciais transformam drafts aprovados em entregáveis finais
 | # | Sub-fase | Agente | Output |
 |---|----------|--------|--------|
 | 3.1 | Documents | pipeline-md-writer | Markdown polido dos 5 drafts |
-| 3.2 | Consolidation | consolidator | `delivery-report.md` (one-pager + seções temáticas) |
-| 3.3 | Report planning | report-planner | Report layout (regions para o HTML) |
-| 3.4 | Reports | html-writer | `delivery-report.html` (auto-contido, dark/light theme) |
+| 3.2 | Consolidation | consolidator | `delivery-report.md` com marcadores de region |
+| 3.3 | Visual Planning | report-planner | `report-plan.md` (especificacao visual por region) |
+| 3.4 | Reports | html-writer | HTMLs com regions visuais renderizadas |
 
 ---
 
@@ -291,18 +291,33 @@ Templates em `dtg-artifacts/templates/` usados pelo orchestrator ao criar o scaf
 
 | Template | Quando usado |
 |----------|-------------|
-| `briefing-template.md` | Modelo para o briefing inicial do cliente |
-| `audit-report-template.md` | Estrutura do relatório do auditor |
-| `challenge-report-template.md` | Estrutura do relatório do 10th-man |
-| `change-request-template.md` | Formato de change request entre iterações |
-| `iteration-setup-template.md` | Setup de cada nova iteração |
+| `draft-templates/briefing-template.md` | Modelo para o briefing inicial do cliente |
+| `draft-templates/audit-report-template.md` | Estrutura do relatório do auditor |
+| `draft-templates/challenge-report-template.md` | Estrutura do relatório do 10th-man |
+| `draft-templates/change-request-template.md` | Formato de change request entre iterações |
+| `draft-templates/iteration-setup-template.md` | Setup de cada nova iteração |
 | `customization/final-report-template.md` | Estrutura do delivery report (seções, one-pager) |
 | `customization/human-review-template.md` | Formato do formulário de Human Review |
 | `customization/iteration-policy.md` | Limites de iteração, threshold de estagnação |
 | `customization/scoring-thresholds.md` | Pisos de nota por perfil (standard, PoC, high-risk) |
+| `report-setups/` | Presets de report (essential, executive, complete) |
 
 > [!tip] Customização
 > Os templates em `customization/` podem ser sobrescritos por `custom-artifacts/{client}/config/` para personalização por cliente.
+
+---
+
+## Report Setups
+
+Três presets que definem o nível de detalhe dos HTMLs gerados:
+
+| Setup | HTMLs | Regions | Público |
+|-------|-------|---------|---------|
+| `essential` | `one-pager.html` | 8 | C-level, sponsor |
+| `executive` | + `executive-report.html` | 28 | Diretoria, gestão |
+| `complete` | + `full-report.html` | 90 | Time técnico, PO |
+
+Configurável via `report-setup` no `config.md` da run. Presets em `dtg-artifacts/templates/report-setups/`.
 
 ---
 
@@ -322,9 +337,10 @@ runs/run-{n}/
 │       ├── report-templates/             ← templates de output
 │       │   ├── final-report-template.md
 │       │   └── human-review-template.md
-│       └── rules/                        ← políticas da run
-│           ├── iteration-policy.md
-│           └── scoring-thresholds.md
+│       ├── rules/                        ← políticas da run
+│       │   ├── iteration-policy.md
+│       │   └── scoring-thresholds.md
+│       └── html-layout.md               ← layout customizado para o HTML
 ├── iterations/
 │   └── iteration-{i}/
 │       ├── logs/
@@ -336,7 +352,10 @@ runs/run-{n}/
 │           └── 3-delivery/              ← 4 sub-fases (3.1, 3.2, 3.3, 3.4)
 └── delivery/
     ├── delivery-report.md                ← relatório final consolidado
-    └── delivery-report.html              ← versão HTML auto-contida
+    ├── report-plan.md                    ← especificação visual por region
+    ├── one-pager.html                    ← sempre gerado (setup essential+)
+    ├── executive-report.html             ← setup executive/complete
+    └── full-report.html                  ← setup complete
 ```
 
 ### Artefatos numerados
@@ -401,6 +420,11 @@ Use este sample como referência para entender exatamente o que o pipeline produ
 ---
 
 ## Customização por Cliente
+
+Para criar a pasta de um novo cliente:
+```bash
+cp -r custom-artifacts/_client-template/ custom-artifacts/{client-name}/
+```
 
 Para personalizar o pipeline para um cliente específico:
 
