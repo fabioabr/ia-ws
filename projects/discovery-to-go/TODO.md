@@ -514,6 +514,72 @@ Ajustes de documentação e paths.
 
 ---
 
+### P23. Entrevista deve ser executada na ordem — um bloco por vez
+
+**Severidade:** Alta
+**Fase:** Fase 1 (Discovery)
+
+**O que aconteceu no teste:** Os 8 blocos temáticos foram executados em paralelo (4 agentes × 2 blocos cada). Isso causou:
+- Blocos financeiros (1.3 e 1.8) geraram números contraditórios porque não viram o output um do outro
+- Blocos técnicos (1.5, 1.7) não tiveram contexto do que o PO definiu nos blocos 1.1-1.4
+- O customer não manteve consistência entre respostas de blocos diferentes (cada agente tinha seu próprio "customer")
+
+**O que deveria acontecer:** Os 8 blocos DEVEM ser executados **sequencialmente**, na ordem #1 → #2 → #3 → #4 → #5 → #6 → #7 → #8. Cada bloco tem acesso ao output dos blocos anteriores. O customer mantém consistência porque é o mesmo agente ao longo de toda a entrevista.
+
+**Por quê na ordem:**
+- Bloco #1 (Visão) define o problema — blocos seguintes precisam dessa base
+- Bloco #3 (OKRs) define métricas e modelo de negócio — bloco #8 (TCO) precisa desses números
+- Bloco #5 (Tech) define stack — bloco #7 (Arquitetura) depende das decisões de stack
+- Bloco #6 (Privacy) depende de saber quais dados pessoais existem (definidos nos blocos anteriores)
+
+**Exceção:** Blocos #1 e #2 PODEM rodar em paralelo (ambos são PO, eixo produto). Blocos #5 e #6 PODEM rodar em paralelo (tech e privacy são eixos diferentes). Mas #7 e #8 DEVEM ser sequenciais após #5 e #6.
+
+**Ação:**
+- [ ] Atualizar orchestrator SKILL.md: blocos são sequenciais por padrão
+- [ ] Definir ordem de dependência:
+  ```
+  #1 (Visão) → #2 (Personas) → #3 (Valor/OKRs) → #4 (Processo/Equipe)
+       ↓                                                    ↓
+  #5 (Tech) + #6 (Privacy) em paralelo
+       ↓           ↓
+  #7 (Arquitetura) → #8 (TCO/Build vs Buy)
+  ```
+- [ ] Cada agente recebe como input: briefing + blueprints + outputs dos blocos anteriores
+- [ ] O customer mantém estado entre blocos (respostas anteriores são contexto para as seguintes)
+
+---
+
+### P24. Log da entrevista (interview.md) é obrigatório — sem log, fase inválida
+
+**Severidade:** Alta
+**Fase:** Fase 1 (Discovery)
+
+**O que aconteceu no teste:** A Fase 1 gerou os 8 result files mas NÃO gerou o interview.md. O pipeline aceitou e seguiu para a Fase 2 normalmente.
+
+**O que deveria acontecer:** O interview.md NÃO é opcional — é um artefato obrigatório da Fase 1. Sem ele, a fase é considerada **incompleta**. O orchestrator DEVE validar sua existência antes de avançar para o HR Review.
+
+**Regra:**
+- Após os 8 blocos serem executados, o orchestrator verifica se `iterations/iteration-{i}/logs/interview.md` existe e tem conteúdo
+- Se não existe → flag `[FASE-INCOMPLETA]` + gerar automaticamente a partir dos result files (modo degradado)
+- Se existe mas está vazio → mesmo tratamento
+- O auditor na Fase 2 DEVE ler o interview.md para validar rastreabilidade das source tags
+
+**O interview.md serve para:**
+- Rastreabilidade: de onde veio cada informação (`[BRIEFING]`, `[RAG]`, `[INFERENCE]`)
+- Transparência: o humano no HR Review vê exatamente o que foi perguntado e respondido
+- Auditoria: o auditor verifica se as `[INFERENCE]` são justificadas
+- Consistência: detectar se o customer contradisse respostas entre blocos
+- Documentação: registro permanente da entrevista para consulta futura
+
+**Ação:**
+- [ ] Atualizar orchestrator SKILL.md: interview.md é OBRIGATÓRIO — validar existência antes de avançar
+- [ ] Se ausente: flag `[FASE-INCOMPLETA]` + tentar gerar modo degradado
+- [ ] Atualizar auditor SKILL.md: ler interview.md para validar rastreabilidade
+- [ ] Atualizar regra discovery.md: interview.md listado como output obrigatório da Fase 1
+- [ ] O interview.md deve ser o PRIMEIRO artefato verificado no checklist de conclusão da Fase 1
+
+---
+
 ## Ordem sugerida de resolução
 
 ```
@@ -542,6 +608,10 @@ P19 (SaaS tom executivo)       ← adaptar público
 
 REDESIGN:
 P20 (one-pager como orçamento) ← nova proposta de valor
+
+FASE 1 — EXECUÇÃO:
+P23 (blocos sequenciais)         ← 1 bloco por vez, na ordem
+P24 (interview.md obrigatório)   ← sem log = fase inválida
 
 VIABILIDADE:
 P21 (auditor alerta receita<TCO) ← finding crítico
