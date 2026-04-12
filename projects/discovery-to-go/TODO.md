@@ -453,6 +453,67 @@ Ajustes de documentação e paths.
 
 ---
 
+### P21. Auditor deve alertar quando receita não cobre TCO em 3 anos
+
+**Severidade:** Alta
+**Fase:** Fase 2 (Auditor)
+
+**O que deveria acontecer:** O auditor, ao validar os blocos 1.3 (Valor/OKRs) e 1.8 (TCO/Build vs Buy), deve comparar automaticamente a receita projetada com o TCO projetado em 3 anos. Se a receita não cobre o TCO (projeção negativa), o auditor deve:
+
+1. Emitir alerta `[!danger]` explícito na seção de Viabilidade Financeira
+2. Penalizar na dimensão "Completude" — o discovery está incompleto se não endereça a inviabilidade
+3. Registrar como finding crítico com recomendação: "Receita projetada (R$ X) não cobre TCO (R$ Y) em 3 anos. Diferença: -R$ Z. O discovery precisa apresentar cenários alternativos viáveis."
+
+**Ação:**
+- [ ] Atualizar auditor SKILL.md: adicionar validação automática receita vs TCO
+- [ ] Se receita < TCO → finding crítico + alerta `[!danger]` + penalidade em Completude
+- [ ] O alerta deve incluir: receita projetada, TCO projetado, diferença, e recomendação de cenários
+
+---
+
+### P22. Gerar cenários alternativos quando solução é financeiramente inviável
+
+**Severidade:** Alta
+**Fase:** Fase 1 (Solution Architect) + Fase 3 (Consolidator)
+
+**O que deveria acontecer:** Quando a análise do bloco 1.8 identifica que a solução proposta gera prejuízo em 3 anos, o solution-architect NÃO deve apenas registrar o número negativo e seguir. Deve **obrigatoriamente** gerar cenários alternativos que tornem o projeto viável.
+
+**Tipos de cenários a explorar:**
+
+| Cenário | O que muda | Exemplo |
+|---------|-----------|---------|
+| **Ajuste de pricing** | Aumentar preço dos planos | Pro de R$ 897 para R$ 1.497 |
+| **Redução de escopo MVP** | Cortar features caras | Remover visualização AI, focar em NL-to-SQL puro |
+| **Mudança de stack** | Trocar componentes caros | Substituir Vertex AI Vector Search por Firestore vectors |
+| **Mudança de modelo** | Pivô de modelo de negócio | De SaaS por tenant para consultoria + licença |
+| **Aumento de base** | Projeção com mais clientes | Break-even com 50 tenants ao invés de 35 |
+| **Redução de equipe** | Team mais enxuto | 4 devs ao invés de 6, timeline mais longa |
+
+**Para cada cenário alternativo, o architect deve apresentar:**
+- Nome do cenário
+- O que muda em relação ao cenário base
+- Novo TCO 3 anos
+- Nova receita projetada 3 anos
+- Novo break-even (meses)
+- Riscos introduzidos pela mudança
+- Recomendação (viável / viável com ressalvas / inviável)
+
+**O delivery report deve incluir:**
+- Seção de cenários (nova region `REG-FIN-07 — Cenários Financeiros`)
+- Tabela comparativa: cenário base vs alternativas
+- Gráfico comparativo (bar chart com receita vs custo por cenário)
+- Recomendação do architect sobre qual cenário seguir
+
+**Ação:**
+- [ ] Atualizar solution-architect SKILL.md: ao calcular TCO, se receita < custo → obrigatório gerar 3+ cenários alternativos
+- [ ] Criar region `REG-FIN-07` (Financial Scenarios) com schema, exemplo e chart specialist recommendation
+- [ ] Atualizar consolidator: incluir seção de cenários no delivery report quando existirem
+- [ ] Atualizar report-setups: cenários aparecem no `executive` e `complete` (não no `essential`)
+- [ ] Atualizar html-writer: renderizar tabela comparativa de cenários com bar chart (Chart.js grouped bar)
+- [ ] Criar arquivo `base-artifacts/templates/report-regions/financial/financial-scenarios.md`
+
+---
+
 ## Ordem sugerida de resolução
 
 ```
@@ -481,6 +542,10 @@ P19 (SaaS tom executivo)       ← adaptar público
 
 REDESIGN:
 P20 (one-pager como orçamento) ← nova proposta de valor
+
+VIABILIDADE:
+P21 (auditor alerta receita<TCO) ← finding crítico
+P22 (cenários alternativos)      ← solution-architect gera alternativas viáveis
 
 DOCS:
 P9  (paths documentados)       ← polish
