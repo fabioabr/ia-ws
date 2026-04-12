@@ -34,7 +34,7 @@ Os problemas concretos:
 
 O Veezoozin resolve isso com uma camada de inteligência que:
 - Recebe perguntas em linguagem natural (PT-BR, EN-US, ES)
-- Converte em queries SQL/analíticas contextualizadas pelo domínio do tenant
+- Converte em queries SQL/analíticas contextualizadas pelo domínio do tenant. (Sempre usaremos o BigQuery como banco)
 - Retorna resultados visuais: gráficos, insights, relatórios e análises
 - Aprende continuamente sobre o contexto de cada tenant
 
@@ -43,6 +43,10 @@ O Veezoozin resolve isso com uma camada de inteligência que:
 - Democratização: 100% dos colaboradores podem consultar dados, não apenas os técnicos
 - Qualidade: Respostas contextualizadas com gráficos e insights, não tabelas brutas
 - Custo: Redução de 60-80% no volume de tickets para o time de dados/BI
+
+**IMPORTANTE:**
+- Devemos pensar em possibilidades de controlar o acesso aos dados em nivel de registro/campo.
+- Precisamos pensar em como monetizar a plataforma. Com planos por exemplo. (incluindo uma opção free com recursos bem limitados)
 
 ---
 
@@ -73,7 +77,7 @@ O Veezoozin resolve isso com uma camada de inteligência que:
 
 | Nome / Papel | Função no projeto | Poder de decisão | Disponível? |
 |-------------|-------------------|-------------------|-------------|
-| Fabio Patria, CTO | Sponsor e arquiteto de solução | Aprova arquitetura e orçamento | Sim, diário |
+| Fabio, CTO | Sponsor e arquiteto de solução | Aprova arquitetura e orçamento | Sim, diário |
 | Time mAInd Tech | Desenvolvimento e operação | Executa | Sim, dedicado |
 
 ---
@@ -134,14 +138,14 @@ O Veezoozin resolve isso com uma camada de inteligência que:
 
 | Tipo | Restrição |
 |------|-----------|
-| **Prazo** | MVP em 3 meses (12 semanas) |
+| **Prazo** | MVP em 4 meses (12 semanas) |
 | **Orçamento** | Calcular como output — TCO para operação em GCP |
 | **Stack obrigatória** | GCP (Cloud Run, Vertex AI, Cloud SQL, BigQuery, Firestore), Python |
 | **Stack proibida** | Nenhuma explicitamente, mas preferência forte por GCP over AWS/Azure |
-| **Equipe disponível** | Time mAInd Tech — full-stack devs com experiência em Python e GCP |
+| **Equipe disponível** | Contrataremos |
 | **Compliance** | LGPD obrigatória — dados dos clientes são sensíveis. Queries não podem expor dados de um tenant para outro |
 | **LLM** | Usar APIs externas (Claude API, Gemini API) — não hospedar LLM próprio |
-| **Bancos suportados no MVP** | PostgreSQL e BigQuery (expandir depois) |
+| **Bancos suportados no MVP** | BigQuery (expandir depois) |
 | **MCP** | Suportar protocolo MCP para integração com RAGs externos |
 | **Segurança de queries** | Read-only obrigatório. Sandbox com timeout e limite de linhas. Sem acesso a DDL/DML |
 | **Outros** | Cliente GCP já tem créditos e incentivos — maximizar uso dos serviços nativos |
@@ -180,7 +184,7 @@ Time mAInd Tech (execução) + CTO (decisão de arquitetura e investimento)
 | Configuração | Valor | Opções |
 |-------------|-------|--------|
 | **Nível de detalhe do report** | executive | `essential` / `executive` / `complete` |
-| **Rigor da validação** | padrão | `padrão` (≥90%) / `alto-risco` (≥95%) / `poc` (≥80%) |
+| **Rigor da validação** | poc | `padrão` (≥90%) / `alto-risco` (≥95%) / `poc` (≥80%) |
 | **Tipo de projeto** | saas + ai-ml + datalake-ingestion | Multi-template: SaaS (multi-tenant, billing) + AI/ML (NL-to-SQL, LLM, embeddings) + Datalake (consulta a bancos analíticos) |
 | **Simulação do cliente** | sim | `sim` (IA simula o cliente usando o briefing como base) / `não` (cliente humano real responde durante a Fase 1) |
 
