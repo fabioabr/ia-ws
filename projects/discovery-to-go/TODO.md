@@ -253,6 +253,76 @@ Um projeto com projeção financeira negativa **não deveria passar** pelo gate 
 
 ---
 
+### P20. One-Pager deve funcionar como "orçamento de tempo" (sem valores)
+
+**Severidade:** Alta
+**Fase:** Report Setup + Consolidator + HTML Writer
+
+O one-pager atual é um resumo executivo genérico. Deveria funcionar como um **orçamento de projeto** — focado em tempo, esforço e escopo — sem entrar em valores financeiros. O objetivo é dar um "cheiro" do que será feito, quanto tempo leva e quem participa.
+
+**Estrutura proposta do one-pager:**
+
+#### 1. Descritivo do Projeto
+- Descrição macro (2-3 frases)
+- Objetivo (1 frase)
+- Premissas (bullets)
+- Responsáveis (tabela: nome, papel)
+
+#### 2. Qualidade e Confiança
+- Score do auditor (radar chart ou stat cards com as 5 dimensões)
+- Score do 10th-man (mesmo formato)
+- Veredicto Go/No-Go (badge)
+- Nota: "Material gerado com X% de dados do briefing, Y% inferidos"
+
+#### 3. Escopo
+- **IN** (o que está contemplado) — lista clara com bullets verdes
+- **OUT** (o que NÃO está contemplado) — lista clara com bullets vermelhos
+- Separação visual forte (split card ou duas colunas)
+
+#### 4. Atividades e Esforço
+- Tabela de atividades macro (épicos/fases)
+- Para cada atividade: roles envolvidas, horas/homem por role, valor/hora por role
+- Exemplo:
+
+| Atividade | Role | Horas | Valor/Hora |
+|-----------|------|-------|------------|
+| Setup e PoC | Tech Lead | 40h | — |
+| Setup e PoC | Dev Backend | 80h | — |
+| Ingestão NL-to-SQL | Dev Backend | 120h | — |
+| Ingestão NL-to-SQL | Dev AI/ML | 80h | — |
+| UX/Frontend | Designer | 60h | — |
+| UX/Frontend | Dev Frontend | 100h | — |
+
+> Nota: a coluna "Valor/Hora" fica vazia no report — o cliente preenche com seus valores internos ou o comercial preenche antes de enviar.
+
+#### 5. Planejamento (Gantt relativo)
+- Gráfico de Gantt **sem datas fixas** — escala relativa: Semana 1, Semana 2, ..., Semana N
+- Barras por atividade/fase
+- Dependências visuais (setas)
+- Marcos (milestones) destacados
+- Renderizado em HTML/CSS puro (barras horizontais com grid de semanas)
+
+#### 6. Totais
+- Total de horas por role
+- Total geral de horas
+- Duração total estimada (em semanas)
+- Stat cards no rodapé
+
+**Ação:**
+- [ ] Redesenhar o report-setup `essential.md` com esta nova estrutura (6 blocos)
+- [ ] Criar/ajustar regions:
+  - REG-EXEC-01 → simplificar para descritivo + objetivo + premissas + responsáveis
+  - REG-QUAL-01/02 → versão compacta com scores em stat cards
+  - REG-PROD-07 → manter split card in/out
+  - REG-BACK-01 → transformar em tabela de atividades com roles e horas
+  - NOVO: REG-EXEC-05 ou REG-FIN-06 → Gantt relativo (HTML/CSS)
+  - NOVO: REG-FIN-07 ou REG-EXEC-06 → Totais de horas (stat cards)
+- [ ] Atualizar html-writer para renderizar Gantt relativo em HTML/CSS (barras com grid de semanas, sem Mermaid)
+- [ ] Atualizar report-planner para gerar plano adequado quando setup = essential
+- [ ] O one-pager NÃO mostra valores em R$ — apenas horas e semanas. O campo "Valor/Hora" é deixado vazio para preenchimento manual
+
+---
+
 ### P19. Seção SaaS Multi-Tenant e Pricing — tom técnico demais para report executivo
 
 **Severidade:** Média
@@ -386,6 +456,7 @@ P16 (mitigações detalhadas)← especialistas propõem resolução
 P17 (10th-man layout)     ← igualar ao layout do auditor
 P18 (radar grid lines)    ← regiões visuais na escala
 P19 (SaaS section too technical) ← adaptar tom ao público
+P20 (one-pager como orçamento) ← redesenhar foco e conteúdo
  ↓
 P9-P11 (docs + config)   ← polish final
 ```
