@@ -35,18 +35,24 @@ Cada cliente tem uma pasta própria com nome em kebab-case:
 ```
 custom-artifacts/
 ├── README.md                          ← este arquivo
+├── _client-template/                  ← scaffold — copie para criar pasta de cliente
 ├── {client-name}/
 │   ├── kb/                            ← knowledge base do cliente
 │   │   ├── integration-flow.md        ← fluxo de integração / ecossistema
 │   │   ├── tech-stack.md              ← stack e ferramentas do cliente
 │   │   └── business-context.md        ← contexto de negócio específico
 │   ├── assets/                        ← assets visuais
-│   │   └── logo.png                   ← logo do cliente (para reports)
+│   │   └── logos/                     ← dark.png, light.png
 │   ├── rules/                         ← regras adicionais
 │   │   └── {rule-name}.md             ← regra específica do cliente
-│   └── config/                        ← overrides de configuração
-│       ├── scoring-thresholds.md       ← pisos de nota customizados
-│       ├── iteration-policy.md         ← política de iteração
+│   ├── templates/                     ← overrides de templates
+│   │   └── customization/             ← scoring, iteration, report, layout
+│   │       ├── scoring-thresholds.md
+│   │       ├── iteration-policy.md
+│   │       ├── final-report-template.md
+│   │       ├── human-review-template.md
+│   │       └── html-layout.md         ← quais regions no HTML, ordem, layout
+│   └── config/                        ← configurações gerais do cliente
 │       └── final-report-template.md    ← estrutura de report customizada
 └── {another-client}/
     └── ...
