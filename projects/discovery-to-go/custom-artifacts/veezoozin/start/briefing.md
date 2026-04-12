@@ -209,22 +209,67 @@ O projeto será desenvolvido por **uma única pessoa** (Fabio, arquiteto sênior
 - Se o produto validar, contratações futuras são feitas com receita (não com investimento)
 - Design: usar templates/componentes prontos + Claude Code para UI (sem designer dedicado)
 
-**Impacto no TCO:**
-- Equipe: ~R$ 20K/mês (salário + Claude Pro/API) vs R$ 75-260K/mês do plano anterior
-- TCO 3 anos estimado: ~R$ 1.5-2M (vs R$ 10.5M anterior)
-- Com BYOK (LLM do tenant): remove mais ~R$ 1.46M
-- Produto pode ser viável com base de clientes muito menor
-
 ### Modelo BYOK — LLM por conta do tenant
 
-O custo de chamadas LLM (Claude API, Gemini API) é **100% do tenant**. O Veezoozin não paga pelas chamadas — cada tenant cadastra sua própria API key no painel administrativo.
+O custo de chamadas LLM (Claude API, Gemini API) é **100% do tenant**. O Veezoozin não paga pelas chamadas — cada tenant cadastra sua própria API key no painel administrativo. Suportar múltiplos provedores (Claude, Gemini, OpenAI, etc.).
 
-**Impacto financeiro:**
-- Remove custo de LLM do TCO
-- O Veezoozin precisa suportar múltiplos provedores de LLM (Claude, Gemini, OpenAI, etc.)
-- Tenant é responsável por seu próprio consumo — Veezoozin apenas roteia as chamadas
-- Facilita onboarding: tenant já pode ter chaves de API que usa em outros produtos
-- Risco: se tenant não configura API key, o sistema não funciona — precisa de onboarding claro
+### Modelo de infra — Pay-per-use (custo proporcional à receita)
+
+A infraestrutura GCP é **100% serverless/pay-per-use**. Sem clientes = custo quase zero. Com clientes = custo cresce proporcional ao uso (e portanto à receita).
+
+- **Cloud Run:** cobra por vCPU-second — sem requests, custo zero
+- **BigQuery:** cobra por TB processado — sem queries, custo zero
+- **Firestore:** cobra por operação — sem uso, custo zero
+- **Cloud SQL:** único custo fixo (~R$ 250/mês instância mínima), mas pode usar Firestore para eliminar
+- **Vertex AI Embeddings:** cobra por volume de texto processado — custo de onboarding do tenant
+
+O custo de infra **nunca será um problema** porque escala junto com a receita. Quanto mais clientes, mais custo de infra, mas também mais receita.
+
+### Projeção de custos — Custo fixo + variável por cliente
+
+**Custos fixos mensais (independem de quantidade de clientes):**
+
+| Item | Custo/mês |
+|------|-----------|
+| Fabio (arquiteto sênior) | R$ 15.000 |
+| Claude Code (Pro + API) | R$ 1.500 |
+| Cloud SQL (instância mínima) | R$ 250 |
+| Domínio + DNS + certificados | R$ 50 |
+| Ferramentas (GitHub, monitoring) | R$ 200 |
+| **Total fixo** | **R$ 17.000/mês** |
+
+**Custo variável por cliente (pay-per-use):**
+
+| Item | Custo estimado/tenant/mês | Premissa |
+|------|--------------------------|----------|
+| Cloud Run (compute) | R$ 15-50 | ~500-2.000 queries/mês |
+| BigQuery (queries) | R$ 10-30 | ~5-20 GB processados/mês |
+| Firestore (sessões, cache) | R$ 5-15 | ~10K-50K operações/mês |
+| Vertex AI (embeddings onboarding) | R$ 5 (amortizado) | Onboarding único, ~R$ 50 |
+| Cloud Storage (logs, exports) | R$ 2-5 | ~1-5 GB/mês |
+| Stripe (billing) | 2,9% + R$ 0,30/transação | Sobre receita do plano |
+| **Total variável/tenant** | **~R$ 40-100/mês** | Depende do uso |
+
+**Projeção por cenário de crescimento:**
+
+| Cenário | Tenants pagantes | Receita/mês | Custo fixo | Custo variável | Custo total | Margem |
+|---------|-----------------|-------------|------------|---------------|-------------|--------|
+| MVP (mês 1-3) | 0 | R$ 0 | R$ 17K | R$ 0 | R$ 17K | -R$ 17K |
+| Early (mês 4-6) | 3 Pro | R$ 1.5K | R$ 17K | R$ 200 | R$ 17.2K | -R$ 15.7K |
+| Tração (mês 7-12) | 10 Pro + 1 Ent | R$ 7K | R$ 17K | R$ 700 | R$ 17.7K | -R$ 10.7K |
+| **Break-even** | **~25 Pro + 2 Ent** | **~R$ 17K** | **R$ 17K** | **R$ 2K** | **R$ 19K** | **~R$ 0** |
+| Crescimento (mês 18+) | 40 Pro + 5 Ent | R$ 30K | R$ 17K | R$ 3.5K | R$ 20.5K | +R$ 9.5K |
+| Escala (mês 24+) | 80 Pro + 10 Ent | R$ 60K | R$ 17K* | R$ 7K | R$ 24K | +R$ 36K |
+
+> *No cenário de escala, pode ser necessário contratar 1 pessoa adicional (SRE/suporte), elevando o fixo para ~R$ 30K.
+
+**Break-even estimado: ~25 tenants Pro + 2 Enterprise** (receita ~R$ 17K/mês cobre os custos fixos + variáveis).
+
+**Premissas importantes:**
+- Custo variável/tenant é baixo (~R$ 40-100) porque LLM é BYOK (tenant paga)
+- O maior custo é FIXO (pessoa) e não escala com clientes
+- A margem bruta por tenant é alta (~80-90%) porque o custo variável é quase só infra GCP
+- Contratação adicional só quando receita justificar (não antes)
 
 ### Fluxo principal do produto
 
