@@ -712,6 +712,68 @@ O gráfico stacked bar do TCO (REG-FIN-01) no executive-report.html tem o canvas
 
 ---
 
+### P31. Reports executive e complete precisam de tabs — apenas one-pager é página única
+
+**Severidade:** Alta
+**Fase:** HTML Writer
+
+**O que aconteceu:** Todos os HTMLs gerados (one-pager, executive-report) renderizam as regions numa página contínua vertical, scrollando infinitamente. Isso funciona para o one-pager (que é curto, ~8 regions), mas NÃO funciona para executive (22+ regions) nem complete (90+ regions) — ficam enormes e difíceis de navegar.
+
+**O que deveria acontecer:**
+
+| Setup | Navegação |
+|-------|-----------|
+| `essential` (one-pager) | **SEM tabs** — página única contínua, tudo visível |
+| `executive` | **COM tabs** — cada seção é uma aba (Produto, Organização, Financeiro, Riscos, etc.) |
+| `complete` | **COM tabs** — mesma estrutura de abas, mais seções |
+
+**Estrutura de tabs para executive-report:**
+- Tab 1: Produto e Valor (REG-EXEC-02, PROD-04, PROD-02, PROD-05, PROD-06, PROD-07, PROD-08)
+- Tab 2: Organização (REG-ORG-01, ORG-02)
+- Tab 3: Financeiro (REG-FIN-01, FIN-05, FIN-07)
+- Tab 4: Riscos e Qualidade (REG-RISK-01, RISK-03, QUAL-01, QUAL-02)
+- Tab 5: Decisão (REG-BACK-01, NARR-01, EXEC-03, EXEC-04)
+- Tab 6: Domain-specific (REG-DOM-*)
+- Tab 7: Glossário (REG-GLOSS-01)
+
+O playground.html já tem CSS de tabs (`.tabs-nav`, `.tab-btn`, `.tab-content`) — usar esse padrão.
+
+**Ação:**
+- [ ] Atualizar html-writer SKILL.md: one-pager = sem tabs; executive e complete = com tabs
+- [ ] Definir no html-layout.md quais seções são tabs (já tem a estrutura "Seção 1", "Seção 2", etc.)
+- [ ] Atualizar report-planner: incluir informação de tab no report-plan.md
+- [ ] JS: tab navigation com prev/next buttons + keyboard arrows
+- [ ] Tab ativa com indicador visual (cor primary na borda inferior)
+- [ ] URL hash para deep linking (ex: `#financeiro`)
+
+---
+
+### P32. HTMLs gerados ignoram acentuação PT-BR
+
+**Severidade:** Alta
+**Fase:** HTML Writer + Consolidator
+
+**O que aconteceu:** Os relatórios HTML têm texto sem acentuação portuguesa. Exemplos: "Descricao" em vez de "Descrição", "Organizacao" em vez de "Organização", "Projecao" em vez de "Projeção", "Cenarios" em vez de "Cenários". Isso ocorre em títulos de seções, labels de tabelas, texto corrido e labels de gráficos.
+
+**O que deveria acontecer:** O html-writer SKILL.md já tem a regra (seção 8 — Idioma):
+
+> [!danger] Regra inviolável
+> O relatório é **exclusivamente em pt-BR**. Toda acentuação portuguesa **deve** ser respeitada.
+
+Mas os agentes que geram o conteúdo (consolidator, report-planner, html-writer) nem sempre respeitam. O problema pode estar:
+1. No consolidator gerando delivery-report.md sem acentos
+2. No html-writer copiando texto sem acentos
+3. Nos agentes que rodam em modo que não preserva acentos
+
+**Ação:**
+- [ ] Reforçar no consolidator SKILL.md: todo texto em PT-BR DEVE ter acentuação correta
+- [ ] Reforçar no html-writer SKILL.md: ao gerar HTML, verificar e corrigir acentuação
+- [ ] Reforçar no report-planner SKILL.md: labels e configurações em PT-BR com acentos
+- [ ] Incluir no prompt de cada agente: "Escreva em PT-BR com acentuação correta — 'organização' não 'organizacao'"
+- [ ] Considerar um passo de pós-processamento que verifica palavras comuns sem acento e corrige
+
+---
+
 ## Ordem sugerida de resolução
 
 ```
@@ -746,6 +808,8 @@ P23 (blocos sequenciais)         ← 1 bloco por vez, na ordem
 P24 (interview.md obrigatório)   ← sem log = fase inválida
 P25 (especialistas proativos)    ← propor soluções, não apenas coletar
 P26-P30 (bugs visuais HTML)      ← tooltips, alerts, radar, barras, TCO chart
+P31 (tabs nos reports)           ← executive e complete precisam de tabs
+P32 (acentuação PT-BR)           ← HTMLs sem acentos
 
 VIABILIDADE:
 P21 (auditor alerta receita<TCO) ← finding crítico
