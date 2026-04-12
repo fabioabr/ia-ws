@@ -172,7 +172,7 @@ abbr[title] { text-decoration: underline dotted; cursor: help; text-decoration-c
 
 /* ====== ALERTS ====== */
 .alert { padding: 12px 16px; border-radius: 8px; font-size: 0.82rem; display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; border: 1px solid; line-height: 1.6; }
-.alert i { font-size: 1.1rem; flex-shrink: 0; margin-top: 2px; }
+.alert i { font-size: 1.1rem; flex-shrink: 0; margin-top: 3px; }
 .alert-warning { background: var(--warning-light); border-color: var(--warning-border); color: var(--alert-warning-text); }
 .alert-danger { background: var(--danger-light); border-color: var(--danger-border); color: var(--alert-danger-text); }
 .alert-info { background: var(--info-light); border-color: var(--info-border); color: var(--alert-info-text); }
@@ -259,8 +259,8 @@ code { background: var(--bg); padding: 2px 6px; border-radius: 4px; font-size: 0
 .timeline-v-item .item-meta { font-size: 0.75rem; color: var(--text-muted); }
 
 /* ====== CHART CONTAINER ====== */
-.chart-container { position: relative; max-width: 600px; margin: 0 auto; }
-.chart-container.wide { max-width: 900px; }
+.chart-container { position: relative; max-width: 600px; margin: 0 auto; min-height: 200px; }
+.chart-container.wide { max-width: 900px; min-height: 300px; }
 
 /* ====== GO/NO-GO ====== */
 .go-badge { display: inline-flex; align-items: center; gap: 8px; padding: 10px 24px; border-radius: 12px; font-size: 1.1rem; font-weight: 700; background: var(--gold-light); color: var(--gold); border: 2px solid var(--gold-border); margin-bottom: 16px; }
@@ -451,7 +451,7 @@ code { background: var(--bg); padding: 2px 6px; border-radius: 4px; font-size: 0
                     <div class="persona-avatar" style="background: var(--primary);">MP</div>
                     <div class="persona-name">Marina — Diretora Comercial <span class="pill pill-info">P0</span></div>
                     <div class="persona-role">38 anos, MBA, nao sabe SQL</div>
-                    <div class="persona-detail"><strong>JTBD:</strong> Perguntar sobre KPIs e receber graficos prontos em segundos</div>
+                    <div class="persona-detail"><strong><abbr title="Jobs To Be Done">JTBD</abbr>:</strong> Perguntar sobre KPIs e receber graficos prontos em segundos</div>
                     <div class="persona-detail"><strong>Frequencia:</strong> Diario (2-5/dia)</div>
                     <div class="persona-detail" style="color: var(--alert-danger-text);"><i class="ri-error-warning-line"></i> Depende de time de dados para respostas simples</div>
                     <div class="persona-detail" style="color: var(--alert-success-text);"><i class="ri-check-line"></i> Tier: Pro/Enterprise</div>
@@ -460,7 +460,7 @@ code { background: var(--bg); padding: 2px 6px; border-radius: 4px; font-size: 0
                     <div class="persona-avatar" style="background: var(--chart-2);">RA</div>
                     <div class="persona-name">Rafael — Analista de BI <span class="pill pill-info">P0</span></div>
                     <div class="persona-role">29 anos, sabe SQL basico, gasta 70% em queries repetitivas</div>
-                    <div class="persona-detail"><strong>JTBD:</strong> Cruzar dados sem escrever SQL, foco em analise</div>
+                    <div class="persona-detail"><strong><abbr title="Jobs To Be Done">JTBD</abbr>:</strong> Cruzar dados sem escrever SQL, foco em analise</div>
                     <div class="persona-detail"><strong>Frequencia:</strong> Diario (10-20/dia)</div>
                     <div class="persona-detail" style="color: var(--alert-danger-text);"><i class="ri-error-warning-line"></i> 70% do tempo em queries repetitivas</div>
                     <div class="persona-detail" style="color: var(--alert-success-text);"><i class="ri-check-line"></i> Tier: Pro</div>
@@ -469,7 +469,7 @@ code { background: var(--bg); padding: 2px 6px; border-radius: 4px; font-size: 0
                     <div class="persona-avatar" style="background: var(--text-muted);">LD</div>
                     <div class="persona-name">Lucas — Lider de Dados <span class="pill" style="background: var(--card-bg); color: var(--text-muted); border: 1px solid var(--border);">P1</span></div>
                     <div class="persona-role">34 anos, engenheiro de dados</div>
-                    <div class="persona-detail"><strong>JTBD:</strong> Ensinar o sistema sobre o dominio de negocio</div>
+                    <div class="persona-detail"><strong><abbr title="Jobs To Be Done">JTBD</abbr>:</strong> Ensinar o sistema sobre o dominio de negocio</div>
                     <div class="persona-detail"><strong>Frequencia:</strong> Semanal</div>
                     <div class="persona-detail" style="color: var(--alert-success-text);"><i class="ri-check-line"></i> Tier: Todos</div>
                 </div>
@@ -477,7 +477,7 @@ code { background: var(--bg); padding: 2px 6px; border-radius: 4px; font-size: 0
                     <div class="persona-avatar" style="background: var(--text-muted);">CI</div>
                     <div class="persona-name">Carla — Coord. de Infra <span class="pill" style="background: var(--card-bg); color: var(--text-muted); border: 1px solid var(--border);">P1</span></div>
                     <div class="persona-role">41 anos, 15 anos de experiencia</div>
-                    <div class="persona-detail"><strong>JTBD:</strong> Garantir read-only, <abbr title="Lei Geral de Protecao de Dados">LGPD</abbr>, auditoria</div>
+                    <div class="persona-detail"><strong><abbr title="Jobs To Be Done">JTBD</abbr>:</strong> Garantir read-only, <abbr title="Lei Geral de Protecao de Dados">LGPD</abbr>, auditoria</div>
                     <div class="persona-detail"><strong>Frequencia:</strong> Mensal</div>
                     <div class="persona-detail"><span class="pill pill-danger">Poder de veto</span></div>
                     <div class="persona-detail" style="color: var(--alert-success-text);"><i class="ri-check-line"></i> Tier: Enterprise</div>
@@ -729,7 +729,7 @@ code { background: var(--bg); padding: 2px 6px; border-radius: 4px; font-size: 0
                         <tr><td>Repositorio</td><td>Monorepo (GitHub)</td></tr>
                         <tr><td>Branching</td><td>Trunk-based + feature flags</td></tr>
                         <tr><td>Deploy</td><td>Diario (Cloud Run rolling update)</td></tr>
-                        <tr><td>CI/CD</td><td>Cloud Build + GitHub Actions</td></tr>
+                        <tr><td><abbr title="Continuous Integration / Continuous Delivery">CI/CD</abbr></td><td>Cloud Build + GitHub Actions</td></tr>
                         <tr><td>On-call</td><td>Rotacao semanal, horario comercial no <abbr title="Minimum Viable Product">MVP</abbr></td></tr>
                     </tbody>
                 </table>
@@ -959,7 +959,7 @@ code { background: var(--bg); padding: 2px 6px; border-radius: 4px; font-size: 0
         </div>
         <div class="card-body">
             <div class="chart-container wide">
-                <canvas id="chartTCO"></canvas>
+                <canvas id="chartTCO" width="900" height="400"></canvas>
             </div>
             <div class="table-wrapper" style="margin-top: 16px;">
                 <table>
@@ -1007,11 +1007,11 @@ code { background: var(--bg); padding: 2px 6px; border-radius: 4px; font-size: 0
         <div class="card-body">
             <div class="table-wrapper">
                 <table>
-                    <thead><tr><th>Componente</th><th style="text-align:center;">Decisao</th><th style="text-align:right;">Custo 3a (R$)</th><th style="text-align:center;">TTM</th><th>Justificativa</th></tr></thead>
+                    <thead><tr><th>Componente</th><th style="text-align:center;">Decisao</th><th style="text-align:right;">Custo 3a (R$)</th><th style="text-align:center;"><abbr title="Time to Market">TTM</abbr></th><th>Justificativa</th></tr></thead>
                     <tbody>
                         <tr><td><abbr title="Natural Language to SQL">NL-to-SQL</abbr> Engine</td><td style="text-align:center;"><span class="pill pill-info">BUILD</span></td><td style="text-align:right;">~0 (dev na equipe)</td><td style="text-align:center;">4-6 sem</td><td>Core product, moat competitivo</td></tr>
                         <tr><td>Vector Store</td><td style="text-align:center;"><span class="pill pill-success">BUY</span></td><td style="text-align:right;">~180.000</td><td style="text-align:center;">&lt; 1 sem</td><td>Infra, nao diferencial</td></tr>
-                        <tr><td><abbr title="Large Language Model">LLM</abbr></td><td style="text-align:center;"><span class="pill pill-success">BUY</span></td><td style="text-align:right;">~1.464.000</td><td style="text-align:center;">1 dia</td><td>D3, qualidade + TTM</td></tr>
+                        <tr><td><abbr title="Large Language Model">LLM</abbr></td><td style="text-align:center;"><span class="pill pill-success">BUY</span></td><td style="text-align:right;">~1.464.000</td><td style="text-align:center;">1 dia</td><td>D3, qualidade + <abbr title="Time to Market">TTM</abbr></td></tr>
                         <tr><td>Auth</td><td style="text-align:center;"><span class="pill pill-success">BUY</span></td><td style="text-align:right;">~10.000</td><td style="text-align:center;">&lt; 1 sem</td><td>Seguranca critica</td></tr>
                         <tr><td>Visualizacao</td><td style="text-align:center;"><span class="pill pill-success">BUY</span></td><td style="text-align:right;">0 (OSS)</td><td style="text-align:center;">1-2 sem</td><td>Nao e moat</td></tr>
                         <tr><td>Billing</td><td style="text-align:center;"><span class="pill pill-success">BUY</span></td><td style="text-align:right;">~340.000</td><td style="text-align:center;">&lt; 1 sem</td><td>Antipattern #2 do blueprint <abbr title="Software as a Service">SaaS</abbr></td></tr>
@@ -1112,7 +1112,7 @@ code { background: var(--bg); padding: 2px 6px; border-radius: 4px; font-size: 0
                         <tr><td>4</td><td><strong>Cross-tenant data leak</strong></td><td style="text-align:center;"><span class="severity severity-low">Baixa</span></td><td style="text-align:center;"><span class="severity severity-critical">Critico</span></td><td>1.5, 1.7</td><td>6 camadas de isolamento, testes automatizados</td></tr>
                         <tr><td>5</td><td><strong><abbr title="Data Protection Officer">DPO</abbr> acumulado pelo CTO</strong></td><td style="text-align:center;"><span class="severity severity-high">Alta</span></td><td style="text-align:center;"><span class="severity severity-high">Alto</span></td><td>1.6, 2.2</td><td>Contratar <abbr title="Data Protection Officer">DPO</abbr> terceirizado (~R$ 2K/mes)</td></tr>
                         <tr><td>6</td><td><strong>Custo <abbr title="Large Language Model">LLM</abbr> APIs explode com escala</strong></td><td style="text-align:center;"><span class="severity severity-medium">Media</span></td><td style="text-align:center;"><span class="severity severity-high">Alto</span></td><td>1.5, 1.8</td><td>Cache 4 camadas, migracao para Gemini</td></tr>
-                        <tr><td>7</td><td><strong>Ausencia de go-to-market</strong></td><td style="text-align:center;"><span class="severity severity-high">Alta</span></td><td style="text-align:center;"><span class="severity severity-high">Alto</span></td><td>2.2</td><td>LOIs, contratar SDR no mes 6</td></tr>
+                        <tr><td>7</td><td><strong>Ausencia de go-to-market</strong></td><td style="text-align:center;"><span class="severity severity-high">Alta</span></td><td style="text-align:center;"><span class="severity severity-high">Alto</span></td><td>2.2</td><td><abbr title="Letters of Intent">LOIs</abbr>, contratar <abbr title="Sales Development Representative">SDR</abbr> no mes 6</td></tr>
                         <tr><td>8</td><td><strong><abbr title="Personally Identifiable Information">PII</abbr> transitando em chamadas <abbr title="Large Language Model">LLM</abbr></strong></td><td style="text-align:center;"><span class="severity severity-high">Alta</span></td><td style="text-align:center;"><span class="severity severity-high">Alto</span></td><td>1.6</td><td>Privacy guard (D35), minimizacao, <abbr title="Data Processing Agreement">DPA</abbr></td></tr>
                         <tr><td>9</td><td><strong>Dificuldade de contratar Backend Senior</strong></td><td style="text-align:center;"><span class="severity severity-high">Alta</span></td><td style="text-align:center;"><span class="severity severity-high">Alto</span></td><td>1.4</td><td>Iniciar busca imediatamente, fallback CTO + junior</td></tr>
                         <tr><td>10</td><td><strong>Enterprise adocao mais lenta</strong></td><td style="text-align:center;"><span class="severity severity-high">Alta</span></td><td style="text-align:center;"><span class="severity severity-high">Alto</span></td><td>2.2</td><td>Projetar 2-3 Ent. no mes 12, focar em Pro/<abbr title="Product-Led Growth">PLG</abbr></td></tr>
@@ -1151,7 +1151,7 @@ code { background: var(--bg); padding: 2px 6px; border-radius: 4px; font-size: 0
                     <ol class="conditions-list">
                         <li>Definir estrategia de captacao de investimento (Pre-seed ~R$ 1,5M) com timeline</li>
                         <li>Dimensionar mercado (TAM/SAM/SOM) — validar se 300 tenants pagantes no mes 36 e alcancavel</li>
-                        <li>Confirmar pelo menos 3 LOIs de early adopters antes de iniciar desenvolvimento</li>
+                        <li>Confirmar pelo menos 3 <abbr title="Letters of Intent">LOIs</abbr> de early adopters antes de iniciar desenvolvimento</li>
                         <li>Resolver conflito de pricing: D11 (R$ 497) vs D51 (R$ 697)</li>
                         <li>Contratar <abbr title="Data Protection Officer">DPO</abbr> terceirizado antes do lancamento</li>
                         <li>Reduzir meta de precisao <abbr title="Natural Language to SQL">NL-to-SQL</abbr> do <abbr title="Minimum Viable Product">MVP</abbr> para &gt;75% (nao 85%)</li>
@@ -1316,7 +1316,7 @@ code { background: var(--bg); padding: 2px 6px; border-radius: 4px; font-size: 0
         <div class="card-body">
             <div class="timeline-h">
                 <div class="timeline-h-block" style="background: rgba(77,168,218,0.15); border-color: var(--primary);">
-                    <strong>S1-S2</strong>Sem 1-4<br><small>Setup: Infra GCP, monorepo, CI/CD, auth</small>
+                    <strong>S1-S2</strong>Sem 1-4<br><small>Setup: Infra GCP, monorepo, <abbr title="Continuous Integration / Continuous Delivery">CI/CD</abbr>, auth</small>
                 </div>
                 <div class="timeline-h-block" style="background: rgba(46,181,245,0.15); border-color: var(--chart-2);">
                     <strong>S3-S4</strong>Sem 5-8<br><small>Core: Engine <abbr title="Natural Language to SQL">NL-to-SQL</abbr> basico (BigQuery)</small>
@@ -1362,7 +1362,7 @@ code { background: var(--bg); padding: 2px 6px; border-radius: 4px; font-size: 0
                 </div>
                 <div class="timeline-v-item critical">
                     <div class="item-title"><span class="severity severity-critical">Critica</span> 3. Confirmar early adopters</div>
-                    <div class="item-meta">Obter pelo menos 3 LOIs | <strong>Fabio + PO</strong> | Antes de iniciar dev</div>
+                    <div class="item-meta">Obter pelo menos 3 <abbr title="Letters of Intent">LOIs</abbr> | <strong>Fabio + PO</strong> | Antes de iniciar dev</div>
                 </div>
                 <div class="timeline-v-item high">
                     <div class="item-title"><span class="severity severity-high">Alta</span> 4. Resolver pricing</div>
@@ -1378,7 +1378,7 @@ code { background: var(--bg); padding: 2px 6px; border-radius: 4px; font-size: 0
                 </div>
                 <div class="timeline-v-item high">
                     <div class="item-title"><span class="severity severity-high">Alta</span> 7. Iniciar Sprint 1</div>
-                    <div class="item-meta">Setup GCP, monorepo, CI/CD, auth | <strong>Tech Lead + Fabio</strong> | Apos resolucao itens 1-3</div>
+                    <div class="item-meta">Setup GCP, monorepo, <abbr title="Continuous Integration / Continuous Delivery">CI/CD</abbr>, auth | <strong>Tech Lead + Fabio</strong> | Apos resolucao itens 1-3</div>
                 </div>
                 <div class="timeline-v-item medium">
                     <div class="item-title"><span class="severity severity-medium">Media</span> 8. Estabelecer metricas de gatilho</div>
@@ -1587,21 +1587,37 @@ function renderAllCharts() {
         plugins: { legend: { display: false } }
     });
 
-    // REG-EXEC-03: Go/No-Go radar (5 axes)
+    // REG-EXEC-03: Go/No-Go radar (5 axes) with zone datasets
     charts.goNoGo = new Chart(document.getElementById('chartGoNoGo'), {
         type: 'radar',
         data: {
             labels: ['Produto', 'Financeiro', 'Tecnico', 'Privacidade', 'Mercado'],
-            datasets: [{
-                data: [78, 35, 85, 72, 40],
-                backgroundColor: 'rgba(77,168,218,0.2)',
-                borderColor: c.primary,
-                borderWidth: 2,
-                pointBackgroundColor: c.primary,
-                pointRadius: 4
-            }]
+            datasets: [
+                { label: 'Danger', data: [40, 40, 40, 40, 40], backgroundColor: 'rgba(232,93,84,0.10)', borderWidth: 0, pointRadius: 0, fill: true },
+                { label: 'Warning', data: [70, 70, 70, 70, 70], backgroundColor: 'rgba(244,172,0,0.10)', borderWidth: 0, pointRadius: 0, fill: true },
+                { label: 'Neutral', data: [90, 90, 90, 90, 90], backgroundColor: 'rgba(200,200,200,0.06)', borderWidth: 0, pointRadius: 0, fill: true },
+                { label: 'Success', data: [100, 100, 100, 100, 100], backgroundColor: 'rgba(14,209,69,0.10)', borderWidth: 0, pointRadius: 0, fill: true },
+                {
+                    label: 'Score',
+                    data: [78, 35, 85, 72, 40],
+                    backgroundColor: 'rgba(77,168,218,0.25)',
+                    borderColor: c.primary,
+                    borderWidth: 2,
+                    pointBackgroundColor: c.primary,
+                    pointRadius: 5,
+                    fill: true
+                }
+            ]
         },
-        options: radarOpts(100)
+        options: {
+            ...radarOpts(100),
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    filter: (item) => item.datasetIndex === 4
+                }
+            }
+        }
     });
 
     // REG-QUAL-01: Auditor radar (5 axes)
@@ -1676,7 +1692,7 @@ function renderAllCharts() {
         }
     });
 
-    // REG-FIN-07: Scenarios grouped bar
+    // REG-FIN-07: Scenarios horizontal grouped bar
     charts.scenarios = new Chart(document.getElementById('chartScenarios'), {
         type: 'bar',
         data: {
@@ -1701,6 +1717,7 @@ function renderAllCharts() {
             ]
         },
         options: {
+            indexAxis: 'y',
             responsive: true,
             maintainAspectRatio: true,
             plugins: {
@@ -1717,21 +1734,25 @@ function renderAllCharts() {
                 }
             },
             scales: {
-                x: { ticks: { color: c.textMuted }, grid: { color: c.border } },
-                y: {
+                x: {
                     ticks: {
                         color: c.textMuted,
                         callback: v => `R$ ${v}M`
                     },
                     grid: { color: c.border }
-                }
+                },
+                y: { ticks: { color: c.textMuted }, grid: { color: c.border } }
             }
         }
     });
 }
 
-// Initial render
-renderAllCharts();
+// Initial render — wrapped in DOMContentLoaded to ensure canvas elements exist
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', renderAllCharts);
+} else {
+    renderAllCharts();
+}
 </script>
 
 </body>

@@ -6,6 +6,7 @@
     <title>Veezoozin — Executive One-Pager</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
     <style>
 /* ====== DESIGN TOKENS (dark default) ====== */
 :root {
@@ -164,7 +165,7 @@ body { font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--t
 
 /* ====== ALERTS ====== */
 .alert { padding: 10px 14px; border-radius: 8px; font-size: 0.78rem; display: flex; align-items: flex-start; gap: 8px; margin-bottom: 10px; border: 1px solid; line-height: 1.5; }
-.alert i { font-size: 1rem; flex-shrink: 0; margin-top: 2px; }
+.alert i { font-size: 1rem; flex-shrink: 0; margin-top: 3px; }
 .alert-warning { background: var(--warning-light); border-color: var(--warning-border); color: var(--alert-warning-text); }
 .alert-danger { background: var(--danger-light); border-color: var(--danger-border); color: var(--alert-danger-text); }
 .alert-info { background: var(--info-light); border-color: var(--info-border); color: var(--alert-info-text); }
@@ -196,8 +197,8 @@ th.center, td.center { text-align: center; }
 
 /* ====== TCO BAR CHART (CSS) ====== */
 .bar-chart { display: flex; align-items: flex-end; gap: 24px; justify-content: center; padding: 16px 0; height: 220px; }
-.bar-group { display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1; max-width: 200px; }
-.bar-stack { display: flex; flex-direction: column-reverse; width: 100%; border-radius: 6px 6px 0 0; overflow: hidden; position: relative; }
+.bar-group { display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1; max-width: 200px; height: 100%; }
+.bar-stack { display: flex; flex-direction: column-reverse; width: 100%; border-radius: 6px 6px 0 0; overflow: hidden; position: relative; flex: 1; }
 .bar-segment { width: 100%; transition: opacity 0.2s; position: relative; }
 .bar-segment:hover { opacity: 0.85; }
 .bar-label { font-size: 0.72rem; font-weight: 600; margin-top: 4px; }
@@ -206,15 +207,17 @@ th.center, td.center { text-align: center; }
 .bar-legend-item { display: flex; align-items: center; gap: 4px; font-size: 0.68rem; color: var(--text-muted); }
 .bar-legend-color { width: 10px; height: 10px; border-radius: 3px; }
 
-/* ====== SCENARIO BARS (CSS grouped) ====== */
-.scenario-chart { display: flex; align-items: flex-end; gap: 12px; justify-content: center; padding: 16px 0; height: 200px; }
-.scenario-group { display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1; max-width: 140px; }
-.scenario-bars { display: flex; gap: 4px; align-items: flex-end; width: 100%; justify-content: center; }
-.scenario-bar { width: 36px; border-radius: 4px 4px 0 0; transition: opacity 0.2s; position: relative; }
-.scenario-bar:hover { opacity: 0.85; }
-.scenario-label { font-size: 0.7rem; font-weight: 600; text-align: center; }
-.scenario-coverage { font-size: 0.62rem; color: var(--text-muted); text-align: center; }
-.scenario-group.highlight { border: 2px solid var(--gold); border-radius: 8px; padding: 4px 6px 0; background: var(--gold-light); }
+/* ====== SCENARIO BARS (horizontal) ====== */
+.scenario-h-chart { display: flex; flex-direction: column; gap: 10px; padding: 12px 0; }
+.scenario-h-row { display: flex; align-items: center; gap: 12px; }
+.scenario-h-row.highlight { border: 2px solid var(--gold); border-radius: 8px; padding: 6px 10px; background: var(--gold-light); }
+.scenario-h-label { width: 110px; font-size: 0.75rem; font-weight: 600; flex-shrink: 0; text-align: right; }
+.scenario-h-bars { flex: 1; display: flex; flex-direction: column; gap: 3px; }
+.scenario-h-bar-row { display: flex; align-items: center; gap: 6px; }
+.scenario-h-bar { height: 18px; border-radius: 4px; transition: opacity 0.2s; min-width: 2px; }
+.scenario-h-bar:hover { opacity: 0.85; }
+.scenario-h-bar-label { font-size: 0.62rem; color: var(--text-muted); white-space: nowrap; }
+.scenario-h-coverage { width: 40px; font-size: 0.72rem; font-weight: 600; text-align: right; flex-shrink: 0; }
 
 /* ====== RISK TABLE ====== */
 .severity-critical { background: var(--danger-light); color: var(--danger-text); }
@@ -318,7 +321,7 @@ abbr[title] { text-decoration: underline dotted; text-underline-offset: 2px; cur
                 </div>
             </div>
             <div class="header-badges">
-                <span class="header-badge"><i class="ri-cloud-line"></i> SaaS + AI/ML</span>
+                <span class="header-badge"><i class="ri-cloud-line"></i> <abbr title="Software as a Service">SaaS</abbr> + AI/ML</span>
                 <span class="header-badge"><i class="ri-git-branch-line"></i> v01</span>
                 <span class="header-badge"><i class="ri-calendar-line"></i> 2026-04-11</span>
                 <span class="header-badge"><i class="ri-loop-left-line"></i> Run 2</span>
@@ -445,7 +448,7 @@ abbr[title] { text-decoration: underline dotted; text-underline-offset: 2px; cur
                     <i class="ri-question-line" style="color: var(--alert-warning-text);"></i>
                     Falta de contexto
                 </div>
-                <div class="problem-card-desc">Ferramentas de BI nao entendem vocabulario do cliente. "Churn" significa coisas diferentes.</div>
+                <div class="problem-card-desc">Ferramentas de <abbr title="Business Intelligence">BI</abbr> nao entendem vocabulario do cliente. "Churn" significa coisas diferentes.</div>
                 <div class="impact-row"><span class="impact-arrow">&#8594;</span> Respostas imprecisas, retrabalho</div>
             </div>
             <div class="problem-card">
@@ -471,7 +474,7 @@ abbr[title] { text-decoration: underline dotted; text-underline-offset: 2px; cur
                 <div style="display: flex; gap: 24px; flex-wrap: wrap; font-size: 0.75rem;">
                     <div><strong>Tempo de resposta:</strong> dias <span style="color: var(--success);">&#8594;</span> segundos</div>
                     <div><strong>Acesso a dados:</strong> 5-10% <span style="color: var(--success);">&#8594;</span> 100% dos colaboradores</div>
-                    <div><strong>Tickets BI:</strong> <span style="color: var(--success);">&#8595; 60-80%</span> de reducao</div>
+                    <div><strong>Tickets <abbr title="Business Intelligence">BI</abbr>:</strong> <span style="color: var(--success);">&#8595; 60-80%</span> de reducao</div>
                 </div>
             </div>
         </div>
@@ -532,8 +535,8 @@ abbr[title] { text-decoration: underline dotted; text-underline-offset: 2px; cur
                     <div class="bar-legend-item"><div class="bar-legend-color" style="background: var(--chart-1);"></div> Equipe (66,5%)</div>
                     <div class="bar-legend-item"><div class="bar-legend-color" style="background: var(--chart-5);"></div> <abbr title="Large Language Model">LLM</abbr> APIs (13,9%)</div>
                     <div class="bar-legend-item"><div class="bar-legend-color" style="background: var(--chart-3);"></div> Marketing (13,2%)</div>
-                    <div class="bar-legend-item"><div class="bar-legend-color" style="background: var(--orange);"></div> Infra GCP (9,3%)</div>
-                    <div class="bar-legend-item"><div class="bar-legend-color" style="background: var(--secondary);"></div> SaaS (3,5%)</div>
+                    <div class="bar-legend-item"><div class="bar-legend-color" style="background: var(--orange);"></div> Infra <abbr title="Google Cloud Platform">GCP</abbr> (9,3%)</div>
+                    <div class="bar-legend-item"><div class="bar-legend-color" style="background: var(--secondary);"></div> <abbr title="Software as a Service">SaaS</abbr> (3,5%)</div>
                 </div>
 
                 <div style="margin-top: 12px; text-align: center;">
@@ -557,52 +560,82 @@ abbr[title] { text-decoration: underline dotted; text-underline-offset: 2px; cur
 
         <div class="card">
             <div class="card-body">
-                <!-- CSS Grouped Bar Chart -->
-                <div class="scenario-chart">
+                <!-- Horizontal Scenario Bars -->
+                <div class="scenario-h-chart">
                     <!-- Base -->
-                    <div class="scenario-group">
-                        <div class="scenario-bars">
-                            <div class="scenario-bar" style="height: 40px; background: var(--chart-3);" title="Receita: R$ 2,4M"></div>
-                            <div class="scenario-bar" style="height: 175px; background: var(--chart-4);" title="TCO: R$ 10,5M"></div>
+                    <div class="scenario-h-row">
+                        <div class="scenario-h-label">Base</div>
+                        <div class="scenario-h-bars">
+                            <div class="scenario-h-bar-row">
+                                <div class="scenario-h-bar" style="width: 20.2%; background: var(--chart-3);" title="Receita: R$ 2,4M"></div>
+                                <span class="scenario-h-bar-label">R$ 2,4M</span>
+                            </div>
+                            <div class="scenario-h-bar-row">
+                                <div class="scenario-h-bar" style="width: 88.2%; background: var(--chart-4);" title="TCO: R$ 10,5M"></div>
+                                <span class="scenario-h-bar-label">R$ 10,5M</span>
+                            </div>
                         </div>
-                        <div class="scenario-label">Base</div>
-                        <div class="scenario-coverage">23%</div>
+                        <div class="scenario-h-coverage">23%</div>
                     </div>
                     <!-- A (Pricing) -->
-                    <div class="scenario-group">
-                        <div class="scenario-bars">
-                            <div class="scenario-bar" style="height: 57px; background: var(--chart-3);" title="Receita: R$ 3,4M"></div>
-                            <div class="scenario-bar" style="height: 175px; background: var(--chart-4);" title="TCO: R$ 10,5M"></div>
+                    <div class="scenario-h-row">
+                        <div class="scenario-h-label">A-Pricing</div>
+                        <div class="scenario-h-bars">
+                            <div class="scenario-h-bar-row">
+                                <div class="scenario-h-bar" style="width: 28.6%; background: var(--chart-3);" title="Receita: R$ 3,4M"></div>
+                                <span class="scenario-h-bar-label">R$ 3,4M</span>
+                            </div>
+                            <div class="scenario-h-bar-row">
+                                <div class="scenario-h-bar" style="width: 88.2%; background: var(--chart-4);" title="TCO: R$ 10,5M"></div>
+                                <span class="scenario-h-bar-label">R$ 10,5M</span>
+                            </div>
                         </div>
-                        <div class="scenario-label">A <span style="font-weight:400; font-size:0.6rem;">(Pricing)</span></div>
-                        <div class="scenario-coverage">33%</div>
+                        <div class="scenario-h-coverage">33%</div>
                     </div>
                     <!-- B (Escopo) -->
-                    <div class="scenario-group">
-                        <div class="scenario-bars">
-                            <div class="scenario-bar" style="height: 37px; background: var(--chart-3);" title="Receita: R$ 2,2M"></div>
-                            <div class="scenario-bar" style="height: 110px; background: var(--chart-4);" title="TCO: R$ 6,6M"></div>
+                    <div class="scenario-h-row">
+                        <div class="scenario-h-label">B-Escopo</div>
+                        <div class="scenario-h-bars">
+                            <div class="scenario-h-bar-row">
+                                <div class="scenario-h-bar" style="width: 18.5%; background: var(--chart-3);" title="Receita: R$ 2,2M"></div>
+                                <span class="scenario-h-bar-label">R$ 2,2M</span>
+                            </div>
+                            <div class="scenario-h-bar-row">
+                                <div class="scenario-h-bar" style="width: 55.5%; background: var(--chart-4);" title="TCO: R$ 6,6M"></div>
+                                <span class="scenario-h-bar-label">R$ 6,6M</span>
+                            </div>
                         </div>
-                        <div class="scenario-label">B <span style="font-weight:400; font-size:0.6rem;">(Escopo)</span></div>
-                        <div class="scenario-coverage">33%</div>
+                        <div class="scenario-h-coverage">33%</div>
                     </div>
                     <!-- C (Crescimento) -->
-                    <div class="scenario-group">
-                        <div class="scenario-bars">
-                            <div class="scenario-bar" style="height: 82px; background: var(--chart-3);" title="Receita: R$ 4,9M"></div>
-                            <div class="scenario-bar" style="height: 198px; background: var(--chart-4);" title="TCO: R$ 11,9M"></div>
+                    <div class="scenario-h-row">
+                        <div class="scenario-h-label">C-Crescimento</div>
+                        <div class="scenario-h-bars">
+                            <div class="scenario-h-bar-row">
+                                <div class="scenario-h-bar" style="width: 41.2%; background: var(--chart-3);" title="Receita: R$ 4,9M"></div>
+                                <span class="scenario-h-bar-label">R$ 4,9M</span>
+                            </div>
+                            <div class="scenario-h-bar-row">
+                                <div class="scenario-h-bar" style="width: 100%; background: var(--chart-4);" title="TCO: R$ 11,9M"></div>
+                                <span class="scenario-h-bar-label">R$ 11,9M</span>
+                            </div>
                         </div>
-                        <div class="scenario-label">C <span style="font-weight:400; font-size:0.6rem;">(Cresc.)</span></div>
-                        <div class="scenario-coverage">42%</div>
+                        <div class="scenario-h-coverage">42%</div>
                     </div>
-                    <!-- D (A+C) - Highlighted -->
-                    <div class="scenario-group highlight">
-                        <div class="scenario-bars">
-                            <div class="scenario-bar" style="height: 117px; background: var(--chart-3);" title="Receita: R$ 7,0M"></div>
-                            <div class="scenario-bar" style="height: 198px; background: var(--chart-4);" title="TCO: R$ 11,9M"></div>
+                    <!-- D (Combinado) - Highlighted -->
+                    <div class="scenario-h-row highlight">
+                        <div class="scenario-h-label">D-Combinado</div>
+                        <div class="scenario-h-bars">
+                            <div class="scenario-h-bar-row">
+                                <div class="scenario-h-bar" style="width: 58.8%; background: var(--chart-3);" title="Receita: R$ 7,0M"></div>
+                                <span class="scenario-h-bar-label">R$ 7,0M</span>
+                            </div>
+                            <div class="scenario-h-bar-row">
+                                <div class="scenario-h-bar" style="width: 100%; background: var(--chart-4);" title="TCO: R$ 11,9M"></div>
+                                <span class="scenario-h-bar-label">R$ 11,9M</span>
+                            </div>
                         </div>
-                        <div class="scenario-label">D <span style="font-weight:400; font-size:0.6rem;">(A+C)</span></div>
-                        <div class="scenario-coverage" style="color: var(--gold); font-weight: 600;">59%</div>
+                        <div class="scenario-h-coverage" style="color: var(--gold); font-weight: 700;">59%</div>
                     </div>
                 </div>
                 <div class="bar-legend" style="margin-bottom: 12px;">
@@ -713,7 +746,7 @@ abbr[title] { text-decoration: underline dotted; text-underline-offset: 2px; cur
                             </tr>
                             <tr>
                                 <td>5</td>
-                                <td><strong><abbr title="Data Protection Officer">DPO</abbr> acumulado pelo CTO</strong> — conflito de interesse</td>
+                                <td><strong><abbr title="Data Protection Officer">DPO</abbr> acumulado pelo <abbr title="Chief Technology Officer">CTO</abbr></strong> — conflito de interesse</td>
                                 <td class="center">Alta</td>
                                 <td class="center"><span class="pill pill-warning">Alto</span></td>
                                 <td>1.6, 2.2</td>
@@ -733,7 +766,7 @@ abbr[title] { text-decoration: underline dotted; text-underline-offset: 2px; cur
                                 <td class="center">Alta</td>
                                 <td class="center"><span class="pill pill-warning">Alto</span></td>
                                 <td>2.2</td>
-                                <td>LOIs, SDR mes 6, partnerships</td>
+                                <td><abbr title="Letter of Intent">LOI</abbr>s, <abbr title="Sales Development Representative">SDR</abbr> mes 6, partnerships</td>
                             </tr>
                             <tr>
                                 <td>8</td>
@@ -749,11 +782,11 @@ abbr[title] { text-decoration: underline dotted; text-underline-offset: 2px; cur
                                 <td class="center">Alta</td>
                                 <td class="center"><span class="pill pill-warning">Alto</span></td>
                                 <td>1.4</td>
-                                <td>Busca imediata, fallback CTO + junior</td>
+                                <td>Busca imediata, fallback <abbr title="Chief Technology Officer">CTO</abbr> + junior</td>
                             </tr>
                             <tr>
                                 <td>10</td>
-                                <td><strong>Enterprise adocao lenta</strong> — sem SSO, ciclo longo</td>
+                                <td><strong>Enterprise adocao lenta</strong> — sem <abbr title="Single Sign-On">SSO</abbr>, ciclo longo</td>
                                 <td class="center">Alta</td>
                                 <td class="center"><span class="pill pill-warning">Alto</span></td>
                                 <td>2.2</td>
@@ -782,42 +815,14 @@ abbr[title] { text-decoration: underline dotted; text-underline-offset: 2px; cur
         </div>
 
         <div class="radar-container">
-            <!-- CSS Radar with zones -->
+            <!-- Chart.js Radar -->
             <div class="radar-chart">
-                <div class="css-radar">
-                    <!-- Zone backgrounds (green >= 80%, yellow 60-79%, red < 60%) -->
-                    <div class="radar-bg r1"></div>
-                    <div class="radar-bg r2"></div>
-                    <div class="radar-bg r3"></div>
-
-                    <!-- Axis labels -->
-                    <div class="radar-axis" style="top: 2px; left: 50%; transform: translateX(-50%);">Tecnico</div>
-                    <div class="radar-axis" style="top: 38%; right: -8px;">Produto</div>
-                    <div class="radar-axis" style="bottom: 12%; right: 2px;">Privacidade</div>
-                    <div class="radar-axis" style="bottom: 12%; left: 2px;">Mercado</div>
-                    <div class="radar-axis" style="top: 38%; left: -14px;">Financeiro</div>
-
-                    <!-- Data points (positioned relative to center 130,130 radius 120) -->
-                    <!-- Tecnico 85%: top -->
-                    <div class="radar-dot" style="top: 28px; left: 126px;"></div>
-                    <div class="radar-value" style="top: 18px; left: 140px;">85%</div>
-                    <!-- Produto 78%: top-right -->
-                    <div class="radar-dot" style="top: 62px; right: 26px;"></div>
-                    <div class="radar-value" style="top: 52px; right: 10px;">78%</div>
-                    <!-- Privacidade 72%: bottom-right -->
-                    <div class="radar-dot" style="bottom: 62px; right: 40px;"></div>
-                    <div class="radar-value" style="bottom: 50px; right: 24px;">72%</div>
-                    <!-- Mercado 40%: bottom-left -->
-                    <div class="radar-dot" style="bottom: 100px; left: 52px;"></div>
-                    <div class="radar-value" style="bottom: 90px; left: 36px;">40%</div>
-                    <!-- Financeiro 35%: top-left -->
-                    <div class="radar-dot" style="top: 100px; left: 40px;"></div>
-                    <div class="radar-value" style="top: 90px; left: 24px;">35%</div>
-                </div>
+                <canvas id="goNoGoRadar" width="300" height="300" style="max-width: 300px; margin: 0 auto; display: block;"></canvas>
                 <div class="radar-zone-legend">
-                    <span><span class="dot dot-green"></span> &ge;80%</span>
-                    <span><span class="dot dot-yellow"></span> 60-79%</span>
-                    <span><span class="dot dot-red"></span> &lt;60%</span>
+                    <span><span class="dot" style="background: rgba(139,26,26,0.35);"></span> 0-40% Danger</span>
+                    <span><span class="dot" style="background: rgba(244,172,0,0.30);"></span> 40-70% Warning</span>
+                    <span><span class="dot" style="background: rgba(77,168,218,0.20);"></span> 70-90% Neutral</span>
+                    <span><span class="dot" style="background: rgba(14,209,69,0.30);"></span> 90-100% Success</span>
                 </div>
             </div>
 
@@ -915,7 +920,7 @@ abbr[title] { text-decoration: underline dotted; text-underline-offset: 2px; cur
                             <tr>
                                 <td><strong>Visualizacao</strong></td>
                                 <td class="center"><span class="badge-buy">BUY</span></td>
-                                <td class="center">R$ 0 (OSS)</td>
+                                <td class="center">R$ 0 (<abbr title="Open Source Software">OSS</abbr>)</td>
                                 <td class="center">1-2 sem</td>
                                 <td>Recharts/Nivo — nao e moat</td>
                             </tr>
@@ -1019,6 +1024,118 @@ abbr[title] { text-decoration: underline dotted; text-underline-offset: 2px; cur
 </footer>
 
 <script>
+/* ====== GO/NO-GO RADAR (Chart.js) ====== */
+let radarChart = null;
+
+function getRadarColors() {
+    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+    return {
+        primary: isLight ? '#3A8BB8' : '#4DA8DA',
+        primaryBg: isLight ? 'rgba(58,139,184,0.18)' : 'rgba(77,168,218,0.18)',
+        gridColor: isLight ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.12)',
+        labelColor: isLight ? '#1A1923' : '#E0DFE3',
+        tickColor: isLight ? '#88878C' : '#88878C',
+        danger: 'rgba(139,26,26,0.04)',
+        warning: 'rgba(244,172,0,0.03)',
+        neutral: 'rgba(77,168,218,0.02)',
+        success: 'rgba(14,209,69,0.03)'
+    };
+}
+
+function buildRadarChart() {
+    const ctx = document.getElementById('goNoGoRadar').getContext('2d');
+    const c = getRadarColors();
+
+    /* Custom plugin: background zones */
+    const zonePlugin = {
+        id: 'radarZones',
+        beforeDraw(chart) {
+            const { ctx: cx, chartArea } = chart;
+            const meta = chart.getDatasetMeta(0);
+            if (!meta || !meta.dataset) return;
+            const scale = chart.scales.r;
+            if (!scale) return;
+            const centerX = scale.xCenter;
+            const centerY = scale.yCenter;
+            const maxR = scale.drawingArea;
+
+            const zones = [
+                { from: 0,   to: 40,  color: c.danger  },
+                { from: 40,  to: 70,  color: c.warning },
+                { from: 70,  to: 90,  color: c.neutral },
+                { from: 90,  to: 100, color: c.success }
+            ];
+
+            zones.forEach(z => {
+                const r1 = (z.from / 100) * maxR;
+                const r2 = (z.to / 100) * maxR;
+                cx.save();
+                cx.beginPath();
+                cx.arc(centerX, centerY, r2, 0, Math.PI * 2);
+                cx.arc(centerX, centerY, r1, 0, Math.PI * 2, true);
+                cx.closePath();
+                cx.fillStyle = z.color;
+                cx.fill();
+                cx.restore();
+            });
+        }
+    };
+
+    if (radarChart) radarChart.destroy();
+
+    radarChart = new Chart(ctx, {
+        type: 'radar',
+        data: {
+            labels: ['Tecnico', 'Produto', 'Privacidade', 'Mercado', 'Financeiro'],
+            datasets: [{
+                label: 'Score (%)',
+                data: [85, 78, 72, 40, 35],
+                backgroundColor: c.primaryBg,
+                borderColor: c.primary,
+                borderWidth: 2,
+                pointBackgroundColor: c.primary,
+                pointBorderColor: '#fff',
+                pointBorderWidth: 1,
+                pointRadius: 5,
+                pointHoverRadius: 7
+            }]
+        },
+        options: {
+            responsive: false,
+            scales: {
+                r: {
+                    min: 0,
+                    max: 100,
+                    ticks: {
+                        stepSize: 20,
+                        color: c.tickColor,
+                        backdropColor: 'transparent',
+                        font: { size: 9 }
+                    },
+                    grid: { color: c.gridColor },
+                    angleLines: { color: c.gridColor },
+                    pointLabels: {
+                        color: c.labelColor,
+                        font: { size: 11, weight: '600' }
+                    }
+                }
+            },
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: function(ctx) { return ctx.parsed.r + '%'; }
+                    }
+                }
+            }
+        },
+        plugins: [zonePlugin]
+    });
+}
+
+document.addEventListener('DOMContentLoaded', buildRadarChart);
+
+/* ====== THEME TOGGLE ====== */
 function toggleTheme() {
     const html = document.documentElement;
     const icon = document.getElementById('theme-icon');
@@ -1032,6 +1149,8 @@ function toggleTheme() {
         icon.className = 'ri-sun-line';
         label.textContent = 'Dark';
     }
+    /* Re-render radar with new theme colors */
+    buildRadarChart();
 }
 </script>
 
