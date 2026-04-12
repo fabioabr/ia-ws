@@ -253,6 +253,25 @@ Um projeto com projeção financeira negativa **não deveria passar** pelo gate 
 
 ---
 
+### P16. Especialistas devem detalhar mitigação de riscos
+
+**Severidade:** Alta
+**Fase:** Fase 1 + Fase 3
+
+Os riscos identificados no discovery (LGPD blockers, accuracy NL-to-SQL, viabilidade financeira, vendor lock-in, etc.) são listados com mitigações genéricas de 1 linha (ex: "PoC na Sprint 0", "Assinar DPA"). Os especialistas (solution-architect, cyber-security-architect, po) deveriam propor **planos de mitigação detalhados** — não apenas nomear o risco.
+
+Exemplo do que falta:
+- **Risco:** "DPO não nomeado" → **Mitigação genérica:** "Nomear DPO" → **Mitigação detalhada que falta:** "1) Avaliar se DPO pode ser interno ou precisa de consultoria externa. 2) Budget estimado: R$ 5-15K/mês para DPO terceirizado. 3) Timeline: contratar até semana 4 do Sprint 0. 4) Responsável: CTO. 5) Se não resolver até go-live: não lançar — é blocker legal."
+
+**Ação:**
+- [ ] Atualizar as skills dos especialistas (solution-architect, cyber-security-architect, po) para que ao identificar um risco, proponham mitigação com: passos concretos, responsável, custo estimado, timeline, e consequência se não resolver
+- [ ] Atualizar a regra de discovery para exigir que cada risco tenha mitigação com pelo menos: ação, responsável e prazo
+- [ ] O auditor deve penalizar na dimensão "Profundidade" quando riscos têm mitigação genérica
+- [ ] O consolidator deve destacar riscos com mitigação insuficiente no delivery report
+- [ ] Considerar adicionar uma sub-seção "Plano de Mitigação" dentro de REG-RISK-01 e REG-RISK-02
+
+---
+
 ### P15. Estimativa de Esforço — gráfico SVG ao invés de HTML/CSS
 
 **Severidade:** Média
@@ -301,6 +320,7 @@ P12 (glossário + tooltips)← HTML com siglas expandidas
 P13 (TCO chart fix)       ← Chart.js no lugar de SVG
 P14 (receita vs custo)    ← validação de viabilidade
 P15 (effort SVG fix)      ← HTML/CSS no lugar de SVG
+P16 (mitigações detalhadas)← especialistas propõem resolução
  ↓
 P9-P11 (docs + config)   ← polish final
 ```
