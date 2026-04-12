@@ -840,6 +840,47 @@ Os agentes recebem instrução para "consultar o playground.html" mas na prátic
 
 ---
 
+### P35. Ressalvas dos auditores devem ser detalhadas com explicação do impacto
+
+**Severidade:** Alta
+**Fase:** Fase 2 (Auditor + 10th-man) + Fase 3 (HTML)
+
+**O que aconteceu:** O 10th-man mostra um radar chart com 3 eixos (Divergência 70%, Robustez 78%, Completude Crítica 80%) e lista as ressalvas como bullets curtos. O leitor vê que "Robustez" tem 78% mas não entende **por quê** é 78% e **o que isso significa** para o projeto.
+
+**O que deveria acontecer:** Abaixo do radar chart, cada ressalva deve ser apresentada como um card expandido com:
+
+1. **Título da ressalva** (ex: "Bus Factor — Risco de Pessoa Única")
+2. **Score/dimensão afetada** (ex: "Robustez: 78%")
+3. **Descrição detalhada** — 2-3 frases explicando O QUE foi identificado
+4. **Por que é importante** — 1-2 frases sobre o impacto se não for endereçado
+5. **Recomendação** — o que fazer para resolver
+
+Exemplo:
+```
+🟡 Bus Factor — Risco de Pessoa Única
+Robustez: 78%
+
+O projeto depende de uma única pessoa (Fabio) para toda a operação:
+arquitetura, desenvolvimento, deploy, suporte e decisões de produto.
+Se Fabio ficar indisponível por 2+ semanas, o projeto para completamente.
+
+POR QUE É IMPORTANTE: Um investidor ou cliente enterprise vai questionar
+a sustentabilidade. O bus factor = 1 é o maior risco operacional do projeto.
+
+RECOMENDAÇÃO: Documentar todas as decisões (ADRs), manter código com
+testes automatizados, e definir milestone de receita para primeira
+contratação (sugerido: R$ 25K MRR para DevOps/SRE).
+```
+
+**Ação:**
+- [ ] Atualizar 10th-man SKILL.md: cada ressalva deve ter os 5 campos (título, score, descrição, importância, recomendação)
+- [ ] Atualizar auditor SKILL.md: idem para findings do auditor
+- [ ] Atualizar region REG-QUAL-02: layout = radar + lista de cards detalhados (não apenas bullets)
+- [ ] Atualizar region REG-QUAL-01: idem para findings do auditor
+- [ ] Atualizar html-writer: renderizar ressalvas como cards expandidos com borda colorida por severidade
+
+---
+
 ## Ordem sugerida de resolução
 
 ```
@@ -878,6 +919,7 @@ P31 (tabs nos reports)           ← executive e complete precisam de tabs
 P32 (acentuação PT-BR)           ← HTMLs sem acentos
 P33 (playground.html ignorado)   ← reports não seguem o Design System
 P34 (barras sempre horizontais CSS) ← Chart.js proibido para barras
+P35 (ressalvas detalhadas)       ← auditor e 10th-man devem detalhar cada ressalva
 
 VIABILIDADE:
 P21 (auditor alerta receita<TCO) ← finding crítico

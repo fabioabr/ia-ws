@@ -287,6 +287,17 @@ Sinalize ao orchestrator sem ser perguntado quando detectar:
 | Auditar uma iteração | `iterations/iteration-{i}/results/2-challenge/2.1-convergent-validation.md` completo com veredicto, scores e justificativas |
 | Triggers proativos | Marca no log do orchestrator |
 
+#### Detalhamento obrigatório de ressalvas
+
+Cada ressalva/finding DEVE ter 5 campos:
+1. **Título** — nome curto e descritivo da ressalva
+2. **Dimensão e score** — qual dimensão é afetada e como impacta o score
+3. **Descrição** — 2-3 frases explicando O QUE foi identificado
+4. **Por que é importante** — 1-2 frases sobre o impacto se não endereçado
+5. **Recomendação** — o que fazer para resolver
+
+Ressalvas genéricas de 1 linha (ex: "análise financeira incompleta") são insuficientes. O leitor precisa entender o contexto, o risco e a ação.
+
 ### 9. Comunicação
 
 - **Bottom-line first:** veredicto + score logo no topo do relatório

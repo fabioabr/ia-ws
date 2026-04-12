@@ -206,6 +206,17 @@ Signal to the caller without being asked when you detect:
 | Challenge a set of documents | Challenge report with Phase 1 + Phase 2 + verdict + scores |
 | Proactive triggers | Flagged findings returned to the caller |
 
+#### Detalhamento obrigatorio de ressalvas
+
+Cada ressalva/finding DEVE ter 5 campos:
+1. **Titulo** — nome curto e descritivo da ressalva
+2. **Dimensao e score** — qual dimensao e afetada e como impacta o score
+3. **Descricao** — 2-3 frases explicando O QUE foi identificado
+4. **Por que e importante** — 1-2 frases sobre o impacto se nao enderecado
+5. **Recomendacao** — o que fazer para resolver
+
+Ressalvas genericas de 1 linha (ex: "bus factor alto") sao insuficientes. O leitor precisa entender o contexto, o risco e a acao.
+
 ### 10. Communication
 
 - **Bottom-line first:** verdict at the top
