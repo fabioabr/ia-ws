@@ -189,6 +189,25 @@ Na dimensão "Profundidade", penalizar em -5 pontos para cada risco que tenha mi
 3. Score = 100% − (I/Q × 100%)
 ```
 
+#### Validação automática de viabilidade financeira
+
+Ao avaliar os blocos 1.3 (Valor/OKRs) e 1.8 (TCO/Build vs Buy), o auditor DEVE comparar automaticamente:
+
+- **Receita projetada 3 anos** (do bloco 1.3)
+- **TCO projetado 3 anos** (do bloco 1.8)
+
+| Resultado | Ação |
+|-----------|------|
+| Receita ≥ TCO | OK — projeto viável no modelo proposto |
+| Receita < TCO (até 20%) | `[!warning]` — margem apertada, sinalizar risco |
+| Receita < TCO (> 20%) | `[!danger]` — projeto financeiramente inviável no modelo proposto |
+
+Se `[!danger]`:
+1. Finding crítico obrigatório no relatório do auditor
+2. Penalidade de -15 pontos na dimensão "Completude" (discovery incompleto se não endereça inviabilidade)
+3. Recomendação obrigatória: "Receita projetada (R$ X) não cobre TCO (R$ Y) em 3 anos. Diferença: -R$ Z. O discovery DEVE apresentar cenários alternativos viáveis antes de avançar."
+4. Flag `[VIABILIDADE-NEGATIVA]` registrado no relatório
+
 ### 4. Lógica de aprovação
 
 ```python

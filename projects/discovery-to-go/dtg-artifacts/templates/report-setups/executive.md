@@ -67,27 +67,28 @@ Setup intermediário que gera **dois HTMLs**: o One-Pager (do setup essencial) +
 | 17 | REG-FIN-01 | full-width | TCO 3 anos detalhado (tabela + chart) |
 | 18 | REG-FIN-02 | full-width | Break-even analysis (se aplicável) |
 | 19 | REG-FIN-05 | full-width | Estimativa de esforço detalhada |
-| 20 | REG-PROD-08 | full-width | Roadmap (faseamento MVP → Fase 2 → N) |
+| 20 | REG-FIN-07 | full-width | Financial Scenarios (quando cenários alternativos existirem) |
+| 21 | REG-PROD-08 | full-width | Roadmap (faseamento MVP → Fase 2 → N) |
 
 #### Seção 4 — Riscos e Decisão
 
 | # | Region | Layout | O que mostra |
 |---|--------|--------|-------------|
-| 21 | REG-RISK-01 | full-width | Matriz de riscos completa |
-| 22 | REG-RISK-03 | full-width | Hipóteses não validadas |
-| 23 | REG-BACK-01 | full-width | Backlog priorizado (épicos com MoSCoW) |
-| 24 | REG-QUAL-01 | sidebar | Score do auditor (radar) |
-| 25 | REG-QUAL-02 | full-width | Questões do 10th-man |
+| 22 | REG-RISK-01 | full-width | Matriz de riscos completa |
+| 23 | REG-RISK-03 | full-width | Hipóteses não validadas |
+| 24 | REG-BACK-01 | full-width | Backlog priorizado (épicos com MoSCoW) |
+| 25 | REG-QUAL-01 | sidebar | Score do auditor (radar) |
+| 26 | REG-QUAL-02 | full-width | Questões do 10th-man |
 
 #### Seção 5 — Narrativa
 
 | # | Region | Layout | O que mostra |
 |---|--------|--------|-------------|
-| 26 | REG-NARR-01 | full-width | Como chegamos aqui (timeline das iterações) |
-| 27 | REG-EXEC-03 | full-width | Go/No-Go detalhado (4 dimensões + condições) |
-| 28 | REG-EXEC-04 | full-width | Próximos passos |
+| 27 | REG-NARR-01 | full-width | Como chegamos aqui (timeline das iterações) |
+| 28 | REG-EXEC-03 | full-width | Go/No-Go detalhado (4 dimensões + condições) |
+| 29 | REG-EXEC-04 | full-width | Próximos passos |
 
-**Total: 28 regions** (8 no one-pager, 20 exclusivas do executive report)
+**Total: 29 regions** (8 no one-pager, 21 exclusivas do executive report)
 
 ## O que NÃO está incluído
 

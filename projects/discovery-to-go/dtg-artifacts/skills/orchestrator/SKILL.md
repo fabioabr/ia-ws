@@ -147,9 +147,9 @@ O projeto pode customizar as cópias locais sem afetar as globais.
 
 #### 3. Arbitrar a reunião conjunta (Fase 1 — Discovery)
 
-A reunião da Fase 1 é **temática** — dividida em 8 blocos com dono, formato de **reunião síncrona** (todos presentes, falam na ordem, podem pedir a voz para apartes curtos). Você arbitra:
+A reunião da Fase 1 é **temática** — dividida em 8 blocos com dono, formato de **reunião síncrona** (todos presentes, falam na ordem, podem pedir a voz para apartes curtos). Os blocos são executados **sequencialmente**, com cada bloco tendo acesso ao output dos anteriores. Você arbitra:
 
-- **Ordem fixa dos blocos:**
+- **Ordem fixa dos blocos (execução sequencial):**
   1. Visão e Propósito — po
   2. Personas e Jornadas — po
   3. Valor Esperado (OKRs/ROI) — po
@@ -161,6 +161,35 @@ A reunião da Fase 1 é **temática** — dividida em 8 blocos com dono, formato
 - **Quem é dono do bloco:** po para blocos 1-4, solution-architect para 5/7/8, cyber-security-architect para 6 (sempre).
 - **Quando outros podem interromper:** o ouvinte pode **pedir a voz** para um aparte curto quando detectar impacto cross-eixo. Você concede ou nega.
 - **Quando invocar custom-specialist:** quando po, solution-architect ou cyber-security-architect pedem `help` em domínio específico (UX research, cloud architecture, ML, etc.). Você consulta o **spec-pack** carregado no Setup, invoca o specialist declarado (ou gera on-the-fly genérico se não houver), recebe a saída, devolve controle ao especialista fixo.
+
+#### Ordem de execução dos blocos (sequencial)
+
+Os blocos DEVEM ser executados **na ordem**, com cada bloco tendo acesso ao output dos anteriores:
+
+```
+#1 (Visão e Propósito)
+ ↓
+#2 (Personas e Jornada)
+ ↓
+#3 (Valor Esperado / OKRs)
+ ↓
+#4 (Processo, Negócio e Equipe)
+ ↓
+#5 (Tecnologia e Segurança) ←──┐
+ ↓                              │ podem rodar em paralelo
+#6 (LGPD e Privacidade) ───────┘
+ ↓
+#7 (Arquitetura Macro)
+ ↓
+#8 (TCO e Build vs Buy)
+```
+
+**Regras:**
+- Cada agente recebe como input: briefing + blueprints + **outputs de todos os blocos anteriores**
+- O customer mantém estado entre blocos — respostas anteriores são contexto para as seguintes
+- Blocos #5 e #6 são a ÚNICA exceção que pode rodar em paralelo (eixos independentes)
+- Bloco #8 DEVE rodar APÓS #5, #6 e #7 — precisa de stack e arquitetura definidos para calcular TCO
+- Se bloco #3 define pricing/receita, bloco #8 DEVE usar esses números como base para break-even
 
 #### 4. cyber-security-architect sempre roda (modo profundo ou magro)
 
@@ -253,6 +282,24 @@ Após todos os 8 blocos da Fase 1 serem gerados, o orchestrator executa validaç
 4. Se em modo simulação: registrar a inconsistência mas avançar com flag
 
 **Considerar:** Rodar blocos 1.3 e 1.8 em sequência (não paralelo) para que o bloco 1.8 tenha acesso ao output do 1.3 e vice-versa.
+
+#### Validação de completude da Fase 1
+
+Antes de avançar para o HR Review, o orchestrator DEVE verificar:
+
+1. **interview.md existe** em `iterations/iteration-{i}/logs/` — se NÃO existe:
+   - Flag `[FASE-INCOMPLETA]`
+   - Tentar gerar automaticamente a partir dos result files (modo degradado)
+   - Registrar no pipeline-state.md: "interview.md gerado em modo degradado — rastreabilidade limitada"
+
+2. **8 result files existem** (1.1 a 1.8) — se algum falta:
+   - Flag `[BLOCO-AUSENTE]` com identificação do bloco
+   - NÃO avançar — fase incompleta
+
+3. **interview.md tem conteúdo** — se vazio:
+   - Mesmo tratamento de "não existe"
+
+O interview.md é o PRIMEIRO artefato verificado no checklist de conclusão da Fase 1. Sem ele, a rastreabilidade das source tags não pode ser auditada.
 
 #### 6. Gerenciar o Human Review Loop (Iteration Control)
 

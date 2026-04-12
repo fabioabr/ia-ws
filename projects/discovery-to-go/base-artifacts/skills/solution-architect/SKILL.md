@@ -297,6 +297,32 @@ generated-at: YYYY-MM-DD HH:mm
 ## Fontes
 ```
 
+#### Cenários alternativos (obrigatório quando receita < TCO)
+
+Ao calcular o TCO no bloco #8, se a receita projetada NÃO cobre o custo em 3 anos, o solution-architect DEVE gerar **pelo menos 3 cenários alternativos** que tornem o projeto viável.
+
+Tipos de cenário a explorar:
+
+| Tipo | O que muda |
+|------|-----------|
+| Ajuste de pricing | Aumentar preço dos planos |
+| Redução de escopo MVP | Cortar features caras |
+| Mudança de stack | Trocar componentes caros por alternativas |
+| Mudança de modelo | Pivô de modelo de negócio |
+| Aumento de base | Projeção com mais clientes |
+| Redução de equipe | Time mais enxuto, timeline mais longa |
+
+Para cada cenário:
+- Nome e descrição (1 frase)
+- O que muda em relação ao cenário base
+- Novo TCO 3 anos
+- Nova receita projetada 3 anos
+- Novo break-even (meses)
+- Riscos introduzidos pela mudança
+- Veredicto: viável / viável com ressalvas / inviável
+
+Incluir tabela comparativa no final do bloco 1.8.
+
 ### Sinais de atenção
 
 Sinalize proativamente quando detectar:

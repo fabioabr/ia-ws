@@ -166,6 +166,7 @@ Formato: `REG-{GRUPO}-{NN}`
 | REG-FIN-04 | `financial/revenue-projection.md` | Projeção de receita | Receita projetada (se aplicável) — MRR/ARR, crescimento, churn | Bloco #3/#8 → 1.3/1.8 | Tabela de projeção mensal/anual | Table ou line chart | Quando SaaS |
 | REG-FIN-05 | `financial/effort-estimation.md` | Estimativa de esforço | T-shirt sizing por épico, esforço total para MVP em sprints | Bloco #8 (arch) → 1.8 | Tabela (épico, complexidade, estimativa, premissas) | Table com badges | Todos |
 | REG-FIN-06 | `financial/total-hours.md` | Total Hours | Resumo de horas totais por papel e total geral | Consolidator | Stat cards com horas por papel + total geral | Stat cards grid (HTML/CSS) | Opcional |
+| REG-FIN-07 | `financial/financial-scenarios.md` | Financial Scenarios | Cenários financeiros alternativos quando o cenário base é inviável — comparativo de TCO, receita, break-even | Bloco #8 (arch) → 1.8 | Tabela comparativa + bar chart | Table + Chart.js grouped bar | Opcional |
 
 ---
 
@@ -264,11 +265,11 @@ Regions que só aparecem quando o context-template correspondente está carregad
 | Técnico | 7 | 4 |
 | Segurança | 4 | 3 |
 | Privacidade | 6 | 0 (quando há PII: 4) |
-| Financeiro | 6 | 2 |
+| Financeiro | 7 | 2 |
 | Riscos | 4 | 3 |
 | Qualidade | 4 | 2 |
 | Backlog | 4 | 1 |
 | Métricas | 5 | 1 |
 | Narrativa | 3 | 1 |
 | Domain-specific | 20 | 0 (por context-template) |
-| **Total** | **87** | **28 universais** |
+| **Total** | **88** | **28 universais** |
