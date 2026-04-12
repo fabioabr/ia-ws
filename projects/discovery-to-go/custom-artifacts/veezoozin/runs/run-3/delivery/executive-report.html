@@ -1,0 +1,1741 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veezoozin — Relatório Executivo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+    <style>
+
+/* ====== DESIGN TOKENS (dark — default) ====== */
+:root {
+    --primary: #4DA8DA;
+    --primary-dark: #3A8BB8;
+    --primary-light: rgba(77, 168, 218, 0.12);
+    --secondary: #B9B7BD;
+    --success: #0ED145;
+    --success-light: rgba(14, 209, 69, 0.12);
+    --success-border: rgba(14, 209, 69, 0.3);
+    --warning: #F4AC00;
+    --warning-light: rgba(244, 172, 0, 0.12);
+    --warning-border: rgba(244, 172, 0, 0.3);
+    --danger: #8B1A1A;
+    --danger-light: rgba(139, 26, 26, 0.15);
+    --danger-border: rgba(139, 26, 26, 0.35);
+    --info: #2EB5F5;
+    --info-light: rgba(46, 181, 245, 0.12);
+    --info-border: rgba(46, 181, 245, 0.3);
+    --bg: #1A1923;
+    --card-bg: #2E2D32;
+    --text: #E0DFE3;
+    --text-muted: #88878C;
+    --border: #3E3D44;
+    --purple: #9B96FF;
+    --purple-light: rgba(155, 150, 255, 0.12);
+    --orange: #FF9473;
+    --teal: #2DD4BF;
+    --chart-1: #4DA8DA;
+    --chart-2: #2EB5F5;
+    --chart-3: #0ED145;
+    --chart-4: #FF6B6B;
+    --chart-5: #A78BFA;
+    --header-bg: linear-gradient(135deg, #2E2D32 0%, #252428 50%, #1A1923 100%);
+    --card-header-bg: #252428;
+    --th-bg: #252428;
+    --th-bg-hover: #36353B;
+    --card-shadow: 0 2px 12px rgba(46, 181, 245, 0.06), 0 1px 4px rgba(0,0,0,0.4);
+    --progress-track: #3E3D44;
+    --alert-warning-text: #f0c040;
+    --danger-text: #E85D54;
+    --alert-danger-text: #E85D54;
+    --alert-info-text: #5FC8F8;
+    --alert-success-text: #3DE06A;
+    --pill-success-text: #3DE06A;
+    --pill-info-text: #5FC8F8;
+    --pill-warning-text: #f0c040;
+    --gold: #D4A017;
+    --gold-light: rgba(212, 160, 23, 0.12);
+    --gold-border: rgba(212, 160, 23, 0.35);
+}
+
+/* ====== LIGHT THEME ====== */
+[data-theme="light"] {
+    --primary: #4DA8DA;
+    --primary-dark: #3A8BB8;
+    --primary-light: rgba(77, 168, 218, 0.1);
+    --secondary: #88878C;
+    --success: #0A9E35;
+    --success-light: rgba(10, 158, 53, 0.08);
+    --success-border: rgba(10, 158, 53, 0.25);
+    --warning: #E67E22;
+    --warning-light: rgba(230, 126, 34, 0.12);
+    --warning-border: rgba(230, 126, 34, 0.35);
+    --danger: #E74C3C;
+    --danger-light: rgba(231, 76, 60, 0.10);
+    --danger-border: rgba(231, 76, 60, 0.30);
+    --info: #1E95CC;
+    --info-light: rgba(30, 149, 204, 0.08);
+    --info-border: rgba(30, 149, 204, 0.25);
+    --bg: #E0DFE3;
+    --card-bg: #ffffff;
+    --text: #1A1923;
+    --text-muted: #88878C;
+    --border: #B9B7BD;
+    --purple: #7B76FE;
+    --purple-light: rgba(123, 118, 254, 0.08);
+    --orange: #FE7C58;
+    --teal: #00D8D8;
+    --chart-1: #4DA8DA;
+    --chart-2: #1E95CC;
+    --chart-3: #0A9E35;
+    --chart-4: #D44040;
+    --chart-5: #7C6BD4;
+    --header-bg: linear-gradient(135deg, #2E2D32 0%, #252428 50%, #1A1923 100%);
+    --card-header-bg: rgba(77, 168, 218, 0.12);
+    --th-bg: rgba(77, 168, 218, 0.12);
+    --th-bg-hover: rgba(77, 168, 218, 0.22);
+    --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0,0,0,0.06);
+    --progress-track: #B9B7BD;
+    --alert-warning-text: #C0392B;
+    --alert-danger-text: #C0392B;
+    --alert-info-text: #1670A0;
+    --alert-success-text: #087A28;
+    --pill-success-text: #087A28;
+    --pill-info-text: #1670A0;
+    --pill-warning-text: #C0392B;
+    --gold: #B8860B;
+    --gold-light: rgba(184, 134, 11, 0.1);
+    --gold-border: rgba(184, 134, 11, 0.3);
+    --hover-border: #4DA8DA;
+}
+
+[data-theme="light"] .card:hover { border-color: var(--hover-border); }
+[data-theme="light"] .stat-card:hover { border-color: var(--hover-border); }
+[data-theme="light"] .stat-card { background: #F0EFF2; }
+[data-theme="light"] .tab-btn.active { color: #2E2D32; }
+
+/* ====== RESET ====== */
+html, body, div, span, h1, h2, h3, h4, h5, h6, p, a, img, ul, ol, li,
+header, footer, nav, section, article, aside, button, input, select, textarea,
+table, tr, td, th, form, label, fieldset, legend { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; transition: background 0.3s, color 0.3s; }
+.container { max-width: 1400px; margin: 0 auto; padding: 0 24px; }
+a { color: var(--primary); text-decoration: none; }
+
+/* ====== HEADER ====== */
+.header { background: linear-gradient(135deg, #2E2D32 0%, #252428 50%, #1A1923 100%); color: white; padding: 36px 0 0; position: relative; overflow: hidden; }
+.header::before { content: ''; position: absolute; top: -50%; right: -10%; width: 500px; height: 500px; background: rgba(255,255,255,0.03); border-radius: 50%; z-index: 0; }
+.header-content { position: relative; z-index: 1; }
+.header-top { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-bottom: 8px; }
+.header-left { display: flex; align-items: center; gap: 16px; }
+.header h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.5px; }
+.header .subtitle { font-size: 0.95rem; opacity: 0.85; font-weight: 300; margin-top: 2px; }
+.header-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+.header-badge { background: rgba(255,255,255,0.15); padding: 6px 14px; border-radius: 8px; font-size: 0.78rem; display: flex; align-items: center; gap: 6px; backdrop-filter: blur(10px); color: white; }
+.header-badges-row { display: flex; flex-wrap: wrap; gap: 8px; }
+
+/* ====== THEME TOGGLE ====== */
+.theme-toggle { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; padding: 6px 14px; color: white; font-family: 'Poppins', sans-serif; font-size: 0.78rem; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: all 0.2s; }
+.theme-toggle:hover { background: rgba(255,255,255,0.22); }
+
+/* ====== TABS ====== */
+.tabs-nav { display: flex; gap: 4px; margin-top: 36px; overflow-x: auto; scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.25) transparent; -ms-overflow-style: none; }
+.tabs-nav::-webkit-scrollbar { height: 4px; }
+.tabs-nav::-webkit-scrollbar-track { background: transparent; }
+.tabs-nav::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
+.tabs-nav::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.35); }
+.tab-btn { padding: 10px 24px; background: rgba(255,255,255,0.1); border: none; border-radius: 10px 10px 0 0; color: rgba(255,255,255,0.7); font-family: 'Poppins', sans-serif; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+.tab-btn:hover { background: rgba(255,255,255,0.18); color: white; }
+.tab-btn.active { background: var(--bg); color: var(--text); font-weight: 600; }
+.tab-btn i { font-size: 1.1rem; }
+.tab-count { background: rgba(255,255,255,0.2); padding: 1px 8px; border-radius: 10px; font-size: 0.68rem; font-weight: 600; color: inherit; }
+.tab-btn.active .tab-count { background: rgba(255,255,255,0.2); color: inherit; }
+.tab-content { display: none; padding-top: 24px; padding-bottom: 32px; }
+.tab-content.active { display: block; }
+
+/* ====== STAT CARDS ====== */
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 28px; }
+.stat-card { background: var(--card-bg); border-radius: 12px; padding: 18px 20px; box-shadow: var(--card-shadow); border: 1px solid var(--border); display: flex; align-items: center; gap: 14px; transition: box-shadow 0.2s, border-color 0.2s, background 0.2s; }
+.stat-card:hover { box-shadow: var(--card-shadow); border-color: var(--primary); }
+.stat-card-icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }
+.stat-card-info { flex: 1; }
+.stat-card-number { font-size: 1.12rem; font-weight: 700; line-height: 1.1; }
+.stat-card-label { font-size: 0.72rem; color: var(--text-muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.3px; }
+
+/* ====== CARDS ====== */
+.card { background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 2px 8px rgba(0,0,0,0.03); overflow: hidden; margin-bottom: 20px; transition: box-shadow 0.2s, border-color 0.2s; }
+.card:hover { box-shadow: var(--card-shadow); border-color: var(--primary); }
+.card:hover > .card-header { background: var(--th-bg-hover); }
+.card-header { display: flex; align-items: center; gap: 10px; padding: 14px 18px; border-bottom: 1px solid var(--border); background: var(--card-header-bg); flex-wrap: wrap; }
+.card-header-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+.card-title { font-weight: 600; font-size: 0.95rem; flex: 1; }
+.card-badge { padding: 2px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: 600; white-space: nowrap; }
+.card-body { padding: 18px; color: var(--text); opacity: 0.85; }
+.region-id { padding: 2px 8px; border-radius: 6px; font-size: 0.65rem; font-weight: 700; font-family: monospace; background: var(--primary-light); color: var(--primary); border: 1px solid rgba(77,168,218,0.25); letter-spacing: 0.5px; }
+
+/* ====== SECTION HEADERS ====== */
+.section { margin-top: 32px; }
+.section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid var(--border); }
+.section-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+.section-title { font-size: 1.15rem; font-weight: 600; }
+
+/* ====== ALERTS ====== */
+.alert { padding: 12px 16px; border-radius: 8px; font-size: 0.82rem; display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; border: 1px solid; line-height: 1.6; }
+.alert i { font-size: 1.1rem; flex-shrink: 0; margin-top: 3px; }
+.alert-warning { background: var(--warning-light); border-color: var(--warning-border); color: var(--alert-warning-text); }
+.alert-danger { background: var(--danger-light); border-color: var(--danger-border); color: var(--alert-danger-text); }
+.alert-info { background: var(--info-light); border-color: var(--info-border); color: var(--alert-info-text); }
+.alert-success { background: var(--success-light); border-color: var(--success-border); color: var(--alert-success-text); }
+
+/* ====== PILLS ====== */
+.pill { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: 600; }
+.pill-success { background: var(--success-light); color: var(--pill-success-text); border: 1px solid var(--success-border); }
+.pill-info { background: var(--info-light); color: var(--pill-info-text); border: 1px solid var(--info-border); }
+.pill-warning { background: var(--warning-light); color: var(--pill-warning-text); border: 1px solid var(--warning-border); }
+.pill-danger { background: var(--danger-light); color: var(--alert-danger-text); border: 1px solid var(--danger-border); }
+.pill-gold { background: var(--gold-light); color: var(--gold); border: 1px solid var(--gold-border); }
+
+/* ====== TABLES ====== */
+.table-wrapper { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+th { text-align: left; padding: 10px 14px; background: var(--th-bg); font-weight: 600; border-bottom: 2px solid var(--border); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.3px; color: var(--text-muted); }
+td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+tr:hover { background: var(--primary-light); }
+code { background: var(--bg); padding: 2px 6px; border-radius: 4px; font-size: 0.78rem; border: 1px solid var(--border); }
+
+/* ====== HORIZONTAL BAR (CSS — P34) ====== */
+.hbar-container { margin: 8px 0; }
+.hbar-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+.hbar-label { font-size: 0.78rem; font-weight: 500; min-width: 130px; text-align: right; white-space: nowrap; }
+.hbar-track { flex: 1; height: 28px; background: var(--progress-track); border-radius: 6px; position: relative; overflow: hidden; }
+.hbar-fill { height: 100%; border-radius: 6px; display: flex; align-items: center; justify-content: flex-end; padding-right: 8px; font-size: 0.7rem; font-weight: 600; color: white; transition: width 0.6s ease; min-width: 40px; }
+.hbar-value { font-size: 0.78rem; font-weight: 600; min-width: 80px; padding-left: 8px; }
+
+/* ====== GRID LAYOUTS ====== */
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.sidebar-layout { display: grid; grid-template-columns: 1fr 320px; gap: 20px; }
+
+/* ====== PERSONA CARDS ====== */
+.persona-card { background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border); padding: 18px; transition: all 0.2s; }
+.persona-card:hover { border-color: var(--primary); box-shadow: var(--card-shadow); }
+.persona-card.p0 { border-left: 3px solid var(--primary); }
+.persona-card.p1 { border-left: 3px solid var(--text-muted); }
+.persona-avatar { width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.85rem; color: white; margin-bottom: 10px; }
+.persona-name { font-weight: 600; font-size: 0.9rem; margin-bottom: 2px; }
+.persona-role { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 10px; }
+.persona-detail { font-size: 0.78rem; margin-bottom: 6px; line-height: 1.5; }
+.persona-detail strong { font-weight: 600; }
+
+/* ====== OKR BLOCKS ====== */
+.okr-block { border-radius: 12px; padding: 16px; margin-bottom: 16px; border: 1px solid var(--border); }
+.okr-block h4 { font-size: 0.88rem; font-weight: 600; margin-bottom: 10px; }
+.okr-block table { font-size: 0.78rem; }
+
+/* ====== PRICING COLS ====== */
+.pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.pricing-col { background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border); padding: 20px; text-align: center; }
+.pricing-col.recommended { border-color: var(--primary); border-width: 2px; position: relative; }
+.pricing-col.recommended::before { content: 'Recomendado'; position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: var(--primary); color: #1A1923; padding: 2px 14px; border-radius: 10px; font-size: 0.68rem; font-weight: 700; }
+.pricing-col h4 { font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
+.pricing-price { font-size: 1.3rem; font-weight: 700; color: var(--primary); margin-bottom: 12px; }
+.pricing-features { list-style: none; text-align: left; font-size: 0.78rem; }
+.pricing-features li { padding: 4px 0; border-bottom: 1px solid var(--border); }
+.pricing-features li:last-child { border-bottom: none; }
+.pricing-features li i { margin-right: 6px; color: var(--success); }
+
+/* ====== SCOPE CHIPS ====== */
+.scope-container { display: flex; gap: 20px; margin-bottom: 16px; }
+.scope-col { flex: 1; }
+.scope-col h4 { font-size: 0.85rem; font-weight: 600; margin-bottom: 10px; }
+.chip { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 500; margin: 3px 4px; }
+.chip-in { background: var(--success-light); color: var(--pill-success-text); border: 1px solid var(--success-border); }
+.chip-out { background: var(--card-bg); color: var(--text-muted); border: 1px solid var(--border); }
+
+/* ====== TIMELINE HORIZONTAL ====== */
+.timeline-h { display: flex; gap: 8px; overflow-x: auto; padding: 16px 0; }
+.timeline-h-block { flex: 0 0 auto; min-width: 140px; padding: 14px; border-radius: 10px; text-align: center; font-size: 0.78rem; border: 1px solid var(--border); }
+.timeline-h-block strong { display: block; font-size: 0.85rem; margin-bottom: 4px; }
+.timeline-h-block small { opacity: 0.7; font-size: 0.7rem; }
+
+/* ====== TIMELINE VERTICAL ====== */
+.timeline-v { position: relative; padding-left: 32px; }
+.timeline-v::before { content: ''; position: absolute; left: 12px; top: 0; bottom: 0; width: 2px; background: var(--border); }
+.timeline-v-item { position: relative; margin-bottom: 20px; padding: 14px 18px; background: var(--card-bg); border-radius: 10px; border: 1px solid var(--border); }
+.timeline-v-item::before { content: ''; position: absolute; left: -26px; top: 18px; width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--border); background: var(--card-bg); }
+.timeline-v-item.blue::before { border-color: var(--primary); background: var(--primary-light); }
+.timeline-v-item.green::before { border-color: var(--success); background: var(--success-light); }
+.timeline-v-item.orange::before { border-color: var(--orange); background: rgba(255,148,115,0.15); }
+.timeline-v-item .item-title { font-weight: 600; font-size: 0.85rem; margin-bottom: 4px; }
+.timeline-v-item .item-meta { font-size: 0.75rem; color: var(--text-muted); }
+
+/* ====== CHART CONTAINER ====== */
+.chart-container { position: relative; max-width: 400px; margin: 0 auto; }
+.chart-container.wide { max-width: 600px; }
+
+/* ====== GO/NO-GO ====== */
+.go-badge { display: inline-flex; align-items: center; gap: 8px; padding: 10px 24px; border-radius: 12px; font-size: 1.1rem; font-weight: 700; margin-bottom: 16px; }
+.go-badge.approved { background: var(--success-light); color: var(--pill-success-text); border: 2px solid var(--success-border); }
+.conditions-list { list-style: none; counter-reset: cond; }
+.conditions-list li { padding: 8px 0; font-size: 0.82rem; border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; gap: 10px; }
+.conditions-list li:last-child { border-bottom: none; }
+.conditions-list li::before { content: ''; width: 18px; height: 18px; border: 2px solid var(--text-muted); border-radius: 4px; flex-shrink: 0; margin-top: 2px; }
+
+/* ====== SEVERITY BADGES ====== */
+.severity { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: 600; }
+.severity-critical { background: var(--danger-light); color: var(--alert-danger-text); border: 1px solid var(--danger-border); }
+.severity-high { background: var(--warning-light); color: var(--alert-warning-text); border: 1px solid var(--warning-border); }
+.severity-medium { background: var(--info-light); color: var(--alert-info-text); border: 1px solid var(--info-border); }
+.severity-low { background: var(--success-light); color: var(--pill-success-text); border: 1px solid var(--success-border); }
+
+/* ====== 10TH-MAN CARDS ====== */
+.challenge-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; margin-top: 16px; }
+.challenge-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 14px; }
+.challenge-card-title { font-weight: 600; font-size: 0.82rem; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+.challenge-card-text { font-size: 0.78rem; color: var(--text-muted); line-height: 1.5; }
+.blind-spots { list-style: none; margin-top: 16px; }
+.blind-spots li { padding: 8px 12px; margin-bottom: 6px; background: var(--warning-light); border: 1px solid var(--warning-border); border-radius: 8px; font-size: 0.78rem; color: var(--alert-warning-text); display: flex; align-items: flex-start; gap: 8px; }
+.blind-spots li i { margin-top: 2px; flex-shrink: 0; }
+
+/* ====== GLOSSARY ====== */
+.glossary-table tr:nth-child(even) { background: var(--primary-light); }
+.glossary-table tr:nth-child(even):hover { background: var(--primary-light); }
+
+/* Acronym — abbr tooltip (P12) */
+abbr.acronym { text-decoration: none; border-bottom: 1px dotted var(--primary); color: var(--primary); cursor: help; font-weight: 500; transition: color 0.2s, border-color 0.2s; }
+abbr.acronym:hover { color: var(--info); border-bottom-color: var(--info); }
+abbr.acronym[title] { position: relative; }
+abbr.acronym[title]:hover::after { content: attr(title); position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%); background: var(--card-bg); color: var(--text); border: 1px solid var(--border); border-radius: 8px; padding: 6px 12px; font-size: 0.72rem; font-weight: 400; white-space: normal; max-width: 320px; z-index: 100; box-shadow: 0 4px 12px rgba(0,0,0,0.3); pointer-events: none; }
+
+/* ====== DASH COMPONENTS ====== */
+.dash-kpi-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; }
+.dash-kpi { background: var(--card-bg); border-radius: 10px; padding: 14px 16px; border-left: 3px solid var(--primary); box-shadow: var(--card-shadow); border: 1px solid var(--border); border-left: 3px solid var(--primary); }
+.dash-kpi.highlight { border-left-color: var(--info); background: var(--card-header-bg); }
+.dash-kpi-label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); font-weight: 600; }
+.dash-kpi-value { font-size: 1.6rem; font-weight: 800; color: var(--primary); margin: 4px 0; }
+.dash-kpi-sub { font-size: 0.72rem; color: var(--text-muted); }
+
+/* ====== FOOTER ====== */
+.footer { background: linear-gradient(135deg, #2E2D32 0%, #252428 50%, #1A1923 100%); color: white; padding: 36px 0; position: relative; overflow: hidden; margin-top: 0; }
+.footer::before { content: ''; position: absolute; bottom: -50%; left: -10%; width: 500px; height: 500px; background: rgba(255,255,255,0.03); border-radius: 50%; z-index: 0; }
+.footer-content { position: relative; z-index: 1; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 24px; }
+.footer-left { font-size: 0.85rem; font-weight: 500; opacity: 0.9; }
+.footer-right { text-align: right; font-size: 0.72rem; opacity: 0.6; }
+.footer-seal { display: flex; align-items: center; gap: 8px; margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.12); font-size: 0.7rem; opacity: 0.5; justify-content: center; }
+.footer-seal i { font-size: 1rem; }
+
+/* ====== BACK TO TOP ====== */
+.back-to-top { position: fixed; bottom: 32px; right: 32px; width: 44px; height: 44px; border-radius: 12px; background: var(--info); color: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; box-shadow: 0 4px 16px rgba(46,181,245,0.35); opacity: 0; visibility: hidden; transform: translateY(10px); transition: opacity 0.3s, visibility 0.3s, transform 0.3s; z-index: 999; }
+.back-to-top.visible { opacity: 1; visibility: visible; transform: translateY(0); }
+
+/* ====== PRINT ====== */
+@media print {
+    body { background: white; color: #212B37; }
+    .header { background: #2E2D32 !important; }
+    .tab-btn { display: none; }
+    .tab-content { display: block !important; page-break-inside: avoid; }
+    .card { break-inside: avoid; }
+    .back-to-top { display: none; }
+}
+
+/* ====== RESPONSIVE ====== */
+@media (max-width: 900px) {
+    .grid-2, .grid-3, .pricing-grid, .sidebar-layout { grid-template-columns: 1fr; }
+    .scope-container { flex-direction: column; }
+    .header-top { flex-direction: column; align-items: flex-start; }
+    .header-right { align-items: flex-start; }
+    .stats-grid { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
+    .dash-kpi-strip { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 768px) {
+    .tabs-nav { flex-wrap: wrap; }
+    .tab-btn { padding: 8px 14px; font-size: 0.78rem; }
+}
+@media (max-width: 600px) {
+    .container { padding: 0 12px; }
+    .stats-grid { grid-template-columns: 1fr; }
+    .challenge-cards { grid-template-columns: 1fr; }
+    .dash-kpi-strip { grid-template-columns: 1fr; }
+}
+
+    </style>
+</head>
+<body>
+
+<!-- ====== HEADER ====== -->
+<header class="header">
+    <div class="container header-content">
+        <div class="header-top">
+            <div class="header-left">
+                <div>
+                    <h1><i class="ri-database-2-line"></i> Veezoozin &mdash; Relat&oacute;rio Executivo</h1>
+                    <div class="subtitle">Discovery Pipeline v0.5 &mdash; Run 3, Itera&ccedil;&atilde;o 1 | 2026-04-12</div>
+                    <div class="header-badges-row" style="margin-top: 10px;">
+                        <span class="header-badge"><i class="ri-stack-line"></i> <abbr class="acronym" title="Software as a Service" style="color:inherit;border:none;">SaaS</abbr> + <abbr class="acronym" title="Artificial Intelligence / Machine Learning" style="color:inherit;border:none;">AI/ML</abbr></span>
+                        <span class="header-badge" style="background:rgba(14,209,69,0.25);border:1px solid rgba(14,209,69,0.4);"><i class="ri-shield-check-line"></i> Auditor 88,8%</span>
+                        <span class="header-badge" style="background:rgba(14,209,69,0.25);border:1px solid rgba(14,209,69,0.4);"><i class="ri-check-double-line"></i> GO &mdash; Vi&aacute;vel</span>
+                        <span class="header-badge"><i class="ri-file-text-line"></i> Executive Setup</span>
+                        <span class="header-badge"><i class="ri-calendar-line"></i> 2026-04-12</span>
+                    </div>
+                </div>
+            </div>
+            <div class="header-right">
+                <button class="theme-toggle" onclick="toggleTheme()">
+                    <i class="ri-moon-line" id="themeIcon"></i> <span id="themeLabel">Light</span>
+                </button>
+            </div>
+        </div>
+        <!-- Tabs -->
+        <div class="tabs-nav">
+            <button class="tab-btn active" onclick="switchTab('produto')"><i class="ri-lightbulb-line"></i> Produto e Valor <span class="tab-count">7</span></button>
+            <button class="tab-btn" onclick="switchTab('org')"><i class="ri-team-line"></i> Organiza&ccedil;&atilde;o <span class="tab-count">2</span></button>
+            <button class="tab-btn" onclick="switchTab('financeiro')"><i class="ri-money-dollar-circle-line"></i> Financeiro <span class="tab-count">3</span></button>
+            <button class="tab-btn" onclick="switchTab('riscos')"><i class="ri-shield-check-line"></i> Riscos e Qualidade <span class="tab-count">4</span></button>
+            <button class="tab-btn" onclick="switchTab('backlog')"><i class="ri-checkbox-circle-line"></i> Backlog e Decis&atilde;o <span class="tab-count">3</span></button>
+            <button class="tab-btn" onclick="switchTab('dominio')"><i class="ri-apps-line"></i> Dom&iacute;nio <span class="tab-count">2</span></button>
+            <button class="tab-btn" onclick="switchTab('glossario')"><i class="ri-book-open-line"></i> Gloss&aacute;rio</button>
+        </div>
+    </div>
+</header>
+
+<main class="container" style="padding-top:0; padding-bottom:0;">
+
+<!-- ================================================================== -->
+<!-- TAB 1: PRODUTO E VALOR                                              -->
+<!-- ================================================================== -->
+<div id="tab-produto" class="tab-content active">
+
+    <!-- REG-EXEC-02 — Product Brief -->
+    <div class="card" id="reg-exec-02">
+        <div class="card-header">
+            <div class="card-header-icon bg-info"><i class="ri-information-line"></i></div>
+            <span class="card-title">Vis&atilde;o Geral do Projeto</span>
+            <span class="region-id">REG-EXEC-02</span>
+        </div>
+        <div class="card-body">
+            <div class="table-wrapper">
+                <table>
+                    <tbody>
+                        <tr><td style="font-weight:600; width:220px;">Projeto</td><td>Veezoozin</td></tr>
+                        <tr><td style="font-weight:600;">Cliente</td><td>mAInd Tech (startup de tecnologia)</td></tr>
+                        <tr><td style="font-weight:600;">Tipo de projeto</td><td>Novo produto (greenfield)</td></tr>
+                        <tr><td style="font-weight:600;">Context-Templates</td><td><abbr class="acronym" title="Software as a Service">SaaS</abbr> + <abbr class="acronym" title="Artificial Intelligence / Machine Learning">AI/ML</abbr> + Datalake-Ingestion</td></tr>
+                        <tr><td style="font-weight:600;">Dura&ccedil;&atilde;o do Discovery</td><td>Run 3, Itera&ccedil;&atilde;o 1 &mdash; 8 blocos discovery + 2 blocos challenge</td></tr>
+                        <tr><td style="font-weight:600;">Setup do Relat&oacute;rio</td><td>Executive</td></tr>
+                        <tr><td style="font-weight:600;">Data Source Breakdown</td><td>Briefing ~69% / Infer&ecirc;ncia ~31% / Recomenda&ccedil;&otilde;es ~89% aceitas</td></tr>
+                        <tr><td style="font-weight:600;">Confian&ccedil;a Geral</td><td>Alta &mdash; sem inconsist&ecirc;ncias inter-blocos, modelo financeiro vi&aacute;vel</td></tr>
+                        <tr><td style="font-weight:600;">Flags</td><td><span class="pill pill-success">Nenhuma</span></td></tr>
+                        <tr><td style="font-weight:600;">Equipe</td><td>1 arquiteto s&ecirc;nior full-stack + Claude Code</td></tr>
+                        <tr><td style="font-weight:600;">Modelo de <abbr class="acronym" title="Large Language Model">LLM</abbr></td><td><abbr class="acronym" title="Bring Your Own Key &mdash; tenant cadastra sua pr&oacute;pria API key de LLM">BYOK</abbr> &mdash; tenant cadastra sua pr&oacute;pria API key</td></tr>
+                        <tr><td style="font-weight:600;">Infraestrutura</td><td>100% serverless/pay-per-use (GCP)</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- REG-PROD-04 — Value Proposition -->
+    <div class="card" id="reg-prod-04">
+        <div class="card-header">
+            <div class="card-header-icon bg-success"><i class="ri-trophy-line"></i></div>
+            <span class="card-title">Proposta de Valor e Diferencia&ccedil;&atilde;o</span>
+            <span class="region-id">REG-PROD-04</span>
+        </div>
+        <div class="card-body">
+            <div class="table-wrapper">
+                <table>
+                    <thead><tr><th>Concorrente</th><th>Limita&ccedil;&atilde;o principal</th><th>Vantagem Veezoozin</th></tr></thead>
+                    <tbody>
+                        <tr><td>Tableau Ask Data</td><td>Apenas dentro do Tableau, idiomas limitados</td><td>Standalone, multi-idioma nativo</td></tr>
+                        <tr><td>ThoughtSpot</td><td>Pricing enterprise elevado (US$ 1.250+/m&ecirc;s), schema r&iacute;gido</td><td>Acess&iacute;vel para <abbr class="acronym" title="Pequenas e M&eacute;dias Empresas">PMEs</abbr> (R$ 497), schema flex&iacute;vel por tenant</td></tr>
+                        <tr><td>ChatGPT + SQL</td><td>Sem contexto de neg&oacute;cio, sem multi-tenancy, sem persist&ecirc;ncia</td><td>Gloss&aacute;rio por tenant, hist&oacute;rico, aprendizado cont&iacute;nuo</td></tr>
+                        <tr><td>Metabase</td><td>Dashboard-first, n&atilde;o conversacional</td><td>Conversational-first com output visual rico</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="alert alert-success" style="margin-top: 12px;">
+                <i class="ri-shield-star-line"></i>
+                <div><strong>Moat real:</strong> Efeito de rede de contexto acumulado por tenant + multi-idioma nativo + integra&ccedil;&atilde;o <abbr class="acronym" title="Model Context Protocol &mdash; protocolo para integra&ccedil;&atilde;o com fontes de conhecimento externas">MCP</abbr>. Quanto mais o tenant usa, melhor o sistema fica (few-shot examples, gloss&aacute;rio refinado, hist&oacute;rico).</div>
+            </div>
+            <div class="alert alert-warning" style="margin-top: 6px;">
+                <i class="ri-alarm-warning-line"></i>
+                <div><strong>Alerta 10th-man:</strong> Moat requer alta reten&ccedil;&atilde;o para acumular contexto. Gloss&aacute;rio &eacute; replic&aacute;vel em 3-6 meses.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- REG-PROD-02 — Personas -->
+    <div class="card" id="reg-prod-02">
+        <div class="card-header">
+            <div class="card-header-icon bg-purple"><i class="ri-user-heart-line"></i></div>
+            <span class="card-title">Personas</span>
+            <span class="region-id">REG-PROD-02</span>
+        </div>
+        <div class="card-body">
+            <div class="grid-2">
+                <div class="persona-card p0">
+                    <div class="persona-avatar" style="background:var(--primary);">M</div>
+                    <div class="persona-name">Marina &mdash; Diretora Comercial <span class="pill pill-info">P0</span></div>
+                    <div class="persona-role">38 anos, MBA, n&atilde;o sabe SQL</div>
+                    <div class="persona-detail"><strong>JTBD:</strong> Perguntar sobre <abbr class="acronym" title="Key Performance Indicators">KPIs</abbr> e receber gr&aacute;ficos em segundos</div>
+                    <div class="persona-detail"><strong>Frequ&ecirc;ncia:</strong> Di&aacute;rio (2-5/dia)</div>
+                    <div class="persona-detail"><strong><abbr class="acronym" title="Bring Your Own Key">BYOK</abbr>:</strong> Transparente &mdash; n&atilde;o sabe que <abbr class="acronym" title="Large Language Model">LLM</abbr> existe</div>
+                </div>
+                <div class="persona-card p0">
+                    <div class="persona-avatar" style="background:var(--info);">R</div>
+                    <div class="persona-name">Rafael &mdash; Analista de BI <span class="pill pill-info">P0</span></div>
+                    <div class="persona-role">29 anos, SQL b&aacute;sico, 70% em queries repetitivas</div>
+                    <div class="persona-detail"><strong>JTBD:</strong> Cruzar dados sem escrever SQL</div>
+                    <div class="persona-detail"><strong>Frequ&ecirc;ncia:</strong> Di&aacute;rio (10-20/dia)</div>
+                    <div class="persona-detail"><strong><abbr class="acronym" title="Bring Your Own Key">BYOK</abbr>:</strong> Pode se preocupar com &ldquo;custo por query&rdquo;</div>
+                </div>
+                <div class="persona-card p1">
+                    <div class="persona-avatar" style="background:var(--secondary);">L</div>
+                    <div class="persona-name">Lucas &mdash; L&iacute;der de Dados <span class="pill pill-warning">P1</span></div>
+                    <div class="persona-role">34 anos, engenheiro de dados</div>
+                    <div class="persona-detail"><strong>JTBD:</strong> Ensinar o sistema sobre o dom&iacute;nio de neg&oacute;cio</div>
+                    <div class="persona-detail"><strong>Frequ&ecirc;ncia:</strong> Semanal</div>
+                    <div class="persona-detail"><strong><abbr class="acronym" title="Bring Your Own Key">BYOK</abbr>:</strong> Monitora consumo no dashboard</div>
+                </div>
+                <div class="persona-card p1">
+                    <div class="persona-avatar" style="background:var(--text-muted);">C</div>
+                    <div class="persona-name">Carla &mdash; Coord. de Infra <span class="pill pill-warning">P1</span> <span class="pill pill-danger">Poder de veto</span></div>
+                    <div class="persona-role">41 anos, foco em seguran&ccedil;a</div>
+                    <div class="persona-detail"><strong>JTBD:</strong> Garantir read-only, <abbr class="acronym" title="Lei Geral de Prote&ccedil;&atilde;o de Dados">LGPD</abbr>, logs</div>
+                    <div class="persona-detail"><strong>Frequ&ecirc;ncia:</strong> Mensal</div>
+                    <div class="persona-detail"><strong><abbr class="acronym" title="Bring Your Own Key">BYOK</abbr>:</strong> Gerencia API key como secret corporativo</div>
+                </div>
+            </div>
+            <div style="margin-top:14px; font-size:0.82rem; color:var(--text-muted);">
+                <strong>Jornada de primeiro valor:</strong> ~45 minutos (signup 2 min &rarr; API key 3 min &rarr; BigQuery 10 min &rarr; schema mapping 15-20 min &rarr; gloss&aacute;rio 10 min &rarr; primeira query 5 seg &rarr; &ldquo;aha! moment&rdquo;)
+            </div>
+        </div>
+    </div>
+
+    <!-- REG-PROD-05 — OKRs -->
+    <div class="card" id="reg-prod-05">
+        <div class="card-header">
+            <div class="card-header-icon bg-teal"><i class="ri-focus-3-line"></i></div>
+            <span class="card-title"><abbr class="acronym" title="Objectives and Key Results">OKRs</abbr> do <abbr class="acronym" title="Minimum Viable Product">MVP</abbr> e M&eacute;tricas</span>
+            <span class="region-id">REG-PROD-05</span>
+        </div>
+        <div class="card-body">
+            <div class="okr-block" style="border-left: 3px solid var(--primary);">
+                <h4 style="color:var(--primary);">O1: Validar que o produto resolve o problema</h4>
+                <table><thead><tr><th>KR</th><th>M&eacute;trica</th><th style="text-align:center;">Meta</th></tr></thead>
+                <tbody>
+                    <tr><td>KR1.1</td><td>Precis&atilde;o <abbr class="acronym" title="Natural Language to SQL &mdash; convers&atilde;o de linguagem natural em queries SQL">NL-to-SQL</abbr> (1&ordf; tentativa)</td><td style="text-align:center;">&gt;85%</td></tr>
+                    <tr><td>KR1.2</td><td>Lat&ecirc;ncia para queries simples</td><td style="text-align:center;">&lt;5 seg</td></tr>
+                    <tr><td>KR1.3</td><td>% tenants com &ldquo;aha! moment&rdquo; em &lt;45 min</td><td style="text-align:center;">&gt;70%</td></tr>
+                    <tr><td>KR1.4</td><td>Taxa de aceita&ccedil;&atilde;o de sugest&otilde;es de prompt</td><td style="text-align:center;">&gt;40%</td></tr>
+                </tbody></table>
+            </div>
+            <div class="okr-block" style="border-left: 3px solid var(--success);">
+                <h4 style="color:var(--success);">O2: Conseguir primeiros clientes pagantes</h4>
+                <table><thead><tr><th>KR</th><th>M&eacute;trica</th><th style="text-align:center;">Meta</th></tr></thead>
+                <tbody>
+                    <tr><td>KR2.1</td><td>Tenants ativos (Free + Pro)</td><td style="text-align:center;">5+ (m&ecirc;s 4)</td></tr>
+                    <tr><td>KR2.2</td><td>Tenants pagantes (Pro)</td><td style="text-align:center;">3+ (m&ecirc;s 6)</td></tr>
+                    <tr><td>KR2.3</td><td><abbr class="acronym" title="Monthly Recurring Revenue &mdash; receita recorrente mensal">MRR</abbr></td><td style="text-align:center;">R$ 1.500+ (m&ecirc;s 6)</td></tr>
+                </tbody></table>
+            </div>
+            <div class="okr-block" style="border-left: 3px solid var(--purple);">
+                <h4 style="color:var(--purple);">O3: Manter opera&ccedil;&atilde;o sustent&aacute;vel com 1 dev</h4>
+                <table><thead><tr><th>KR</th><th>M&eacute;trica</th><th style="text-align:center;">Meta</th></tr></thead>
+                <tbody>
+                    <tr><td>KR3.1</td><td>Custo de infra com at&eacute; 50 tenants</td><td style="text-align:center;">&lt;R$ 5K/m&ecirc;s</td></tr>
+                    <tr><td>KR3.2</td><td>Uptime</td><td style="text-align:center;">&gt;99,5%</td></tr>
+                    <tr><td>KR3.3</td><td>Deploy sem downtime</td><td style="text-align:center;">100%</td></tr>
+                </tbody></table>
+            </div>
+            <!-- North Star by Stage -->
+            <div style="margin-top:16px;">
+                <h4 style="font-size:0.85rem; font-weight:600; margin-bottom:12px;">M&eacute;trica Norte por Est&aacute;gio</h4>
+                <div class="timeline-h">
+                    <div class="timeline-h-block" style="background:var(--primary-light);border-color:var(--primary);">
+                        <strong><abbr class="acronym" title="Minimum Viable Product">MVP</abbr> (m1-4)</strong>
+                        Precis&atilde;o <abbr class="acronym" title="Natural Language to SQL">NL-to-SQL</abbr>
+                        <small>Se a query errar, nada importa</small>
+                    </div>
+                    <div class="timeline-h-block" style="background:var(--success-light);border-color:var(--success);">
+                        <strong>Early (m4-8)</strong>
+                        Ativa&ccedil;&atilde;o (% aha! moment)
+                        <small>Validar onboarding</small>
+                    </div>
+                    <div class="timeline-h-block" style="background:var(--purple-light);border-color:var(--purple);">
+                        <strong>Growth (m8-14)</strong>
+                        <abbr class="acronym" title="Monthly Recurring Revenue">MRR</abbr>
+                        <small>Caminho para break-even</small>
+                    </div>
+                    <div class="timeline-h-block" style="background:var(--info-light);border-color:var(--info);">
+                        <strong>Scale (m14+)</strong>
+                        <abbr class="acronym" title="Net Revenue Retention &mdash; reten&ccedil;&atilde;o l&iacute;quida de receita">NRR</abbr>
+                        <small>Expans&atilde;o &gt; churn</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- REG-PROD-06 — Pricing -->
+    <div class="card" id="reg-prod-06">
+        <div class="card-header">
+            <div class="card-header-icon bg-warning"><i class="ri-price-tag-3-line"></i></div>
+            <span class="card-title">Modelo Comercial e Pricing</span>
+            <span class="region-id">REG-PROD-06</span>
+        </div>
+        <div class="card-body">
+            <div class="pricing-grid">
+                <div class="pricing-col">
+                    <h4>Free</h4>
+                    <div class="pricing-price">R$ 0</div>
+                    <ul class="pricing-features">
+                        <li><i class="ri-check-line"></i> 2 usu&aacute;rios</li>
+                        <li><i class="ri-check-line"></i> 1 dataset, 5 tabelas</li>
+                        <li><i class="ri-check-line"></i> 50 queries/m&ecirc;s</li>
+                        <li><i class="ri-check-line"></i> Pool compartilhado (Gemini Flash)</li>
+                        <li><i class="ri-check-line"></i> Hist&oacute;rico 7 dias</li>
+                        <li><i class="ri-close-line" style="color:var(--text-muted);"></i> Sem export</li>
+                        <li><i class="ri-close-line" style="color:var(--text-muted);"></i> Sem <abbr class="acronym" title="Model Context Protocol">MCP</abbr></li>
+                    </ul>
+                </div>
+                <div class="pricing-col recommended">
+                    <h4>Pro</h4>
+                    <div class="pricing-price">R$ 497<span style="font-size:0.7rem;font-weight:400;">/m&ecirc;s</span></div>
+                    <ul class="pricing-features">
+                        <li><i class="ri-check-line"></i> 10 usu&aacute;rios</li>
+                        <li><i class="ri-check-line"></i> 10 datasets, 50 tabelas</li>
+                        <li><i class="ri-check-line"></i> Queries ilimitadas</li>
+                        <li><i class="ri-check-line"></i> <abbr class="acronym" title="Bring Your Own Key">BYOK</abbr> obrigat&oacute;rio</li>
+                        <li><i class="ri-check-line"></i> Hist&oacute;rico 90 dias</li>
+                        <li><i class="ri-check-line"></i> Export PDF/HTML</li>
+                        <li><i class="ri-check-line"></i> <abbr class="acronym" title="Model Context Protocol">MCP</abbr> (at&eacute; 3 fontes)</li>
+                        <li><i class="ri-check-line"></i> Trial 14 dias</li>
+                    </ul>
+                </div>
+                <div class="pricing-col">
+                    <h4>Enterprise</h4>
+                    <div class="pricing-price">R$ 2.497+<span style="font-size:0.7rem;font-weight:400;">/m&ecirc;s</span></div>
+                    <ul class="pricing-features">
+                        <li><i class="ri-check-line"></i> Usu&aacute;rios ilimitados</li>
+                        <li><i class="ri-check-line"></i> Datasets ilimitados</li>
+                        <li><i class="ri-check-line"></i> <abbr class="acronym" title="Bring Your Own Key">BYOK</abbr> obrigat&oacute;rio</li>
+                        <li><i class="ri-check-line"></i> Hist&oacute;rico ilimitado</li>
+                        <li><i class="ri-check-line"></i> <abbr class="acronym" title="Single Sign-On">SSO</abbr> (SAML/OAuth2)</li>
+                        <li><i class="ri-check-line"></i> <abbr class="acronym" title="Role-Based Access Control">RBAC</abbr> custom + column-level</li>
+                        <li><i class="ri-check-line"></i> <abbr class="acronym" title="Service Level Agreement">SLA</abbr> 99,9% / Suporte 4h</li>
+                        <li><i class="ri-check-line"></i> Base + R$ 29/usu&aacute;rio adicional</li>
+                    </ul>
+                </div>
+            </div>
+            <div style="margin-top:12px; font-size:0.78rem; color:var(--text-muted);">
+                <strong>Margem bruta:</strong> Pro 86% | Enterprise 94% &mdash; <abbr class="acronym" title="Bring Your Own Key">BYOK</abbr> elimina custo de <abbr class="acronym" title="Large Language Model">LLM</abbr> para mAInd Tech.
+            </div>
+        </div>
+    </div>
+
+    <!-- REG-PROD-07 — Scope & Roadmap -->
+    <div class="card" id="reg-prod-07">
+        <div class="card-header">
+            <div class="card-header-icon bg-orange"><i class="ri-road-map-line"></i></div>
+            <span class="card-title">Escopo do <abbr class="acronym" title="Minimum Viable Product">MVP</abbr> e Roadmap</span>
+            <span class="region-id">REG-PROD-07</span>
+        </div>
+        <div class="card-body">
+            <div class="scope-container">
+                <div class="scope-col">
+                    <h4 style="color:var(--pill-success-text);"><i class="ri-check-line"></i> Dentro do Escopo</h4>
+                    <span class="chip chip-in">Interface conversacional web</span>
+                    <span class="chip chip-in">NL-to-SQL + RAG</span>
+                    <span class="chip chip-in">3 idiomas (PT/EN/ES)</span>
+                    <span class="chip chip-in">Gr&aacute;ficos + insights</span>
+                    <span class="chip chip-in">Multi-tenant</span>
+                    <span class="chip chip-in">Billing Stripe</span>
+                    <span class="chip chip-in">BYOK multi-provider</span>
+                    <span class="chip chip-in">LGPD compliant</span>
+                    <span class="chip chip-in">RBAC b&aacute;sico</span>
+                    <span class="chip chip-in">Guided First Query</span>
+                </div>
+                <div class="scope-col">
+                    <h4 style="color:var(--text-muted);"><i class="ri-close-line"></i> Fora do Escopo</h4>
+                    <span class="chip chip-out">Escrita/modifica&ccedil;&atilde;o de dados</span>
+                    <span class="chip chip-out">Fine-tuning de LLM</span>
+                    <span class="chip chip-out">ETL/ingest&atilde;o</span>
+                    <span class="chip chip-out">App mobile nativo</span>
+                    <span class="chip chip-out">Multi-banco (Fase 2)</span>
+                    <span class="chip chip-out">SSO/SAML (Fase 2)</span>
+                </div>
+            </div>
+            <div class="timeline-h">
+                <div class="timeline-h-block" style="background:var(--primary-light);border-color:var(--primary);min-width:200px;">
+                    <strong><abbr class="acronym" title="Minimum Viable Product">MVP</abbr></strong>
+                    4 meses (12 semanas)
+                    <small>NL&rarr;SQL&rarr;Viz. BigQuery. Free/Pro. BYOK.</small>
+                </div>
+                <div class="timeline-h-block" style="background:var(--success-light);border-color:var(--success);min-width:200px;">
+                    <strong>Fase 2</strong>
+                    +3 meses
+                    <small>Multi-banco + MCPs + RAG + SSO + Enterprise</small>
+                </div>
+                <div class="timeline-h-block" style="background:var(--purple-light);border-color:var(--purple);min-width:200px;">
+                    <strong>Fase 3</strong>
+                    +3 meses
+                    <small>An&aacute;lises preditivas + alertas + agentes</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- REG-PROD-08 — Impacto & Problema (PROD-01 data) -->
+    <div class="card" id="reg-prod-08">
+        <div class="card-header">
+            <div class="card-header-icon bg-danger"><i class="ri-error-warning-line"></i></div>
+            <span class="card-title">Problema Central e Impacto</span>
+            <span class="region-id">REG-PROD-01</span>
+        </div>
+        <div class="card-body">
+            <div class="stats-grid" style="margin-bottom:16px;">
+                <div class="stat-card">
+                    <div class="stat-card-icon bg-primary"><i class="ri-time-line"></i></div>
+                    <div class="stat-card-info"><div class="stat-card-number">Dias &rarr; Segundos</div><div class="stat-card-label">Tempo de resposta</div></div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-icon bg-success"><i class="ri-group-line"></i></div>
+                    <div class="stat-card-info"><div class="stat-card-number">5% &rarr; 100%</div><div class="stat-card-label">Acesso a dados</div></div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-icon bg-info"><i class="ri-subtract-line"></i></div>
+                    <div class="stat-card-info"><div class="stat-card-number">-60% a -80%</div><div class="stat-card-label">Tickets para time de dados</div></div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-icon bg-purple"><i class="ri-bar-chart-box-line"></i></div>
+                    <div class="stat-card-info"><div class="stat-card-number">Tabela &rarr; Gr&aacute;fico + Insight</div><div class="stat-card-label">Qualidade da resposta</div></div>
+                </div>
+            </div>
+            <div class="table-wrapper">
+                <table>
+                    <thead><tr><th>Dimens&atilde;o</th><th>Descri&ccedil;&atilde;o</th><th>Impacto</th></tr></thead>
+                    <tbody>
+                        <tr><td style="font-weight:600;">Barreira t&eacute;cnica</td><td>Gestores dependem de times de dados. Uma pergunta vira ticket de 2-3 dias.</td><td>Decis&otilde;es atrasadas, custo operacional alto</td></tr>
+                        <tr><td style="font-weight:600;">Falta de contexto</td><td>Ferramentas de BI gen&eacute;ricas n&atilde;o entendem o vocabul&aacute;rio do cliente.</td><td>Respostas imprecisas, retrabalho</td></tr>
+                        <tr><td style="font-weight:600;">Dados sem a&ccedil;&atilde;o</td><td>Usu&aacute;rio recebe tabelas brutas sem insights, gr&aacute;ficos ou tend&ecirc;ncias.</td><td>Dados acessados mas n&atilde;o utilizados</td></tr>
+                        <tr><td style="font-weight:600;">Multi-idioma</td><td>Empresas latinas operam em PT-BR, EN-US e ES.</td><td>Exclus&atilde;o de usu&aacute;rios, ado&ccedil;&atilde;o limitada</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- ================================================================== -->
+<!-- TAB 2: ORGANIZA&Ccedil;&Atilde;O                                    -->
+<!-- ================================================================== -->
+<div id="tab-org" class="tab-content">
+
+    <!-- REG-ORG-01 — Time e Stakeholders -->
+    <div class="card" id="reg-org-01">
+        <div class="card-header">
+            <div class="card-header-icon bg-primary"><i class="ri-team-line"></i></div>
+            <span class="card-title">Time e Stakeholders</span>
+            <span class="region-id">REG-ORG-01</span>
+        </div>
+        <div class="card-body">
+            <div class="stats-grid" style="margin-bottom:16px;">
+                <div class="stat-card">
+                    <div class="stat-card-icon bg-info"><i class="ri-user-star-line"></i></div>
+                    <div class="stat-card-info"><div class="stat-card-number">1 pessoa + IA</div><div class="stat-card-label">Equipe MVP</div></div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-icon bg-warning"><i class="ri-money-dollar-circle-line"></i></div>
+                    <div class="stat-card-info"><div class="stat-card-number">R$ 16.500/m&ecirc;s</div><div class="stat-card-label">Custo total equipe</div></div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-icon bg-danger"><i class="ri-alarm-warning-line"></i></div>
+                    <div class="stat-card-info"><div class="stat-card-number">Bus Factor = 1</div><div class="stat-card-label">Risco mitigado</div></div>
+                </div>
+            </div>
+            <div class="table-wrapper">
+                <table>
+                    <thead><tr><th>Papel</th><th>Pessoa</th><th style="text-align:center;">Dedica&ccedil;&atilde;o</th><th style="text-align:right;">Custo/m&ecirc;s</th></tr></thead>
+                    <tbody>
+                        <tr><td>Arquiteto S&ecirc;nior Full-Stack</td><td>Fabio</td><td style="text-align:center;">Full-time</td><td style="text-align:right;">R$ 15.000</td></tr>
+                        <tr><td>Assistente de desenvolvimento (IA)</td><td>Claude Code</td><td style="text-align:center;">Full-time</td><td style="text-align:right;">R$ 1.500</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <h4 style="font-size:0.85rem; font-weight:600; margin:16px 0 10px;">Milestones de contrata&ccedil;&atilde;o (baseados em <abbr class="acronym" title="Monthly Recurring Revenue">MRR</abbr>)</h4>
+            <div class="timeline-h">
+                <div class="timeline-h-block" style="background:var(--primary-light);border-color:var(--primary);">
+                    <strong>R$ 25K <abbr class="acronym" title="Monthly Recurring Revenue">MRR</abbr></strong>
+                    DevOps/SRE junior
+                    <small>+R$ 8K/m&ecirc;s</small>
+                </div>
+                <div class="timeline-h-block" style="background:var(--success-light);border-color:var(--success);">
+                    <strong>R$ 40K <abbr class="acronym" title="Monthly Recurring Revenue">MRR</abbr></strong>
+                    Customer Success
+                    <small>+R$ 7K/m&ecirc;s</small>
+                </div>
+                <div class="timeline-h-block" style="background:var(--purple-light);border-color:var(--purple);">
+                    <strong>R$ 60K <abbr class="acronym" title="Monthly Recurring Revenue">MRR</abbr></strong>
+                    Dev backend pleno
+                    <small>+R$ 12K/m&ecirc;s</small>
+                </div>
+                <div class="timeline-h-block" style="background:var(--info-light);border-color:var(--info);">
+                    <strong>R$ 100K <abbr class="acronym" title="Monthly Recurring Revenue">MRR</abbr></strong>
+                    Dev + Designer + PM
+                    <small>+R$ 30K/m&ecirc;s</small>
+                </div>
+            </div>
+            <div class="alert alert-warning" style="margin-top:12px;">
+                <i class="ri-alarm-warning-line"></i>
+                <div><strong>Bus factor mitigation:</strong> Auto-healing (Cloud Run restart, circuit breakers) + documenta&ccedil;&atilde;o excepcional (<abbr class="acronym" title="Architecture Decision Record">ADRs</abbr>, runbooks) + freelancer em standby.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- REG-ORG-02 — Metodologia e SLOs -->
+    <div class="card" id="reg-org-02">
+        <div class="card-header">
+            <div class="card-header-icon bg-teal"><i class="ri-settings-4-line"></i></div>
+            <span class="card-title">Metodologia e <abbr class="acronym" title="Service Level Objectives &mdash; objetivos de n&iacute;vel de servi&ccedil;o">SLOs</abbr></span>
+            <span class="region-id">REG-ORG-02</span>
+        </div>
+        <div class="card-body">
+            <div class="table-wrapper">
+                <table>
+                    <thead><tr><th>Aspecto</th><th>Abordagem</th></tr></thead>
+                    <tbody>
+                        <tr><td style="font-weight:600;">Framework</td><td>Kanban pessoal (n&atilde;o Scrum)</td></tr>
+                        <tr><td style="font-weight:600;">Ciclos</td><td>Sprints de 1 semana com meta &uacute;nica</td></tr>
+                        <tr><td style="font-weight:600;">C&oacute;digo</td><td>Trunk-based development</td></tr>
+                        <tr><td style="font-weight:600;">Code review</td><td>Claude Code como reviewer</td></tr>
+                        <tr><td style="font-weight:600;">Testes</td><td>Automatizados desde o dia 1</td></tr>
+                        <tr><td style="font-weight:600;">Deploy</td><td><abbr class="acronym" title="Continuous Integration / Continuous Deployment">CI/CD</abbr> com GitHub Actions &rarr; Cloud Run</td></tr>
+                        <tr><td style="font-weight:600;">Monitoramento</td><td>Cloud Monitoring + Sentry + alertas Telegram</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <h4 style="font-size:0.85rem; font-weight:600; margin:16px 0 10px;"><abbr class="acronym" title="Service Level Objectives">SLOs</abbr> por Tier</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead><tr><th>M&eacute;trica</th><th style="text-align:center;">Free</th><th style="text-align:center;">Pro</th><th style="text-align:center;">Enterprise</th></tr></thead>
+                    <tbody>
+                        <tr><td style="font-weight:600;">Uptime</td><td style="text-align:center;">Best effort</td><td style="text-align:center;">99,5%</td><td style="text-align:center;">99,9%</td></tr>
+                        <tr><td style="font-weight:600;">Lat&ecirc;ncia p95</td><td style="text-align:center;">&lt;10s</td><td style="text-align:center;">&lt;5s</td><td style="text-align:center;">&lt;3s</td></tr>
+                        <tr><td style="font-weight:600;">Suporte</td><td style="text-align:center;">Docs</td><td style="text-align:center;"><abbr class="acronym" title="Next Business Day">NBD</abbr></td><td style="text-align:center;">4h <abbr class="acronym" title="Service Level Agreement">SLA</abbr></td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="alert alert-info" style="margin-top:12px;">
+                <i class="ri-heart-pulse-line"></i>
+                <div><strong>Rituais anti-burnout:</strong> No-deploy Friday, review mensal 2h, semana de debt mensal, f&eacute;rias trimestrais.</div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- ================================================================== -->
+<!-- TAB 3: FINANCEIRO                                                   -->
+<!-- ================================================================== -->
+<div id="tab-financeiro" class="tab-content">
+
+    <!-- REG-FIN-01 — TCO -->
+    <div class="card" id="reg-fin-01">
+        <div class="card-header">
+            <div class="card-header-icon bg-info"><i class="ri-funds-line"></i></div>
+            <span class="card-title"><abbr class="acronym" title="Total Cost of Ownership &mdash; custo total de propriedade">TCO</abbr> &mdash; 3 Anos</span>
+            <span class="region-id">REG-FIN-01</span>
+        </div>
+        <div class="card-body">
+            <div class="stats-grid" style="margin-bottom:16px;">
+                <div class="stat-card">
+                    <div class="stat-card-icon bg-info"><i class="ri-money-dollar-box-line"></i></div>
+                    <div class="stat-card-info"><div class="stat-card-number">R$ 1.204.800</div><div class="stat-card-label"><abbr class="acronym" title="Total Cost of Ownership">TCO</abbr> 3 ANOS</div></div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-icon bg-success"><i class="ri-line-chart-line"></i></div>
+                    <div class="stat-card-info"><div class="stat-card-number">R$ 1.360.214</div><div class="stat-card-label">RECEITA 3 ANOS</div></div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-icon" style="background:var(--success-light);color:var(--pill-success-text);"><i class="ri-add-circle-line"></i></div>
+                    <div class="stat-card-info"><div class="stat-card-number" style="color:var(--pill-success-text);">+R$ 155.414</div><div class="stat-card-label">RESULTADO 3 ANOS</div></div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-icon bg-warning"><i class="ri-calendar-check-line"></i></div>
+                    <div class="stat-card-info"><div class="stat-card-number">M&ecirc;s 19</div><div class="stat-card-label">BREAK-EVEN</div></div>
+                </div>
+            </div>
+            <!-- Projeção por ano — horizontal bars P34 -->
+            <h4 style="font-size:0.85rem; font-weight:600; margin-bottom:12px;">Proje&ccedil;&atilde;o Consolidada</h4>
+            <div class="hbar-container">
+                <div class="hbar-row">
+                    <span class="hbar-label">Ano 1 — Receita</span>
+                    <div class="hbar-track"><div class="hbar-fill" style="width:5%;background:var(--success);">5%</div></div>
+                    <span class="hbar-value">R$ 50.834</span>
+                </div>
+                <div class="hbar-row">
+                    <span class="hbar-label">Ano 1 — Custo</span>
+                    <div class="hbar-track"><div class="hbar-fill" style="width:18%;background:var(--chart-4);">18%</div></div>
+                    <span class="hbar-value">R$ 211.800</span>
+                </div>
+                <div class="hbar-row">
+                    <span class="hbar-label">Ano 2 — Receita</span>
+                    <div class="hbar-track"><div class="hbar-fill" style="width:24%;background:var(--success);">24%</div></div>
+                    <span class="hbar-value">R$ 329.244</span>
+                </div>
+                <div class="hbar-row">
+                    <span class="hbar-label">Ano 2 — Custo</span>
+                    <div class="hbar-track"><div class="hbar-fill" style="width:26%;background:var(--chart-4);">26%</div></div>
+                    <span class="hbar-value">R$ 353.400</span>
+                </div>
+                <div class="hbar-row">
+                    <span class="hbar-label">Ano 3 — Receita</span>
+                    <div class="hbar-track"><div class="hbar-fill" style="width:72%;background:var(--success);">72%</div></div>
+                    <span class="hbar-value" style="color:var(--pill-success-text);">R$ 980.136</span>
+                </div>
+                <div class="hbar-row">
+                    <span class="hbar-label">Ano 3 — Custo</span>
+                    <div class="hbar-track"><div class="hbar-fill" style="width:47%;background:var(--chart-4);">47%</div></div>
+                    <span class="hbar-value">R$ 639.600</span>
+                </div>
+            </div>
+            <div class="alert alert-success" style="margin-top:12px;">
+                <i class="ri-arrow-down-circle-line"></i>
+                <div><strong>Comparativo vs Run-2:</strong> Investimento at&eacute; break-even reduziu de ~R$ 900K-1,2M para R$ 184K (-80%). <abbr class="acronym" title="Total Cost of Ownership">TCO</abbr> 3 anos reduziu de R$ 10,5M para R$ 1,2M (-88%).</div>
+            </div>
+            <h4 style="font-size:0.85rem; font-weight:600; margin:16px 0 10px;">Custos Fixos Mensais (evolu&ccedil;&atilde;o)</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead><tr><th>Item</th><th style="text-align:right;">M&ecirc;s 1-12</th><th style="text-align:right;">M&ecirc;s 13-18</th><th style="text-align:right;">M&ecirc;s 19-24</th><th style="text-align:right;">M&ecirc;s 25-36</th></tr></thead>
+                    <tbody>
+                        <tr><td>Fabio (arquiteto s&ecirc;nior)</td><td style="text-align:right;">R$ 15.000</td><td style="text-align:right;">R$ 15.000</td><td style="text-align:right;">R$ 15.000</td><td style="text-align:right;">R$ 15.000</td></tr>
+                        <tr><td>Claude Code</td><td style="text-align:right;">R$ 1.500</td><td style="text-align:right;">R$ 1.500</td><td style="text-align:right;">R$ 1.500</td><td style="text-align:right;">R$ 1.500</td></tr>
+                        <tr><td>Cloud SQL HA</td><td style="text-align:right;">R$ 400</td><td style="text-align:right;">R$ 400</td><td style="text-align:right;">R$ 600</td><td style="text-align:right;">R$ 600</td></tr>
+                        <tr><td>Ferramentas</td><td style="text-align:right;">R$ 250</td><td style="text-align:right;">R$ 250</td><td style="text-align:right;">R$ 350</td><td style="text-align:right;">R$ 350</td></tr>
+                        <tr><td>SRE junior</td><td style="text-align:right;">&mdash;</td><td style="text-align:right;">R$ 8.000</td><td style="text-align:right;">R$ 8.000</td><td style="text-align:right;">R$ 8.000</td></tr>
+                        <tr><td>CS</td><td style="text-align:right;">&mdash;</td><td style="text-align:right;">&mdash;</td><td style="text-align:right;">R$ 7.000</td><td style="text-align:right;">R$ 7.000</td></tr>
+                        <tr><td>Dev backend</td><td style="text-align:right;">&mdash;</td><td style="text-align:right;">&mdash;</td><td style="text-align:right;">&mdash;</td><td style="text-align:right;">R$ 12.000</td></tr>
+                        <tr><td><abbr class="acronym" title="Data Protection Officer">DPO</abbr> terceirizado</td><td style="text-align:right;">&mdash;</td><td style="text-align:right;">&mdash;</td><td style="text-align:right;">R$ 2.000</td><td style="text-align:right;">R$ 2.000</td></tr>
+                        <tr style="font-weight:700;"><td>Total fixo/m&ecirc;s</td><td style="text-align:right;">R$ 17.150</td><td style="text-align:right;">R$ 25.650</td><td style="text-align:right;">R$ 34.950</td><td style="text-align:right;">R$ 47.450</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- REG-FIN-05 — Build vs Buy -->
+    <div class="card" id="reg-fin-05">
+        <div class="card-header">
+            <div class="card-header-icon bg-purple"><i class="ri-hammer-line"></i></div>
+            <span class="card-title">Build vs Buy</span>
+            <span class="region-id">REG-FIN-05</span>
+        </div>
+        <div class="card-body">
+            <div class="table-wrapper">
+                <table>
+                    <thead><tr><th>Componente</th><th style="text-align:center;">Decis&atilde;o</th><th>Custo Buy</th><th style="text-align:center;">Economia</th></tr></thead>
+                    <tbody>
+                        <tr><td>Autentica&ccedil;&atilde;o</td><td style="text-align:center;"><span class="pill pill-success">BUY</span> Firebase Auth</td><td>R$ 0</td><td style="text-align:center;">80h</td></tr>
+                        <tr><td>Billing</td><td style="text-align:center;"><span class="pill pill-success">BUY</span> Stripe</td><td>~3% receita</td><td style="text-align:center;">200h</td></tr>
+                        <tr><td><abbr class="acronym" title="Natural Language to SQL">NL-to-SQL</abbr> engine</td><td style="text-align:center;"><span class="pill pill-info">BUILD</span> Custom pipeline</td><td>N/A</td><td style="text-align:center;">Core</td></tr>
+                        <tr><td><abbr class="acronym" title="Large Language Model">LLM</abbr></td><td style="text-align:center;"><span class="pill pill-success">BUY</span> APIs externas BYOK</td><td>R$ 0 (tenant paga)</td><td style="text-align:center;">Invi&aacute;vel</td></tr>
+                        <tr><td>Embeddings</td><td style="text-align:center;"><span class="pill pill-success">BUY</span> Vertex AI</td><td>~R$ 5/tenant</td><td style="text-align:center;">100h</td></tr>
+                        <tr><td>Bancos</td><td style="text-align:center;"><span class="pill pill-success">BUY</span> Cloud SQL + Firestore + BQ</td><td>Pay-per-use</td><td style="text-align:center;">&mdash;</td></tr>
+                        <tr><td>Monitoramento</td><td style="text-align:center;"><span class="pill pill-success">BUY</span> GCP + Sentry</td><td>R$ 0</td><td style="text-align:center;">60h</td></tr>
+                        <tr><td><abbr class="acronym" title="Continuous Integration / Continuous Deployment">CI/CD</abbr></td><td style="text-align:center;"><span class="pill pill-success">BUY</span> GitHub Actions</td><td>R$ 0</td><td style="text-align:center;">40h</td></tr>
+                        <tr><td>Gr&aacute;ficos</td><td style="text-align:center;"><span class="pill pill-success">BUY</span> Chart.js</td><td>R$ 0</td><td style="text-align:center;">120h</td></tr>
+                        <tr><td>Frontend UI</td><td style="text-align:center;"><span class="pill pill-success">BUY</span> Shadcn/Radix</td><td>R$ 0</td><td style="text-align:center;">200h</td></tr>
+                        <tr><td>Feature flags</td><td style="text-align:center;"><span class="pill pill-info">BUILD</span> Custom (Cloud SQL)</td><td>R$ 0</td><td style="text-align:center;">8h</td></tr>
+                        <tr><td>Secrets</td><td style="text-align:center;"><span class="pill pill-success">BUY</span> Secret Manager</td><td>Inclu&iacute;do GCP</td><td style="text-align:center;">40h</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="alert alert-success" style="margin-top:12px;">
+                <i class="ri-timer-line"></i>
+                <div><strong>Total economizado: ~840h (21 semanas).</strong> Sem Buy, <abbr class="acronym" title="Minimum Viable Product">MVP</abbr> levaria 33 semanas em vez de 12. Regra: &ldquo;Build apenas o que &eacute; diferencial competitivo. Buy todo o resto.&rdquo;</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- REG-FIN-06/07 — Cenários -->
+    <div class="card" id="reg-fin-07">
+        <div class="card-header">
+            <div class="card-header-icon bg-orange"><i class="ri-line-chart-line"></i></div>
+            <span class="card-title">Cen&aacute;rios de Viabilidade</span>
+            <span class="region-id">REG-FIN-07</span>
+        </div>
+        <div class="card-body">
+            <!-- Scenarios horizontal bars P34 -->
+            <h4 style="font-size:0.85rem; font-weight:600; margin-bottom:12px;">Break-even por Cen&aacute;rio (meses)</h4>
+            <div class="hbar-container">
+                <div class="hbar-row">
+                    <span class="hbar-label">Base (gradual)</span>
+                    <div class="hbar-track"><div class="hbar-fill" style="width:54%;background:var(--success);">M&ecirc;s 19</div></div>
+                    <span class="hbar-value">R$ 184K</span>
+                </div>
+                <div class="hbar-row">
+                    <span class="hbar-label">A (lento, 50%)</span>
+                    <div class="hbar-track"><div class="hbar-fill" style="width:80%;background:var(--warning);">M&ecirc;s 28</div></div>
+                    <span class="hbar-value">R$ 330K</span>
+                </div>
+                <div class="hbar-row">
+                    <span class="hbar-label">B (acelerado)</span>
+                    <div class="hbar-track"><div class="hbar-fill" style="width:34%;background:var(--primary);">M&ecirc;s 10-12</div></div>
+                    <span class="hbar-value">R$ 85K</span>
+                </div>
+                <div class="hbar-row">
+                    <span class="hbar-label">C (R$ 297/Pro)</span>
+                    <div class="hbar-track"><div class="hbar-fill" style="width:63%;background:var(--warning);">M&ecirc;s 22</div></div>
+                    <span class="hbar-value">R$ 260K</span>
+                </div>
+                <div class="hbar-row">
+                    <span class="hbar-label">D (Enterprise-first)</span>
+                    <div class="hbar-track"><div class="hbar-fill" style="width:40%;background:var(--info);">M&ecirc;s 12-14</div></div>
+                    <span class="hbar-value">R$ 140K</span>
+                </div>
+            </div>
+            <div class="alert alert-info" style="margin-top:12px;">
+                <i class="ri-information-line"></i>
+                <div><strong>Sensibilidade:</strong> Modelo extremamente sens&iacute;vel ao custo fixo (equipe) e pouco sens&iacute;vel ao custo vari&aacute;vel (infra). Cada contrata&ccedil;&atilde;o adiciona ~R$ 8K/m&ecirc;s, exigindo ~16 Pro adicionais.</div>
+            </div>
+            <h4 style="font-size:0.85rem; font-weight:600; margin:16px 0 10px;">Go/No-Go Gates</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead><tr><th>Gate</th><th>Quando</th><th>Crit&eacute;rio GO</th><th>Crit&eacute;rio STOP</th></tr></thead>
+                    <tbody>
+                        <tr><td style="font-weight:600;">Gate 1</td><td>M&ecirc;s 4</td><td>Produto funcional, 3+ tenants beta</td><td>0 tenants</td></tr>
+                        <tr><td style="font-weight:600;">Gate 2</td><td>M&ecirc;s 7</td><td>1+ pagante, NPS &gt;30</td><td>0 pagantes</td></tr>
+                        <tr><td style="font-weight:600;">Gate 3</td><td>M&ecirc;s 12</td><td><abbr class="acronym" title="Monthly Recurring Revenue">MRR</abbr> &gt;R$ 5K, 10+ Pro</td><td><abbr class="acronym" title="Monthly Recurring Revenue">MRR</abbr> &lt;R$ 2K</td></tr>
+                        <tr><td style="font-weight:600;">Gate 4</td><td>M&ecirc;s 18</td><td><abbr class="acronym" title="Monthly Recurring Revenue">MRR</abbr> &gt;R$ 20K, trajet&oacute;ria de break-even</td><td><abbr class="acronym" title="Monthly Recurring Revenue">MRR</abbr> &lt;R$ 10K</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- ================================================================== -->
+<!-- TAB 4: RISCOS E QUALIDADE                                           -->
+<!-- ================================================================== -->
+<div id="tab-riscos" class="tab-content">
+
+    <!-- REG-RISK-01 — Mapa de Riscos -->
+    <div class="card" id="reg-risk-01">
+        <div class="card-header">
+            <div class="card-header-icon bg-danger"><i class="ri-alarm-warning-line"></i></div>
+            <span class="card-title">Mapa de Riscos</span>
+            <span class="region-id">REG-RISK-01</span>
+        </div>
+        <div class="card-body">
+            <div class="table-wrapper">
+                <table>
+                    <thead><tr><th>#</th><th>Risco</th><th style="text-align:center;">Prob.</th><th style="text-align:center;">Impacto</th><th>Mitiga&ccedil;&atilde;o</th></tr></thead>
+                    <tbody>
+                        <tr><td>R1</td><td>Bus factor = 1 (Fabio indispon&iacute;vel)</td><td style="text-align:center;"><span class="severity severity-high">Alta</span></td><td style="text-align:center;"><span class="severity severity-critical">Cr&iacute;tico</span></td><td>Auto-healing, ADRs/runbooks, freelancer standby, fundo emerg&ecirc;ncia 3 meses</td></tr>
+                        <tr><td>R2</td><td>Precis&atilde;o <abbr class="acronym" title="Natural Language to SQL">NL-to-SQL</abbr> &lt;85% no <abbr class="acronym" title="Minimum Viable Product">MVP</abbr></td><td style="text-align:center;"><span class="severity severity-medium">M&eacute;dia</span></td><td style="text-align:center;"><span class="severity severity-critical">Cr&iacute;tico</span></td><td>Gloss&aacute;rio + <abbr class="acronym" title="Retrieval-Augmented Generation">RAG</abbr> + feedback loop 3 camadas. Kill: &lt;70%</td></tr>
+                        <tr><td>R3</td><td>Burnout do fundador (6-12 meses)</td><td style="text-align:center;"><span class="severity severity-high">Alta</span></td><td style="text-align:center;"><span class="severity severity-high">Alto</span></td><td>No-deploy Friday, semana de debt, f&eacute;rias trimestrais, automa&ccedil;&atilde;o 34h/m&ecirc;s</td></tr>
+                        <tr><td>R4</td><td><abbr class="acronym" title="Bring Your Own Key">BYOK</abbr> key expirada/sem saldo</td><td style="text-align:center;"><span class="severity severity-medium">M&eacute;dia</span></td><td style="text-align:center;"><span class="severity severity-medium">M&eacute;dio</span></td><td>Healthcheck di&aacute;rio, notifica&ccedil;&atilde;o proativa, mensagem amig&aacute;vel</td></tr>
+                        <tr><td>R5</td><td>Google lan&ccedil;a BigQuery NL nativo</td><td style="text-align:center;"><span class="severity severity-medium">M&eacute;dia</span></td><td style="text-align:center;"><span class="severity severity-high">Alto</span></td><td>Moat de contexto acumulado + gloss&aacute;rio + multi-idioma + insights</td></tr>
+                        <tr><td>R6</td><td>Convers&atilde;o Free&rarr;Pro &lt;5%</td><td style="text-align:center;"><span class="severity severity-high">Alta</span></td><td style="text-align:center;"><span class="severity severity-medium">M&eacute;dio</span></td><td>Limitar Free agressivamente, trial 14 dias</td></tr>
+                        <tr><td>R7</td><td>Churn &gt;10% mensal</td><td style="text-align:center;"><span class="severity severity-medium">M&eacute;dia</span></td><td style="text-align:center;"><span class="severity severity-high">Alto</span></td><td>Feedback loop, guided first query, CS (post R$ 40K <abbr class="acronym" title="Monthly Recurring Revenue">MRR</abbr>)</td></tr>
+                        <tr><td>R8</td><td>BigQuery cost spike (query pesada)</td><td style="text-align:center;"><span class="severity severity-medium">M&eacute;dia</span></td><td style="text-align:center;"><span class="severity severity-medium">M&eacute;dio</span></td><td>Dry-run + scan limit 1TB + alertas de custo</td></tr>
+                        <tr><td>R9</td><td><abbr class="acronym" title="Large Language Model">LLM</abbr> provider muda termos/pre&ccedil;os</td><td style="text-align:center;"><span class="severity severity-medium">M&eacute;dia</span></td><td style="text-align:center;"><span class="severity severity-medium">M&eacute;dio</span></td><td>Multi-provider adapter, suporte a 3+ provedores</td></tr>
+                        <tr><td>R10</td><td><abbr class="acronym" title="Lei Geral de Prote&ccedil;&atilde;o de Dados">LGPD</abbr> multa por n&atilde;o-compliance</td><td style="text-align:center;"><span class="severity severity-low">Baixa</span></td><td style="text-align:center;"><span class="severity severity-high">Alto</span></td><td>Compliance escal&aacute;vel por est&aacute;gio de receita, <abbr class="acronym" title="Data Protection Officer">DPO</abbr> antes de R$ 25K <abbr class="acronym" title="Monthly Recurring Revenue">MRR</abbr></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- REG-EXEC-03 — Go/No-Go with Radar -->
+    <div class="card" id="reg-exec-03">
+        <div class="card-header">
+            <div class="card-header-icon bg-success"><i class="ri-checkbox-circle-line"></i></div>
+            <span class="card-title">Go/No-Go &mdash; Veredicto</span>
+            <span class="region-id">REG-EXEC-03</span>
+        </div>
+        <div class="card-body">
+            <div class="go-badge approved"><i class="ri-check-double-line"></i> GO &mdash; PROJETO VI&Aacute;VEL</div>
+            <div class="grid-2" style="margin-top:16px;">
+                <div>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead><tr><th>Validador</th><th style="text-align:center;">Score</th><th style="text-align:center;">Threshold</th><th>Status</th></tr></thead>
+                            <tbody>
+                                <tr><td style="font-weight:600;">Auditor (convergente)</td><td style="text-align:center;">88,8%</td><td style="text-align:center;">&ge;80%</td><td><span class="pill pill-success">ACIMA</span></td></tr>
+                                <tr><td style="font-weight:600;">10th-man (divergente)</td><td style="text-align:center;">75,8%</td><td style="text-align:center;">&ge;80%</td><td><span class="pill pill-warning">ABAIXO</span></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h4 style="font-size:0.85rem; font-weight:600; margin:16px 0 8px;">Recomenda&ccedil;&otilde;es para fortalecimento</h4>
+                    <ul class="conditions-list">
+                        <li>Dimensionar mercado (<abbr class="acronym" title="Total Addressable Market / Serviceable Available Market / Serviceable Obtainable Market">TAM/SAM/SOM</abbr>) &mdash; validar volume de empresas com BigQuery no Brasil</li>
+                        <li>Confirmar 3-5 candidatos para beta program antes do desenvolvimento</li>
+                        <li>Definir meta de precis&atilde;o escalonada: &gt;75% (<abbr class="acronym" title="Minimum Viable Product">MVP</abbr>), &gt;80% (m&ecirc;s 6), &gt;85% (m&ecirc;s 8)</li>
+                        <li>Formalizar acordo com 1-2 freelancers para conting&ecirc;ncia do bus factor</li>
+                        <li>Criar fundo de emerg&ecirc;ncia de 3 meses (R$ 51K) antes do launch</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="font-size:0.85rem; font-weight:600; margin-bottom:10px; text-align:center;">Radar Go/No-Go (5 eixos)</h4>
+                    <div class="chart-container">
+                        <canvas id="radarGoNoGo"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- REG-QUAL-01 — Auditor -->
+    <div class="card" id="reg-qual-01">
+        <div class="card-header">
+            <div class="card-header-icon bg-info"><i class="ri-shield-check-line"></i></div>
+            <span class="card-title">Valida&ccedil;&atilde;o Convergente (Auditor)</span>
+            <span class="region-id">REG-QUAL-01</span>
+            <span class="pill pill-success">88,8% &mdash; APROVADO</span>
+        </div>
+        <div class="card-body">
+            <div class="sidebar-layout">
+                <div>
+                    <!-- Auditor scores horizontal bars P34 -->
+                    <div class="hbar-container">
+                        <div class="hbar-row">
+                            <span class="hbar-label">Cobertura</span>
+                            <div class="hbar-track"><div class="hbar-fill" style="width:92%;background:var(--success);">92%</div></div>
+                            <span class="hbar-value">92%</span>
+                        </div>
+                        <div class="hbar-row">
+                            <span class="hbar-label">Profundidade</span>
+                            <div class="hbar-track"><div class="hbar-fill" style="width:88%;background:var(--success);">88%</div></div>
+                            <span class="hbar-value">88%</span>
+                        </div>
+                        <div class="hbar-row">
+                            <span class="hbar-label">Consist&ecirc;ncia</span>
+                            <div class="hbar-track"><div class="hbar-fill" style="width:93%;background:var(--success);">93%</div></div>
+                            <span class="hbar-value">93%</span>
+                        </div>
+                        <div class="hbar-row">
+                            <span class="hbar-label">Fundamenta&ccedil;&atilde;o</span>
+                            <div class="hbar-track"><div class="hbar-fill" style="width:85%;background:var(--success);">85%</div></div>
+                            <span class="hbar-value">85%</span>
+                        </div>
+                        <div class="hbar-row">
+                            <span class="hbar-label">Completude</span>
+                            <div class="hbar-track"><div class="hbar-fill" style="width:85%;background:var(--success);">85%</div></div>
+                            <span class="hbar-value">85%</span>
+                        </div>
+                    </div>
+                    <div class="alert alert-success" style="margin-top:12px;">
+                        <i class="ri-check-line"></i>
+                        <div><strong>Viabilidade Financeira: APROVADO</strong> (sem penalidade). Projeto vi&aacute;vel com break-even m&ecirc;s 19, margem 86-94%, ROI positivo em 3 anos.</div>
+                    </div>
+                    <h4 style="font-size:0.85rem; font-weight:600; margin:12px 0 8px;">Findings n&atilde;o bloqueantes</h4>
+                    <div style="font-size:0.82rem;">
+                        <div style="margin-bottom:6px;"><span class="pill pill-warning">F1</span> <abbr class="acronym" title="Total Addressable Market / Serviceable Available Market / Serviceable Obtainable Market">TAM/SAM/SOM</abbr> ausente (volume necess&aacute;rio &eacute; baixo: ~30 clientes)</div>
+                        <div style="margin-bottom:6px;"><span class="pill pill-warning">F2</span> Churn sem benchmark externo</div>
+                        <div><span class="pill pill-warning">F3</span> Competitive response est&aacute;tica (n&atilde;o modela BigQuery NL nativo)</div>
+                    </div>
+                </div>
+                <div>
+                    <h4 style="font-size:0.85rem; font-weight:600; margin-bottom:10px; text-align:center;">Radar Auditor (5 eixos)</h4>
+                    <div class="chart-container">
+                        <canvas id="radarAuditor"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- REG-QUAL-02 — 10th-man (P17: same layout as auditor) -->
+    <div class="card" id="reg-qual-02">
+        <div class="card-header">
+            <div class="card-header-icon bg-warning"><i class="ri-spy-line"></i></div>
+            <span class="card-title">Valida&ccedil;&atilde;o Divergente (10th Man)</span>
+            <span class="region-id">REG-QUAL-02</span>
+            <span class="pill pill-warning">75,8% &mdash; APROVADO COM RESSALVAS</span>
+        </div>
+        <div class="card-body">
+            <div class="sidebar-layout">
+                <div>
+                    <!-- 10th-man scores horizontal bars P34 -->
+                    <div class="hbar-container">
+                        <div class="hbar-row">
+                            <span class="hbar-label">Diverg&ecirc;ncia</span>
+                            <div class="hbar-track"><div class="hbar-fill" style="width:70%;background:var(--warning);">70%</div></div>
+                            <span class="hbar-value">70%</span>
+                        </div>
+                        <div class="hbar-row">
+                            <span class="hbar-label">Robustez</span>
+                            <div class="hbar-track"><div class="hbar-fill" style="width:78%;background:var(--warning);">78%</div></div>
+                            <span class="hbar-value">78%</span>
+                        </div>
+                        <div class="hbar-row">
+                            <span class="hbar-label">Completude Cr&iacute;tica</span>
+                            <div class="hbar-track"><div class="hbar-fill" style="width:80%;background:var(--success);">80%</div></div>
+                            <span class="hbar-value">80%</span>
+                        </div>
+                    </div>
+                    <h4 style="font-size:0.85rem; font-weight:600; margin:16px 0 8px;">Premissas desafiadas</h4>
+                    <div class="challenge-cards">
+                        <div class="challenge-card">
+                            <div class="challenge-card-title"><span class="severity severity-critical">1</span> Bus factor = 1</div>
+                            <div class="challenge-card-text">Mitiga&ccedil;&otilde;es propostas s&atilde;o necess&aacute;rias mas insuficientes para aus&ecirc;ncia prolongada</div>
+                        </div>
+                        <div class="challenge-card">
+                            <div class="challenge-card-title"><span class="severity severity-high">2</span> <abbr class="acronym" title="Bring Your Own Key">BYOK</abbr></div>
+                            <div class="challenge-card-text">Financeiramente brilhante, mas cria fric&ccedil;&atilde;o (key expirada, custo surpresa, suporte de terceiro)</div>
+                        </div>
+                        <div class="challenge-card">
+                            <div class="challenge-card-title"><span class="severity severity-high">3</span> Precis&atilde;o <abbr class="acronym" title="Natural Language to SQL">NL-to-SQL</abbr></div>
+                            <div class="challenge-card-text">85% &eacute; otimista para schemas desconhecidos; recomenda meta escalonada (75%&rarr;80%&rarr;85%)</div>
+                        </div>
+                    </div>
+                    <h4 style="font-size:0.85rem; font-weight:600; margin:16px 0 8px;">Pontos cegos identificados</h4>
+                    <ul class="blind-spots">
+                        <li><i class="ri-eye-off-line"></i> Sustentabilidade operacional solo por 10-14 meses</li>
+                        <li><i class="ri-eye-off-line"></i> Exit strategy n&atilde;o definida</li>
+                        <li><i class="ri-eye-off-line"></i> BigQuery NL nativo como risco competitivo existencial</li>
+                        <li><i class="ri-eye-off-line"></i> Nenhuma valida&ccedil;&atilde;o com clientes reais (beta program planejado)</li>
+                    </ul>
+                    <div class="alert alert-success" style="margin-top:12px;">
+                        <i class="ri-star-line"></i>
+                        <div><strong>Reconhecimento:</strong> Salto qualitativo vs run-2. Modelo financeiro transformado de invi&aacute;vel (23% cobertura) para vi&aacute;vel (113%). Consist&ecirc;ncia inter-blocos excelente.</div>
+                    </div>
+                </div>
+                <div>
+                    <h4 style="font-size:0.85rem; font-weight:600; margin-bottom:10px; text-align:center;">Radar 10th-Man (3 eixos)</h4>
+                    <div class="chart-container">
+                        <canvas id="radar10thMan"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- ================================================================== -->
+<!-- TAB 5: BACKLOG E DECIS&Atilde;O                                     -->
+<!-- ================================================================== -->
+<div id="tab-backlog" class="tab-content">
+
+    <!-- REG-BACK-01 — Roadmap de Execução -->
+    <div class="card" id="reg-back-01">
+        <div class="card-header">
+            <div class="card-header-icon bg-primary"><i class="ri-calendar-schedule-line"></i></div>
+            <span class="card-title">Roadmap de Execu&ccedil;&atilde;o &mdash; <abbr class="acronym" title="Minimum Viable Product">MVP</abbr> (12 semanas)</span>
+            <span class="region-id">REG-BACK-01</span>
+        </div>
+        <div class="card-body">
+            <div class="timeline-h">
+                <div class="timeline-h-block" style="background:rgba(77,168,218,0.08);border-color:var(--primary);">
+                    <strong>Sem 1-2</strong>
+                    Funda&ccedil;&atilde;o
+                    <small>GCP, Cloud Run, Firestore, auth, CI/CD</small>
+                </div>
+                <div class="timeline-h-block" style="background:rgba(77,168,218,0.12);border-color:var(--primary);">
+                    <strong>Sem 3-4</strong>
+                    Multi-tenant core
+                    <small>Tenant CRUD, isolamento, RBAC</small>
+                </div>
+                <div class="timeline-h-block" style="background:rgba(77,168,218,0.18);border-color:var(--primary);">
+                    <strong>Sem 5-6</strong>
+                    NL-to-SQL engine
+                    <small>Parser NL, convers&atilde;o BigQuery SQL, sandbox</small>
+                </div>
+                <div class="timeline-h-block" style="background:rgba(77,168,218,0.24);border-color:var(--info);">
+                    <strong>Sem 7-8</strong>
+                    Contexto do tenant
+                    <small>Schema mapping, gloss&aacute;rio, embeddings</small>
+                </div>
+                <div class="timeline-h-block" style="background:rgba(77,168,218,0.30);border-color:var(--info);">
+                    <strong>Sem 9-10</strong>
+                    Output visual
+                    <small>Gr&aacute;ficos Chart.js, insights IA, export</small>
+                </div>
+                <div class="timeline-h-block" style="background:rgba(77,168,218,0.36);border-color:var(--info);">
+                    <strong>Sem 11</strong>
+                    Billing + BYOK
+                    <small>Stripe, planos Free/Pro, API key LLM</small>
+                </div>
+                <div class="timeline-h-block" style="background:rgba(46,181,245,0.2);border-color:var(--success);">
+                    <strong>Sem 12</strong>
+                    Polish + launch
+                    <small>Onboarding wizard, guided first query</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NARR-01 — Narrativa de Encerramento -->
+    <div class="card" id="narr-01">
+        <div class="card-header">
+            <div class="card-header-icon bg-teal"><i class="ri-chat-quote-line"></i></div>
+            <span class="card-title">S&iacute;ntese Narrativa</span>
+            <span class="region-id">NARR-01</span>
+        </div>
+        <div class="card-body">
+            <div style="font-size:0.88rem; line-height:1.7; padding:8px 0;">
+                O Veezoozin &eacute; uma plataforma <abbr class="acronym" title="Software as a Service">SaaS</abbr> conversational-first que converte perguntas em linguagem natural (PT-BR, EN-US, ES) em queries SQL contextualizadas pelo dom&iacute;nio de neg&oacute;cio de cada tenant, retornando gr&aacute;ficos, insights e an&aacute;lises em segundos. A mudan&ccedil;a estrutural do Run-3 &mdash; equipe de 1 desenvolvedor s&ecirc;nior + Claude Code, modelo <abbr class="acronym" title="Bring Your Own Key">BYOK</abbr>, infraestrutura 100% serverless &mdash; reduz o custo fixo de ~R$ 75K para ~R$ 17K/m&ecirc;s e torna o projeto financeiramente vi&aacute;vel com bootstrapping. Score auditor de 88,8% com break-even no m&ecirc;s 19 e margem bruta de 86-94%.
+            </div>
+        </div>
+    </div>
+
+    <!-- REG-EXEC-04 — Próximos Passos -->
+    <div class="card" id="reg-exec-04">
+        <div class="card-header">
+            <div class="card-header-icon bg-success"><i class="ri-arrow-right-circle-line"></i></div>
+            <span class="card-title">Pr&oacute;ximos Passos</span>
+            <span class="region-id">REG-EXEC-04</span>
+        </div>
+        <div class="card-body">
+            <div class="timeline-v">
+                <div class="timeline-v-item blue">
+                    <div class="item-title"><span class="pill pill-info">Antes do dev</span> 1. Confirmar reserva financeira de R$ 184K</div>
+                    <div class="item-meta">Ou fonte de financiamento</div>
+                </div>
+                <div class="timeline-v-item blue">
+                    <div class="item-title"><span class="pill pill-info">Antes do dev</span> 2. Mapear 20 empresas da rede pessoal com BigQuery para beta</div>
+                </div>
+                <div class="timeline-v-item blue">
+                    <div class="item-title"><span class="pill pill-info">Antes do dev</span> 3. Formalizar acordo com 1-2 freelancers</div>
+                    <div class="item-meta">Conting&ecirc;ncia do bus factor</div>
+                </div>
+                <div class="timeline-v-item blue">
+                    <div class="item-title"><span class="pill pill-info">Antes do dev</span> 4. Criar projeto GCP com cr&eacute;ditos</div>
+                </div>
+                <div class="timeline-v-item green">
+                    <div class="item-title"><span class="pill pill-success">Durante dev</span> 5. Convidar 5 empresas para beta (semana 8-10)</div>
+                </div>
+                <div class="timeline-v-item green">
+                    <div class="item-title"><span class="pill pill-success">Durante dev</span> 6. Instrumentar m&eacute;tricas de precis&atilde;o desde a semana 5</div>
+                </div>
+                <div class="timeline-v-item green">
+                    <div class="item-title"><span class="pill pill-success">Durante dev</span> 7. Documentar <abbr class="acronym" title="Architecture Decision Record">ADRs</abbr> continuamente</div>
+                </div>
+                <div class="timeline-v-item orange">
+                    <div class="item-title"><span class="pill pill-warning">P&oacute;s-launch</span> 8. Go/No-Go Gate 1 (m&ecirc;s 4)</div>
+                    <div class="item-meta">Produto funcional + 3 tenants beta</div>
+                </div>
+                <div class="timeline-v-item orange">
+                    <div class="item-title"><span class="pill pill-warning">P&oacute;s-launch</span> 9. Beta program: onboarding assistido, feedback, convers&atilde;o</div>
+                </div>
+                <div class="timeline-v-item orange">
+                    <div class="item-title"><span class="pill pill-warning">P&oacute;s-launch</span> 10. Go/No-Go Gate 2 (m&ecirc;s 7)</div>
+                    <div class="item-meta">1+ pagante, NPS &gt;30</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- ================================================================== -->
+<!-- TAB 6: DOM&Iacute;NIO                                               -->
+<!-- ================================================================== -->
+<div id="tab-dominio" class="tab-content">
+
+    <!-- REG-DOM-SAAS-01 — SaaS Domain -->
+    <div class="card" id="reg-dom-saas-01">
+        <div class="card-header">
+            <div class="card-header-icon bg-primary"><i class="ri-cloud-line"></i></div>
+            <span class="card-title">Dom&iacute;nio <abbr class="acronym" title="Software as a Service">SaaS</abbr> &mdash; Stack e Arquitetura</span>
+            <span class="region-id">REG-DOM-SAAS-01</span>
+        </div>
+        <div class="card-body">
+            <h4 style="font-size:0.85rem; font-weight:600; margin-bottom:10px;">Stack Tecnol&oacute;gica (14 tecnologias)</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead><tr><th>Camada</th><th>Tecnologia</th><th>Justificativa</th></tr></thead>
+                    <tbody>
+                        <tr><td style="font-weight:600;">Compute</td><td>Cloud Run (serverless)</td><td>Pay-per-use, auto-scaling</td></tr>
+                        <tr><td style="font-weight:600;">API</td><td>Python + FastAPI</td><td>Ecossistema AI/ML, tipagem, async</td></tr>
+                        <tr><td style="font-weight:600;">Banco metadata</td><td>Cloud SQL (PostgreSQL) HA</td><td>Tenants, configs, gloss&aacute;rios</td></tr>
+                        <tr><td style="font-weight:600;">Sess&otilde;es/cache</td><td>Firestore</td><td>Pay-per-operation, 99,999%</td></tr>
+                        <tr><td style="font-weight:600;">Data Warehouse</td><td>BigQuery</td><td>Banco anal&iacute;tico dos tenants (read-only)</td></tr>
+                        <tr><td style="font-weight:600;">Embeddings</td><td>Vertex AI (text-embedding-004)</td><td>Schema + gloss&aacute;rio vetorial</td></tr>
+                        <tr><td style="font-weight:600;"><abbr class="acronym" title="Large Language Model">LLM</abbr></td><td>APIs externas via <abbr class="acronym" title="Bring Your Own Key">BYOK</abbr></td><td>Claude, Gemini, OpenAI</td></tr>
+                        <tr><td style="font-weight:600;">Auth</td><td>Firebase Auth</td><td>OAuth2, <abbr class="acronym" title="Single Sign-On">SSO</abbr> (SAML Enterprise)</td></tr>
+                        <tr><td style="font-weight:600;">Frontend</td><td>Next.js + Shadcn/Radix</td><td>SSR, component library</td></tr>
+                        <tr><td style="font-weight:600;">Gr&aacute;ficos</td><td>Chart.js</td><td>Lightweight, customiz&aacute;vel</td></tr>
+                        <tr><td style="font-weight:600;">Billing</td><td>Stripe</td><td>Planos, trials, dunning</td></tr>
+                        <tr><td style="font-weight:600;"><abbr class="acronym" title="Continuous Integration / Continuous Deployment">CI/CD</abbr></td><td>GitHub Actions</td><td>Deploy cont&iacute;nuo</td></tr>
+                        <tr><td style="font-weight:600;">Secrets</td><td>Google Secret Manager</td><td>API keys <abbr class="acronym" title="Bring Your Own Key">BYOK</abbr> criptografadas</td></tr>
+                        <tr><td style="font-weight:600;">Monitoramento</td><td>Cloud Monitoring + Sentry</td><td>Nativo GCP + error tracking</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <h4 style="font-size:0.85rem; font-weight:600; margin:16px 0 10px;">Modular Monolith &mdash; 15 m&oacute;dulos</h4>
+            <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:12px;">
+                <span class="chip chip-in">auth</span>
+                <span class="chip chip-in">tenant</span>
+                <span class="chip chip-in">rbac</span>
+                <span class="chip chip-in">connection</span>
+                <span class="chip chip-in">byok</span>
+                <span class="chip chip-in">schema</span>
+                <span class="chip chip-in">glossary</span>
+                <span class="chip chip-in">nl-to-sql</span>
+                <span class="chip chip-in">visualization</span>
+                <span class="chip chip-in">insight</span>
+                <span class="chip chip-in">billing</span>
+                <span class="chip chip-in">audit</span>
+                <span class="chip chip-in">mcp</span>
+                <span class="chip chip-in">admin</span>
+                <span class="chip chip-in">onboarding</span>
+            </div>
+            <div style="font-size:0.78rem; color:var(--text-muted);">
+                <strong>12 <abbr class="acronym" title="Architecture Decision Record &mdash; registro de decis&atilde;o arquitetural">ADRs</abbr> documentados:</strong> Modular Monolith, row-level tenancy, <abbr class="acronym" title="Retrieval-Augmented Generation">RAG</abbr> sem fine-tuning, <abbr class="acronym" title="Bring Your Own Key">BYOK</abbr> adapter, Firebase Auth, Stripe, schema abstrato, SQL dry-run, monitoring GCP-nativo, cache Firestore, reten&ccedil;&atilde;o por tier, <abbr class="acronym" title="Data Processing Agreement">DPA</abbr> obrigat&oacute;rio.
+            </div>
+        </div>
+    </div>
+
+    <!-- REG-DOM-AIML-01 — AI/ML Domain -->
+    <div class="card" id="reg-dom-aiml-01">
+        <div class="card-header">
+            <div class="card-header-icon bg-purple"><i class="ri-brain-line"></i></div>
+            <span class="card-title">Dom&iacute;nio <abbr class="acronym" title="Artificial Intelligence / Machine Learning">AI/ML</abbr> &mdash; Pipeline <abbr class="acronym" title="Natural Language to SQL">NL-to-SQL</abbr></span>
+            <span class="region-id">REG-DOM-AIML-01</span>
+        </div>
+        <div class="card-body">
+            <div class="table-wrapper">
+                <table>
+                    <thead><tr><th style="text-align:center;">Etapa</th><th>Processo</th><th style="text-align:center;">Lat&ecirc;ncia alvo</th></tr></thead>
+                    <tbody>
+                        <tr><td style="text-align:center; font-weight:700;">1</td><td>Input NL + detec&ccedil;&atilde;o de idioma</td><td style="text-align:center;">&lt;100ms</td></tr>
+                        <tr><td style="text-align:center; font-weight:700;">2</td><td>Contexto enriquecido (<abbr class="acronym" title="Retrieval-Augmented Generation">RAG</abbr>: schema + gloss&aacute;rio + hist&oacute;rico)</td><td style="text-align:center;">&lt;500ms</td></tr>
+                        <tr><td style="text-align:center; font-weight:700;">3</td><td>Gera&ccedil;&atilde;o de SQL via <abbr class="acronym" title="Large Language Model">LLM</abbr> <abbr class="acronym" title="Bring Your Own Key">BYOK</abbr></td><td style="text-align:center;">&lt;2.000ms</td></tr>
+                        <tr><td style="text-align:center; font-weight:700;">4</td><td>Valida&ccedil;&atilde;o (read-only, dry-run) + execu&ccedil;&atilde;o BigQuery sandbox</td><td style="text-align:center;">&lt;1.500ms</td></tr>
+                        <tr><td style="text-align:center; font-weight:700;">5</td><td>Output visual (Chart.js, tipo auto-selecionado)</td><td style="text-align:center;">&lt;300ms</td></tr>
+                        <tr><td style="text-align:center; font-weight:700;">6</td><td>Insight generation via <abbr class="acronym" title="Large Language Model">LLM</abbr> <abbr class="acronym" title="Bring Your Own Key">BYOK</abbr></td><td style="text-align:center;">&lt;1.000ms</td></tr>
+                        <tr style="font-weight:700;"><td style="text-align:center;">Total</td><td>&mdash;</td><td style="text-align:center;">&lt;5.050ms</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- Latency budget — horizontal bars P34 -->
+            <h4 style="font-size:0.85rem; font-weight:600; margin:16px 0 10px;">Budget de Lat&ecirc;ncia (distribui&ccedil;&atilde;o)</h4>
+            <div class="hbar-container">
+                <div class="hbar-row">
+                    <span class="hbar-label">1. Input NL</span>
+                    <div class="hbar-track"><div class="hbar-fill" style="width:2%;background:var(--primary);min-width:50px;">&lt;100ms</div></div>
+                    <span class="hbar-value">2%</span>
+                </div>
+                <div class="hbar-row">
+                    <span class="hbar-label">2. Contexto <abbr class="acronym" title="Retrieval-Augmented Generation">RAG</abbr></span>
+                    <div class="hbar-track"><div class="hbar-fill" style="width:10%;background:var(--info);min-width:50px;">&lt;500ms</div></div>
+                    <span class="hbar-value">10%</span>
+                </div>
+                <div class="hbar-row">
+                    <span class="hbar-label">3. Gera&ccedil;&atilde;o SQL</span>
+                    <div class="hbar-track"><div class="hbar-fill" style="width:40%;background:var(--purple);">&lt;2.000ms</div></div>
+                    <span class="hbar-value">40%</span>
+                </div>
+                <div class="hbar-row">
+                    <span class="hbar-label">4. Valida&ccedil;&atilde;o + BQ</span>
+                    <div class="hbar-track"><div class="hbar-fill" style="width:30%;background:var(--warning);">&lt;1.500ms</div></div>
+                    <span class="hbar-value">30%</span>
+                </div>
+                <div class="hbar-row">
+                    <span class="hbar-label">5. Output visual</span>
+                    <div class="hbar-track"><div class="hbar-fill" style="width:6%;background:var(--success);min-width:50px;">&lt;300ms</div></div>
+                    <span class="hbar-value">6%</span>
+                </div>
+                <div class="hbar-row">
+                    <span class="hbar-label">6. Insight <abbr class="acronym" title="Large Language Model">LLM</abbr></span>
+                    <div class="hbar-track"><div class="hbar-fill" style="width:20%;background:var(--orange);">&lt;1.000ms</div></div>
+                    <span class="hbar-value">20%</span>
+                </div>
+            </div>
+            <div class="alert alert-info" style="margin-top:12px;">
+                <i class="ri-flashlight-line"></i>
+                <div><strong>Otimiza&ccedil;&atilde;o:</strong> Cache de queries (mesma pergunta normalizada + mesmo schema &rarr; reutiliza SQL, TTL 1h). Economia estimada 30-50%. SQL dry-run antes de execu&ccedil;&atilde;o. Schema abstrato nos prompts (sem sample data, minimiza&ccedil;&atilde;o PII/<abbr class="acronym" title="Lei Geral de Prote&ccedil;&atilde;o de Dados">LGPD</abbr>).</div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- ================================================================== -->
+<!-- TAB 7: GLOSS&Aacute;RIO                                            -->
+<!-- ================================================================== -->
+<div id="tab-glossario" class="tab-content">
+
+    <div class="card" id="reg-gloss-01">
+        <div class="card-header">
+            <div class="card-header-icon bg-secondary"><i class="ri-book-open-line"></i></div>
+            <span class="card-title">Gloss&aacute;rio (P12)</span>
+            <span class="region-id">REG-GLOSS-01</span>
+        </div>
+        <div class="card-body">
+            <div class="table-wrapper">
+                <table class="glossary-table">
+                    <thead><tr><th>Termo</th><th>Defini&ccedil;&atilde;o</th></tr></thead>
+                    <tbody>
+                        <tr><td style="font-weight:700;">ADR</td><td>Architecture Decision Record &mdash; registro de decis&atilde;o arquitetural</td></tr>
+                        <tr><td style="font-weight:700;">BYOK</td><td>Bring Your Own Key &mdash; modelo onde o tenant cadastra sua pr&oacute;pria API key de <abbr class="acronym" title="Large Language Model">LLM</abbr></td></tr>
+                        <tr><td style="font-weight:700;">CAC</td><td>Customer Acquisition Cost &mdash; custo de aquisi&ccedil;&atilde;o de cliente</td></tr>
+                        <tr><td style="font-weight:700;">CI/CD</td><td>Continuous Integration / Continuous Deployment &mdash; integra&ccedil;&atilde;o e deploy cont&iacute;nuos</td></tr>
+                        <tr><td style="font-weight:700;">DPA</td><td>Data Processing Agreement &mdash; acordo de processamento de dados</td></tr>
+                        <tr><td style="font-weight:700;">DPO</td><td>Data Protection Officer &mdash; encarregado de prote&ccedil;&atilde;o de dados</td></tr>
+                        <tr><td style="font-weight:700;">Gloss&aacute;rio (produto)</td><td>Dicion&aacute;rio de termos de neg&oacute;cio por tenant que contextualiza as queries NL</td></tr>
+                        <tr><td style="font-weight:700;">Guided First Query</td><td>Feature de onboarding que sugere a primeira query baseada no schema mapeado</td></tr>
+                        <tr><td style="font-weight:700;">LGPD</td><td>Lei Geral de Prote&ccedil;&atilde;o de Dados &mdash; legisla&ccedil;&atilde;o brasileira de privacidade</td></tr>
+                        <tr><td style="font-weight:700;">LLM</td><td>Large Language Model &mdash; modelo de linguagem de grande porte</td></tr>
+                        <tr><td style="font-weight:700;">LTV</td><td>Lifetime Value &mdash; valor do tempo de vida do cliente</td></tr>
+                        <tr><td style="font-weight:700;">MCP</td><td>Model Context Protocol &mdash; protocolo para integra&ccedil;&atilde;o com fontes de conhecimento externas</td></tr>
+                        <tr><td style="font-weight:700;">MRR</td><td>Monthly Recurring Revenue &mdash; receita recorrente mensal</td></tr>
+                        <tr><td style="font-weight:700;">NL-to-SQL</td><td>Convers&atilde;o de linguagem natural em queries SQL</td></tr>
+                        <tr><td style="font-weight:700;">NRR</td><td>Net Revenue Retention &mdash; reten&ccedil;&atilde;o l&iacute;quida de receita</td></tr>
+                        <tr><td style="font-weight:700;">PLG</td><td>Product-Led Growth &mdash; estrat&eacute;gia de crescimento liderada pelo produto</td></tr>
+                        <tr><td style="font-weight:700;">RAG</td><td>Retrieval-Augmented Generation &mdash; enriquecimento de contexto via busca vetorial</td></tr>
+                        <tr><td style="font-weight:700;">RBAC</td><td>Role-Based Access Control &mdash; controle de acesso baseado em pap&eacute;is</td></tr>
+                        <tr><td style="font-weight:700;">SLA</td><td>Service Level Agreement &mdash; acordo de n&iacute;vel de servi&ccedil;o</td></tr>
+                        <tr><td style="font-weight:700;">SLO</td><td>Service Level Objective &mdash; objetivo de n&iacute;vel de servi&ccedil;o</td></tr>
+                        <tr><td style="font-weight:700;">TCO</td><td>Total Cost of Ownership &mdash; custo total de propriedade</td></tr>
+                        <tr><td style="font-weight:700;">Tenant</td><td>Organiza&ccedil;&atilde;o-cliente que usa o Veezoozin (cada empresa &eacute; um tenant)</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</main>
+
+<!-- ====== FOOTER ====== -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-left">&copy; 2026 mAInd Tech &mdash; Discovery Pipeline v0.5</div>
+            <div class="footer-right">
+                Veezoozin &mdash; Relat&oacute;rio Executivo<br>
+                Run 3 &bull; Itera&ccedil;&atilde;o 1 &bull; 2026-04-12
+            </div>
+        </div>
+        <div class="footer-seal">
+            <i class="ri-robot-2-line"></i> Gerado automaticamente pelo Discovery Pipeline &mdash; Revis&atilde;o humana recomendada
+        </div>
+    </div>
+</footer>
+
+<!-- ====== BACK TO TOP ====== -->
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <i class="ri-arrow-up-line"></i>
+</button>
+
+<!-- ====== SCRIPTS ====== -->
+<script>
+/* ====== TAB SWITCHING ====== */
+function switchTab(tabId) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + tabId).classList.add('active');
+    event.currentTarget.classList.add('active');
+    // Re-render charts when their tab becomes visible
+    if (tabId === 'riscos') {
+        setTimeout(() => { renderAllRadars(); }, 100);
+    }
+}
+
+/* ====== THEME TOGGLE ====== */
+function toggleTheme() {
+    const body = document.documentElement;
+    const current = body.getAttribute('data-theme');
+    const next = current === 'light' ? null : 'light';
+    if (next) body.setAttribute('data-theme', 'light');
+    else body.removeAttribute('data-theme');
+    document.getElementById('themeIcon').className = next ? 'ri-sun-line' : 'ri-moon-line';
+    document.getElementById('themeLabel').textContent = next ? 'Dark' : 'Light';
+    // Re-render all charts with new colors
+    setTimeout(() => { renderAllRadars(); }, 150);
+}
+
+/* ====== BACK TO TOP ====== */
+window.addEventListener('scroll', () => {
+    const btn = document.getElementById('backToTop');
+    if (window.scrollY > 300) btn.classList.add('visible');
+    else btn.classList.remove('visible');
+});
+
+/* ====== RADAR CHARTS with P18 colored zones ====== */
+let chartAuditor = null;
+let chart10thMan = null;
+let chartGoNoGo = null;
+
+function getThemeColors() {
+    const style = getComputedStyle(document.documentElement);
+    return {
+        text: style.getPropertyValue('--text').trim(),
+        textMuted: style.getPropertyValue('--text-muted').trim(),
+        border: style.getPropertyValue('--border').trim(),
+        primary: style.getPropertyValue('--primary').trim(),
+        success: style.getPropertyValue('--success').trim(),
+        warning: style.getPropertyValue('--warning').trim(),
+        info: style.getPropertyValue('--info').trim(),
+        purple: style.getPropertyValue('--purple').trim(),
+        cardBg: style.getPropertyValue('--card-bg').trim(),
+    };
+}
+
+// P18: Colored zones plugin
+const zonePlugin = {
+    id: 'radarZones',
+    beforeDatasetsDraw(chart) {
+        const { ctx, scales: { r } } = chart;
+        if (!r) return;
+        const cx = r.xCenter;
+        const cy = r.yCenter;
+        const maxR = r.drawingArea;
+        // Zone colors: red (<60), yellow (60-79), green (>=80)
+        // Draw full circle red, then overlay yellow up to 79%, then green up to 100%
+        const r60 = maxR * 0.6;
+        const r80 = maxR * 0.8;
+        ctx.save();
+        // Red zone (0-60%)
+        ctx.beginPath();
+        ctx.arc(cx, cy, r60, 0, 2 * Math.PI);
+        ctx.fillStyle = 'rgba(232, 93, 84, 0.08)';
+        ctx.fill();
+        // Yellow zone (60-80%)
+        ctx.beginPath();
+        ctx.arc(cx, cy, r80, 0, 2 * Math.PI);
+        ctx.arc(cx, cy, r60, 0, 2 * Math.PI, true);
+        ctx.fillStyle = 'rgba(244, 172, 0, 0.06)';
+        ctx.fill();
+        // Green zone (80-100%)
+        ctx.beginPath();
+        ctx.arc(cx, cy, maxR, 0, 2 * Math.PI);
+        ctx.arc(cx, cy, r80, 0, 2 * Math.PI, true);
+        ctx.fillStyle = 'rgba(14, 209, 69, 0.06)';
+        ctx.fill();
+        // Zone boundary lines
+        ctx.setLineDash([4, 4]);
+        ctx.lineWidth = 1;
+        // 60% boundary
+        ctx.beginPath();
+        ctx.arc(cx, cy, r60, 0, 2 * Math.PI);
+        ctx.strokeStyle = 'rgba(232, 93, 84, 0.3)';
+        ctx.stroke();
+        // 80% boundary
+        ctx.beginPath();
+        ctx.arc(cx, cy, r80, 0, 2 * Math.PI);
+        ctx.strokeStyle = 'rgba(14, 209, 69, 0.3)';
+        ctx.stroke();
+        ctx.restore();
+    }
+};
+
+function makeRadarConfig(labels, data, label, borderColor, bgColor, colors) {
+    return {
+        type: 'radar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: label,
+                data: data,
+                borderColor: borderColor,
+                backgroundColor: bgColor,
+                pointBackgroundColor: borderColor,
+                pointBorderColor: borderColor,
+                pointRadius: 5,
+                pointHoverRadius: 7,
+                borderWidth: 2.5,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            scales: {
+                r: {
+                    min: 0,
+                    max: 100,
+                    ticks: {
+                        stepSize: 20,
+                        font: { size: 10, family: 'Poppins' },
+                        color: colors.textMuted,
+                        backdropColor: 'transparent',
+                        callback: (v) => v + '%'
+                    },
+                    grid: { color: colors.border + '66' },
+                    angleLines: { color: colors.border + '66' },
+                    pointLabels: {
+                        font: { size: 11, family: 'Poppins', weight: '500' },
+                        color: colors.text
+                    }
+                }
+            },
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: (ctx) => ctx.dataset.label + ': ' + ctx.raw + '%'
+                    }
+                }
+            }
+        },
+        plugins: [zonePlugin]
+    };
+}
+
+function renderAllRadars() {
+    const colors = getThemeColors();
+
+    // Destroy existing
+    if (chartAuditor) chartAuditor.destroy();
+    if (chart10thMan) chart10thMan.destroy();
+    if (chartGoNoGo) chartGoNoGo.destroy();
+
+    // Auditor radar (5 axes)
+    const ctxA = document.getElementById('radarAuditor');
+    if (ctxA) {
+        chartAuditor = new Chart(ctxA.getContext('2d'), makeRadarConfig(
+            ['Cobertura', 'Profundidade', 'Consistência', 'Fundamentação', 'Completude'],
+            [92, 88, 93, 85, 85],
+            'Auditor (88,8%)',
+            colors.info,
+            colors.info + '22',
+            colors
+        ));
+    }
+
+    // 10th-man radar (3 axes) — P17: same layout
+    const ctx10 = document.getElementById('radar10thMan');
+    if (ctx10) {
+        chart10thMan = new Chart(ctx10.getContext('2d'), makeRadarConfig(
+            ['Divergência', 'Robustez', 'Completude Crítica'],
+            [70, 78, 80],
+            '10th-Man (75,8%)',
+            colors.warning,
+            colors.warning + '18',
+            colors
+        ));
+    }
+
+    // Go/No-Go radar (5 axes) — composite view
+    const ctxG = document.getElementById('radarGoNoGo');
+    if (ctxG) {
+        chartGoNoGo = new Chart(ctxG.getContext('2d'), makeRadarConfig(
+            ['Cobertura', 'Profundidade', 'Consistência', 'Fundamentação', 'Completude'],
+            [92, 88, 93, 85, 85],
+            'Go/No-Go (88,8%)',
+            colors.success,
+            colors.success + '1A',
+            colors
+        ));
+    }
+}
+
+// Initial render
+document.addEventListener('DOMContentLoaded', () => {
+    renderAllRadars();
+});
+</script>
+
+</body>
+</html>
