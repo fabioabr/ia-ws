@@ -1,1041 +1,935 @@
 ---
-title: TODO
-description: Lista de pendências do projeto Discovery To Go — problemas identificados no teste end-to-end (Veezoozin run-1)
+title: "TO-DO — Ajustes no Pipeline Discovery-to-Go"
+description: "Pendências identificadas a partir das correções estruturais capturadas no Discovery da Patria (Abr/2026)"
 project-name: discovery-to-go
-version: 06.00.000
 status: ativo
-author: claude-code
-category: todo
-area: tecnologia
-tags:
-  - todo
-  - pendencia
-  - pipeline-issues
-created: 2026-04-11
-updated: 2026-04-12
+created: 2026-04-17
+owner: fabio.rodrigues.consult@patria.com
 ---
 
-# TODO — Discovery To Go
+# TO-DO — Ajustes no Pipeline Discovery-to-Go
 
-20 problemas identificados durante o primeiro teste end-to-end (Veezoozin run-1). Organizados em 4 categorias por área de impacto.
+Lista de pendências a resolver, em ordem de prioridade, derivadas das correções estruturais feitas durante o Discovery da Patria.
 
----
+## Contexto — o que mudou
 
-## Concluídos
+1. **One-Pager do Discovery-to-Go NÃO dimensiona time real** — assume "todos contratados" para simplificar esforço/custo/escopo.
+2. **One-Pager NÃO justifica ROI/payback** — Discovery acontece depois da aprovação global do investimento. Exceção: se briefing exigir explicitamente.
+3. **Modelo financeiro "fundo global"** existe — projetos não arcam custo cloud, só estimam consumo sem free tier. O pipeline só modela o caso "projeto paga".
+4. **3 entregáveis distintos** foram formalizados: One-Pager (OP) ⊂ Executive Report (EX) ⊂ Delivery Report (DR) — mas o pipeline hoje gera só 1 delivery.
+5. **Bitmap `[OP][EX][DR]`** em cada pergunta do `environment.md` — classificação criada em `projects/patria/kb/question-priority.md`.
 
-<details>
-<summary>25 itens concluídos nesta sessão (clique para expandir)</summary>
-
-- ~~1. Consolidar packs no formato único~~ DONE
-- ~~2. Sample run atualizado~~ DONE
-- ~~3. Terminologia "context-template"~~ DONE
-- ~~4. CLAUDE.md atualizado~~ DONE
-- ~~5. .gitignore (draw.io temps)~~ DONE
-- ~~6. product-discovery-deliverables.md~~ DONE
-- ~~7. README.md atualizado~~ DONE
-- ~~8. Information Regions (85 regions, previews, chart specialist)~~ DONE
-- ~~9. Consolidator com regions~~ DONE
-- ~~10. HTML Writer com regions~~ DONE
-- ~~11. Sample run com regions~~ DONE
-- ~~12. CLAUDE.md + chart-specialist~~ DONE
-- ~~13. Sync base-artifacts~~ DONE
-- ~~14. Teste end-to-end (Veezoozin)~~ DONE
-- ~~15. Report setups (essential/executive/complete)~~ DONE
-- ~~16. Report Planner skill~~ DONE
-- ~~17. quick-start.md com report setups~~ DONE
-- ~~18. README.md seções atualizadas~~ DONE
-- ~~READMEs em 117 subpastas~~ DONE
-- ~~Client template scaffold~~ DONE
-- ~~Starter-kit com briefing template~~ DONE
-- ~~Docs organizados (guides/ + reference/ + diagrams/)~~ DONE
-- ~~Auditoria de consistência (10 issues)~~ DONE
-- ~~discovery-pipeline.md v02~~ DONE
-- ~~Orchestrator: auto-detect + simulação~~ DONE
-
-</details>
+Fonte: `projects/patria/kb/question-priority.md`, `one-pager-form.txt` respondido pelo usuário, memórias `feedback_one_pager_scope.md` e `project_patria_financial_model.md`.
 
 ---
 
-## Categoria A — Infraestrutura do Pipeline
+## Legenda
 
-Problemas na mecânica de execução do pipeline — scaffold, logs, gates, estados.
-
----
-
-### P1. Scaffold da run é manual — não existe automação
-
-**Severidade:** Alta | **Fase:** Setup | **Detectado:** Início da execução
-
-**O que aconteceu:** O orchestrator é uma skill (SKILL.md com instruções), não código executável. Para rodar o pipeline foi necessário criar manualmente via bash: a estrutura de pastas (`setup/`, `iterations/`, `delivery/`), copiar os blueprints para `current-context/`, copiar os templates de customização, e criar `config.md` e `pipeline-state.md`.
-
-**O que deveria ter acontecido:** Um comando como `./scripts/create-run.sh --briefing briefing.md --client veezoozin` deveria materializar toda a estrutura automaticamente, lendo o frontmatter do briefing para detectar context-templates, report-setup, e outras configurações.
-
-**Impacto:** Sem automação, cada nova run exige ~20 comandos manuais de cópia e criação de pastas. Propenso a erros (esquecer de copiar um blueprint, usar path errado, etc.).
-
-**Ação:**
-- [ ] Criar script `support-tools/create-run/create-run.sh` (ou Python) que:
-  - Recebe: `--briefing <path>` e `--client <name>`
-  - Lê frontmatter do briefing (context-templates, report-setup, client-simulation, scoring)
-  - Cria `custom-artifacts/{client}/runs/run-{n}/` com toda a estrutura
-  - Copia blueprints de `context-templates/` para `current-context/`
-  - Copia templates de `dtg-artifacts/templates/customization/` para `setup/customization/`
-  - Gera `config.md` e `pipeline-state.md` a partir do briefing
-  - Auto-incrementa o número da run
-- [ ] Documentar uso no `docs/guides/quick-start.md`
-- [ ] Adicionar ao catálogo de support-tools
+| Campo | Valores |
+|-------|---------|
+| **Status** | `[ ]` pendente, `[~]` em andamento, `[X]` concluído, `[!]` bloqueado |
+| **Severidade** | 🔴 Crítica, 🟡 Alta, 🟠 Média, 🟢 Baixa |
+| **Esforço** | S (≤1h), M (1-4h), L (>4h) |
 
 ---
 
-### P2. Log da entrevista (interview.md) não foi gerado
+## #1 — Revisar regra formal `rules/discovery/discovery.md`  🔴  [esforço: S]
 
-**Severidade:** Alta | **Fase:** Fase 1 | **Detectado:** Fim da Fase 1
+- [X] **Status:** concluído (2026-04-17)
+- **Depende de:** —
+- **Bloqueia:** #3, #4, #5, #9
+- **Resultado:** [projects/patria/kb/diagnosis-discovery-rule.md](projects/patria/kb/diagnosis-discovery-rule.md)
 
-**O que aconteceu:** A regra `analyst-discovery-log` exige um log cronológico da entrevista com formato de tabela (colunas `Quem | Diálogo`), emojis por persona, e source tags (`[BRIEFING]`, `[RAG]`, `[INFERENCE]`). O teste gerou os 8 result files diretamente sem registrar o diálogo simulado entre os especialistas e o customer.
+### 🎯 Objetivo
 
-**O que deveria ter acontecido:** Cada bloco temático deveria produzir um trecho de log com as perguntas do especialista, as respostas do customer (com source tags), observações e decisões. O orchestrator deveria consolidar os 8 trechos em um único `iterations/iteration-1/logs/interview.md`.
+Diagnosticar o que a rule formal prescreve hoje como **obrigatório** e identificar onde isso conflita com o novo entendimento capturado no Discovery da Patria (One-Pager sem FTE/ROI, modelo "fundo global", 3 entregáveis OP⊂EX⊂DR).
 
-**Impacto:** Sem o interview.md, perde-se a rastreabilidade de como cada informação foi obtida. O auditor não consegue verificar se as `[INFERENCE]` são justificadas. O humano no HR Review não consegue revisar o diálogo.
+**Importante:** essa task **não edita** a rule. Só investiga. A edição vem nas tasks derivadas, depois que a task #2 decidir o modelo de entregáveis.
 
-**Ação:**
-- [ ] Cada agente da Fase 1 deve gerar, junto com o result file, um trecho de log de entrevista
-- [ ] Formato: tabela `| Quem | Diálogo |` com emojis (🧑‍💼 PO, 🏗️ Architect, 🔒 Security, 👤 Customer)
-- [ ] Cada resposta do customer marcada com `[BRIEFING]`, `[RAG]` ou `[INFERENCE]`
-- [ ] Orchestrator consolida em `iterations/iteration-{i}/logs/interview.md`
-- [ ] Em modo simulação, o log é gerado com nota: "[SIMULADO — customer gerado por IA]"
+### 📋 Planejamento
 
----
+1. **Ler** `base/behavior/rules/discovery/discovery.md` (287L) completo.
+2. **Extrair** todas as obrigatoriedades em tabela estruturada:
 
-### P3. Pipeline seguiu para Fase 3 com scores abaixo do threshold
+   | Item prescrito | Onde (linha/seção) | Obrigatoriedade hoje | Novo comportamento esperado |
+   |---|---|---|---|
+   | Bloco #3 inclui ROI/payback | — | Obrigatório sempre | Condicional a `require_roi_justification` |
+   | Bloco #8 TCO 3 anos | — | Obrigatório sempre | Condicional a `financial_model` |
+   | Bloco #4 FTE real | — | Obrigatório sempre | Capturar mas marcar como EX/DR-only |
+   | ... | ... | ... | ... |
 
-**Severidade:** Alta | **Fase:** Fase 2 → Fase 3 | **Detectado:** Transição entre fases
+3. **Mapear referências cruzadas** — listar outros arquivos que a rule aponta (skills, regions, schemas, outras rules). Servirá de guia para tasks derivadas.
+4. **Marcar conflitos** — separar o que conflita com as correções em 3 categorias:
+   - **🔴 Conflito duro:** contradiz o que o usuário estabeleceu (ex: "ROI é obrigatório no OP")
+   - **🟡 Conflito por omissão:** a rule não prevê o caso novo (ex: não conhece "fundo global")
+   - **🟢 Alinhado:** já compatível, não precisa mexer
+5. **Identificar lacunas** — coisas que o usuário estabeleceu mas que a rule nem menciona (ex: diferença entre OP/EX/DR — a rule hoje só conhece "delivery").
+6. **Verificar se há rules vizinhas** potencialmente afetadas pelo mesmo conflito (por ex. `iteration-loop`, `requirement-priority`) — marcar para task futura sem entrar no mérito.
 
-**O que aconteceu:** O auditor deu 82% e o 10th-man deu 62%. O threshold padrão configurado é ≥90%. O pipeline deveria ter pausado para HR Review antes de avançar para a Fase 3, mas seguiu direto porque o teste roda em modo simulação sem pausas.
+### ❓ Decisões pendentes (preciso da sua resposta)
 
-**O que deveria ter acontecido:** Mesmo em modo simulação (`client-simulation: sim`), o pipeline deveria ter: (1) registrado o score no pipeline-state.md, (2) gerado um `hr-loop-round2-pass1.md` com flag `[BELOW-THRESHOLD]`, (3) registrado a decisão simulada "AVANÇAR — simulação, score abaixo do threshold aceito automaticamente", (4) incluído callout `[!danger]` no delivery report sinalizando que o material não passou nos gates.
+- **D1.1 — Onde salvar o diagnóstico?**
+  - Opções:
+    - (a) Como seção nova dentro do próprio `TODO.md` (task #1 ganha "Resultado")
+    - (b) Em arquivo separado `projects/patria/kb/diagnosis-discovery-rule.md`
+    - (c) Em arquivo separado global `base/behavior/rules/discovery/diagnosis-2026-04.md`
+  - Recomendação: **(b)** — é um produto do Discovery da Patria, fica no kb do cliente; depois é promovido para framework quando virar padrão.
+  - Resposta: _____
 
-**Impacto:** O delivery report final recomenda "GO CONDICIONAL" sem deixar explícito que os gates de qualidade não foram atingidos. Um stakeholder que leia apenas o report pode não perceber que o material tem ressalvas significativas.
+- **D1.2 — Escopo da leitura: só `discovery.md` ou rules vizinhas também?**
+  - Contexto: além de `discovery.md`, existem `iteration-loop.md` (249L), `requirement-priority.md`, `analyst-discovery-log.md`, `audit-log.md`, `token-tracking.md`, `layer-priority.md` na pasta `rules/`.
+  - Opções:
+    - (a) Apenas `discovery.md` — mantém task #1 no esforço S (≤1h), foco no núcleo
+    - (b) `discovery.md` + `iteration-loop.md` — principais, cobre ciclo e gates (1-2h)
+    - (c) Todas as rules de discovery — exaustivo (3-5h), muda esforço para M-L
+  - Recomendação: **(a)** — faz a #1 enxuta; abre task nova se rules vizinhas aparecerem como bloqueadoras.
+  - Resposta: _____
 
-**Ação:**
-- [ ] Em modo simulação: registrar score + gerar HR loop log + avançar com flag `[BELOW-THRESHOLD]`
-- [ ] Em modo real: PAUSAR obrigatoriamente quando score < threshold
-- [ ] O delivery report deve incluir banner `[!danger]` quando gerado com scores abaixo do threshold
-- [ ] O Go/No-Go (REG-EXEC-03) deve refletir fielmente os scores — se abaixo, veredicto não pode ser "GO"
+- **D1.3 — Formato do diagnóstico: tabela compacta ou narrativo?**
+  - Opções:
+    - (a) Só a tabela de obrigatoriedades (mínimo viável)
+    - (b) Tabela + sumário executivo (recomendações top 3-5)
+    - (c) Tabela + sumário + exemplos de trechos conflitantes (mais verbose, mais útil para a task #2)
+  - Recomendação: **(c)** — o custo extra é baixo e alimenta bem a decisão da task #2.
+  - Resposta: _____
 
----
+### 📦 Entregáveis
 
-### P7. HR Review logs não foram gerados
+- Arquivo de diagnóstico (local conforme D1.1), contendo:
+  - Tabela de obrigatoriedades prescritas hoje
+  - Classificação conflito duro / omissão / alinhado
+  - Lista de referências cruzadas (outros arquivos tocados)
+  - Top 3-5 recomendações (se formato D1.3 = b ou c)
+- Atualização da task #1 no TODO.md para status `[X] concluído`
+- Identificação automática de subtasks novas (se surgirem) — adicionadas ao final do TODO
 
-**Severidade:** Média | **Fase:** Entre fases | **Detectado:** Revisão pós-pipeline
+### 📝 Notas / Registro
 
-**O que aconteceu:** Os arquivos `hr-loop-round{N}-pass{M}.md` — que registram a decisão do humano em cada pausa — não foram criados. São 3 pausas (após Fase 1, 2 e 3) e nenhuma gerou log.
+_(append-only durante execução)_
 
-**O que deveria ter acontecido:** Mesmo em simulação, cada pausa de HR Review deveria gerar um arquivo com: observações (vazias em simulação), decisão ("AVANÇAR — simulação"), scores das fases anteriores, e timestamp.
+- 2026-04-17 — Task criada, aguardando decisões D1.1, D1.2, D1.3 para começar.
+- 2026-04-17 — Respostas: D1.1=(b), D1.2=(a), D1.3=(c). Executando.
+- 2026-04-17 — Task concluída. Diagnóstico salvo em `projects/patria/kb/diagnosis-discovery-rule.md`.
 
-**Impacto:** Sem os logs de HR Review, a trilha de auditoria do pipeline está incompleta. Não há registro formal de que o humano (ou simulação) autorizou o avanço.
+### 🎯 Resultado
 
-**Ação:**
-- [ ] Gerar `hr-loop-round1-pass1.md` após Fase 1 com decisão simulada
-- [ ] Gerar `hr-loop-round2-pass1.md` após Fase 2 com scores e flag `[BELOW-THRESHOLD]` se aplicável
-- [ ] Gerar `hr-loop-round3-pass1.md` após Fase 3 com resultado final
-- [ ] Usar o template `human-review-template.md` como base
+**Achados principais:**
 
----
+- **1 conflito filosófico raiz:** a rule estabelece "orçamento como output" (L220-229) — incompatível com organizações onde o investimento já foi aprovado globalmente antes do Discovery começar (caso Patria).
+- **6 conflitos duros** — blocos #3 (ROI), #8 (TCO), seção "Orçamento Output" (3 trechos), Prazo fixo 1+6 meses.
+- **4 conflitos por omissão** — hierarquia OP/EX/DR não prevista; FTE capturado mas sem classificação por entregável; auditor sem condicionalidade; critério de conclusão monolítico.
+- **3 subtasks novas identificadas:** #13, #14, #15 (ver abaixo).
 
-### P11. pipeline-state.md não foi atualizado durante a execução
+**Correção mais limpa identificada:** introduzir flag `financial_model` (`projeto-paga` | `fundo-global`) no briefing/config — **resolve todos os conflitos duros em uma única mudança**. Isso é exatamente o que a task #3 já prevê; o diagnóstico confirma que ela é de fato a chave.
 
-**Severidade:** Baixa | **Fase:** Todas | **Detectado:** Revisão pós-pipeline
-
-**O que aconteceu:** O pipeline-state.md foi criado no setup com metadata inicial mas não recebeu snapshots ao longo da execução. O pipeline exige que seja append-only — um snapshot é adicionado ao final após cada fase com: status, scores, decisão do HR, tokens consumidos.
-
-**O que deveria ter acontecido:** 3 snapshots appendados: (1) após Fase 1 com resumo dos 8 blocos, (2) após Fase 2 com scores do auditor e 10th-man, (3) após Fase 3 com artefatos gerados e resultado final.
-
-**Impacto:** O pipeline-state.md é a "memória viva" da run. Sem snapshots, não há registro cronológico do que aconteceu. Iterações futuras não teriam contexto do que foi feito anteriormente.
-
-**Ação:**
-- [ ] Após cada fase, appendar snapshot com: fase, status, scores (se aplicável), decisão HR, tokens
-- [ ] No final, appendar snapshot de conclusão com lista de artefatos gerados e resultado
-- [ ] O script de scaffold (P1) pode incluir helper para append de snapshots
-
----
-
-## Categoria B — Qualidade da Fase 1 (Discovery)
-
-Problemas na execução da Fase 1 — agentes, entrevista, consistência, blueprints.
-
----
-
-### P4. Inconsistência financeira grave entre blocos 1.3 e 1.8
-
-**Severidade:** Alta | **Fase:** Fase 1 | **Detectado:** Fase 2 (auditor)
-
-**O que aconteceu:** O bloco 1.3 (Valor e OKRs, gerado pelo PO) projeta ARR de R$ 460K e break-even no mês 3. O bloco 1.8 (TCO e Build vs Buy, gerado pelo solution-architect) projeta ARR equivalente a ~R$ 175K e break-even no mês 14-18. Divergência de **2.6x no ARR** e **5x no break-even**. Os dois blocos foram gerados por agentes diferentes, em paralelo, sem validação cruzada.
-
-**O que deveria ter acontecido:** O orchestrator deveria fazer uma cross-validation entre blocos financeiros ao fim da Fase 1. Se valores divergem mais de 20%, sinalizar automaticamente e pedir que os agentes conciliem antes de avançar para o HR Review.
-
-**Impacto:** O stakeholder recebe um delivery report com números contraditórios. A credibilidade do discovery é comprometida. O auditor detectou (e penalizou na dimensão Consistência — 72%) mas não houve correção.
-
-**Ação:**
-- [ ] Adicionar passo de cross-validation no orchestrator entre blocos 1.3 e 1.8
-- [ ] Se divergência > 20% em ARR, TCO, break-even ou team cost → flag automático `[INCONSISTÊNCIA-FINANCEIRA]`
-- [ ] Forçar conciliação antes de avançar (solution-architect é source of truth para TCO; PO ajusta projeções)
-- [ ] Considerar rodar os blocos financeiros em sequência (não paralelo) para que 1.8 tenha acesso ao output de 1.3
+**Impacto nas outras tasks:** todos os achados foram mapeados para as tasks #2, #3, #4, #5, #9 no diagnóstico. Não houve descobertas que invalidem a ordem sugerida no TODO.
 
 ---
 
-### P5. Customer não operou como agente separado
+## #2 — Decisão: 3 entregáveis (OP / EX / DR) — como modelar?  🔴  [esforço: L]
 
-**Severidade:** Média | **Fase:** Fase 1 | **Detectado:** Durante execução
+- [X] **Status:** concluído (2026-04-17)
+- **Depende de:** #1 ✓
+- **Bloqueia:** #5, #6, #7, #8, #11
+- **Resultado:** [projects/patria/kb/adr-001-deliverables-model.md](projects/patria/kb/adr-001-deliverables-model.md)
 
-**O que aconteceu:** O pipeline define que o customer é um agente independente que simula o cliente — respondendo perguntas dos especialistas com dados do briefing, marcados com source tags. No teste, cada agente (PO, architect, security) fez tudo sozinho: entrevistou e respondeu. Não houve interação entre agentes.
+### 🎯 Objetivo
 
-**O que deveria ter acontecido:** O PO pergunta → o customer responde com `[BRIEFING]` ou `[INFERENCE]` → o PO analisa a resposta e decide a próxima pergunta. Isso cria um diálogo rastreável (registrado no interview.md) e força transparência sobre o que é dado real vs inferido.
+Decidir **como o pipeline produz e entrega** os 3 artefatos hierárquicos (One-Pager, Executive Report, Delivery Report). Essa decisão define a estrutura da Fase 3 e o contrato do `consolidator`, `report-planner` e `html-writer`.
 
-**Impacto:** Sem o customer separado, não há separação entre "o que o cliente disse" e "o que o especialista interpretou". As source tags ficam menos confiáveis porque o mesmo agente que pergunta é quem inventa a resposta.
+**Não é nesta task que editamos código.** É a task que toma as decisões arquiteturais que habilitam as edições nas tasks #5 em diante.
 
-**Ação:**
-- [ ] Implementar o customer como agente separado invocado pelo orchestrator
-- [ ] Fluxo por bloco: especialista formula perguntas → customer responde → especialista analisa
-- [ ] Em modo simulação, o customer pode rodar inline mas deve gerar respostas tagueadas separadamente
-- [ ] O interview.md registra o diálogo entre especialista e customer
+### 🧱 Entendimento (baseado no diagnóstico da #1)
 
----
+A rule hoje prevê 1 output (`delivery-report.md + .html`). Precisamos acomodar 3 artefatos sem quebrar a Fase 3. Há **3 dimensões de decisão** independentes — vale a pena tratá-las separadamente:
 
-### P6. Agentes não consultaram os discovery-blueprints
+- **DIM-A: Estrutura de dados** — os 3 artefatos são 1 arquivo com views ou 3 arquivos distintos?
+- **DIM-B: Momento de geração** — geramos os 3 em série única (uma execução da Fase 3) ou em sequência com aprovação entre eles?
+- **DIM-C: Filtragem** — quem define o que entra em cada artefato? Schemas? `html-layout.md`? Flag no region? Bitmap OP/EX/DR?
 
-**Severidade:** Média | **Fase:** Fase 1 | **Detectado:** Revisão pós-pipeline
+Cada dimensão tem suas opções. As opções (a)(b)(c) originais cobriam misturas de A+B — vou desacoplar.
 
-**O que aconteceu:** Os 3 discovery-blueprints (saas, ai-ml, datalake-ingestion) foram copiados corretamente para `setup/customization/current-context/` durante o scaffold. Porém, nenhum dos 4 agentes da Fase 1 os leu — trabalharam apenas com o briefing.
+### 📋 Planejamento
 
-**O que deveria ter acontecido:** Cada agente deveria ler os blueprints relevantes antes de iniciar seu bloco. O blueprint de SaaS tem seção "Componente 1 — Produto e Modelo Comercial" que guia exatamente o que o PO deve perguntar. O blueprint de AI/ML tem "Componente 2 — Desenvolvimento de Modelos" que guia o architect no bloco de arquitetura.
+1. **Consolidar decisão em DIM-A, DIM-B, DIM-C** com o usuário (ver Decisões Pendentes).
+2. **Escrever ADR** (`projects/patria/kb/adr-001-deliverables-model.md`) registrando a escolha final e o porquê.
+3. **Listar impacto concreto** nos arquivos afetados (deriva das escolhas):
+   - `docs/guides/discovery-pipeline.md`
+   - `base/behavior/rules/discovery/discovery.md`
+   - `base/behavior/skills/consolidator/SKILL.md`
+   - `base/behavior/skills/report-planner/SKILL.md`
+   - `base/behavior/skills/html-writer/SKILL.md`
+   - `base/behavior/skills/pipeline-md-writer/SKILL.md`
+   - `base/standards/conventions/report-regions/schemas/**`
+   - `dtg-artifacts/templates/customization/html-layout.md`
+4. **Atualizar tasks #5, #6, #7, #8, #11** no TODO para refletir a estrutura escolhida.
+5. **Marcar task #2 como concluída** apontando para o ADR.
 
-**Impacto:** Os agentes geraram conteúdo de qualidade (o briefing era rico), mas perderam os concerns específicos de domínio que os blueprints trazem (ex: antipatterns SaaS, edge cases de tenancy, checklist de privacy para ML). O resultado ficou genérico onde poderia ser domain-specific.
+### ❓ Decisões pendentes (preciso da sua resposta)
 
-**Ação:**
-- [ ] O orchestrator deve incluir no prompt de cada agente: "Leia os blueprints em {paths} antes de iniciar"
-- [ ] Mapear quais blocos são cobertos por quais blueprints (já existe na seção "Mapeamento para os 8 Blocos")
-- [ ] O agente deve citar o blueprint como fonte quando usar um concern de domínio
+#### DIM-A — Estrutura de dados
 
----
+- **D2.A — Os 3 artefatos são 1 arquivo com views ou 3 arquivos distintos?**
+  - **(a.1) View única:** 1 `delivery-report.md` é o superset. OP e EX são **renderizações filtradas** via `html-layout.md`.
+    - ✅ Pros: 1 fonte da verdade; impossível divergirem; menor esforço de manutenção; regions com bitmap `[OP][EX][DR]` servem como filtro natural.
+    - ❌ Cons: conteúdo escrito "em modo DR" pode ficar denso demais para OP; difícil ter linguagem executiva vs. técnica no mesmo texto-fonte.
+  - **(a.2) Arquivos distintos:** 3 arquivos md + 3 html. Cada um com consolidator próprio (ou modo do mesmo skill).
+    - ✅ Pros: cada entregável tem densidade/linguagem própria; flexibilidade total.
+    - ❌ Cons: 3x trabalho; risco de divergência; triplica complexidade no consolidator.
+  - **(a.3) Híbrido — "source doc + renderizações":** 1 `delivery-report.md` (o DR completo) **+** 2 arquivos derivados (`one-pager.md`, `executive-report.md`) **gerados por skill dedicada de destilação** (não cópia mecânica — usa LLM para adaptar linguagem/densidade).
+    - ✅ Pros: 1 fonte da verdade para dados; linguagem adequada em cada entregável; aderente ao princípio OP ⊂ EX ⊂ DR.
+    - ❌ Cons: precisa de nova skill (`deliverable-distiller` ou equivalente); risco de hallucination se a destilação inferir o que não está no DR.
+  - **Recomendação:** **(a.3)**. Equilibra integridade da fonte única com qualidade editorial por público.
+  - **Resposta:** _____
 
-### P14. Projeção receita vs custo negativa — pipeline não bloqueou
+#### DIM-B — Momento de geração
 
-**Severidade:** Alta | **Fase:** Fase 2 → Fase 3 | **Detectado:** Análise do 10th-man
+- **D2.B — Geramos os 3 em uma execução só ou em sequência com aprovação entre eles?**
+  - **(b.1) Todos em paralelo na Fase 3 atual:** uma execução da Fase 3 produz OP + EX + DR. Human Review final valida os 3 juntos.
+    - ✅ Pros: pipeline atual muda minimamente — só adiciona outputs; 1 ciclo de HR.
+    - ❌ Cons: não reflete fluxo real (patrocinador → comitê → time); usuário pode ter que rejeitar OP tendo lido EX+DR que distraem.
+  - **(b.2) Stage-gate com HR entre cada:** OP é gerado → HR → se aprovar, gera EX → HR → se aprovar, gera DR → HR final.
+    - ✅ Pros: espelha fluxo real de aprovação corporativa; economiza tokens/esforço se OP for rejeitado; mantém foco por entregável.
+    - ❌ Cons: 3 HR a mais; pipeline mais longo; exige reescrever Fase 3 como sequência; pode atrasar clientes que querem tudo junto.
+  - **(b.3) Híbrido — DR é gerado sempre, OP e EX são destilações on-demand:** a Fase 3 sempre produz DR completo; OP e EX são gerados por solicitação explícita (comando/flag) **após** o DR.
+    - ✅ Pros: não trava o pipeline; OP pode ser regerado quantas vezes quiser sem reprocessar tudo.
+    - ❌ Cons: não força a produção dos 3; depende de disciplina para gerar OP/EX.
+  - **Recomendação:** **(b.3)** — casa perfeitamente com **(a.3)**: DR vira artefato canônico, OP/EX são destilações. Quem quiser stage-gate de aprovação faz por processo humano (sem travar o pipeline).
+  - **Resposta:** _____
 
-**O que aconteceu:** O 10th-man identificou que no cenário "esperado" o projeto acumula **-$901K de déficit em 3 anos**. Com churn realista de 10%, o projeto **nunca atinge break-even**. Mesmo assim, o pipeline gerou um delivery report com recomendação "GO CONDICIONAL" — sugerindo que o projeto deveria prosseguir.
+#### DIM-C — Filtragem: como saber o que entra em cada artefato?
 
-**O que deveria ter acontecido:** Um projeto com projeção financeira negativa em 3 anos é, por definição, inviável no modelo proposto. Isso deveria ter sido flagado como `[VIABILIDADE-NEGATIVA]` e o HR Review da Fase 2 deveria exigir que o humano aceite explicitamente o risco financeiro — com justificativa registrada (ex: "investimento estratégico", "pivot de modelo previsto").
+- **D2.C — Como o sistema decide o conteúdo de cada artefato?**
+  - **(c.1) `html-layout.md` escolhe regions** — solução atual, apenas estendida com 3 layouts (`one-pager-layout.md`, `executive-layout.md`, `delivery-layout.md`).
+    - ✅ Pros: reutiliza infra atual; já existe o conceito.
+    - ❌ Cons: filtragem por region é grosseira; não consegue destilar **trechos** dentro de uma region.
+  - **(c.2) Bitmap `[OP][EX][DR]` dentro de cada region** — cada schema de region marca quais sub-campos vão para cada entregável.
+    - ✅ Pros: granularidade fina; aderente ao `question-priority.md` que criamos para a Patria.
+    - ❌ Cons: exige editar todos os 85 schemas de region; mais complexidade no consolidator.
+  - **(c.3) Destilação por skill** — a skill `deliverable-distiller` (da DIM-A.3) **resume e adapta** o DR completo para OP/EX usando regras do prompt.
+    - ✅ Pros: máxima flexibilidade; linguagem ajustada; não precisa editar schemas.
+    - ❌ Cons: depende de qualidade do prompt; precisa de eval/validação.
+  - **Recomendação:** **(c.3) principal + (c.1) como fallback determinístico**. A destilação via LLM faz o trabalho editorial; o layout garante ordem e presença obrigatória de regions-chave (ex: "OP sempre tem `executive/overview-one-pager`").
+  - **Resposta:** _____
 
-**Impacto:** O stakeholder recebe um "GO CONDICIONAL" para um projeto que o próprio pipeline calculou como financeiramente inviável. Se o humano não ler os detalhes do 10th-man, pode aprovar um projeto que não se paga.
+#### Confirmação do conjunto
 
-**Ação:**
-- [ ] Adicionar validação automática: se receita projetada < custo projetado em 3 anos → `[VIABILIDADE-NEGATIVA]`
-- [ ] HR Review da Fase 2 deve mostrar callout `[!danger]` exigindo aceite explícito do risco
-- [ ] O auditor deve ter dimensão "Viabilidade Financeira" que verifica TCO vs receita
-- [ ] Go/No-Go (REG-EXEC-03) deve ter dimensão "Viability" como VERMELHO (não amarelo) quando projeção é negativa
-- [ ] Se humano aceita: registrar justificativa no pipeline-state.md
-- [ ] Se humano não aceita: voltar para Fase 1 para revisar modelo de negócio/pricing
+Se as 3 recomendações forem aceitas (a.3 + b.3 + c.3+c.1), o modelo final é:
 
----
+> **Fase 3 produz `delivery-report.md` + `delivery-report.html` como hoje. Após isso, o usuário pode invocar a skill `deliverable-distiller` para produzir `one-pager.md`/`.html` e `executive-report.md`/`.html` — ambos destilados do DR com linguagem e densidade apropriadas, usando layouts específicos para garantir estrutura mínima.**
 
-### P16. Especialistas listam riscos com mitigações genéricas
+Isso **não quebra** o pipeline atual — adiciona capacidade sem remover nada. E é compatível com o fluxo real da Patria (DR é o produto do Discovery; OP/EX são comunicação para stakeholders).
 
-**Severidade:** Alta | **Fase:** Fase 1 + Fase 3 | **Detectado:** Revisão dos results
+- **D2.FINAL — Aceita o conjunto (a.3 + b.3 + c.3+c.1)?**
+  - (sim) — avanço para ADR e atualizo tasks derivadas
+  - (não, quero outro conjunto) — especifique
+  - (quero discutir mais antes de decidir)
+  - **Resposta:** _____
 
-**O que aconteceu:** Os riscos identificados pelos especialistas têm mitigações de 1 linha genérica. Exemplo: Risco "DPO não nomeado" → Mitigação "Nomear DPO". Risco "Accuracy NL-to-SQL incerta" → Mitigação "PoC na Sprint 0". Isso não dá ao stakeholder informação suficiente para agir.
+### 📦 Entregáveis
 
-**O que deveria ter acontecido:** Cada risco deveria ter um plano de mitigação detalhado com: (1) passos concretos para resolver, (2) responsável por cada passo, (3) custo estimado da mitigação, (4) timeline, (5) consequência se não resolver a tempo. Exemplo: "DPO não nomeado → 1) Avaliar DPO interno vs consultoria externa. 2) Budget: R$ 5-15K/mês se terceirizado. 3) Contratar até semana 4 do Sprint 0. 4) Responsável: CTO. 5) Se não resolver até go-live: não lançar — blocker legal."
+- ADR salvo em `projects/patria/kb/adr-001-deliverables-model.md` (decisão + justificativa + alternativas descartadas)
+- TODO atualizado: tasks #5, #6, #7, #8, #11 ajustadas à estrutura escolhida
+- Task #2 marcada como `[X] concluído` no TODO
 
-**Impacto:** Mitigações genéricas dão falsa sensação de que os riscos estão endereçados. O stakeholder lê "PoC na Sprint 0" e assume que está coberto, mas ninguém definiu quem faz, quanto custa, e o que acontece se a PoC falhar.
+### 📝 Notas / Registro
 
-**Ação:**
-- [ ] Atualizar skills dos especialistas: ao identificar risco, exigir mitigação com: ação, responsável, custo, prazo, consequência
-- [ ] Atualizar regra de discovery: risco sem mitigação detalhada → penalidade na dimensão "Profundidade"
-- [ ] O auditor deve penalizar explicitamente mitigações de 1 linha
-- [ ] O consolidator deve destacar riscos com mitigação insuficiente no delivery report
-- [ ] Considerar sub-seção "Plano de Mitigação" dentro de REG-RISK-01 e REG-RISK-02
+- 2026-04-17 — Task redesenhada no novo formato. Opções originais (a)(b)(c) desdobradas em 3 dimensões (DIM-A, DIM-B, DIM-C) para decisão mais granular. Recomendação consolidada: **a.3 + b.3 + c.3+c.1**.
+- 2026-04-17 — Usuário aceitou o conjunto recomendado. ADR-001 criado e salvo.
+- 2026-04-17 — Tasks derivadas ajustadas (#3, #5, #6, #7, #8, #11) + tasks novas adicionadas (#16, #17). Task #2 concluída.
 
----
+### 🎯 Resultado
 
-## Categoria C — Qualidade do HTML (Fase 3)
+**Decisão aceita:** **a.3 + b.3 + c.3+c.1**
 
-Problemas na renderização visual dos relatórios HTML.
+- **DIM-A:** `delivery-report.md` é canônico; OP e EX são destilações geradas por skill dedicada.
+- **DIM-B:** DR sempre gerado pela Fase 3. OP/EX on-demand após Fase 3 (não quebra pipeline atual).
+- **DIM-C:** Destilação LLM + layout mínimo obrigatório como piso determinístico.
 
----
+**Novas tasks geradas:** #16 (skill `deliverable-distiller`), #17 (layouts OP/EX).
 
-### P8. md-writer (Fase 3.1) foi pulado
-
-**Severidade:** Média | **Fase:** Fase 3 | **Detectado:** Durante execução
-
-**O que aconteceu:** O pipeline define 4 sub-fases na Fase 3: md-writer → consolidator → report-planner → html-writer. No teste, o md-writer (3.1) foi pulado — o consolidator leu os result files brutos diretamente, sem polimento.
-
-**O que deveria ter acontecido:** O md-writer deveria ter lido os 8 result files da Fase 1 e gerado versões polidas (formatação Obsidian, frontmatter padronizado, emojis semânticos, siglas expandidas, wikilinks corretos). O consolidator então leria os arquivos polidos.
-
-**Impacto:** O delivery-report.md foi gerado a partir de conteúdo bruto. A formatação é inconsistente entre blocos (cada agente escreveu com estilo diferente). Siglas não estão expandidas. Wikilinks podem estar quebrados.
-
-**Ação:**
-- [ ] Incluir passo 3.1 (md-writer) na execução — polir os 8 drafts
-- [ ] Gerar arquivos polidos em `delivery/intermediate/` ou sobrescrever em `results/`
-- [ ] O consolidator deve ler os polidos, não os brutos
-- [ ] O md-writer deve aplicar: frontmatter padronizado, emojis em H2, siglas expandidas, formatação consistente
-
----
-
-### P12. Glossário de abreviações não gerado nos HTMLs
-
-**Severidade:** Média | **Fase:** Fase 3.4 (HTML Writer) | **Detectado:** Revisão visual
-
-**O que aconteceu:** Os relatórios HTML usam dezenas de siglas técnicas (TCO, MRR, ARR, LTV, CAC, LGPD, DPO, DPA, NL-to-SQL, RAG, MCP, OKR, MVP, SLA, JTBD, etc.) sem nenhum suporte visual. Não há tooltips (`<abbr>`) ao passar o mouse sobre as siglas, nem glossário no final do documento.
-
-**O que deveria ter acontecido:** O workspace tem convenções de tratamento de siglas (`conventions/acronyms/`) e um banco de siglas (`acronym-bank.md`) com expansões. O html-writer deveria usar esses recursos para: (1) envolver cada sigla conhecida em `<abbr title="Total Cost of Ownership">TCO</abbr>` para tooltip on hover, (2) adicionar seção "Glossário" no final do HTML listando todas as siglas usadas com suas expansões.
-
-**Impacto:** Um executivo que lê o report pela primeira vez encontra "DPA" e não sabe o que é. Precisa googlar ou perguntar. Isso reduz a acessibilidade do documento para públicos não-técnicos.
-
-**Ação:**
-- [ ] Atualizar html-writer para gerar `<abbr title="...">` em siglas conhecidas
-- [ ] Consultar `acronym-bank.md` para expansões
-- [ ] Siglas desconhecidas → sublinhado pontilhado sem tooltip (sinal de que precisa ser adicionada ao banco)
-- [ ] Seção "Glossário" no final de cada HTML
-- [ ] Considerar criar REG-NARR-04 (Glossary) como region própria
-
----
-
-### P13. TCO 3 Anos — gráfico gerado como SVG ao invés de Chart.js
-
-**Severidade:** Média | **Fase:** Fase 3.4 (HTML Writer) | **Detectado:** Revisão visual
-
-**O que aconteceu:** Na seção TCO 3 Anos (REG-FIN-01) do `executive-report.html`, o gráfico de barras empilhadas foi renderizado como SVG inline. O `report-plan.md` especificou `Chart.js stacked bar` e a prioridade de tecnologia definida é: HTML/CSS > Chart.js > Card. SVG inline **não está na lista** de tecnologias aprovadas para gráficos de dados.
-
-**O que deveria ter acontecido:** O html-writer deveria ter usado `<canvas>` com Chart.js (type: 'bar', stacked: true) para renderizar as 5 categorias de custo × 3 anos, conforme especificado no report-plan.md.
-
-**Impacto:** SVG inline para gráficos de dados é difícil de manter, não tem tooltips interativos, não re-renderiza corretamente no toggle dark/light, e não segue o padrão estabelecido.
-
-**Ação:**
-- [ ] Substituir SVG por Chart.js stacked bar em REG-FIN-01
-- [ ] Reforçar na skill html-writer: SVG inline NÃO é opção para gráficos de dados
-- [ ] SVG inline aceito apenas para: gauges simples, progress bars, ícones custom (quando HTML/CSS não resolve)
+**Tasks derivadas ajustadas:** #3 (reinterpretação de `deliverables_scope`), #5 (caixa pós-Fase 3), #6 (region vira componente de layout), #7 (classificação vira sugestão), #8 (mantida), #11 (bitmap vira input de prompt).
 
 ---
 
-### P15. Estimativa de Esforço — gráfico SVG ao invés de HTML/CSS
+## #3 — Adicionar flags no briefing/config para controlar condicionalidade  🟡  [esforço: S]
 
-**Severidade:** Média | **Fase:** Fase 3.4 (HTML Writer) | **Detectado:** Revisão visual
+- [X] **Status:** concluído (2026-04-17)
+- **Depende de:** #1 ✓, #2 ✓
+- **Bloqueia:** #4, #6, #8, #9, #14
+- **Resultado:** ver seção "🎯 Resultado" abaixo.
 
-**O que aconteceu:** Mesma issue do P13 — a seção Estimativa de Esforço (REG-FIN-05) gerou barras horizontais como SVG inline. Barras horizontais simples são triviais em HTML/CSS puro (divs com `width: X%`) e são o caso de uso mais básico de HTML/CSS.
+### 🎯 Objetivo
 
-**O que deveria ter acontecido:** Divs com CSS, cada barra com width proporcional ao valor, cor por T-shirt size (P=verde, M=azul, G=amarelo, GG=vermelho), label com horas.
+Introduzir no briefing/config do Discovery-to-Go os **3 flags que materializam as decisões dos ADRs e do diagnóstico**: modelo financeiro (projeto paga vs. fundo global), obrigatoriedade de ROI e escopo de entregáveis (OP/EX/DR). Sem esses flags, o pipeline não tem como decidir em runtime entre os dois comportamentos conflitantes identificados nas tasks #1 e #2.
 
-**Ação:**
-- [ ] Substituir SVG por HTML/CSS puro (divs com width proporcional)
-- [ ] Reforçar: barras horizontais simples = HTML/CSS SEMPRE, sem exceção
+**Não é nesta task que tornamos blocos/regions condicionais** — essa é a task #4. Aqui apenas **declaramos** o vocabulário de flags e onde eles vivem.
 
----
+### 🧱 Entendimento
 
-### P17. Layout do 10th-man diferente do layout do auditor
+Três flags, três famílias de efeitos:
 
-**Severidade:** Baixa | **Fase:** Fase 3.4 (HTML Writer) | **Detectado:** Revisão visual
+| Flag | Valores | Efeito principal | Tasks consumidoras |
+|------|---------|------------------|--------------------|
+| `financial_model` | `projeto-paga` (default) \| `fundo-global` | Bloco #8 (TCO) muda para "estimativa de consumo sem free tier"; regions financeiras têm variante | #4, #8 |
+| `require_roi_justification` | `false` (default) \| `true` | Bloco #3 cobra ROI/payback; region `product/roi` ativa; auditor pontua dimensão ROI | #4, #6, #7, #9 |
+| `deliverables_scope` | `["DR"]` (default) \| `["DR","OP"]` \| `["DR","EX"]` \| `["DR","OP","EX"]` | Após Fase 3, dispara destilação automática para OP e/ou EX (ADR-001) | #16 |
 
-**O que aconteceu:** A seção REG-QUAL-01 (Score do Auditor) tem layout exemplar: radar chart com 5 dimensões à esquerda + tabela de scores à direita (sidebar layout). A seção REG-QUAL-02 (Questões do 10th-man) usa layout completamente diferente: cards com badges de severidade, sem radar chart.
+Adicionalmente, a task #14 separou dois valores de `iteration-policy.md` (prazo fixo 1+6 meses). Tecnicamente pertencem a outra família (cadência), mas vale alinhar nomenclatura para que a semântica "tudo configurável" fique consistente.
 
-**O que deveria ter acontecido:** Ambas são validações da Fase 2 e deveriam usar o mesmo padrão visual. O 10th-man tem 3 dimensões com scores (Divergência 55%, Robustez 60%, Completude Crítica 73%) que se encaixam perfeitamente num radar chart de 3 eixos.
+### 📋 Planejamento
 
-**Impacto:** O leitor vê dois padrões visuais diferentes para o mesmo tipo de informação (validação com scores). Parece que o 10th-man é menos importante que o auditor.
+1. **Decidir onde os flags vivem** (briefing? config? rule própria?) — ver D3.1.
+2. **Decidir nomes finais e defaults** — ver D3.2.
+3. **Atualizar `docs/starter-kit/briefing-template.md`** incluindo seção nova "Flags de configuração".
+4. **Atualizar rule `base/behavior/rules/discovery/discovery.md`** com parágrafo que explica os flags e aponta para o briefing-template (não duplicar).
+5. **Atualizar `dtg-artifacts/templates/customization/`** se D3.1 exigir arquivo novo de customization.
+6. **Documentar impacto nas tasks consumidoras** — deixar ponteiros em #4, #6, #8, #9 (já feito parcialmente; revalidar).
 
-**Ação:**
-- [ ] REG-QUAL-02: adicionar radar chart 3 eixos (Chart.js) com as dimensões do 10th-man
-- [ ] Manter cards com severity badges para as questões residuais (abaixo do radar)
-- [ ] Usar sidebar layout (mesmo do auditor): radar à esquerda + detalhes à direita
-- [ ] Atualizar chart-specialist recommendation e report-plan de REG-QUAL-02
+### ❓ Decisões pendentes (preciso da sua resposta)
 
----
+- **D3.1 — Onde os flags vivem fisicamente?**
+  - (a) **Só no `briefing.md` do projeto** — 1 lugar; simples; mas briefing é conteúdo narrativo e flags podem se perder
+  - (b) **Só no `config.md` do run** — lugar técnico, fácil de ler por skills; mas briefing precisaria duplicar para humano ler
+  - (c) **Briefing declara, config consome** — briefing tem seção "Flags" (humano), config.md é gerado/copiado a partir do briefing. Skills leem config.md
+  - **Recomendação:** **(c)** — separa intenção (briefing, humano) de estado (config, máquina). Padrão já usado na pipeline.
+  - **Resposta:** _____
 
-### P18. Radar charts sem faixas visuais de escala
+- **D3.2 — Nomes dos flags: manter como está ou renomear?**
+  - Proposta atual: `financial_model`, `require_roi_justification`, `deliverables_scope`
+  - Alternativa: padronizar prefixo (`flags.financial_model`, `flags.require_roi`, `flags.deliverables`)
+  - **Recomendação:** manter **sem prefixo** (mais conciso, o contexto do arquivo já é "flags"). Renomear `require_roi_justification` → `require_roi` (mais curto, mesmo sentido).
+  - **Resposta:** _____
 
-**Severidade:** Baixa | **Fase:** Fase 3.4 (HTML Writer) | **Detectado:** Revisão visual
+- **D3.3 — Default de `deliverables_scope` — só `["DR"]` ou `["DR","OP"]`?**
+  - (a) `["DR"]` — mínimo; quem quiser OP/EX precisa declarar. Aderente ao ADR-001 ("DR sempre, OP/EX on-demand")
+  - (b) `["DR","OP"]` — OP é barato e quase sempre útil; fazer default evita esquecimento
+  - **Recomendação:** **(a)** — ADR-001 diz explicitamente "on-demand". Forçar declaração é pedagógico e evita custo de tokens em projetos que só querem DR.
+  - **Resposta:** _____
 
-**O que aconteceu:** Os radar charts (auditor, go/no-go) mostram linhas de grade (20, 40, 60, 80, 100) mas as regiões entre as linhas não têm preenchimento visual. É difícil perceber rapidamente em qual faixa cada ponto está sem ler os números.
+- **D3.4 — `require_roi` quando `financial_model=fundo-global` — proibir ou permitir?**
+  - Contexto: se a organização opera com fundo global (Patria), por definição o investimento já foi aprovado antes. Faz sentido cobrar ROI no entregável?
+  - (a) **Permitir combinação** — são flags independentes; alguém pode querer ROI por motivo fiscal/contábil mesmo com fundo global
+  - (b) **Proibir combinação** — validator do config rejeita `financial_model=fundo-global` + `require_roi=true`
+  - **Recomendação:** **(a)** — ortogonalidade é mais simples. Documenta-se "não é o caso comum" mas não bloqueia.
+  - **Resposta:** _____
 
-**O que deveria ter acontecido:** Faixas de cor suave (quase transparentes) entre as linhas de grade, funcionando como zonas semânticas: 0-40 vermelho suave (zona crítica), 40-70 amarelo suave (atenção), 70-90 neutro (aceitável), 90-100 verde suave (excelência). O leitor bate o olho e sabe instantaneamente se o score está na zona verde ou vermelha.
+### 📦 Entregáveis
 
-**Ação:**
-- [ ] Chart.js: adicionar datasets de background com fill entre escalas (opacity 0.03-0.05)
-- [ ] Cores: danger (0-40), warning (40-70), neutro (70-90), success (90-100)
-- [ ] Aplicar em TODOS os radar charts (auditor, 10th-man, go/no-go)
-- [ ] Documentar como padrão no chart-specialist skill
+- `docs/starter-kit/briefing-template.md` com seção nova "Flags de configuração" (conforme D3.1)
+- `base/behavior/rules/discovery/discovery.md` com parágrafo curto apontando para os flags
+- (Se D3.1 = c) Arquivo/seção em `dtg-artifacts/templates/customization/` que define como config.md é gerado a partir do briefing
+- Task #3 marcada como `[X] concluído`
+- Tasks #4, #6, #8, #9 revalidadas com nomes finais dos flags
 
----
+### 📝 Notas / Registro
 
-### P19. Seção SaaS no executive report tem tom técnico demais
+- 2026-04-17 — Task estruturada no formato workbook. Aguardando D3.1, D3.2, D3.3, D3.4 para executar.
+- 2026-04-17 — Respostas: D3.1=(c), D3.2=sem prefixo + renomear `require_roi`, D3.3=(a) `["DR"]`, D3.4=(a) permitir. Executando.
+- 2026-04-17 — Briefing, rule e config README atualizados. Task concluída. Descoberto: `report-setup` existente ainda é lido por 12 arquivos — mantido como legacy alias, migração virou task #18.
 
-**Severidade:** Média | **Fase:** Fase 3.2 + 3.4 | **Detectado:** Revisão visual
+### 🎯 Resultado
 
-**O que aconteceu:** A seção "SaaS — Detalhamento Multi-Tenant e Pricing" (REG-DOM-SAAS-01) no `executive-report.html` discute isolamento por schema, row-level security, service accounts dedicados — linguagem técnica para um público que é diretoria e gestão.
+**Arquivos editados:**
 
-**O que deveria ter acontecido:** O report-setup `executive` é para **diretoria e gestão**. A seção SaaS deveria focar em: quais planos existem, quanto custa cada um, projeção de MRR/ARR, modelo de receita, diferenciação entre tiers. Detalhes de isolamento técnico pertencem ao setup `complete` (REG-DOM-SAAS-02 Tenancy Strategy).
+- `base/starter-kit/client-template/projects/project-n/setup/start-briefing.md` — frontmatter inclui 3 novos flags; seção 9.1 reescrita para `deliverables_scope` (com nota sobre legacy `report-setup`); seções 9.5 (`financial_model`) e 9.6 (`require_roi`) adicionadas.
+- `base/behavior/rules/discovery/discovery.md` — nova seção "⚙️ Flags de configuração" com tabela de efeitos; versão bumpada para 04.01.000; histórico atualizado.
+- `base/starter-kit/client-template/config/README.md` — documenta como `config.md` do run materializa os flags do briefing.
 
-**Impacto:** Um diretor lê sobre "service accounts dedicados por tenant com row-level security no BigQuery" e desliga. Perde a informação de negócio que está misturada no meio do conteúdo técnico.
+**Defaults finais:**
 
-**Ação:**
-- [ ] O consolidator deve adaptar o **tom** de cada region com base no report-setup selecionado
-- [ ] Para `executive`: tom "executivo-negócio" nas regions domain-specific
-- [ ] Para `complete`: tom "técnico" mantido
-- [ ] Considerar separar REG-DOM-SAAS-01 em dois: "Modelo Comercial" (executive) e "Estratégia de Tenancy" (complete)
-
----
-
-## Categoria D — Redesign do One-Pager
-
-Redesenho conceitual do report-setup `essential`.
-
----
-
-### P20. One-Pager deve funcionar como orçamento de tempo (sem valores financeiros)
-
-**Severidade:** Alta | **Fase:** Report Setup + Consolidator + HTML Writer | **Detectado:** Revisão conceitual
-
-**O que aconteceu:** O one-pager atual é um resumo executivo genérico com: overview, problema, escopo, TCO, riscos, go/no-go, next steps. Funciona como "resumo do discovery" mas não como ferramenta comercial.
-
-**O que deveria ser:** O one-pager deveria funcionar como um **orçamento de projeto baseado em tempo** — sem valores em R$, apenas horas e semanas. O objetivo é dar um "cheiro" do esforço necessário para que o comercial/gestor possa estimar custos internamente (preenchendo valor/hora por role).
-
-**Estrutura proposta (6 blocos):**
-
-1. **Descritivo do Projeto** — Descrição macro (2-3 frases), objetivo (1 frase), premissas (bullets), responsáveis (tabela nome/papel)
-
-2. **Qualidade e Confiança** — Scores do auditor e 10th-man (stat cards ou radar compacto), veredicto Go/No-Go (badge), nota de confiança ("X% briefing, Y% inferido")
-
-3. **Escopo** — IN (bullets verdes) vs OUT (bullets vermelhos), separação visual forte (split card)
-
-4. **Atividades e Esforço** — Tabela com: atividade macro, roles envolvidas, horas/homem por role, coluna valor/hora vazia (para preenchimento manual)
-
-5. **Planejamento (Gantt relativo)** — Gráfico de barras horizontais sem datas fixas (Semana 1, 2, ..., N), dependências visuais, marcos destacados, renderizado em HTML/CSS puro
-
-6. **Totais** — Total de horas por role, total geral, duração em semanas (stat cards)
-
-**Ação:**
-- [ ] Redesenhar `dtg-artifacts/templates/report-setups/essential.md` com os 6 blocos
-- [ ] Criar/ajustar regions:
-  - REG-EXEC-01 → simplificar para descritivo + objetivo + premissas + responsáveis
-  - REG-QUAL-01/02 → versão compacta (stat cards, sem radar chart)
-  - REG-PROD-07 → manter split card in/out
-  - REG-BACK-01 → tabela de atividades com roles e horas (sem priorização MoSCoW)
-  - NOVO: REG-PLAN-01 → Gantt relativo (HTML/CSS barras com grid de semanas)
-  - NOVO: REG-FIN-06 → Totais de horas (stat cards)
-- [ ] Atualizar html-writer para renderizar Gantt relativo em HTML/CSS
-- [ ] Atualizar report-planner para gerar plano adequado quando setup = essential
-- [ ] One-pager NÃO mostra valores em R$ — coluna "Valor/Hora" vazia para preenchimento manual
-
----
-
-## Categoria E — Documentação
-
-Ajustes de documentação e paths.
-
----
-
-### P9. Path das runs não está documentado
-
-**Severidade:** Baixa | **Fase:** Estrutura | **Detectado:** Revisão pós-pipeline
-
-**O que aconteceu:** As runs ficam em `custom-artifacts/{client}/runs/run-{n}/` mas o quick-start.md, README.md e orchestrator SKILL.md referenciam `runs/run-{n}/` genérico (sem o path do cliente).
-
-**Ação:**
-- [ ] Documentar path correto no quick-start.md, README.md e orchestrator SKILL.md
-
----
-
-### P10. config.md não herda campos do briefing automaticamente
-
-**Severidade:** Baixa | **Fase:** Setup | **Detectado:** Durante scaffold
-
-**O que aconteceu:** Os campos `report-setup`, `context-templates`, `client-simulation` e `scoring-threshold` do briefing não foram copiados automaticamente para o config.md — foram preenchidos manualmente.
-
-**Ação:**
-- [ ] O script de scaffold (P1) deve ler frontmatter do briefing e propagar para config.md
-
----
-
-### P21. Auditor deve alertar quando receita não cobre TCO em 3 anos
-
-**Severidade:** Alta
-**Fase:** Fase 2 (Auditor)
-
-**O que deveria acontecer:** O auditor, ao validar os blocos 1.3 (Valor/OKRs) e 1.8 (TCO/Build vs Buy), deve comparar automaticamente a receita projetada com o TCO projetado em 3 anos. Se a receita não cobre o TCO (projeção negativa), o auditor deve:
-
-1. Emitir alerta `[!danger]` explícito na seção de Viabilidade Financeira
-2. Penalizar na dimensão "Completude" — o discovery está incompleto se não endereça a inviabilidade
-3. Registrar como finding crítico com recomendação: "Receita projetada (R$ X) não cobre TCO (R$ Y) em 3 anos. Diferença: -R$ Z. O discovery precisa apresentar cenários alternativos viáveis."
-
-**Ação:**
-- [ ] Atualizar auditor SKILL.md: adicionar validação automática receita vs TCO
-- [ ] Se receita < TCO → finding crítico + alerta `[!danger]` + penalidade em Completude
-- [ ] O alerta deve incluir: receita projetada, TCO projetado, diferença, e recomendação de cenários
-
----
-
-### P22. Gerar cenários alternativos quando solução é financeiramente inviável
-
-**Severidade:** Alta
-**Fase:** Fase 1 (Solution Architect) + Fase 3 (Consolidator)
-
-**O que deveria acontecer:** Quando a análise do bloco 1.8 identifica que a solução proposta gera prejuízo em 3 anos, o solution-architect NÃO deve apenas registrar o número negativo e seguir. Deve **obrigatoriamente** gerar cenários alternativos que tornem o projeto viável.
-
-**Tipos de cenários a explorar:**
-
-| Cenário | O que muda | Exemplo |
-|---------|-----------|---------|
-| **Ajuste de pricing** | Aumentar preço dos planos | Pro de R$ 897 para R$ 1.497 |
-| **Redução de escopo MVP** | Cortar features caras | Remover visualização AI, focar em NL-to-SQL puro |
-| **Mudança de stack** | Trocar componentes caros | Substituir Vertex AI Vector Search por Firestore vectors |
-| **Mudança de modelo** | Pivô de modelo de negócio | De SaaS por tenant para consultoria + licença |
-| **Aumento de base** | Projeção com mais clientes | Break-even com 50 tenants ao invés de 35 |
-| **Redução de equipe** | Team mais enxuto | 4 devs ao invés de 6, timeline mais longa |
-
-**Para cada cenário alternativo, o architect deve apresentar:**
-- Nome do cenário
-- O que muda em relação ao cenário base
-- Novo TCO 3 anos
-- Nova receita projetada 3 anos
-- Novo break-even (meses)
-- Riscos introduzidos pela mudança
-- Recomendação (viável / viável com ressalvas / inviável)
-
-**O delivery report deve incluir:**
-- Seção de cenários (nova region `REG-FIN-07 — Cenários Financeiros`)
-- Tabela comparativa: cenário base vs alternativas
-- Gráfico comparativo (bar chart com receita vs custo por cenário)
-- Recomendação do architect sobre qual cenário seguir
-
-**Ação:**
-- [ ] Atualizar solution-architect SKILL.md: ao calcular TCO, se receita < custo → obrigatório gerar 3+ cenários alternativos
-- [ ] Criar region `REG-FIN-07` (Financial Scenarios) com schema, exemplo e chart specialist recommendation
-- [ ] Atualizar consolidator: incluir seção de cenários no delivery report quando existirem
-- [ ] Atualizar report-setups: cenários aparecem no `executive` e `complete` (não no `essential`)
-- [ ] Atualizar html-writer: renderizar tabela comparativa de cenários com bar chart (Chart.js grouped bar)
-- [ ] Criar arquivo `base-artifacts/templates/report-regions/financial/financial-scenarios.md`
-
----
-
-### P23. Entrevista deve ser executada na ordem — um bloco por vez
-
-**Severidade:** Alta
-**Fase:** Fase 1 (Discovery)
-
-**O que aconteceu no teste:** Os 8 blocos temáticos foram executados em paralelo (4 agentes × 2 blocos cada). Isso causou:
-- Blocos financeiros (1.3 e 1.8) geraram números contraditórios porque não viram o output um do outro
-- Blocos técnicos (1.5, 1.7) não tiveram contexto do que o PO definiu nos blocos 1.1-1.4
-- O customer não manteve consistência entre respostas de blocos diferentes (cada agente tinha seu próprio "customer")
-
-**O que deveria acontecer:** Os 8 blocos DEVEM ser executados **sequencialmente**, na ordem #1 → #2 → #3 → #4 → #5 → #6 → #7 → #8. Cada bloco tem acesso ao output dos blocos anteriores. O customer mantém consistência porque é o mesmo agente ao longo de toda a entrevista.
-
-**Por quê na ordem:**
-- Bloco #1 (Visão) define o problema — blocos seguintes precisam dessa base
-- Bloco #3 (OKRs) define métricas e modelo de negócio — bloco #8 (TCO) precisa desses números
-- Bloco #5 (Tech) define stack — bloco #7 (Arquitetura) depende das decisões de stack
-- Bloco #6 (Privacy) depende de saber quais dados pessoais existem (definidos nos blocos anteriores)
-
-**Exceção:** Blocos #1 e #2 PODEM rodar em paralelo (ambos são PO, eixo produto). Blocos #5 e #6 PODEM rodar em paralelo (tech e privacy são eixos diferentes). Mas #7 e #8 DEVEM ser sequenciais após #5 e #6.
-
-**Ação:**
-- [ ] Atualizar orchestrator SKILL.md: blocos são sequenciais por padrão
-- [ ] Definir ordem de dependência:
-  ```
-  #1 (Visão) → #2 (Personas) → #3 (Valor/OKRs) → #4 (Processo/Equipe)
-       ↓                                                    ↓
-  #5 (Tech) + #6 (Privacy) em paralelo
-       ↓           ↓
-  #7 (Arquitetura) → #8 (TCO/Build vs Buy)
-  ```
-- [ ] Cada agente recebe como input: briefing + blueprints + outputs dos blocos anteriores
-- [ ] O customer mantém estado entre blocos (respostas anteriores são contexto para as seguintes)
-
----
-
-### P24. Log da entrevista (interview.md) é obrigatório — sem log, fase inválida
-
-**Severidade:** Alta
-**Fase:** Fase 1 (Discovery)
-
-**O que aconteceu no teste:** A Fase 1 gerou os 8 result files mas NÃO gerou o interview.md. O pipeline aceitou e seguiu para a Fase 2 normalmente.
-
-**O que deveria acontecer:** O interview.md NÃO é opcional — é um artefato obrigatório da Fase 1. Sem ele, a fase é considerada **incompleta**. O orchestrator DEVE validar sua existência antes de avançar para o HR Review.
-
-**Regra:**
-- Após os 8 blocos serem executados, o orchestrator verifica se `iterations/iteration-{i}/logs/interview.md` existe e tem conteúdo
-- Se não existe → flag `[FASE-INCOMPLETA]` + gerar automaticamente a partir dos result files (modo degradado)
-- Se existe mas está vazio → mesmo tratamento
-- O auditor na Fase 2 DEVE ler o interview.md para validar rastreabilidade das source tags
-
-**O interview.md serve para:**
-- Rastreabilidade: de onde veio cada informação (`[BRIEFING]`, `[RAG]`, `[INFERENCE]`)
-- Transparência: o humano no HR Review vê exatamente o que foi perguntado e respondido
-- Auditoria: o auditor verifica se as `[INFERENCE]` são justificadas
-- Consistência: detectar se o customer contradisse respostas entre blocos
-- Documentação: registro permanente da entrevista para consulta futura
-
-**Ação:**
-- [ ] Atualizar orchestrator SKILL.md: interview.md é OBRIGATÓRIO — validar existência antes de avançar
-- [ ] Se ausente: flag `[FASE-INCOMPLETA]` + tentar gerar modo degradado
-- [ ] Atualizar auditor SKILL.md: ler interview.md para validar rastreabilidade
-- [ ] Atualizar regra discovery.md: interview.md listado como output obrigatório da Fase 1
-- [ ] O interview.md deve ser o PRIMEIRO artefato verificado no checklist de conclusão da Fase 1
-
----
-
-### P25. Especialistas devem ser consultores ativos — não coletores passivos
-
-**Severidade:** Alta
-**Fase:** Fase 1 (Discovery)
-
-**O que aconteceu nos testes:** Os especialistas (PO, solution-architect, cyber-security-architect) operam em modo **coleta passiva** — fazem perguntas ao customer, registram as respostas, e seguem para o próximo tópico. Quando encontram uma lacuna (`[INFERENCE]` fraca ou resposta vaga), apenas documentam a lacuna e avançam.
-
-**O que deveria acontecer:** Cada especialista é um **consultor sênior** — não um entrevistador junior. Ao identificar um problema, lacuna ou risco durante a entrevista, o especialista deve **imediatamente** propor soluções, alternativas e recomendações. O discovery não é apenas "descobrir o que existe" — é "descobrir e recomendar o que fazer".
-
-**Comportamento esperado por situação:**
-
-| Situação na entrevista | Coleta passiva (ERRADO) | Consultor ativo (CORRETO) |
-|------------------------|------------------------|--------------------------|
-| Customer descreve problema | Registra o problema | Registra + propõe 2-3 abordagens de solução com prós/contras |
-| Customer não sabe responder | Marca `[INFERENCE]` e segue | Apresenta opções baseadas no domínio + recomenda a melhor + justifica |
-| Resposta vaga do customer | Aceita e documenta | Aprofunda com perguntas específicas + sugere benchmark do mercado |
-| Lacuna técnica identificada | Lista como gap | Propõe solução técnica + estima esforço + identifica riscos |
-| Risco identificado | Lista risco + mitigação genérica | Propõe plano de mitigação detalhado (P16) + alternativa se falhar |
-| Inconsistência entre respostas | Documenta conflito | Confronta o customer + propõe resolução + registra decisão |
-| Oportunidade não mencionada | Ignora | Sugere proativamente ("Considerando o domínio SaaS, vocês já pensaram em...") |
-
-**Impacto direto nas notas:**
-- **Profundidade** (auditor): sobe quando blocos têm análise + recomendação, não apenas coleta
-- **Completude** (auditor): sobe quando lacunas são preenchidas com propostas, não deixadas vazias
-- **Divergência** (10th-man): sobe quando alternativas são exploradas durante o discovery, não apenas o caminho feliz
-- **Robustez** (10th-man): sobe quando decisões são fundamentadas com prós/contras, não apenas declaradas
-
-**O que cada especialista deve fazer PROATIVAMENTE:**
-
-### PO (blocos #1-#4)
-- Propor modelo de negócio quando o briefing não define (freemium vs paid vs enterprise)
-- Sugerir personas quando o briefing é genérico ("para empresas" → propor 3-4 perfis concretos)
-- Calcular ROI preliminar quando o customer não tem números
-- Sugerir OKRs quando o customer diz "queremos ter sucesso"
-- Propor faseamento MVP quando o escopo é amplo demais
-
-### Solution Architect (blocos #5, #7, #8)
-- Recomendar stack quando o briefing diz "a definir" (baseado no context-template + team skills)
-- Propor arquitetura com diagrama quando o customer descreve funcionalidades
-- Calcular TCO mesmo quando o customer não pede (é output obrigatório)
-- Apresentar Build vs Buy para cada componente com recomendação explícita
-- Propor cenários alternativos quando a viabilidade é questionável (P22)
-- Sugerir integrações que o customer não mencionou mas que o domínio exige
-
-### Cyber Security Architect (bloco #6)
-- Classificar dados mesmo quando o customer não sabe quais são pessoais
-- Propor estratégia de DPO quando o customer não tem um
-- Mapear sub-operadores mesmo quando o customer não listou
-- Recomendar base legal LGPD por tratamento
-- Propor timeline de compliance com marcos e responsáveis
-
-**Ação:**
-- [ ] Atualizar PO SKILL.md: adicionar seção "Modo consultor ativo" com os comportamentos esperados
-- [ ] Atualizar solution-architect SKILL.md: idem
-- [ ] Atualizar cyber-security-architect SKILL.md: idem
-- [ ] Atualizar customer SKILL.md: quando o customer marca `[INFERENCE]` fraca, o especialista deve reagir propondo solução (não apenas aceitar)
-- [ ] Atualizar orchestrator SKILL.md: instruir que cada bloco deve ter seção "Recomendações do especialista" além da coleta
-- [ ] Atualizar regra discovery.md: cada bloco DEVE ter: (1) dados coletados, (2) análise do especialista, (3) recomendações com justificativa
-- [ ] Atualizar auditor SKILL.md: bonificar +5 na dimensão "Profundidade" quando bloco tem recomendações proativas
-
----
-
-### P26. Siglas sem tooltip — precisa de arquivo de siglas alimentável
-
-**Severidade:** Média | **Fase:** HTML Writer
-
-Várias siglas no one-pager e executive-report não receberam `<abbr>` tooltip (ex: PLG, RBAC, LOI, SCC). O `acronym-bank.md` existente não contém todas as siglas que aparecem nos reports de discovery.
-
-**Ação:**
-- [ ] Enriquecer `base-artifacts/conventions/acronyms/acronym-bank.md` com todas as siglas encontradas nos reports (PLG, RBAC, LOI, SCC, RLS, WAF, SSO, OIDC, SAML, CDN, etc.)
-- [ ] Criar processo: ao fim de cada pipeline run, listar siglas sem tooltip e adicioná-las ao banco
-- [ ] O html-writer deve marcar siglas sem tooltip com estilo visual diferente (sublinhado pontilhado) para fácil identificação
-
----
-
-### P27. Alert CSS — ícone e texto desalinhados verticalmente
-
-**Severidade:** Baixa | **Fase:** HTML Writer
-
-A classe `.alert` tem `display: flex; align-items: center;` mas na prática o ícone e o texto não ficam alinhados verticalmente quando o texto quebra em múltiplas linhas.
-
-**Ação:**
-- [ ] Ajustar CSS: `.alert { display: flex; align-items: flex-start; }` com `.alert i { margin-top: 2px; }` para alinhar ícone com primeira linha
-- [ ] Ou usar `align-items: center` com `line-height` consistente entre ícone e texto
-- [ ] Atualizar no playground.html e propagar para os templates
-
----
-
-### P28. Radar Go/No-Go — pontos não conectados + legenda incorreta
-
-**Severidade:** Média | **Fase:** HTML Writer
-
-O radar do Go/No-Go (REG-EXEC-03) no one-pager foi renderizado em CSS puro, mas:
-- a) Os pontos dos scores não estão conectados por linhas (parecem pontos soltos)
-- b) A legenda mostra cores (verde/amarelo/vermelho) que não correspondem às zonas desenhadas no fundo
-
-**Ação:**
-- [ ] Substituir o radar CSS por **Chart.js radar** (mesmo no one-pager) — é a única forma de ter pontos conectados + zonas corretas
-- [ ] Atualizar regra: radar charts SEMPRE usam Chart.js, nunca CSS puro (CSS não consegue conectar pontos num radar)
-- [ ] Garantir que a legenda do Chart.js use as mesmas cores das zonas de fundo (P18)
-- [ ] Atualizar chart-specialist e html-writer: radar = Chart.js obrigatório
-
----
-
-### P29. Gráficos de barras verticais — preferir horizontais
-
-**Severidade:** Baixa | **Fase:** HTML Writer
-
-O gráfico de cenários de viabilidade (REG-FIN-07) usa barras verticais. Para comparação entre cenários, barras horizontais são mais legíveis (labels longos não ficam truncados, leitura natural esquerda→direita).
-
-**Ação:**
-- [ ] Atualizar chart-specialist: para comparações entre categorias com labels longos, preferir barras horizontais
-- [ ] Atualizar html-writer: barras de cenários = horizontais (HTML/CSS) ou Chart.js horizontal bar
-- [ ] Aplicar em REG-FIN-07 no próximo run
-
----
-
-### P30. TCO 3 Anos — gráfico Chart.js não renderizado
-
-**Severidade:** Alta | **Fase:** HTML Writer
-
-O gráfico stacked bar do TCO (REG-FIN-01) no executive-report.html tem o canvas mas as barras não aparecem — apenas os labels (Ano 1, Ano 2, Ano 3) e a legenda. O Chart.js provavelmente não está inicializando corretamente (erro de JS, dados com formato errado, ou canvas com height 0).
-
-**Ação:**
-- [ ] Verificar o JS do executive-report.html: o Chart.js está sendo chamado corretamente?
-- [ ] Verificar se o canvas tem dimensões definidas (width/height)
-- [ ] Verificar se os dados estão no formato correto para Chart.js stacked bar
-- [ ] Testar isoladamente o snippet do gráfico para identificar o erro
-- [ ] Corrigir e validar que as barras aparecem em dark e light theme
-
----
-
-### P31. Reports executive e complete precisam de tabs — apenas one-pager é página única
-
-**Severidade:** Alta
-**Fase:** HTML Writer
-
-**O que aconteceu:** Todos os HTMLs gerados (one-pager, executive-report) renderizam as regions numa página contínua vertical, scrollando infinitamente. Isso funciona para o one-pager (que é curto, ~8 regions), mas NÃO funciona para executive (22+ regions) nem complete (90+ regions) — ficam enormes e difíceis de navegar.
-
-**O que deveria acontecer:**
-
-| Setup | Navegação |
-|-------|-----------|
-| `essential` (one-pager) | **SEM tabs** — página única contínua, tudo visível |
-| `executive` | **COM tabs** — cada seção é uma aba (Produto, Organização, Financeiro, Riscos, etc.) |
-| `complete` | **COM tabs** — mesma estrutura de abas, mais seções |
-
-**Estrutura de tabs para executive-report:**
-- Tab 1: Produto e Valor (REG-EXEC-02, PROD-04, PROD-02, PROD-05, PROD-06, PROD-07, PROD-08)
-- Tab 2: Organização (REG-ORG-01, ORG-02)
-- Tab 3: Financeiro (REG-FIN-01, FIN-05, FIN-07)
-- Tab 4: Riscos e Qualidade (REG-RISK-01, RISK-03, QUAL-01, QUAL-02)
-- Tab 5: Decisão (REG-BACK-01, NARR-01, EXEC-03, EXEC-04)
-- Tab 6: Domain-specific (REG-DOM-*)
-- Tab 7: Glossário (REG-GLOSS-01)
-
-O playground.html já tem CSS de tabs (`.tabs-nav`, `.tab-btn`, `.tab-content`) — usar esse padrão.
-
-**Ação:**
-- [ ] Atualizar html-writer SKILL.md: one-pager = sem tabs; executive e complete = com tabs
-- [ ] Definir no html-layout.md quais seções são tabs (já tem a estrutura "Seção 1", "Seção 2", etc.)
-- [ ] Atualizar report-planner: incluir informação de tab no report-plan.md
-- [ ] JS: tab navigation com prev/next buttons + keyboard arrows
-- [ ] Tab ativa com indicador visual (cor primary na borda inferior)
-- [ ] URL hash para deep linking (ex: `#financeiro`)
-
----
-
-### P32. HTMLs gerados ignoram acentuação PT-BR
-
-**Severidade:** Alta
-**Fase:** HTML Writer + Consolidator
-
-**O que aconteceu:** Os relatórios HTML têm texto sem acentuação portuguesa. Exemplos: "Descricao" em vez de "Descrição", "Organizacao" em vez de "Organização", "Projecao" em vez de "Projeção", "Cenarios" em vez de "Cenários". Isso ocorre em títulos de seções, labels de tabelas, texto corrido e labels de gráficos.
-
-**O que deveria acontecer:** O html-writer SKILL.md já tem a regra (seção 8 — Idioma):
-
-> [!danger] Regra inviolável
-> O relatório é **exclusivamente em pt-BR**. Toda acentuação portuguesa **deve** ser respeitada.
-
-Mas os agentes que geram o conteúdo (consolidator, report-planner, html-writer) nem sempre respeitam. O problema pode estar:
-1. No consolidator gerando delivery-report.md sem acentos
-2. No html-writer copiando texto sem acentos
-3. Nos agentes que rodam em modo que não preserva acentos
-
-**Ação:**
-- [ ] Reforçar no consolidator SKILL.md: todo texto em PT-BR DEVE ter acentuação correta
-- [ ] Reforçar no html-writer SKILL.md: ao gerar HTML, verificar e corrigir acentuação
-- [ ] Reforçar no report-planner SKILL.md: labels e configurações em PT-BR com acentos
-- [ ] Incluir no prompt de cada agente: "Escreva em PT-BR com acentuação correta — 'organização' não 'organizacao'"
-- [ ] Considerar um passo de pós-processamento que verifica palavras comuns sem acento e corrige
-
----
-
-### P33. Reports HTML não seguem o playground.html (Design System ignorado)
-
-**Severidade:** Alta
-**Fase:** HTML Writer
-
-**O que aconteceu:** Os HTMLs gerados (one-pager, executive-report) recriam CSS do zero — cada agente inventa seus próprios estilos, classes e tokens. O playground.html (`base-artifacts/assets/ui-ux/playground.html`) já tem um Design System completo com:
-- Tokens de cor (`:root` com `--primary`, `--bg`, `--card-bg`, etc. para dark e light)
-- Componentes prontos (`.card`, `.card-header`, `.card-body`, `.stat-card`, `.alert`, `.pill`, `.tabs-nav`, `.tab-btn`, etc.)
-- Tipografia (Poppins, tamanhos, pesos)
-- Header e footer patterns
-- Tabelas estilizadas (`.th-bg`, hover states)
-- Toggle dark/light com JS
-
-Os agentes recebem instrução para "consultar o playground.html" mas na prática copiam apenas os tokens de cor e reinventam todo o resto. O resultado é CSS inconsistente entre reports, classes diferentes para o mesmo componente, e aparência que não segue o Design System.
-
-**O que deveria acontecer:** O html-writer DEVE:
-1. **Copiar o CSS inteiro do playground.html** (tokens + componentes) para cada HTML gerado
-2. **Usar as classes do playground** (`.card`, `.stat-card`, `.alert`, `.pill`, `.tabs-nav`, etc.) em vez de inventar novas
-3. **Seguir a estrutura HTML do playground** (header, container, cards, footer)
-4. O playground é o **template de referência** — não uma sugestão, é a base obrigatória
-
-**Ação:**
-- [ ] Atualizar html-writer SKILL.md: regra explícita "COPIAR CSS do playground.html, não reinventar"
-- [ ] Listar as classes obrigatórias que devem ser usadas (card, stat-card, alert, pill, tabs-nav, tab-btn, tab-content, etc.)
-- [ ] O agente deve ler o playground.html inteiro (não só 200 linhas) e extrair TODO o CSS
-- [ ] Componentes custom (scenario bars, radar, timeline) são adições — mas a base DEVE ser o playground
-
----
-
-### P34. TODOS os gráficos de barras devem ser horizontais em HTML/CSS
-
-**Severidade:** Média
-**Fase:** HTML Writer + Chart Specialist
-
-**O que aconteceu:** Alguns gráficos de barras foram gerados verticais (Chart.js) ou com largura desproporcional. As barras horizontais em HTML/CSS são mais legíveis (labels longos não truncam, leitura natural esquerda→direita) e mais simples de implementar.
-
-**Regra a partir de agora:**
-
-| Tipo de gráfico | Tecnologia | Orientação |
-|----------------|-----------|------------|
-| Barras simples (1 série) | HTML/CSS (`div` com `width: X%`) | **Horizontal** |
-| Barras agrupadas (2 séries) | HTML/CSS (2 divs por linha) | **Horizontal** |
-| Barras empilhadas (stacked) | HTML/CSS (divs lado a lado) | **Horizontal** |
-| Radar | Chart.js | N/A |
-| Pie/Donut | Chart.js | N/A |
-| Line/Area | Chart.js | N/A |
-
-**Chart.js NÃO é usado para gráficos de barras.** Barras são sempre HTML/CSS horizontal.
-
-**Implementação CSS padrão:**
-```css
-.bar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
-.bar-label { width: 120px; font-size: 0.75rem; text-align: right; flex-shrink: 0; }
-.bar-track { flex: 1; background: var(--border); border-radius: 4px; height: 20px; overflow: hidden; }
-.bar-fill { height: 100%; border-radius: 4px; transition: width 0.3s; }
-.bar-value { width: 60px; font-size: 0.72rem; text-align: right; }
+```yaml
+financial_model: "projeto-paga"
+require_roi: false
+deliverables_scope: ["DR"]
 ```
 
-**Ação:**
-- [ ] Atualizar chart-specialist SKILL.md: barras = SEMPRE HTML/CSS horizontal, NUNCA Chart.js
-- [ ] Atualizar html-writer SKILL.md: incluir CSS padrão de barras horizontais
-- [ ] Remover qualquer menção a Chart.js bar/stacked bar nas recommendations
-- [ ] Chart.js fica APENAS para: radar, pie/donut, line/area, scatter, bubble
+**Descoberta:** 12 arquivos do ecossistema ainda leem `report-setup: essential | executive | complete`. Mantido como legacy alias no frontmatter do briefing para não quebrar ninguém. Migração tracked na **task #18** (nova, abaixo).
 
 ---
 
-### P35. Ressalvas dos auditores devem ser detalhadas com explicação do impacto
+## #4 — Tornar blocos #3, #4 e #8 condicionais ao briefing  🟡  [esforço: M]
 
-**Severidade:** Alta
-**Fase:** Fase 2 (Auditor + 10th-man) + Fase 3 (HTML)
+- [X] **Status:** concluído (2026-04-17)
+- **Depende de:** #1 ✓, #3 ✓
+- **Bloqueia:** #9
+- **Resultado:** ver seção "🎯 Resultado" abaixo.
 
-**O que aconteceu:** O 10th-man mostra um radar chart com 3 eixos (Divergência 70%, Robustez 78%, Completude Crítica 80%) e lista as ressalvas como bullets curtos. O leitor vê que "Robustez" tem 78% mas não entende **por quê** é 78% e **o que isso significa** para o projeto.
+### 🎯 Objetivo
 
-**O que deveria acontecer:** Abaixo do radar chart, cada ressalva deve ser apresentada como um card expandido com:
+Fazer as skills `po` e `solution-architect` **consumirem os flags** declarados na task #3 e ajustarem seu comportamento em runtime. Sem esta task, os flags existem só em papel — o pipeline real ignora.
 
-1. **Título da ressalva** (ex: "Bus Factor — Risco de Pessoa Única")
-2. **Score/dimensão afetada** (ex: "Robustez: 78%")
-3. **Descrição detalhada** — 2-3 frases explicando O QUE foi identificado
-4. **Por que é importante** — 1-2 frases sobre o impacto se não for endereçado
-5. **Recomendação** — o que fazer para resolver
+### 🧱 Entendimento
 
-Exemplo:
-```
-🟡 Bus Factor — Risco de Pessoa Única
-Robustez: 78%
+Mapeamento entre flags e pontos de mudança:
 
-O projeto depende de uma única pessoa (Fabio) para toda a operação:
-arquitetura, desenvolvimento, deploy, suporte e decisões de produto.
-Se Fabio ficar indisponível por 2+ semanas, o projeto para completamente.
+| Flag | Skill afetada | Onde no SKILL.md |
+|------|--------------|------------------|
+| `require_roi=false` (default) | `po` | Área 3 linha 3 ("ROI esperado") — skip; seção 3.3 do `product-vision.md` — omitir |
+| `require_roi=true` | `po` | Comportamento atual (ROI obrigatório) |
+| `financial_model=fundo-global` | `solution-architect` | Área 3 — TCO vira "Estimativa de consumo mensal sem free tier"; Build vs Buy foca em sustentabilidade/lock-in, não em custo total |
+| `financial_model=projeto-paga` (default) | `solution-architect` | Comportamento atual (TCO 3 anos + Build vs Buy econômico) |
+| FTE real (bloco #4) | — | **Não muda skill**. A filtragem FTE→EX/DR é downstream (destilador/layouts — tasks #6, #16, #17) |
 
-POR QUE É IMPORTANTE: Um investidor ou cliente enterprise vai questionar
-a sustentabilidade. O bus factor = 1 é o maior risco operacional do projeto.
+**Insight:** o bloco #4 não exige edição de skill; a skill `po` continua capturando FTE sempre. Quem decide se aparece no OP é o destilador (task #16). Então task #4 edita só `po` (bloco #3) e `solution-architect` (bloco #8).
 
-RECOMENDAÇÃO: Documentar todas as decisões (ADRs), manter código com
-testes automatizados, e definir milestone de receita para primeira
-contratação (sugerido: R$ 25K MRR para DevOps/SRE).
-```
+### 📋 Planejamento (decisões tomadas autonomamente)
 
-**Ação:**
-- [ ] Atualizar 10th-man SKILL.md: cada ressalva deve ter os 5 campos (título, score, descrição, importância, recomendação)
-- [ ] Atualizar auditor SKILL.md: idem para findings do auditor
-- [ ] Atualizar region REG-QUAL-02: layout = radar + lista de cards detalhados (não apenas bullets)
-- [ ] Atualizar region REG-QUAL-01: idem para findings do auditor
-- [ ] Atualizar html-writer: renderizar ressalvas como cards expandidos com borda colorida por severidade
+- **D4.1** Canal de comunicação dos flags → skill: **orchestrator injeta via contexto** (padrão atual). Skills só precisam condicionar o comportamento. Documentação: incluir nota nas skills "Se `require_roi=false` no config.md...".
+- **D4.2** Comportamento quando `require_roi=false`: pular área e **omitir seção 3.3** do `product-vision.md`. Consistência > completude.
+- **D4.3** Comportamento quando `financial_model=fundo-global`: substituir TCO por "Estimativa de consumo mensal". Build vs Buy mantido mas refocado em sustentabilidade.
+- **D4.4** Context-templates (10 packs): **não editar agora**. São guias domínio-específicos; evoluem sob demanda. Adicionar nota na skill: "ao rodar com context-template, respeitar flags acima".
 
----
+Passos:
 
-### P36. Responsividade mobile — hamburger menu + footer centralizado
+1. Editar `base/behavior/skills/po/SKILL.md` — adicionar bloco "Condicionais de flags" + ajustes no checklist Área 3 + nota na estrutura do `product-vision.md`.
+2. Editar `base/behavior/skills/solution-architect/SKILL.md` — adicionar bloco "Condicionais de flags" + ajustes no checklist Área 3 + nota na estrutura do `strategic-analysis.md`.
+3. Bump de versão em ambos.
 
-**Severidade:** Média
-**Fase:** HTML Writer
+### 📦 Entregáveis
 
-**O que aconteceu:** Quando a página é redimensionada para menos de 50% da tela (~768px ou menos):
-- As tabs continuam visíveis e quebram o layout (overflow horizontal)
-- O botão de tema fica perdido no header
-- O footer fica alinhado à esquerda
+- `base/behavior/skills/po/SKILL.md` atualizado (v04.00.000)
+- `base/behavior/skills/solution-architect/SKILL.md` atualizado (v03.00.000)
+- Task #4 marcada como `[X] concluído`
 
-**O que deveria acontecer:**
+### 📝 Notas / Registro
 
-#### 1) Hamburger menu (< 768px)
-- Ocultar `.tabs-nav` e o botão de tema do header
-- Mostrar um botão hamburger (☰ `ri-menu-line`) no header
-- Ao clicar: abrir menu lateral (drawer) ou dropdown com:
-  - Lista das tabs como itens de menu (com ícone e nome)
-  - Botão de tema como último item do menu
-- Ao selecionar uma tab no menu: fechar menu + ativar a tab
+- 2026-04-17 — Task estruturada e executada autonomamente (usuário autorizou autonomia até o próximo bloqueio real).
 
-```css
-@media (max-width: 768px) {
-    .tabs-nav { display: none; }
-    .theme-toggle { display: none; }
-    .hamburger-btn { display: flex; }
-    .mobile-menu { display: none; } /* shown via JS toggle */
-    .mobile-menu.open { display: flex; flex-direction: column; }
-}
-```
+### 🎯 Resultado
 
-#### 2) Footer centralizado (< 768px)
-```css
-@media (max-width: 768px) {
-    .footer { text-align: center; }
-    .footer-content { flex-direction: column; align-items: center; }
-}
-```
+**Arquivos editados:**
 
-**Ação:**
-- [ ] Atualizar html-writer SKILL.md: seção de responsividade com hamburger menu spec
-- [ ] Incluir no playground.html o CSS e JS do hamburger menu como padrão
-- [ ] Footer: `text-align: center` + `flex-direction: column` em mobile
+- `base/behavior/skills/po/SKILL.md` (v04.00.000) — Área 3 ganhou coluna "Condicional"; ROI (linha 3) só é cobrado quando `require_roi=true`; callout explicando o comportamento; marcador `<!-- OMITIR se require_roi=false -->` na estrutura do `product-vision.md`.
+- `base/behavior/skills/solution-architect/SKILL.md` (v03.00.000) — Área 3 desdobrada em 2 modos (`projeto-paga` e `fundo-global`); seção "TCO obrigatório" bifurcada; estrutura do `strategic-analysis.md` ganhou variante "Estimativa de Consumo Cloud"; Constraints atualizadas.
+
+**Blocos decididos:**
+- #3 ROI: condicional a `require_roi`
+- #4 FTE: **sem mudança na skill** — captura continua; filtragem é downstream (task #6/#16/#17)
+- #8 TCO: dois modos completos (`projeto-paga` vs `fundo-global`)
+
+**Context-templates (10 packs):** não editados. Decisão: evoluem sob demanda quando forem usados. Nota: o comportamento condicional **já funciona** independente do context-template, porque a condicionalidade está na skill.
 
 ---
 
-### P37. Tooltip `<abbr>` quebra alinhamento de texto em checkboxes
+## #5 — Modelar fase "pré-aprovação" + destilação no diagrama macro  🟠  [esforço: S]
 
-**Severidade:** Baixa
-**Fase:** HTML Writer
+- [X] **Status:** concluído (2026-04-17)
+- **Depende de:** #2 ✓ (define caixa de destilação)
+- **Bloqueia:** —
 
-O `<abbr>` dentro de itens de checkbox causa quebra de linha estranha — o parêntese "(" fica na linha de baixo. Causa: o `<abbr>` tem `display: inline` com espaços extras ao redor.
+### 🎯 Objetivo
 
-**Ação:**
-- [x] CSS: `abbr { white-space: nowrap; }` para evitar quebra dentro da sigla ✅ DONE (html-writer v02.04.000)
-- [x] Verificar se há espaços extras no HTML entre `(` e `<abbr>` ✅ DONE
+Tornar explícito no diagrama macro que (a) o pipeline começa **depois** da aprovação global — que acontece fora dele; e (b) existe uma caixa **opcional** de destilação pós-Fase 3 para gerar OP/EX a partir do DR (conforme ADR-001).
 
----
+### 🧩 Resultado
 
-### P38. Build vs Buy — separar badge da solução em colunas distintas
+**Arquivos editados (2):**
 
-**Severidade:** Baixa
-**Fase:** HTML Writer
+| Arquivo | Mudança |
+|---|---|
+| [docs/guides/discovery-pipeline.md](docs/guides/discovery-pipeline.md) | Diagrama mermaid ganhou nó `PRE` (Aprovação Global) antes do briefing e `DIST` (Destilação OP/EX) após `Entrega DR`. Ambos em linha pontilhada (`stroke-dasharray: 5 5`). Callout `[!info]` explica caixas pontilhadas. |
+| [README.md](README.md) | Mesma atualização aplicada ao diagrama da seção "As 3 Fases do Pipeline" (L85). Callout adicionado. |
 
-A tabela Build vs Buy mistura o badge (BUILD/BUY) com o nome da solução na mesma coluna "DECISÃO". Fica visualmente confuso.
+**Arquivo não afetado:**
 
-**Deve ficar:**
+- `docs/guides/quick-start.md` — inspecionado, não contém diagrama mermaid; apenas instruções operacionais. Nenhuma edição necessária.
 
-| Componente | Decisão | Solução | Custo | Economia |
-|-----------|---------|---------|-------|----------|
-| Autenticação | `BUY` | Firebase Auth | R$ 0 | 80h |
-| NL-to-SQL | `BUILD` | Custom pipeline | N/A | Core |
-
-**Ação:**
-- [x] Atualizar html-writer: tabela Build vs Buy com coluna "Decisão" (badge) separada de "Solução" (texto) ✅ DONE (html-writer v02.05.000)
-- [x] Atualizar region REG-TECH-06 schema para 5 colunas ✅ DONE (build-vs-buy.md atualizado)
+**Convenção introduzida:** linhas pontilhadas no diagrama macro representam **etapas fora do escopo do pipeline** (upstream ou downstream opcional). Qualquer novo diagrama que represente o fluxo macro deve seguir o mesmo padrão.
 
 ---
 
-### P39. delivery-report.md deve estar em delivery/ e ser extremamente detalhado
+## #6 — Revisar region `executive/overview-one-pager.md`  🟠  [esforço: S]
 
-**Severidade:** Alta
-**Fase:** Consolidator + Orchestrator
+- [X] **Status:** concluído (2026-04-17)
+- **Depende de:** #2 ✓, #3 ✓
+- **Bloqueia:** —
 
-**Dois problemas:**
+### 🎯 Objetivo
 
-**1) Path errado:** O delivery-report.md foi gerado em `iterations/iteration-1/results/3-delivery/` mas deveria estar em `delivery/` (a pasta final de entrega). O path correto é `custom-artifacts/{client}/runs/run-{n}/delivery/delivery-report.md`.
+Tornar a region **condicional às flags do briefing** (`financial_model`, `require_roi`) e deixar explícito que ela é **componente** do OP — não o entregável inteiro.
 
-**2) Conteúdo insuficiente:** O delivery-report.md tem 729 linhas para um projeto com 78 decisões, 8 blocos e 2 validações. Deveria ter **2000+ linhas** com:
-- Explicação detalhada de CADA decisão (não apenas listagem)
-- Contexto de POR QUÊ cada decisão foi tomada
-- Alternativas consideradas e descartadas
-- Incertezas e gaps remanescentes
-- Análise do especialista para cada seção
-- Recomendações do consultor com justificativa
-- Referências cruzadas entre blocos
+### 🧩 Resultado
 
-O delivery-report.md é o **documento mestre** do discovery — quem lê apenas ele deve entender tudo sem precisar abrir os 8 blocos individuais. É o equivalente a um "livro do projeto" não um "resumo executivo".
+**Arquivo editado:** [base/standards/conventions/report-regions/schemas/executive/overview-one-pager.md](base/standards/conventions/report-regions/schemas/executive/overview-one-pager.md)
 
-**Ação:**
-- [x] Atualizar orchestrator SKILL.md: delivery-report.md vai em `delivery/` (não em results/3-delivery/) ✅ DONE (dual-path obrigatório)
-- [x] Atualizar consolidator SKILL.md: o delivery-report DEVE ser extremamente detalhado — cada region com análise completa, decisões justificadas, alternativas descartadas, incertezas documentadas ✅ DONE (mínimo 2000 linhas, 8 regras de conteúdo)
-- [x] Copiar delivery-report.md e report-plan.md para `delivery/` (além de manter em results/3-delivery/) ✅ DONE
-- [x] O HTMLs leem de `delivery/`, não de results/ ✅ DONE
+Mudanças:
+
+1. **Frontmatter** ganhou campo `deliverable-scope: ["OP", "EX", "DR"]` sinalizando que a region aparece em todos os entregáveis (distiller decide a forma).
+2. **Descrição** atualizada: "TCO" → "esforço/custo/escopo" (alinhamento com escopo do OP segundo ADR-001 + `feedback_one_pager_scope.md`).
+3. **Callout `[!info]`** explica a relação com o entregável OP (região = componente; OP completo vem do distiller — task #16).
+4. **Callout `[!warning]`** documenta as duas condicionalidades:
+   - `tco_resumo` ⇄ `estimativa_consumo` conforme `financial_model`
+   - `roi_resumo` só quando `require_roi=true`
+5. **Schema de dados** ganhou coluna **Condicional** e 2 campos novos:
+   - `estimativa_consumo` (objeto com `opex_cloud_anual`, `premissas`, `confianca`) — para `fundo-global`
+   - `roi_resumo` (objeto com `payback_meses`, `vpl`, `premissas`) — para `require_roi=true`
+6. **Exemplo** ganhou comentários HTML mostrando quando substituir TCO por Estimativa de Consumo e quando adicionar o bloco ROI.
+
+**Convenção introduzida:** campo `deliverable-scope` no frontmatter das regions — aceita `["OP"]`, `["EX"]`, `["DR"]` ou combinações. É sugestão para o distiller, não filtro mecânico (conforme ADR-001).
 
 ---
 
-## Ordem sugerida de resolução
+## #7 — Separar region `product/okrs-and-roi.md` em 2 regions  🟠  [esforço: S]
+
+- [X] **Status:** concluído (2026-04-17)
+- **Depende de:** #2 ✓
+- **Bloqueia:** —
+
+### 🎯 Objetivo
+
+Separar a region única `product/okrs-and-roi.md` em **duas regions independentes** para que OKRs (sempre presente) e ROI (condicional) possam ser ativadas separadamente via flags do briefing.
+
+### 🧩 Resultado
+
+**Arquivos criados (2):**
+
+| Arquivo | Propósito | Condicional |
+|---|---|---|
+| [base/standards/conventions/report-regions/schemas/product/okrs.md](base/standards/conventions/report-regions/schemas/product/okrs.md) | OKRs + critérios de sucesso do MVP | sempre (`deliverable-scope: ["OP","EX","DR"]`) |
+| [base/standards/conventions/report-regions/schemas/product/roi.md](base/standards/conventions/report-regions/schemas/product/roi.md) | Análise de ROI (investimento, payback, VPL, premissas) | `require_roi=true` |
+
+**Arquivo deprecado:** [base/standards/conventions/report-regions/schemas/product/okrs-and-roi.md](base/standards/conventions/report-regions/schemas/product/okrs-and-roi.md)
+
+- Convertido em stub com `deprecated: true` e `superseded-by: ["okrs.md", "roi.md"]` no frontmatter
+- Callout `[!danger]` explicando a substituição
+- Tabela de migração para templates legados
+
+**Campo novo no frontmatter:** `conditional-on: "require_roi=true"` em `roi.md` — padroniza como expressar condicionalidades derivadas das flags do briefing. Qualquer region condicional futura deve usar esse campo.
+
+**Nota ADR-001:** a classificação `deliverable-scope` é **sugestão para o prompt do distiller** (task #16), não filtro mecânico. OKRs estão no DR sempre; distiller decide se resume/omite no OP.
+
+---
+
+## #8 — Criar variante "fundo global" para regions financeiras  🟠  [esforço: M]
+
+- [X] **Status:** concluído (2026-04-17)
+- **Depende de:** #2 ✓, #3 ✓
+- **Bloqueia:** —
+
+### 🎯 Objetivo
+
+Fazer as regions financeiras reconhecerem as flags `financial_model` e `require_roi` do briefing — algumas mudam **forma** (TCO vira "estimativa de consumo"), outras passam a ser **condicionais** (break-even só quando há ROI) ou **fortemente condicionais** (financial-scenarios só em combinação específica).
+
+### 🧩 Resultado
+
+**Arquivos editados (4):**
+
+| Arquivo | Mudança |
+|---|---|
+| [financial/tco-3-years.md](base/standards/conventions/report-regions/schemas/financial/tco-3-years.md) | Frontmatter ganhou `deliverable-scope: ["EX","DR"]` + `conditional-on`. Callout `[!info]` documenta 2 modos. Nova seção **"Variante fundo-global"** com schema próprio (`estimativa_consumo`: cloud_provider, serviços com unidade/volume/custo, alertas_overrun, escopo_excluido), exemplo tabulado e premissas. |
+| [financial/cost-per-component.md](base/standards/conventions/report-regions/schemas/financial/cost-per-component.md) | Ganhou `deliverable-scope: ["DR"]`. Callout `[!info]` diferencia "custo real" (projeto-paga) × "estimativa de consumo" (fundo-global). |
+| [financial/financial-scenarios.md](base/standards/conventions/report-regions/schemas/financial/financial-scenarios.md) | Marcada como **fortemente condicional**: só produzir quando `financial_model=projeto-paga` AND `require_roi=true`. Callout `[!warning]`. |
+| [financial/break-even.md](base/standards/conventions/report-regions/schemas/financial/break-even.md) | Condicional a `require_roi=true`. Callout `[!warning]` explicando que aprovação é upstream do pipeline. |
+
+**Regions não afetadas:** `effort-estimation.md`, `revenue-projection.md`, `total-hours.md` — serão revisadas nas tasks #16/#17 quando o distiller definir o payload do OP/EX definitivamente.
+
+**Convenção reforçada:** `conditional-on` no frontmatter — suporta expressões booleanas simples (`AND`, `OR`, `=`). Usada por distiller (task #16) para incluir/omitir regions por run.
+
+---
+
+## #9 — Revisar auditor + scoring-thresholds  🟠  [esforço: M]
+
+- [X] **Status:** concluído (2026-04-17)
+- **Depende de:** #1 ✓, #4 ✓
+- **Bloqueia:** —
+
+### 🎯 Objetivo
+
+Tornar o auditor **sensível às flags do briefing** — não penalizar ausência de ROI/TCO quando as flags declaram explicitamente que esses itens são opcionais. Criar arquivo default `scoring-thresholds.md` (nunca havia sido materializado, estava sendo apenas referenciado).
+
+### 🧩 Resultado
+
+**Arquivo novo criado:** [base/starter-kit/client-template/templates/customization/scoring-thresholds.md](base/starter-kit/client-template/templates/customization/scoring-thresholds.md) — default completo com:
+
+- Pesos e pisos das 5 dimensões do auditor
+- Threshold global (90% default)
+- **Modificadores condicionais** às flags (`require_roi`, `financial_model`, `deliverables_scope`)
+- Penalidades específicas (viabilidade negativa, mitigação genérica, tag ausente)
+- Pisos do 10th-man (criticalidade, cruzamento, cross-eixo)
+- **3 perfis predefinidos** (conservador 92%/75%, default 90%/70%, rapido 85%/65%)
+
+**SKILL editada:** [base/behavior/skills/auditor/SKILL.md](base/behavior/skills/auditor/SKILL.md)
+
+- Versão bumpada: 01.00.000 → 02.00.000
+- Leitura obrigatória ganhou itens 13 (briefing com flags) e 14 (scoring-thresholds)
+- Callout `[!warning]` "Critérios condicionais às flags do briefing" documenta 3 casos:
+  - `require_roi=false` → remover ROI/payback/break-even do checklist
+  - `financial_model=fundo-global` → substituir TCO por "estimativa de consumo sem free tier"
+  - Validação automática Receita × TCO só quando `projeto-paga AND require_roi`
+- Nova subseção "Validação alternativa: overrun de consumo (modo fundo-global)" — critérios específicos para fundo-global (volumes, custo anual, premissas, alertas de overrun)
+- Validação de viabilidade original ganhou callout `[!info]` explicitando condicionalidade
+
+**Convenção reforçada:** modificadores de scoring vivem em `scoring-thresholds.md` (customizável por cliente), **nunca** hardcoded na skill. SKILL descreve o *mecanismo*; `scoring-thresholds.md` descreve os *valores* e *regras condicionais*.
+
+---
+
+## #10 — Modificador organizacional "fundo-global / governança pré-aprovada"  🟢  [esforço: L]
+
+- [X] **Status:** concluído (2026-04-17) — resolvido pela opção (b) via task #3
+- **Depende de:** #3 ✓
+- **Bloqueia:** —
+
+### 🎯 Resultado
+
+Resolvido **integralmente pela opção (b)** — flag no briefing — sem necessidade de arquivo transversal de "organizational modifiers".
+
+**Como a solução (b) cobre o caso:**
+
+- Flag `financial_model: fundo-global` (criada na task #3) captura a essência do modificador: projeto opera sob fundo corporativo centralizado, não arca custo individual
+- Flag `require_roi: false` (default da task #3) captura o outro lado: aprovação foi upstream, não há obrigação de justificar retorno aqui
+- Essas 2 flags juntas já modelam "governança pré-aprovada" em **todas as skills e regions** condicionais (tasks #4, #6, #7, #8, #9)
+
+**Por que (a) não vale o esforço agora:**
+
+- Modificador transversal exigiria: novo conceito de arquivo, logica de merge com packs, manutenção paralela — complexidade para resolver um único caso de uso real
+- Se novos modificadores surgirem (ex: "time distribuído global", "compliance cross-jurisdictional"), reabrir a discussão com padrão validado em produção
+- **Feedback registrado:** preferência por flags no briefing em vez de modificadores transversais — menor custo cognitivo, mesma expressividade
+
+**Evidência de cobertura:**
+
+| Aspecto do "fundo-global" | Materializado em |
+|---|---|
+| Custo vem de fundo, não do projeto | `financial_model=fundo-global` (briefing + solution-architect + regions financeiras) |
+| Estimativa de consumo em vez de TCO | `tco-3-years.md` (variante fundo-global), `cost-per-component.md` |
+| Sem exigência de ROI | `require_roi=false` (default) + `roi.md` condicional + `break-even.md` condicional |
+| Auditor não penaliza ausência | `scoring-thresholds.md` + callout no `auditor/SKILL.md` |
+
+Tudo isso foi feito sem criar uma camada nova de "modificadores". (a) fica arquivada como opção futura se os requisitos mudarem.
+
+---
+
+## #11 — Mapear questões do `environment.md` com bitmap [OP][EX][DR] no framework  🟢  [esforço: L]
+
+- [X] **Status:** concluído (2026-04-17)
+- **Problema:** o bitmap existe apenas em `projects/patria/kb/question-priority.md` (específico da Patria). Framework não tem isso.
+- **O que fazer:** promover a ideia para o framework — `base/standards/.../question-priority-template.md` que qualquer projeto copia e adapta.
+- **Nota (ADR-001):** o bitmap **deixa de ser filtro mecânico** e passa a ser **input para o prompt do `deliverable-distiller`** (task #16). Continua valioso: diz ao destilador "essa informação é OP-relevante" para ele priorizar na destilação.
+- **Depende de:** #2 ✓
+- **Bloqueia:** #16 (alimenta o prompt do destilador)
+
+### 🎯 Resultado
+
+**Arquivos criados/editados:**
+
+| Arquivo | Mudança |
+|---------|---------|
+| [base/standards/blueprints/environment/question-priority-template.md](base/standards/blueprints/environment/question-priority-template.md) | **Criação** — template genérico com bitmap `[OP][EX][DR]` para os 10 domínios (D01–D10) do `environment.md`. Generalizado a partir de `projects/patria/kb/question-priority.md`. Inclui seção "Ajustes condicionais às flags do briefing" que dialoga com as 3 flags do ADR-001. |
+| [base/standards/blueprints/environment/README.md](base/standards/blueprints/environment/README.md) | Adicionado callout `[!tip]` no topo referenciando o template e explicando a relação com o `deliverable-distiller`. |
+| [base/behavior/skills/deliverable-distiller/SKILL.md](base/behavior/skills/deliverable-distiller/SKILL.md) | Versão `01.00.000 → 01.01.000`. Input opcional `question-priority` adicionado ao frontmatter. Seção "Bitmap semântico" reescrita com **regras explícitas** de hint × lei (o bitmap nunca remove region obrigatória nem inclui region ausente do layout). |
+
+**Ponto-chave ADR-001:** o bitmap é **sugestão de densidade**, não filtro. O layout é a lei. Isso está explícito nos três arquivos acima. Projetos existentes que já tinham o bitmap como filtro (ex: Patria) permanecem válidos — o significado mudou mas a estrutura não quebrou.
+
+**Não feito (escopo):** migração retroativa de `projects/patria/kb/question-priority.md` para o template genérico. Patria já tem o seu com dados reais preenchidos; o template é **ponto de partida para novos projetos**. Manter Patria como está.
+
+---
+
+## #12 — Atualizar `projects/patria/kb/environment.md` com % por entregável  🟢  [esforço: S]
+
+- [X] **Status:** concluído (2026-04-17)
+- **O que fazer:** adicionar seção no cabeçalho do `environment.md` com "% respondido por entregável (OP / EX / DR)" para ficar visível o progresso.
+- **Arquivo afetado:** `projects/patria/kb/environment.md`
+- **Depende de:** —
+- **Bloqueia:** —
+
+### 🎯 Resultado
+
+**Arquivo editado:** [projects/patria/kb/environment.md](projects/patria/kb/environment.md).
+
+Mudanças:
+
+- Frontmatter ganhou bloco `completude-por-entregavel` (OP 100% / EX ~30% / DR ~11%) — machine-readable.
+- Adicionada seção "Progresso por entregável" logo após o cabeçalho com tabela explicando o status de cada entregável e callout `[!tip]` com leitura interpretativa (One-Pager pronto; EX/DR são progressivos via Discovery Pipeline).
+- Referência cruzada para `question-priority.md` — sem duplicar o bitmap aqui.
+
+---
+
+## #13 — Atualizar lista de context-templates na rule  🟢  [esforço: S]
+
+- [X] **Status:** concluído (2026-04-17)
+- **Depende de:** —
+- **Bloqueia:** —
+
+### 🎯 Resultado
+
+**Arquivo editado:** [base/behavior/rules/discovery/discovery.md](base/behavior/rules/discovery/discovery.md) — versão `04.02.000 → 04.02.001`.
+
+Mudanças:
+
+- Tabela de context-templates **sincronizada** com `docs/guides/discovery-pipeline.md` (de 4 para 10 packs): adicionados `system-integration`, `migration-modernization`, `ai-ml`, `mobile-app`, `process-automation`, `platform-engineering`.
+- Callout `[!tip] Templates múltiplos` incorporado (paridade com o guide).
+- Estrutura do pack atualizada: referencia **`discovery-blueprint.md`** (arquivo atual consolidado) no lugar de `context.md` + `specialists.md` (estrutura antiga).
+- Path corrigido: `context-templates/` na raiz do workspace → `base-artifacts/context-templates/` (paridade com guide).
+- Histórico ganhou entrada `04.02.001`.
+
+**Nota operacional:** os blueprints físicos dos packs não foram encontrados em `base-artifacts/context-templates/` durante esta edição (provavelmente ainda não migrados para a nova estrutura). A rule agora usa a nomenclatura correta — quando os arquivos existirem, a referência já estará consistente.
+
+---
+
+## #14 — Mover "Prazo fixo 1+6 meses" para `iteration-policy.md`  🟠  [esforço: S]
+
+- [X] **Status:** concluído (2026-04-17)
+- **Depende de:** #3 ✓
+- **Bloqueia:** —
+- **Origem:** conflito duro I identificado no diagnóstico da task #1
+- **Resultado:** ver seção "🎯 Resultado" abaixo.
+
+### 🎯 Objetivo
+
+Remover o prazo fixo "1 mês de planejamento + 6 meses de desenvolvimento MVP" de `rules/discovery/discovery.md` (L229) — onde hoje vive como regra dura universal — e movê-lo para `iteration-policy.md` como **parâmetros configuráveis por projeto**. Um prazo de execução é uma decisão de projeto, não de framework; hardcodá-lo na rule conflita com clientes que operam com outros ciclos (OKRs trimestrais, releases mensais, etc.).
+
+### 🧱 Entendimento
+
+Situação atual:
+
+- **Prazo fixo** está no callout `💰 Orcamento e Output, nao Input` da rule (L220-229), misturado com a lógica "orçamento como output". Dois conceitos acoplados no mesmo lugar.
+- **`iteration-policy.md`** é referenciado em 15 arquivos mas o **arquivo default não existe fisicamente** (foi removido num restruct anterior — ver `git status`: `dtg-artifacts/templates/customization/rules/iteration-policy.md` deletado). Vou precisar **recriar o default** já incorporando os 2 novos parâmetros.
+- **Parâmetros existentes** (documentados em `iteration-loop.md` L191-198): `max-iterations`, `stagnation-threshold`, `stagnation-consecutive`, `hr-loop-default-answer`, `hr-loop-max-passes`, `abort-requires-confirmation`.
+
+Ou seja: a task tem **duas frentes** — (i) criar o arquivo default de `iteration-policy.md` que o sistema já espera; (ii) migrar o prazo fixo para lá.
+
+### 📋 Planejamento
+
+1. **Criar** `base/starter-kit/client-template/templates/customization/iteration-policy.md` com:
+   - Parâmetros existentes (6, já documentados em `iteration-loop.md`)
+   - 2 parâmetros novos: `planning_duration`, `mvp_duration`
+2. **Editar** `base/behavior/rules/discovery/discovery.md`:
+   - Remover a linha "Prazo fixo: 1 mês planejamento + 6 meses MVP" do callout de orçamento
+   - Opcional: separar o callout em duas peças (orçamento vs. prazo) para desacoplar (ver D14.1)
+   - Apontar para `iteration-policy.md` como fonte dos prazos
+   - Bump de versão para `04.01.001`
+3. **Editar** `base/behavior/rules/iteration-loop/iteration-loop.md` seção "Iteration Policy" para incluir os 2 parâmetros novos na tabela.
+4. **Validar** que `layer-priority.md` e outros consumidores continuam consistentes.
+
+### ❓ Decisões pendentes (preciso da sua resposta)
+
+- **D14.1 — O callout "Orçamento e Output, nao Input" também vai ser retirado?**
+  - Contexto: a rule tem o callout (L220-229) que mistura **2 princípios**: (a) "orçamento é output, não input" e (b) "prazo fixo 1+6". O princípio (a) **também já foi contestado** pelo diagnóstico da task #1 (é incompatível com `financial_model=fundo-global`, onde o budget já foi pré-aprovado).
+  - Opções:
+    - (a) **Minimal** — só remover a linha do prazo; deixar o princípio "orçamento como output" para revisitar na task #4 (blocos condicionais)
+    - (b) **Completa** — reescrever o callout inteiro já tornando "orçamento como output" condicional a `financial_model=projeto-paga`
+  - **Recomendação:** **(a) minimal**. A task #14 é cirúrgica (prazo). O princípio "orçamento como output" é da família da task #4 (blocos condicionais) — deixa lá para manter escopo das tasks enxuto.
+  - **Resposta:** _____
+
+- **D14.2 — Nomes dos novos parâmetros: `planning_duration` / `mvp_duration` ou outro?**
+  - Opções:
+    - (a) `planning_duration` e `mvp_duration` (proposta original)
+    - (b) `planning-duration-months` e `mvp-duration-months` (hifenizado + unidade explícita, casa com o resto dos parâmetros do arquivo)
+    - (c) `project-timeline.planning` e `project-timeline.mvp` (agrupado)
+  - **Recomendação:** **(b)** — hifenizado casa com os 6 parâmetros existentes (`max-iterations`, `hr-loop-default-answer`, etc.); sufixo `-months` deixa a unidade inequívoca.
+  - **Resposta:** _____
+
+- **D14.3 — Defaults: manter 1 mês + 6 meses ou aproveitar para remover opinião?**
+  - Opções:
+    - (a) Manter defaults `1` e `6` — não muda comportamento para quem já usa a rule hoje
+    - (b) Defaults `null` (sem prazo) — força o projeto a declarar explicitamente
+    - (c) Defaults `1` e `6` mas marcar como `[exemplo]` — neutro em tom, ainda funcional
+  - **Recomendação:** **(c)** — preserva o valor pedagógico ("esse é um ponto de partida comum") sem prescrever como lei do framework.
+  - **Resposta:** _____
+
+- **D14.4 — O que acontece no pipeline se os prazos não forem respeitados?**
+  - Contexto: hoje a rule declara o prazo mas não há ação automática ligada a ele. Vale transformar em algo acionável?
+  - Opções:
+    - (a) **Nada** — é só um parâmetro declarativo consumido pelo `po` / `solution-architect` para calibrar escopo do MVP
+    - (b) **Alerta brando** — orchestrator loga aviso se o backlog priorizado não cabe no `mvp-duration-months`
+    - (c) **Bloqueio duro** — pipeline falha se não couber
+  - **Recomendação:** **(a) nada**. Manter cirúrgico. Se no futuro quisermos alerta, vira task nova. `mvp-duration-months` entra no prompt das skills que dimensionam escopo; o resto é processo humano.
+  - **Resposta:** _____
+
+### 📦 Entregáveis
+
+- `base/starter-kit/client-template/templates/customization/iteration-policy.md` (novo)
+- `base/behavior/rules/discovery/discovery.md` atualizado (prazo removido do callout; versão bumpada)
+- `base/behavior/rules/iteration-loop/iteration-loop.md` atualizado (tabela de parâmetros estendida)
+- Task #14 marcada como `[X] concluído`
+
+### 📝 Notas / Registro
+
+- 2026-04-17 — Task estruturada no formato workbook. Descoberta: `iteration-policy.md` default não existe fisicamente, precisa ser criado. Aguardando D14.1, D14.2, D14.3, D14.4.
+- 2026-04-17 — Respostas: D14.1=(a) minimal, D14.2=(b) hifenizado com `-months`, D14.3=(c) defaults `[exemplo]`, D14.4=(a) nenhuma ação. Executando.
+- 2026-04-17 — `iteration-policy.md` default criado; prazo fixo removido de `discovery.md` (v04.01.001); tabela de parâmetros em `iteration-loop.md` estendida. Task concluída.
+
+### 🎯 Resultado
+
+**Arquivos criados:**
+
+- `base/starter-kit/client-template/templates/customization/iteration-policy.md` (novo) — 8 parâmetros documentados (6 existentes + 2 novos), com exemplos de configurações conservadora e rápida.
+
+**Arquivos editados:**
+
+- `base/behavior/rules/discovery/discovery.md` — linha "Prazo fixo: 1 mês + 6 meses" removida; substituída por callout `[!info] Prazos de planejamento e MVP` apontando para `iteration-policy.md`. Versão `04.01.001`.
+- `base/behavior/rules/iteration-loop/iteration-loop.md` — tabela de parâmetros estendida com `planning-duration-months` e `mvp-duration-months`.
+
+**Defaults `[exemplo]` ativos:**
+
+```yaml
+planning-duration-months: 1
+mvp-duration-months: 6
+```
+
+**Descoberta colateral resolvida:** o arquivo default `iteration-policy.md` não existia fisicamente apesar de ser referenciado em 15 arquivos. Agora existe e serve como ponte entre a rule e o config do run.
+
+**Impacto residual:** nenhum. Callout "orçamento como output" permanece intacto (escopo da task #4). Princípio "orçamento como output" segue conflitante com `financial_model=fundo-global`, mas essa reconciliação é da #4.
+
+---
+
+## #15 — Política de sincronização rule ↔ guide  🟢  [esforço: S por edição]
+
+- [X] **Status:** concluído (2026-04-17) — política estabelecida e cross-linkada
+- **Depende de:** —
+- **Bloqueia:** —
+
+### 🎯 Resultado
+
+**Arquivo novo criado:** [docs/guides/rule-guide-sync-policy.md](docs/guides/rule-guide-sync-policy.md) — política explícita em 1 arquivo com:
+
+- **Regra principal:** "ao editar um, atualize o outro no mesmo commit"
+- **Tabela de tópicos sincronizados** (fases, sub-fases, skills, outputs, flags, context-templates, Human Review) com apontamento de localização em cada arquivo
+- **Tabela de tópicos exclusivos** (histórico/cláusulas na rule; exemplos/diagramas/FAQs no guide)
+- **Checklist pré-commit** (4 itens)
+- **Responsabilidades por skill/papel**
+- **Procedimento em caso de divergência observada**
+
+**Cross-links adicionados (2):**
+
+| Arquivo | Mudança |
+|---|---|
+| [base/behavior/rules/discovery/discovery.md](base/behavior/rules/discovery/discovery.md) | Seção "Documentos Relacionados" ganhou wikilink para `rule-guide-sync-policy` |
+| [docs/guides/discovery-pipeline.md](docs/guides/discovery-pipeline.md) | Callout `[!info]` no topo aponta para a policy como par operacional da rule |
+
+**Por que não virou hook/CI:**
+
+Considerado mas rejeitado nesta fase. A política é documental, curta e referenciada dos dois arquivos — qualquer contribuidor (humano ou agente) consegue ler e respeitar. Automação pode vir depois se a divergência voltar a acontecer; hoje, um arquivo explícito resolve o caso observado na task #13 (lista de context-templates divergente).
+
+---
+
+## #16 — Criar skill `deliverable-distiller`  🔴  [esforço: L]
+
+- [X] **Status:** concluído (2026-04-17) — em `status: draft`
+- **Depende de:** #2 ✓, #17 ✓, #11 (bitmap — opcional, pode ser integrado depois)
+- **Bloqueia:** —
+
+### 🎯 Objetivo
+
+Criar a skill que materializa a decisão do ADR-001: **destilar** o Delivery Report consolidado em One-Pager e/ou Executive Report, respeitando layouts, flags condicionais e rastreabilidade.
+
+### 🧩 Resultado
+
+**Skill nova criada (2 arquivos):**
+
+| Arquivo | Conteúdo |
+|---|---|
+| [base/behavior/skills/deliverable-distiller/SKILL.md](base/behavior/skills/deliverable-distiller/SKILL.md) | SKILL.md completa — frontmatter, princípios inegociáveis, 5 passos de instruction, restrições, handoff, exemplo mínimo, histórico. `status: draft` — implementação real dependerá de ajustes pós tasks #11 e #9. |
+| [base/behavior/skills/deliverable-distiller/README.md](base/behavior/skills/deliverable-distiller/README.md) | README curto apontando quando é invocada, inputs, outputs, garantias. |
+
+**5 princípios inegociáveis registrados na skill:**
+
+1. Hierarquia OP ⊂ EX ⊂ DR (DR é fonte de verdade)
+2. Rastreabilidade obrigatória (cada region destilada cita `source-region`)
+3. Flags do briefing são lei (distiller não improvisa)
+4. Layout é piso, não teto (obrigatórias + proibidas + opcionais condicionais)
+5. Hallucination = falha crítica (gap vira placeholder explícito)
+
+**Arquivos do ecossistema atualizados (2):**
+
+| Arquivo | Mudança |
+|---|---|
+| [base/behavior/rules/discovery/discovery.md](base/behavior/rules/discovery/discovery.md) | Versão 04.01.001 → 04.02.000. Sub-fase 3.3 adicionada à tabela de Fase 3 como opcional. Tabela de outputs expandida com colunas condicionais. Callout `[!info]` explicando condicionalidade. Entrada 04.02.000 no histórico. |
+| [docs/guides/discovery-pipeline.md](docs/guides/discovery-pipeline.md) | Diagrama mermaid da Fase 3 ganhou nó `DIST` (pontilhado). Tabela de sub-fases 3.1-3.5 renumerada com `Condicional`. Tabela de outputs expandida com linha OP e EX. Tabela de skills da Fase 3 ganhou `deliverable-distiller`. |
+
+**Correção de rota (vs planejamento original):**
+
+- Planejado: "usar bitmap `[OP][EX][DR]` como hint no prompt".
+- Real: a skill menciona o bitmap como **hint opcional** para decisões ambíguas, explicitando que **layout é a lei** — bitmap nunca substitui layout. Evita ambiguidade semântica entre "sugestão" e "filtro".
+
+---
+
+## #18 — Migrar `report-setup` legacy para `deliverables_scope`  🟢  [esforço: M]
+
+- [X] **Status:** concluído (2026-04-17)
+- **Origem:** descoberto durante execução da task #3
+- **Problema:** 12 arquivos do ecossistema ainda leem o flag antigo `report-setup: essential | executive | complete`. O novo canônico é `deliverables_scope`. Ambos coexistem no briefing atual (legacy mantido para não quebrar).
+- **Mapeamento aplicado:**
+  - `essential` → `["DR", "OP"]`
+  - `executive` → `["DR", "OP", "EX"]`
+  - `complete` → `["DR", "OP", "EX"]`
+- **Depende de:** #3 ✓
+- **Bloqueia:** —
+
+### 🎯 Resultado
+
+**Decisão central:** manter `report-setup` como **alias legacy aceito** em vez de remover. Razão: muitos artefatos/logs históricos já materializaram o valor; quebrar a leitura sem transição teria gerado `[GAP]` em runs existentes. O canônico passa a ser `deliverables_scope`; `report-setup` é derivado quando ausente, com warning explícito no tool.
+
+**Arquivos editados:**
+
+| Arquivo | Mudança |
+|---------|---------|
+| [tools/create-run/main.py](tools/create-run/main.py) | Lê `deliverables_scope` (list) como canônico; fallback para `report-setup` com warning + mapeamento. `generate_config_md` agora emite `deliverables-scope` primeiro no frontmatter gerado; `report-setup` permanece com comentário `# legacy alias`. Output do CLI mostra ambos. |
+| [tools/create-run/README.md](tools/create-run/README.md) | Seção "Parses briefing frontmatter" reescrita: `deliverables_scope` canônico; `report-setup` como legacy com tabela de mapeamento. |
+| [base/starter-kit/report-setups/README.md](base/starter-kit/report-setups/README.md) | Reescrito como "catálogo legacy de regions por HTML". Tabela de equivalência. Seção "Migração do briefing" com exemplo antes/depois. |
+| [base/starter-kit/report-setups/essential.md](base/starter-kit/report-setups/essential.md) | Frontmatter: `status: legacy`, `deprecated-as-briefing-flag: true`, `superseded-by`, `deliverables-scope-equivalent: ["DR","OP"]`. Callout `[!warning] Legacy` no topo. |
+| [base/starter-kit/report-setups/executive.md](base/starter-kit/report-setups/executive.md) | Idem, equivalente `["DR","OP","EX"]`. |
+| [base/starter-kit/report-setups/complete.md](base/starter-kit/report-setups/complete.md) | Idem, equivalente `["DR","OP","EX"]`. |
+| [base/starter-kit/README.md](base/starter-kit/README.md) | Árvore de diretórios: `report-setups/` marcado como **legacy** com nota sobre `deliverables_scope`. |
+| [base/README.md](base/README.md) | Árvore de diretórios: idem. |
+| [README.md](README.md) | Árvore de diretórios + tabela de setups substituída por **"Entregáveis (`deliverables_scope`)"** com tabela de MDs e HTMLs. Legacy mencionado como alias com link para `report-setups/README.md`. |
+| [base/behavior/skills/consolidator/SKILL.md](base/behavior/skills/consolidator/SKILL.md) | Seção "Adaptação de tom por report-setup" → "Adaptação de tom por entregável (`deliverables_scope`)". Esclarece que o consolidator escreve o DR com profundidade técnica e o `deliverable-distiller` faz a adaptação de linguagem para OP/EX. |
+| [docs/guides/quick-start.md](docs/guides/quick-start.md) | Callout "Report Setup" substituído por "Entregáveis (`deliverables_scope`)". Seção "Report Setup" na customização substituída por "Deliverables scope". Histórico ganhou entrada `03.03.000`. |
+| [base/starter-kit/client-template/projects/project-n/setup/start-briefing.md](base/starter-kit/client-template/projects/project-n/setup/start-briefing.md) | Callout legacy suavizado de `[!warning]` para `[!info]` — task concluída; `report-setup` agora é apenas alias aceito, não "a ser migrado". |
+| [projects/patria/projects/project-n/setup/start-briefing.md](projects/patria/projects/project-n/setup/start-briefing.md) | Frontmatter: adicionados `financial_model: "fundo-global"`, `require_roi: false`, `deliverables_scope: ["DR"]`. Seção 9.1 reescrita para `deliverables_scope` + 9.5/9.6 adicionadas com defaults Patria. |
+
+**Não feito (escopo):** apagar a pasta `report-setups/`. Ela ainda contém o catálogo de regions que o `html-writer` consulta para montar o HTML. Foi **reposicionada** (legacy + catálogo), não removida. Se futuramente os layouts (`one-pager-layout.md`, `executive-layout.md`, `html-layout.md`) absorverem esse catálogo de regions, pode ser aposentada — fora do escopo desta task.
+
+**Dor positiva:** o warning do tool ao derivar `deliverables_scope` de `report-setup` dá feedback imediato para quem continuar usando o legacy — atrito suave que empurra a migração dos briefings existentes.
+
+---
+
+## #17 — Criar layouts `one-pager-layout.md` e `executive-layout.md`  🟠  [esforço: S]
+
+- [X] **Status:** concluído (2026-04-17)
+- **Depende de:** #2 ✓
+- **Bloqueia:** #16 (agora desbloqueada)
+
+### 🎯 Objetivo
+
+Criar o **piso determinístico** que o [deliverable-distiller](#16) deve respeitar ao produzir OP e EX. Cada layout lista as regions obrigatórias, opcionais e proibidas + o comportamento esperado do distiller.
+
+### 🧩 Resultado
+
+**Arquivos criados (2):**
+
+| Arquivo | Escopo | Regions obrigatórias | Extensão alvo |
+|---|---|---|---|
+| [base/starter-kit/client-template/templates/customization/one-pager-layout.md](base/starter-kit/client-template/templates/customization/one-pager-layout.md) | OP | 5 (overview-one-pager, premises, risk-matrix, cost-per-component, prioritized-epics) | 1 página |
+| [base/starter-kit/client-template/templates/customization/executive-layout.md](base/starter-kit/client-template/templates/customization/executive-layout.md) | EX | 11 (5 do OP + problem-and-context, value-proposition, okrs, macro-architecture, feasibility-analysis, go-no-go-criteria) | 5-15 páginas |
+
+**Correção de rota (vs planejamento original):**
+
+- Planejado: `dtg-artifacts/templates/customization/` — essa pasta **não existe** no repo atual.
+- Real: `base/starter-kit/client-template/templates/customization/` — onde os outros defaults vivem (iteration-policy, scoring-thresholds, html-layout).
+
+**Decisões estruturais documentadas nos layouts:**
+
+1. **OP herdado pelo EX** — `executive-layout.md` declara `extends: one-pager-layout.md` no frontmatter. Distiller deve resolver a herança.
+2. **Regions proibidas** listadas explicitamente (ROI no OP, logs no EX, etc.) para evitar que o distiller "vaze" conteúdo.
+3. **Comportamento condicional** documentado: distiller avalia `conditional-on` de cada region contra flags do briefing.
+4. **Warning obrigatório** se region de um layout estiver marcada como gap no DR — sinaliza que Discovery ficou incompleto; não é resolvido pelo distiller.
+5. **Tabela comparativa OP × EX × DR** no `executive-layout.md` serve de referência visual para orchestrator/distiller.
+
+**README atualizado:** [base/starter-kit/client-template/templates/customization/README.md](base/starter-kit/client-template/templates/customization/README.md) — adicionadas 2 linhas na tabela de overrides.
+
+---
+
+## Ordem de execução sugerida
 
 ```
-INFRAESTRUTURA:
-P1  (scaffold script)          ← desbloqueia tudo
-P11 (pipeline-state snapshots) ← tracking correto
-P7  (HR Review logs)           ← trilha de auditoria
-P3  (threshold + flags)        ← gates funcionando
-
-FASE 1:
-P2  (interview.md)             ← log da entrevista
-P5  (customer separado)        ← separação de papéis
-P6  (blueprints lidos)         ← contexto de domínio
-P4  (cross-validation)         ← consistência financeira
-P14 (viabilidade negativa)     ← gate financeiro
-P16 (mitigações detalhadas)    ← profundidade dos riscos
-
-FASE 3 — HTML:
-P8  (md-writer 3.1)            ← polimento dos drafts
-P12 (glossário + tooltips)     ← acessibilidade de siglas
-P13 (TCO: SVG → Chart.js)     ← gráfico correto
-P15 (Esforço: SVG → CSS)      ← barras corretas
-P17 (10th-man = auditor)       ← layout consistente
-P18 (radar zones)              ← faixas visuais
-P19 (SaaS tom executivo)       ← adaptar público
-
-REDESIGN:
-P20 (one-pager como orçamento) ← nova proposta de valor
-
-FASE 1 — EXECUÇÃO:
-P23 (blocos sequenciais)         ← 1 bloco por vez, na ordem
-P24 (interview.md obrigatório)   ← sem log = fase inválida
-P25 (especialistas proativos)    ← propor soluções, não apenas coletar
-P26-P30 (bugs visuais HTML)      ← tooltips, alerts, radar, barras, TCO chart
-P31 (tabs nos reports)           ← executive e complete precisam de tabs
-P32 (acentuação PT-BR)           ← HTMLs sem acentos
-P33 (playground.html ignorado)   ← reports não seguem o Design System
-P34 (barras sempre horizontais CSS) ← Chart.js proibido para barras
-P35 (ressalvas detalhadas)       ← auditor e 10th-man devem detalhar cada ressalva
-P36 (responsividade mobile)      ← hamburger menu + footer centralizado
-P37 (abbr quebra texto)          ← tooltip de sigla desalinha checkbox
-P38 (Build vs Buy coluna)        ← separar badge da solução
-P39 (delivery-report.md)         ← deve estar em delivery/ + ser MUITO detalhado
-
-VIABILIDADE:
-P21 (auditor alerta receita<TCO) ← finding crítico
-P22 (cenários alternativos)      ← solution-architect gera alternativas viáveis
-
-DOCS:
-P9  (paths documentados)       ← polish
-P10 (config herda briefing)    ← automatização
+#1 (diagnóstico) ✓ → #2 (ADR-001) ✓ → #3 (flags) ✓ → #14 (prazo) ✓ → #4 (blocos condicionais)
+                                                                      ↓
+                                              #5, #6, #7, #8 em paralelo
+                                                                      ↓
+                               #17 (layouts) → #16 (distiller) → #9 (auditor)
+                                                                      ↓
+                          #10, #11, #12, #13, #15, #18 (migração legacy)
 ```
+
+**Próximo item a atacar:** **#4** — tornar blocos #3 (ROI), #4 (FTE) e #8 (TCO) da Fase 1 condicionais aos flags já declarados em #3. É onde as flags viram comportamento real nas skills `po` e `solution-architect`.

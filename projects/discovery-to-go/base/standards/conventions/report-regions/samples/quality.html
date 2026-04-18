@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quality Regions Preview</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+    <style>
+/* ====== DESIGN TOKENS (dark default) ====== */
+:root {
+    --primary: #4DA8DA;
+    --primary-dark: #3A8BB8;
+    --primary-light: rgba(77, 168, 218, 0.12);
+    --secondary: #B9B7BD;
+    --success: #0ED145;
+    --success-light: rgba(14, 209, 69, 0.12);
+    --success-border: rgba(14, 209, 69, 0.3);
+    --warning: #F4AC00;
+    --warning-light: rgba(244, 172, 0, 0.12);
+    --warning-border: rgba(244, 172, 0, 0.3);
+    --danger: #8B1A1A;
+    --danger-light: rgba(139, 26, 26, 0.15);
+    --danger-border: rgba(139, 26, 26, 0.35);
+    --info: #2EB5F5;
+    --info-light: rgba(46, 181, 245, 0.12);
+    --info-border: rgba(46, 181, 245, 0.3);
+    --bg: #141414;
+    --card-bg: #2E2D32;
+    --text: #E0DFE3;
+    --text-muted: #88878C;
+    --border: #3E3D44;
+    --purple: #9B96FF;
+    --purple-light: rgba(155, 150, 255, 0.12);
+    --orange: #FF9473;
+    --teal: #2DD4BF;
+    --chart-1: #4DA8DA;
+    --chart-2: #F4AC00;
+    --chart-3: #0ED145;
+    --chart-4: #FF6B6B;
+    --chart-5: #A78BFA;
+    --header-bg: linear-gradient(135deg, #2E2D32 0%, #252428 50%, #1A1923 100%);
+    --card-header-bg: #252428;
+    --th-bg: #252428;
+    --th-bg-hover: #36353B;
+    --card-shadow: 0 2px 12px rgba(46, 181, 245, 0.06), 0 1px 4px rgba(0,0,0,0.4);
+    --progress-track: #3E3D44;
+    --alert-warning-text: #f0c040;
+    --danger-text: #E85D54;
+    --alert-danger-text: #E85D54;
+    --alert-info-text: #5FC8F8;
+    --alert-success-text: #3DE06A;
+    --pill-success-text: #3DE06A;
+    --pill-info-text: #5FC8F8;
+    --pill-warning-text: #f0c040;
+}
+
+/* ====== LIGHT THEME ====== */
+[data-theme-mode=light] {
+    --primary: #4DA8DA;
+    --primary-dark: #3A8BB8;
+    --primary-light: rgba(77, 168, 218, 0.1);
+    --secondary: #88878C;
+    --success: #0A9E35;
+    --success-light: rgba(10, 158, 53, 0.08);
+    --success-border: rgba(10, 158, 53, 0.25);
+    --warning: #E67E22;
+    --warning-light: rgba(230, 126, 34, 0.12);
+    --warning-border: rgba(230, 126, 34, 0.35);
+    --danger: #E74C3C;
+    --danger-light: rgba(231, 76, 60, 0.10);
+    --danger-border: rgba(231, 76, 60, 0.30);
+    --info: #1E95CC;
+    --info-light: rgba(30, 149, 204, 0.08);
+    --info-border: rgba(30, 149, 204, 0.25);
+    --bg: #F3F3F6;
+    --card-bg: #ffffff;
+    --text: #1A1923;
+    --text-muted: #88878C;
+    --border: #B9B7BD;
+    --purple: #7B76FE;
+    --purple-light: rgba(123, 118, 254, 0.08);
+    --orange: #FE7C58;
+    --teal: #00D8D8;
+    --chart-1: #4DA8DA;
+    --chart-2: #E67E22;
+    --chart-3: #0A9E35;
+    --chart-4: #D44040;
+    --chart-5: #7C6BD4;
+    --header-bg: linear-gradient(135deg, #2E2D32 0%, #252428 50%, #1A1923 100%);
+    --card-header-bg: rgba(77, 168, 218, 0.12);
+    --th-bg: rgba(77, 168, 218, 0.12);
+    --th-bg-hover: rgba(77, 168, 218, 0.22);
+    --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0,0,0,0.06);
+    --progress-track: #B9B7BD;
+    --alert-warning-text: #C0392B;
+    --alert-danger-text: #C0392B;
+    --alert-info-text: #1670A0;
+    --alert-success-text: #087A28;
+    --pill-success-text: #087A28;
+    --pill-info-text: #1670A0;
+    --pill-warning-text: #C0392B;
+    --danger-text: #C0392B;
+}
+
+/* ====== RESET ====== */
+html, body, div, span, h1, h2, h3, h4, h5, h6, p, a, ul, ol, li,
+header, footer, section, article, button, table, tr, td, th { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+/* ====== HEADER ====== */
+.header { background: linear-gradient(135deg, #2E2D32 0%, #252428 50%, #1A1923 100%); color: white; padding: 32px 0; position: relative; overflow: hidden; }
+.header::before { content: ''; position: absolute; top: -50%; right: -10%; width: 500px; height: 500px; background: rgba(255,255,255,0.03); border-radius: 50%; z-index: 0; }
+.header-content { position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+.header-left { display: flex; align-items: center; gap: 14px; }
+.header-icon { width: 44px; height: 44px; border-radius: 12px; background: rgba(14,209,69,0.2); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; color: #3DE06A; }
+.header h1 { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.5px; }
+.header .subtitle { font-size: 0.88rem; opacity: 0.7; font-weight: 300; margin-top: 2px; }
+.header-right { display: flex; align-items: center; gap: 10px; }
+.header-badge { background: rgba(255,255,255,0.15); padding: 6px 14px; border-radius: 8px; font-size: 0.78rem; display: flex; align-items: center; gap: 6px; backdrop-filter: blur(10px); color: white; cursor: pointer; border: none; font-family: 'Poppins', sans-serif; transition: background 0.2s; }
+.header-badge:hover { background: rgba(255,255,255,0.25); }
+.region-count { background: rgba(14,209,69,0.25); padding: 4px 12px; border-radius: 8px; font-size: 0.75rem; font-weight: 600; color: #3DE06A; }
+
+/* ====== SECTION ====== */
+.section { margin-top: 32px; margin-bottom: 32px; }
+.section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid var(--border); }
+.section-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+.section-title { font-size: 1.15rem; font-weight: 600; flex: 1; }
+.region-badge { background: var(--card-header-bg); padding: 3px 10px; border-radius: 8px; font-size: 0.65rem; font-weight: 700; color: var(--text-muted); letter-spacing: 0.5px; font-family: monospace; border: 1px solid var(--border); }
+
+/* ====== CARDS ====== */
+.card { background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border); box-shadow: var(--card-shadow); overflow: hidden; margin-bottom: 20px; transition: box-shadow 0.2s, border-color 0.2s; }
+.card:hover { border-color: var(--primary); }
+.card-header { display: flex; align-items: center; gap: 10px; padding: 14px 18px; border-bottom: 1px solid var(--border); background: var(--card-header-bg); }
+.card-header-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+.card-title { font-weight: 600; font-size: 0.95rem; flex: 1; }
+.card-body { padding: 20px; }
+
+/* ====== CHART CONTAINER ====== */
+.chart-container { position: relative; max-width: 480px; margin: 0 auto; }
+
+/* ====== TABLES ====== */
+.table-wrapper { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+th { text-align: left; padding: 10px 14px; background: var(--th-bg); font-weight: 600; border-bottom: 2px solid var(--border); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.3px; color: var(--text-muted); }
+td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+tr:hover { background: var(--primary-light); }
+
+/* ====== PILLS ====== */
+.pill { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: 600; }
+.pill-danger { background: var(--danger-light); color: var(--alert-danger-text); border: 1px solid var(--danger-border); }
+.pill-warning { background: var(--warning-light); color: var(--pill-warning-text); border: 1px solid var(--warning-border); }
+.pill-info { background: var(--info-light); color: var(--pill-info-text); border: 1px solid var(--info-border); }
+.pill-success { background: var(--success-light); color: var(--pill-success-text); border: 1px solid var(--success-border); }
+
+/* ====== QUESTION CARDS (10th Man) ====== */
+.q-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; }
+.q-card { background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border); padding: 18px; transition: border-color 0.2s, box-shadow 0.2s; }
+.q-card:hover { box-shadow: var(--card-shadow); }
+.q-card.severity-critica { border-left: 4px solid var(--alert-danger-text); }
+.q-card.severity-alta { border-left: 4px solid var(--pill-warning-text); }
+.q-card.severity-media { border-left: 4px solid var(--pill-info-text); }
+.q-card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.q-card-id { font-size: 0.72rem; font-weight: 700; color: var(--text-muted); font-family: monospace; }
+.q-card-body p { font-size: 0.88rem; font-weight: 500; line-height: 1.5; margin-bottom: 10px; }
+.q-card-meta { display: flex; align-items: center; gap: 12px; font-size: 0.75rem; color: var(--text-muted); }
+.q-card-meta i { font-size: 0.85rem; }
+.status-badge { display: inline-flex; align-items: center; gap: 4px; padding: 2px 10px; border-radius: 12px; font-size: 0.68rem; font-weight: 600; }
+.status-open { background: var(--danger-light); color: var(--alert-danger-text); border: 1px solid var(--danger-border); }
+.status-partial { background: var(--warning-light); color: var(--pill-warning-text); border: 1px solid var(--warning-border); }
+.status-done { background: var(--success-light); color: var(--pill-success-text); border: 1px solid var(--success-border); }
+
+/* ====== CHECKLIST ====== */
+.checklist-progress { margin-bottom: 20px; }
+.progress-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.progress-label { font-size: 0.85rem; font-weight: 600; }
+.progress-pct { font-size: 1.1rem; font-weight: 800; color: var(--primary); }
+.progress-track { width: 100%; height: 12px; background: var(--progress-track); border-radius: 6px; overflow: hidden; }
+.progress-fill { height: 100%; border-radius: 6px; background: linear-gradient(90deg, var(--primary), var(--info)); transition: width 0.6s ease; }
+.checklist-group { margin-bottom: 16px; }
+.checklist-group-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); margin-bottom: 8px; padding: 4px 0; border-bottom: 1px solid var(--border); }
+.checklist-item { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 8px; margin-bottom: 4px; font-size: 0.82rem; transition: background 0.15s; }
+.checklist-item:hover { background: var(--primary-light); }
+.check-icon { width: 22px; height: 22px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; flex-shrink: 0; }
+.check-complete { background: var(--success-light); color: var(--pill-success-text); border: 1px solid var(--success-border); }
+.check-partial { background: var(--warning-light); color: var(--pill-warning-text); border: 1px solid var(--warning-border); }
+.check-pending { background: var(--danger-light); color: var(--alert-danger-text); border: 1px solid var(--danger-border); }
+.checklist-item-text { flex: 1; }
+.checklist-item-notes { font-size: 0.72rem; color: var(--text-muted); }
+
+/* ====== INTRO TEXT ====== */
+.intro-text { font-size: 0.85rem; color: var(--text); line-height: 1.6; opacity: 0.85; margin-bottom: 24px; padding: 14px 18px; background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border); border-left: 3px solid var(--primary); }
+
+/* ====== SCORE SUMMARY ====== */
+.score-summary { display: flex; align-items: center; gap: 16px; margin-top: 20px; padding: 16px 20px; background: var(--card-header-bg); border-radius: 10px; border: 1px solid var(--border); }
+.score-big { font-size: 2rem; font-weight: 800; }
+.score-details { flex: 1; }
+.score-details .score-label { font-size: 0.78rem; font-weight: 600; }
+.score-details .score-sub { font-size: 0.72rem; color: var(--text-muted); }
+
+/* ====== FOOTER ====== */
+.footer { background: linear-gradient(135deg, #2E2D32 0%, #252428 50%, #1A1923 100%); color: white; padding: 28px 0; position: relative; overflow: hidden; margin-top: 40px; }
+.footer::before { content: ''; position: absolute; bottom: -50%; left: -10%; width: 500px; height: 500px; background: rgba(255,255,255,0.03); border-radius: 50%; z-index: 0; }
+.footer-content { position: relative; z-index: 1; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+.footer-left { font-size: 0.82rem; opacity: 0.7; }
+.footer-right { font-size: 0.72rem; opacity: 0.5; display: flex; align-items: center; gap: 6px; }
+.footer-seal { display: flex; align-items: center; gap: 8px; margin-top: 16px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.12); font-size: 0.7rem; opacity: 0.5; justify-content: center; width: 100%; }
+
+/* ====== RESPONSIVE ====== */
+@media (max-width: 768px) {
+    .header h1 { font-size: 1.1rem; }
+    .q-grid { grid-template-columns: 1fr; }
+    .chart-container { max-width: 100%; }
+}
+
+/* ====== PRINT ====== */
+@media print {
+    body { background: white; color: #1A1923; }
+    .header { background: #2E2D32 !important; }
+    .card { break-inside: avoid; }
+}
+    </style>
+</head>
+<body>
+
+<!-- ====== HEADER ====== -->
+<header class="header">
+    <div class="container">
+        <div class="header-content">
+            <div class="header-left">
+                <div class="header-icon"><i class="ri-shield-check-line"></i></div>
+                <div>
+                    <h1>Quality Regions</h1>
+                    <div class="subtitle">Preview dos 4 regions do grupo Quality</div>
+                </div>
+            </div>
+            <div class="header-right">
+                <span class="region-count">4 regions</span>
+                <div class="header-badge" onclick="toggleTheme()" title="Alternar tema">
+                    <i id="theme-icon" class="ri-sun-line"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="container">
+
+    <!-- ================================================================== -->
+    <!-- REG-QUAL-01: Auditor Score (Radar Chart)                           -->
+    <!-- ================================================================== -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-icon" style="background:var(--info-light);color:var(--pill-info-text);"><i class="ri-radar-line"></i></div>
+            <div class="section-title">Auditor Score</div>
+            <span class="region-badge">REG-QUAL-01</span>
+        </div>
+        <p class="intro-text">Notas de qualidade atribuidas pelo auditor em 5 dimensoes. Cada dimensao tem piso minimo (7.0). Radar chart com overlay da linha de piso para identificacao imediata de dimensoes abaixo do minimo.</p>
+        <div class="card">
+            <div class="card-header">
+                <div class="card-header-icon" style="background:var(--info-light);color:var(--pill-info-text);"><i class="ri-bar-chart-grouped-line"></i></div>
+                <span class="card-title">Perfil de Qualidade do Discovery</span>
+                <span class="pill pill-danger">Reprovado</span>
+            </div>
+            <div class="card-body">
+                <div class="chart-container">
+                    <canvas id="auditorRadar"></canvas>
+                </div>
+                <div class="score-summary">
+                    <div class="score-big" style="color:var(--pill-warning-text);">7.9</div>
+                    <div class="score-details">
+                        <div class="score-label">Score Geral / 10</div>
+                        <div class="score-sub">Status: Reprovado (1 dimensao abaixo do piso) — Iteracao 1</div>
+                    </div>
+                    <span class="pill pill-danger">Reprovado</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- REG-QUAL-02: 10th Man Questions (Cards with severity badges)       -->
+    <!-- ================================================================== -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-icon" style="background:var(--danger-light);color:var(--alert-danger-text);"><i class="ri-chat-quote-line"></i></div>
+            <div class="section-title">10th Man Questions</div>
+            <span class="region-badge">REG-QUAL-02</span>
+        </div>
+        <p class="intro-text">Questoes provocativas levantadas pelo 10th-man desafiando premissas do discovery. Cards com severidade (Critica = vermelho, Alta = laranja, Media = amarelo) e status de resposta.</p>
+        <div class="q-grid">
+
+            <!-- 10M-01 Critica -->
+            <div class="q-card severity-critica">
+                <div class="q-card-header">
+                    <span class="q-card-id">10M-01</span>
+                    <span class="pill pill-danger">Critica</span>
+                </div>
+                <div class="q-card-body">
+                    <p>Se o Open Finance nao atingir 80% de cobertura bancaria, o produto ainda entrega valor suficiente?</p>
+                    <div class="q-card-meta">
+                        <i class="ri-focus-3-line"></i> <span>Bloco: Produto</span>
+                        <span class="status-badge status-open"><i class="ri-error-warning-line"></i> Em aberto</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 10M-02 Critica -->
+            <div class="q-card severity-critica">
+                <div class="q-card-header">
+                    <span class="q-card-id">10M-02</span>
+                    <span class="pill pill-danger">Critica</span>
+                </div>
+                <div class="q-card-body">
+                    <p>Qual e o diferencial defensavel que impede copia em 6 meses?</p>
+                    <div class="q-card-meta">
+                        <i class="ri-focus-3-line"></i> <span>Bloco: Estrategia</span>
+                        <span class="status-badge status-partial"><i class="ri-time-line"></i> Parcialmente respondida</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 10M-03 Alta -->
+            <div class="q-card severity-alta">
+                <div class="q-card-header">
+                    <span class="q-card-id">10M-03</span>
+                    <span class="pill pill-warning">Alta</span>
+                </div>
+                <div class="q-card-body">
+                    <p>A estimativa de churn de 3% e baseada em dados proprios?</p>
+                    <div class="q-card-meta">
+                        <i class="ri-focus-3-line"></i> <span>Bloco: Financeiro</span>
+                        <span class="status-badge status-done"><i class="ri-check-line"></i> Respondida</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 10M-04 Alta -->
+            <div class="q-card severity-alta">
+                <div class="q-card-header">
+                    <span class="q-card-id">10M-04</span>
+                    <span class="pill pill-warning">Alta</span>
+                </div>
+                <div class="q-card-body">
+                    <p>Multi-tenancy por schema nao deveria ser risco critico?</p>
+                    <div class="q-card-meta">
+                        <i class="ri-focus-3-line"></i> <span>Bloco: Arquitetura</span>
+                        <span class="status-badge status-done"><i class="ri-check-line"></i> Respondida</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 10M-05 Media -->
+            <div class="q-card severity-media">
+                <div class="q-card-header">
+                    <span class="q-card-id">10M-05</span>
+                    <span class="pill pill-info">Media</span>
+                </div>
+                <div class="q-card-body">
+                    <p>Custos de suporte e CS estao ausentes do TCO?</p>
+                    <div class="q-card-meta">
+                        <i class="ri-focus-3-line"></i> <span>Bloco: Financeiro</span>
+                        <span class="status-badge status-open"><i class="ri-error-warning-line"></i> Em aberto</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- REG-QUAL-03: Identified Gaps (Table with alert badges)             -->
+    <!-- ================================================================== -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-icon" style="background:var(--warning-light);color:var(--pill-warning-text);"><i class="ri-error-warning-line"></i></div>
+            <div class="section-title">Identified Gaps</div>
+            <span class="region-badge">REG-QUAL-03</span>
+        </div>
+        <p class="intro-text">Lacunas identificadas pelo auditor durante revisao dos artefatos de discovery. Tabela com alert badges coloridos por impacto para rastreamento de resolucao.</p>
+        <div class="card">
+            <div class="card-header">
+                <div class="card-header-icon" style="background:var(--warning-light);color:var(--pill-warning-text);"><i class="ri-file-search-line"></i></div>
+                <span class="card-title">Gaps Identificados</span>
+                <span class="pill pill-warning">4 gaps</span>
+            </div>
+            <div class="card-body">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Area</th>
+                                <th>Gap</th>
+                                <th>Impacto</th>
+                                <th>Recomendacao</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="font-family:monospace;font-weight:700;color:var(--text-muted);">GAP-01</td>
+                                <td><span class="pill pill-info">Financeiro</span></td>
+                                <td>Custos de customer success e suporte nao contemplados no TCO</td>
+                                <td><span class="pill pill-warning">Alto</span></td>
+                                <td style="font-size:0.78rem;">Incluir pelo menos 1 CS part-time a partir do mes 3</td>
+                                <td><span class="status-badge status-open"><i class="ri-error-warning-line"></i> Aberto</span></td>
+                            </tr>
+                            <tr>
+                                <td style="font-family:monospace;font-weight:700;color:var(--text-muted);">GAP-02</td>
+                                <td><span class="pill pill-info">Seguranca</span></td>
+                                <td>Nenhuma mencao a politica de backup e disaster recovery</td>
+                                <td><span class="pill pill-danger">Critico</span></td>
+                                <td style="font-size:0.78rem;">Definir RPO/RTO e estrategia de backup antes da sprint 1</td>
+                                <td><span class="status-badge status-open"><i class="ri-error-warning-line"></i> Aberto</span></td>
+                            </tr>
+                            <tr>
+                                <td style="font-family:monospace;font-weight:700;color:var(--text-muted);">GAP-03</td>
+                                <td><span class="pill pill-info">Requisitos</span></td>
+                                <td>Requisitos de acessibilidade (WCAG) nao especificados</td>
+                                <td><span class="pill pill-info">Medio</span></td>
+                                <td style="font-size:0.78rem;">Adicionar criterios WCAG 2.1 AA nos criterios de aceite</td>
+                                <td><span class="status-badge status-partial"><i class="ri-time-line"></i> Em resolucao</span></td>
+                            </tr>
+                            <tr>
+                                <td style="font-family:monospace;font-weight:700;color:var(--text-muted);">GAP-04</td>
+                                <td><span class="pill pill-info">Arquitetura</span></td>
+                                <td>Estrategia de observabilidade mencionada mas nao detalhada</td>
+                                <td><span class="pill pill-info">Medio</span></td>
+                                <td style="font-size:0.78rem;">Detalhar stack de monitoring, logging e tracing</td>
+                                <td><span class="status-badge status-open"><i class="ri-error-warning-line"></i> Aberto</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- REG-QUAL-04: Completion Checklist (Checklist with progress bar)    -->
+    <!-- ================================================================== -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-icon" style="background:var(--success-light);color:var(--pill-success-text);"><i class="ri-checkbox-circle-line"></i></div>
+            <div class="section-title">Completion Checklist</div>
+            <span class="region-badge">REG-QUAL-04</span>
+        </div>
+        <p class="intro-text">Todos os entregaveis esperados do discovery e seu status de conclusao. Barra de progresso geral + checklist agrupado por categoria com checkmarks visuais.</p>
+        <div class="card">
+            <div class="card-header">
+                <div class="card-header-icon" style="background:var(--success-light);color:var(--pill-success-text);"><i class="ri-task-line"></i></div>
+                <span class="card-title">Status de Entregaveis</span>
+                <span class="pill pill-warning">77%</span>
+            </div>
+            <div class="card-body">
+                <!-- Progress Bar -->
+                <div class="checklist-progress">
+                    <div class="progress-header">
+                        <span class="progress-label">Taxa de Conclusao</span>
+                        <span class="progress-pct">77%</span>
+                    </div>
+                    <div class="progress-track">
+                        <div class="progress-fill" style="width:77%;"></div>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;margin-top:6px;font-size:0.72rem;color:var(--text-muted);">
+                        <span>10 completos</span>
+                        <span>1 parcial</span>
+                        <span>2 pendentes</span>
+                    </div>
+                </div>
+
+                <!-- Produto -->
+                <div class="checklist-group">
+                    <div class="checklist-group-title"><i class="ri-box-3-line" style="margin-right:6px;"></i>Produto</div>
+                    <div class="checklist-item">
+                        <div class="check-icon check-complete"><i class="ri-check-line"></i></div>
+                        <span class="checklist-item-text">Visao e proposta de valor</span>
+                    </div>
+                    <div class="checklist-item">
+                        <div class="check-icon check-complete"><i class="ri-check-line"></i></div>
+                        <span class="checklist-item-text">Personas e jornadas</span>
+                    </div>
+                    <div class="checklist-item">
+                        <div class="check-icon check-complete"><i class="ri-check-line"></i></div>
+                        <span class="checklist-item-text">Backlog priorizado (epicos)</span>
+                        <span class="checklist-item-notes">5 epicos com MoSCoW</span>
+                    </div>
+                </div>
+
+                <!-- Arquitetura -->
+                <div class="checklist-group">
+                    <div class="checklist-group-title"><i class="ri-building-line" style="margin-right:6px;"></i>Arquitetura</div>
+                    <div class="checklist-item">
+                        <div class="check-icon check-complete"><i class="ri-check-line"></i></div>
+                        <span class="checklist-item-text">Diagrama de arquitetura</span>
+                        <span class="checklist-item-notes">C4 nivel 2</span>
+                    </div>
+                    <div class="checklist-item">
+                        <div class="check-icon check-complete"><i class="ri-check-line"></i></div>
+                        <span class="checklist-item-text">Definicao de stack</span>
+                    </div>
+                    <div class="checklist-item">
+                        <div class="check-icon check-partial"><i class="ri-subtract-line"></i></div>
+                        <span class="checklist-item-text">NFRs e SLAs</span>
+                        <span class="checklist-item-notes">SLAs definidos, SLOs pendentes</span>
+                    </div>
+                </div>
+
+                <!-- Financeiro -->
+                <div class="checklist-group">
+                    <div class="checklist-group-title"><i class="ri-money-dollar-circle-line" style="margin-right:6px;"></i>Financeiro</div>
+                    <div class="checklist-item">
+                        <div class="check-icon check-complete"><i class="ri-check-line"></i></div>
+                        <span class="checklist-item-text">TCO 3 anos</span>
+                        <span class="checklist-item-notes">Revisado apos reprovacao do auditor</span>
+                    </div>
+                    <div class="checklist-item">
+                        <div class="check-icon check-complete"><i class="ri-check-line"></i></div>
+                        <span class="checklist-item-text">Estimativa de esforco</span>
+                    </div>
+                </div>
+
+                <!-- Seguranca -->
+                <div class="checklist-group">
+                    <div class="checklist-group-title"><i class="ri-shield-line" style="margin-right:6px;"></i>Seguranca</div>
+                    <div class="checklist-item">
+                        <div class="check-icon check-pending"><i class="ri-close-line"></i></div>
+                        <span class="checklist-item-text">Analise LGPD</span>
+                        <span class="checklist-item-notes">Aguardando DPO</span>
+                    </div>
+                    <div class="checklist-item">
+                        <div class="check-icon check-pending"><i class="ri-close-line"></i></div>
+                        <span class="checklist-item-text">Threat modeling</span>
+                    </div>
+                </div>
+
+                <!-- Riscos -->
+                <div class="checklist-group">
+                    <div class="checklist-group-title"><i class="ri-alarm-warning-line" style="margin-right:6px;"></i>Riscos</div>
+                    <div class="checklist-item">
+                        <div class="check-icon check-complete"><i class="ri-check-line"></i></div>
+                        <span class="checklist-item-text">Matriz de riscos</span>
+                    </div>
+                </div>
+
+                <!-- Qualidade -->
+                <div class="checklist-group">
+                    <div class="checklist-group-title"><i class="ri-shield-check-line" style="margin-right:6px;"></i>Qualidade</div>
+                    <div class="checklist-item">
+                        <div class="check-icon check-complete"><i class="ri-check-line"></i></div>
+                        <span class="checklist-item-text">Revisao do auditor</span>
+                        <span class="checklist-item-notes">2 iteracoes</span>
+                    </div>
+                    <div class="checklist-item">
+                        <div class="check-icon check-complete"><i class="ri-check-line"></i></div>
+                        <span class="checklist-item-text">Revisao do 10th-man</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<!-- ====== FOOTER ====== -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-left">
+                <strong>Quality Regions Preview</strong> — Discovery to Go
+            </div>
+            <div class="footer-right">
+                <i class="ri-time-line"></i> Gerado em 2026-04-11
+            </div>
+        </div>
+        <div class="footer-seal">
+            <i class="ri-shield-check-line"></i>
+            Preview de componentes visuais para as 4 regions do grupo Quality
+        </div>
+    </div>
+</footer>
+
+<script>
+// ====== THEME TOGGLE ======
+function toggleTheme() {
+    var html = document.documentElement;
+    var icon = document.getElementById('theme-icon');
+    if (html.getAttribute('data-theme-mode') === 'light') {
+        html.removeAttribute('data-theme-mode');
+        icon.className = 'ri-sun-line';
+        localStorage.setItem('quality-preview-theme', 'dark');
+    } else {
+        html.setAttribute('data-theme-mode', 'light');
+        icon.className = 'ri-moon-line';
+        localStorage.setItem('quality-preview-theme', 'light');
+    }
+    updateChartThemes();
+}
+(function() {
+    var saved = localStorage.getItem('quality-preview-theme');
+    if (saved === 'light') {
+        document.documentElement.setAttribute('data-theme-mode', 'light');
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('theme-icon').className = 'ri-moon-line';
+        });
+    }
+})();
+
+// ====== CHART HELPERS ======
+function isLight() {
+    return document.documentElement.getAttribute('data-theme-mode') === 'light';
+}
+function gridColor() { return isLight() ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.1)'; }
+function labelColor() { return isLight() ? '#1A1923' : '#E0DFE3'; }
+
+// ====== AUDITOR SCORE RADAR (REG-QUAL-01) ======
+var radarCtx = document.getElementById('auditorRadar').getContext('2d');
+var auditorRadar = new Chart(radarCtx, {
+    type: 'radar',
+    data: {
+        labels: ['Cobertura', 'Profundidade', 'Consistencia', 'Fundamentacao', 'Completude'],
+        datasets: [
+            {
+                label: 'Score',
+                data: [8.5, 9.0, 6.5, 7.5, 8.0],
+                backgroundColor: 'rgba(77, 168, 218, 0.25)',
+                borderColor: '#4DA8DA',
+                borderWidth: 2,
+                pointBackgroundColor: '#4DA8DA',
+                pointBorderColor: '#fff',
+                pointBorderWidth: 1,
+                pointRadius: 5
+            },
+            {
+                label: 'Piso Minimo (7.0)',
+                data: [7, 7, 7, 7, 7],
+                backgroundColor: 'rgba(232, 93, 84, 0.08)',
+                borderColor: 'rgba(232, 93, 84, 0.6)',
+                borderWidth: 2,
+                borderDash: [6, 4],
+                pointRadius: 0,
+                fill: false
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        plugins: {
+            legend: {
+                position: 'bottom',
+                labels: {
+                    color: labelColor(),
+                    font: { family: 'Poppins', size: 11 },
+                    padding: 16,
+                    usePointStyle: true
+                }
+            },
+            tooltip: {
+                backgroundColor: 'rgba(26,25,35,0.95)',
+                titleFont: { family: 'Poppins', weight: '600' },
+                bodyFont: { family: 'Poppins' }
+            }
+        },
+        scales: {
+            r: {
+                min: 0, max: 10,
+                ticks: {
+                    stepSize: 2,
+                    color: labelColor(),
+                    backdropColor: 'transparent',
+                    font: { family: 'Poppins', size: 10 }
+                },
+                pointLabels: {
+                    color: labelColor(),
+                    font: { family: 'Poppins', size: 11, weight: '600' }
+                },
+                grid: { color: gridColor() },
+                angleLines: { color: gridColor() }
+            }
+        }
+    }
+});
+
+// ====== UPDATE CHARTS ON THEME CHANGE ======
+function updateChartThemes() {
+    var lc = labelColor();
+    var gc = gridColor();
+    auditorRadar.options.scales.r.ticks.color = lc;
+    auditorRadar.options.scales.r.pointLabels.color = lc;
+    auditorRadar.options.scales.r.grid.color = gc;
+    auditorRadar.options.scales.r.angleLines.color = gc;
+    auditorRadar.options.plugins.legend.labels.color = lc;
+    auditorRadar.update();
+}
+</script>
+
+</body>
+</html>

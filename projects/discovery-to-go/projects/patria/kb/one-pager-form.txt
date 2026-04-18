@@ -1,0 +1,271 @@
+================================================================
+ PATRIA - ONE-PAGER DISCOVERY
+ FORMULARIO MINIMO PARA APROVACAO EXECUTIVA
+================================================================
+
+ Versao: 1.0
+ Data:   Abr/2026
+ Autor:  Fabio Rodrigues (fabio.rodrigues.consult@patria.com)
+ Base:   question-priority.md (checklist One-Pager minimo viavel)
+ Escopo: SOMENTE as 7 perguntas pendentes para fechar o One-Pager.
+         Ja temos respondido: cloud (GCP), regiao (us-central1),
+         residencia BR (nao obrigatoria), compliance (BACEN/CVM/CMF),
+         tipo infra (cloud publica).
+
+ 🎯 Objetivo: destravar a decisao "vai / nao vai" do patrocinador.
+ ⚠️ Sem estas 7 respostas, o One-Pager nao sai.
+
+
+================================================================
+ COMO PREENCHER
+================================================================
+
+ - Substitua "_____" pela resposta.
+ - Use "NAO SEI" quando nao tiver a informacao (vira pauta de
+   entrevista).
+ - Ordens de grandeza valem. Nao precisa de numero fechado.
+ - Se precisar citar fonte ou premissa, use o campo "Observacao".
+
+
+================================================================
+ IDENTIFICACAO DO RESPONDENTE
+================================================================
+
+ Nome:           ____________________________________________
+ Email:          ____________________________________________
+ Cargo:          ____________________________________________
+ Area:           ____________________________________________
+ Data:           ____/____/______
+
+
+================================================================
+ PERGUNTA 1 de 7 - LEGADOS CRITICOS SEM SUBSTITUICAO
+================================================================
+
+ 💡 Origem: environment.md D02.6  |  Region: risk/technical-risks
+ 🎯 Por que importa: legado sem plano de saida = risco de
+    bloqueio e aumento de TCO. One-Pager precisa citar top 1-2.
+
+ Quais sistemas estao em uso hoje SEM plano formal de
+ substituicao ou desligamento, e que representam risco
+ (fornecedor em EOL, sem suporte, dependencia unica)?
+
+ R. INCORTA DEVE SER DESABILITADO EM 06/2026
+
+ Top 1:         ____________________________________________
+ Motivo risco:  ____________________________________________
+
+ Top 2:         ____________________________________________
+ Motivo risco:  ____________________________________________
+
+ Top 3 (opt):   ____________________________________________
+ Motivo risco:  ____________________________________________
+
+ Observacao:    ____________________________________________
+
+
+================================================================
+ PERGUNTA 2 de 7 - DEBITO TECNICO CRITICO
+================================================================
+
+ 💡 Origem: environment.md D03.7  |  Region: risk/technical-risks
+ 🎯 Por que importa: debito critico muda orcamento e prazo.
+    O One-Pager precisa sinalizar se ha "bomba-relogio".
+
+ Cite os 3 principais debitos tecnicos conhecidos hoje no
+ ambiente (codigo, infra, integracao, dados) que poderiam
+ bloquear ou encarecer o projeto novo.
+
+ Debito 1:      ____________________________________________
+ Impacto:       ____________________________________________
+
+ Debito 2:      ____________________________________________
+ Impacto:       ____________________________________________
+
+ Debito 3:      ____________________________________________
+ Impacto:       ____________________________________________
+
+ Observacao:    ____________________________________________
+
+
+================================================================
+ PERGUNTA 3 de 7 - DISPONIBILIDADE REAL DO TIME
+================================================================
+
+ 💡 Origem: environment.md D08.4  |  Region: organization/team-structure
+ 🎯 Por que importa: sem FTE alocavel, nao ha projeto viavel.
+    One-Pager precisa indicar capacidade real, nao ideal.
+
+ Quantos FTE (full-time equivalent) estao efetivamente
+ disponiveis para o projeto novo nos proximos 6 meses?
+
+ Ex.: "2.5 devs", "1 arquiteto (30%)", "1 PM (50%)".
+
+ FTE disponivel: 
+	NÃO RELEVANTE, POIS A IDEIA DO ONE PAGE NÃO É DIZER QUANDO O PROJETO COMEÇA... MAS SIM O ESFORÇO, CUSTO E ESCOPO.
+	PENSE QUE EM UM PROJETO TODO MUNDO SERÁ CONTRATADO... ASSIM FICA MAIS FACIL A CONTA.
+
+ _____________________________________________________________
+ _____________________________________________________________
+ _____________________________________________________________
+
+ Ha dependencia de contratacao / backfill antes do inicio?
+   [ ] Nao, time atual cobre
+   [X] Sim, precisa contratar: _______________________________
+   [ ] NAO SEI
+
+ Observacao:    ____________________________________________
+
+
+================================================================
+ PERGUNTA 4 de 7 - GAP CRITICO DE SKILLS
+================================================================
+
+ 💡 Origem: environment.md D08.5  |  Region: risk/risk-matrix,
+    backlog/dependencies
+ 🎯 Por que importa: gap de skill eh risco duro ou item de
+    budget (contratacao, treinamento, parceiro).
+
+ R. NÃO EXISTEM GAPS CRITICOS DE SKILLS
+
+ Gap 1:         ____________________________________________
+ Como resolver: [ ] Contratar  [ ] Treinar  [ ] Parceiro  [ ] NAO SEI
+
+ Gap 2:         ____________________________________________
+ Como resolver: [ ] Contratar  [ ] Treinar  [ ] Parceiro  [ ] NAO SEI
+
+ Gap 3 (opt):   ____________________________________________
+ Como resolver: [ ] Contratar  [ ] Treinar  [ ] Parceiro  [ ] NAO SEI
+
+ Observacao:    ____________________________________________
+
+
+================================================================
+ PERGUNTA 5 de 7 - CUSTO MENSAL ATUAL DE CLOUD
+================================================================
+
+ 💡 Origem: environment.md D09.2  |  Region: financial/cost-per-component,
+    executive/overview-one-pager
+ 🎯 Por que importa: baseline de OPEX atual. One-Pager precisa contextualizar o investimento novo vs. custo corrente.
+
+ Qual o custo mensal agregado dos 3 projetos GCP (pat-datalake-dev + pat-datalake-hml + pat-datalake-prd  + pat-scl-networking)?
+
+ R. 	POR ENQUANTO, O OPEX DISPONIBILIZADO PARA OS PROJETOS SÃO ORIUNDOS DE UM FUNDO GLOBAL DA EMPRESA.
+	OU SEJA, OS PROJETOS NÃO PRECISAM ARCAR COM OS CUSTOS DE CLOUD.
+	MAS É IMPORTANTE SABERMOS O CUSTO ESTIMADO DOS RECURSOS CLOUD QUE SÃO USADOS NO PROJETO (ESTIMATIVA DESCONSIDERANDO FREE TIER)
+
+
+ Valor mensal (USD ou BRL, indique):
+ _____________________________________________________________
+
+ Tendencia ultimos 6 meses:
+   [ ] Estavel
+   [ ] Crescendo:  ____% ao mes
+   [ ] Caindo:     ____% ao mes
+   [ ] NAO SEI
+
+ Ha outros custos de cloud fora do DataLake (Azure, AWS,
+ outros projetos GCP)?
+   [ ] Nao
+   [ ] Sim: ___________________________________________________
+   [ ] NAO SEI
+
+ Observacao:    ____________________________________________
+
+
+================================================================
+ PERGUNTA 6 de 7 - BUDGET ANUAL APROVADO
+================================================================
+
+ 💡 Origem: environment.md D09.4  |  Region: financial/financial-scenarios, executive/go-no-go-decision
+ 🎯 Por que importa: nucleo do "vai / nao vai". Sem teto aprovado, nao ha One-Pager.
+
+ Qual o budget aprovado (ou em aprovacao) para este projeto
+ em 2026?
+
+ R. MESMA SITUAÇÃO DA PERGUNTA 5.
+
+ Valor teto:
+ _____________________________________________________________
+
+ Tipo:
+   [ ] OPEX recorrente anual
+   [ ] CAPEX unico (investimento)
+   [ ] Misto: OPEX _______ + CAPEX _______
+   [ ] NAO SEI
+
+ Status:
+   [ ] Aprovado formalmente
+   [ ] Em aprovacao (comite previsto: _____/_____)
+   [ ] Ainda sem numero
+   [ ] NAO SEI
+
+ Moeda:  [ ] BRL   [ ] USD   [ ] Outra: ______________
+
+ Alcada quem aprova o teto:
+ _____________________________________________________________
+
+ Observacao:    ____________________________________________
+
+
+================================================================
+ PERGUNTA 7 de 7 - ROI / PAYBACK ESPERADO
+================================================================
+
+ 💡 Origem: environment.md D09.6  |  Region: product/okrs-and-roi, financial/break-even
+ 🎯 Por que importa: One-Pager precisa justificar o
+    investimento. Se nao ha hipotese de retorno, o projeto
+    nao deveria ir ao comite.
+
+ Qual o retorno esperado (quantitativo ou qualitativo)?
+
+ R. 	EXISTE UMA FASE ANTES DO PROJETO, QUE É A APROVAÇÃO DA LIBERAÇÃO DOS VALORES PARA A EXECUÇÃO DO PROJETO.
+	QUANDO O DISCOVERY ACONTECER, UMA QUANTIA DE DINHEIRO JA FOI APROVADA. 
+	PORTANTO, O DISCOVERY NÃO PRECISA ACONTECER VISANDO A ALCANÇAR O VALOR QUE FOI APROVADO... A NAO SER QUE SEJA EXPLICITO NO ARQUIVO DE BRIEFING;
+
+	PORTANTO NÃO PRECISAMOS JUSTIFICAR O INVESTIMENTO NO ONEPAGER
+
+ Tipo de retorno (pode marcar mais de um):
+   [ ] Reducao de custo:    _____________________________
+   [ ] Aumento de receita:  _____________________________
+   [ ] Mitigacao de risco:  _____________________________
+   [ ] Ganho de eficiencia: _____________________________
+   [ ] Compliance / obrigacao legal
+   [ ] Outro: ________________________________________
+   [ ] NAO SEI
+
+ Payback esperado:
+   [ ] < 12 meses
+   [ ] 12 a 24 meses
+   [ ] 24 a 36 meses
+   [ ] > 36 meses
+   [ ] NAO SEI
+
+ Como medir o retorno (metrica, KPI):
+ _____________________________________________________________
+ _____________________________________________________________
+
+ Observacao:    ____________________________________________
+
+
+================================================================
+ FIM DO FORMULARIO
+================================================================
+
+ ✅ Preenchido: __7__/7 perguntas
+ ❓ Pendente:   __0__/7 perguntas
+
+ Proximos passos apos devolucao:
+   1. Fabio consolida respostas no environment.md
+   2. Fabio gera One-Pager
+   3. One-Pager vai ao patrocinador para "vai / nao vai"
+   4. Se "vai", abre-se o formulario completo do Executive
+      Report (environment-form.txt)
+
+ Envie o arquivo preenchido para:
+   fabio.rodrigues.consult@patria.com
+
+ Duvidas sobre qualquer pergunta? Responda "NAO SEI" -
+ e melhor marcar para entrevista do que chutar.
+
+================================================================

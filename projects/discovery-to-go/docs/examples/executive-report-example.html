@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme-mode="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plataforma de Consolidação Financeira — Executive Report</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet">
+<style>
+:root {
+  --primary: #4DA8DA; --primary-dark: #3A8BB8; --primary-light: rgba(77,168,218,0.12);
+  --secondary: #B9B7BD;
+  --success: #0ED145; --success-light: rgba(14,209,69,0.12); --success-border: rgba(14,209,69,0.3);
+  --warning: #F4AC00; --warning-light: rgba(244,172,0,0.12); --warning-border: rgba(244,172,0,0.3);
+  --danger: #8B1A1A; --danger-light: rgba(139,26,26,0.15); --danger-border: rgba(139,26,26,0.35);
+  --info: #2EB5F5; --info-light: rgba(46,181,245,0.12); --info-border: rgba(46,181,245,0.3);
+  --bg: #141414; --card-bg: #2E2D32; --text: #E0DFE3; --text-muted: #88878C; --border: #3E3D44;
+  --purple: #9B96FF; --purple-light: rgba(155,150,255,0.12); --orange: #FF9473; --teal: #2DD4BF;
+  --chart-1: #4DA8DA; --chart-2: #F4AC00; --chart-3: #0ED145; --chart-4: #FF6B6B; --chart-5: #A78BFA;
+  --card-header-bg: #252428; --th-bg: #252428; --th-bg-hover: #36353B;
+  --card-shadow: 0 2px 12px rgba(46,181,245,0.06), 0 1px 4px rgba(0,0,0,0.4);
+  --alert-warning-text: #f0c040; --alert-danger-text: #E85D54; --alert-info-text: #5FC8F8; --alert-success-text: #3DE06A;
+  --pill-success-text: #3DE06A; --pill-info-text: #5FC8F8; --pill-warning-text: #f0c040;
+}
+[data-theme-mode=light] {
+  --primary: #4DA8DA; --primary-dark: #3A8BB8; --primary-light: rgba(77,168,218,0.1);
+  --secondary: #88878C;
+  --success: #0A9E35; --success-light: rgba(10,158,53,0.08); --success-border: rgba(10,158,53,0.25);
+  --warning: #E67E22; --warning-light: rgba(230,126,34,0.12); --warning-border: rgba(230,126,34,0.35);
+  --danger: #E74C3C; --danger-light: rgba(231,76,60,0.10); --danger-border: rgba(231,76,60,0.30);
+  --info: #1E95CC; --info-light: rgba(30,149,204,0.08); --info-border: rgba(30,149,204,0.25);
+  --bg: #F3F3F6; --card-bg: #ffffff; --text: #1A1923; --text-muted: #88878C; --border: #B9B7BD;
+  --purple: #7B76FE; --purple-light: rgba(123,118,254,0.08); --orange: #FE7C58; --teal: #00D8D8;
+  --chart-1: #4DA8DA; --chart-2: #E67E22; --chart-3: #0A9E35; --chart-4: #D44040; --chart-5: #7C6BD4;
+  --card-header-bg: rgba(77,168,218,0.12); --th-bg: rgba(77,168,218,0.12); --th-bg-hover: rgba(77,168,218,0.22);
+  --card-shadow: 0 2px 8px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.06);
+  --alert-warning-text: #C0392B; --alert-danger-text: #C0392B; --alert-info-text: #1670A0; --alert-success-text: #087A28;
+  --pill-success-text: #087A28; --pill-info-text: #1670A0; --pill-warning-text: #C0392B; --hover-border: #4DA8DA;
+}
+[data-theme-mode=light] .card:hover { border-color: var(--hover-border); }
+[data-theme-mode=light] .stat-card:hover { border-color: var(--hover-border); }
+* { box-sizing: border-box; }
+body { font-family: 'Poppins','Segoe UI',sans-serif; background: var(--bg); color: var(--text); margin: 0; font-size: 14px; line-height: 1.6; }
+.header { background: linear-gradient(135deg, #2E2D32 0%, #252428 50%, #1A1923 100%); color: white; position: relative; overflow: hidden; }
+.header::before { content: ''; position: absolute; top: -50%; right: -10%; width: 500px; height: 500px; background: rgba(255,255,255,0.03); border-radius: 50%; }
+.doc-container { max-width: 1400px; margin: 0 auto; padding: 24px 32px; position: relative; z-index: 1; }
+.header-top { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; padding-top: 28px; }
+.header h1 { color: #fff; font-size: 22px; font-weight: 600; margin: 0; }
+.header h1 i { margin-right: 10px; color: var(--primary); }
+.subtitle { color: rgba(255,255,255,0.5); font-size: 13px; margin-top: 4px; }
+.header-badge { background: rgba(255,255,255,0.15); padding: 6px 14px; border-radius: 8px; font-size: 0.78rem; display: inline-flex; align-items: center; gap: 6px; backdrop-filter: blur(10px); color: white; }
+.badge-version { background: rgba(77,168,218,0.2); color: var(--primary); padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 500; }
+.theme-toggle { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; border-radius: 6px; padding: 6px 12px; cursor: pointer; font-size: 14px; margin-left: 8px; font-family: 'Poppins'; }
+.tabs-nav { display: flex; gap: 4px; margin-top: 36px; overflow-x: auto; }
+.tab-btn { padding: 10px 24px; background: rgba(255,255,255,0.1); border: none; border-radius: 10px 10px 0 0; color: rgba(255,255,255,0.7); font-family: 'Poppins'; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+.tab-btn:hover { background: rgba(255,255,255,0.18); color: white; }
+.tab-btn.active { background: var(--bg); color: var(--text); font-weight: 600; }
+[data-theme-mode=light] .tab-btn.active { color: #1A1923; }
+.tab-btn i { font-size: 1.1rem; }
+.tab-pane { display: none; padding: 24px 0 32px; }
+.tab-pane.active { display: block; }
+
+.intro-text { font-size: 0.88rem; line-height: 1.6; opacity: 0.9; margin-bottom: 24px; padding: 16px 20px; background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border); border-left: 3px solid var(--primary); box-shadow: var(--card-shadow); }
+.intro-text strong { color: var(--primary); }
+
+.section { margin-top: 32px; }
+.section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid var(--border); }
+.section-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+.section-title { font-size: 1.15rem; font-weight: 600; }
+.section-count { background: var(--bg); padding: 4px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 600; color: var(--text-muted); }
+
+.card { background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 2px 8px rgba(0,0,0,0.03); overflow: hidden; margin-bottom: 20px; transition: box-shadow 0.2s, border-color 0.2s; }
+.card:hover { box-shadow: var(--card-shadow); border-color: var(--primary); }
+.card-header { display: flex; align-items: center; gap: 10px; padding: 14px 18px; border-bottom: 1px solid var(--border); background: var(--card-header-bg); }
+.card-header-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+.card-title { font-weight: 600; font-size: 0.95rem; flex: 1; }
+.card-badge { padding: 2px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: 600; white-space: nowrap; }
+.card-body { padding: 18px; opacity: 0.9; }
+
+.alert { padding: 12px 16px; border-radius: 8px; font-size: 0.82rem; display: flex; align-items: center; gap: 10px; margin-bottom: 10px; border: 1px solid; }
+.alert i { font-size: 1.1rem; }
+.alert-success { background: var(--success-light); border-color: var(--success-border); color: var(--alert-success-text); }
+.alert-warning { background: var(--warning-light); border-color: var(--warning-border); color: var(--alert-warning-text); }
+.alert-danger { background: var(--danger-light); border-color: var(--danger-border); color: var(--alert-danger-text); }
+.alert-info { background: var(--info-light); border-color: var(--info-border); color: var(--alert-info-text); }
+
+.pill { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: 600; }
+.pill-success { background: var(--success-light); color: var(--pill-success-text); border: 1px solid var(--success-border); }
+.pill-info { background: var(--info-light); color: var(--pill-info-text); border: 1px solid var(--info-border); }
+.pill-warning { background: var(--warning-light); color: var(--pill-warning-text); border: 1px solid var(--warning-border); }
+.pill-danger { background: var(--danger-light); color: var(--alert-danger-text); border: 1px solid var(--danger-border); }
+.pill-purple { background: var(--purple-light); color: var(--purple); border: 1px solid rgba(155,150,255,0.3); }
+
+.bg-primary { background: var(--primary); color: #1A1923 !important; }
+.bg-success { background: var(--success); color: #1A1923 !important; }
+.bg-warning { background: var(--warning); color: #1A1923 !important; }
+.bg-info { background: var(--info); color: white !important; }
+.bg-danger { background: var(--danger); color: white !important; }
+.bg-purple { background: var(--purple); color: white !important; }
+.bg-teal { background: var(--teal); color: #1A1923 !important; }
+.bg-orange { background: var(--orange); color: #1A1923 !important; }
+[data-theme-mode=light] .bg-danger, [data-theme-mode=light] .bg-info, [data-theme-mode=light] .bg-purple { color: #1A1923 !important; }
+
+.table-wrapper { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+th { text-align: left; padding: 10px 14px; background: var(--th-bg); font-weight: 600; border-bottom: 2px solid var(--border); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.3px; color: var(--text-muted); }
+thead tr:first-child th:first-child { border-radius: 8px 0 0 0; }
+thead tr:first-child th:last-child { border-radius: 0 8px 0 0; }
+td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+tr:hover { background: var(--primary-light); }
+.num { text-align: right; font-family: 'Consolas',monospace; font-variant-numeric: tabular-nums; }
+
+/* TL;DR + Recommendation */
+.tldr-box { background: linear-gradient(135deg, #2E2D32 0%, #252428 50%, #1A1923 100%); color: white; border-radius: 12px; padding: 28px 32px; margin-bottom: 24px; border: 1px solid var(--border); position: relative; overflow: hidden; }
+.tldr-box::before { content: ''; position: absolute; top: -30%; right: -5%; width: 250px; height: 250px; background: rgba(77,168,218,0.05); border-radius: 50%; }
+.tldr-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: var(--primary); font-weight: 700; opacity: 0.9; }
+.tldr-content { font-size: 1.05rem; line-height: 1.5; margin-top: 8px; opacity: 0.95; position: relative; z-index: 1; }
+.tldr-recommend { margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; gap: 12px; flex-wrap: wrap; position: relative; z-index: 1; }
+.tldr-recommend-badge { background: var(--primary); color: #1A1923; padding: 6px 14px; border-radius: 8px; font-size: 0.82rem; font-weight: 700; display: flex; align-items: center; gap: 6px; }
+.tldr-recommend-text { font-size: 0.92rem; opacity: 0.9; }
+
+/* Scenario Cards (dense comparison) */
+.scenario-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+.scenario-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.03); transition: all 0.2s; position: relative; }
+.scenario-card:hover { border-color: var(--primary); box-shadow: var(--card-shadow); }
+.scenario-card.recommended { border-color: var(--primary); border-width: 2px; }
+.scenario-card.recommended::before { content: '⭐ RECOMENDADO'; position: absolute; top: -10px; left: 16px; background: var(--primary); color: #1A1923; padding: 3px 10px; border-radius: 6px; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.5px; }
+.scenario-card-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+.scenario-card-icon { width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+.scenario-card-title { font-size: 1rem; font-weight: 700; flex: 1; }
+.scenario-card-tag { font-size: 0.68rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+.scenario-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+.scenario-metric { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; }
+.scenario-metric-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); font-weight: 600; }
+.scenario-metric-value { font-size: 1.15rem; font-weight: 700; margin-top: 2px; }
+.scenario-metric-sub { font-size: 0.7rem; color: var(--text-muted); margin-top: 2px; }
+.scenario-scope { margin-bottom: 12px; }
+.scenario-scope-line { font-size: 0.78rem; padding: 4px 0; display: flex; align-items: flex-start; gap: 6px; }
+.scenario-scope-line.in { color: var(--alert-success-text); }
+.scenario-scope-line.out { color: var(--text-muted); text-decoration: line-through; }
+.scenario-risk-row { display: flex; align-items: center; gap: 8px; font-size: 0.78rem; padding-top: 12px; border-top: 1px solid var(--border); }
+.scenario-risk-row strong { font-weight: 600; color: var(--text-muted); text-transform: uppercase; font-size: 0.65rem; letter-spacing: 0.5px; }
+.scenario-risk-dot { width: 10px; height: 10px; border-radius: 50%; }
+.dot-low { background: var(--success); }
+.dot-med { background: var(--warning); }
+.dot-high { background: var(--danger); }
+
+/* KPI Strip */
+.kpi-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; }
+.kpi { background: var(--card-bg); border-radius: 10px; padding: 14px 16px; border-left: 3px solid var(--primary); border: 1px solid var(--border); border-left: 3px solid var(--primary); box-shadow: var(--card-shadow); }
+.kpi-label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); font-weight: 600; }
+.kpi-value { font-size: 1.6rem; font-weight: 800; margin: 4px 0; }
+.kpi-sub { font-size: 0.72rem; color: var(--text-muted); }
+
+/* Risk badges */
+.risk-list { display: flex; flex-direction: column; gap: 8px; }
+.risk-item { display: flex; align-items: center; gap: 12px; padding: 12px 14px; background: var(--card-bg); border-radius: 8px; border: 1px solid var(--border); }
+.risk-level { width: 8px; height: 36px; border-radius: 4px; flex-shrink: 0; }
+.risk-content { flex: 1; }
+.risk-title { font-weight: 600; font-size: 0.88rem; }
+.risk-desc { font-size: 0.78rem; color: var(--text-muted); margin-top: 2px; }
+.risk-impact { padding: 4px 10px; border-radius: 6px; font-size: 0.7rem; font-weight: 600; white-space: nowrap; }
+
+/* Scenario detail tabs */
+.detail-section { margin-bottom: 24px; }
+.detail-h { font-size: 0.95rem; font-weight: 700; margin-bottom: 12px; color: var(--primary); display: flex; align-items: center; gap: 8px; }
+.scope-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.scope-box { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+.scope-box-title { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; }
+.scope-box-title.in { color: var(--alert-success-text); }
+.scope-box-title.out { color: var(--alert-danger-text); }
+.scope-box ul { margin: 0; padding-left: 18px; font-size: 0.85rem; }
+.scope-box li { padding: 3px 0; }
+
+/* Phases */
+.phase-flow { display: flex; gap: 8px; flex-wrap: wrap; padding: 16px 0; }
+.phase-card { flex: 1; min-width: 180px; background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 14px; }
+.phase-card-num { font-size: 0.7rem; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.5px; }
+.phase-card-name { font-size: 0.92rem; font-weight: 700; margin: 4px 0; }
+.phase-card-hours { font-size: 1.4rem; font-weight: 800; color: var(--info); }
+.phase-card-team { font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; }
+
+.footer { background: linear-gradient(135deg, #2E2D32 0%, #252428 50%, #1A1923 100%); color: white; padding: 36px 0; margin-top: 40px; }
+.footer-content { max-width: 1400px; margin: 0 auto; padding: 0 32px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 24px; }
+.footer-author-name { font-size: 0.95rem; font-weight: 600; }
+.footer-author-role { font-size: 0.78rem; opacity: 0.7; }
+.footer-doc-title { font-size: 0.85rem; opacity: 0.9; }
+.footer-doc-detail { font-size: 0.72rem; opacity: 0.6; margin-top: 2px; }
+.footer-seal { max-width: 1400px; margin: 20px auto 0; padding: 16px 32px 0; border-top: 1px solid rgba(255,255,255,0.12); font-size: 0.7rem; opacity: 0.5; text-align: center; }
+
+@media (max-width: 768px) {
+  .scenario-grid { grid-template-columns: 1fr; }
+  .kpi-strip { grid-template-columns: 1fr 1fr; }
+  .scope-grid { grid-template-columns: 1fr; }
+  .phase-flow { flex-direction: column; }
+}
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-thumb { background: rgba(77,168,218,0.3); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="doc-container" style="padding-top: 0; padding-bottom: 0;">
+    <div class="header-top">
+      <div>
+        <h1><i class="ri-file-chart-line"></i>Plataforma de Consolidação Financeira</h1>
+        <div class="subtitle">Executive Report — Decisão de Investimento</div>
+        <div style="display:flex; gap:8px; margin-top:10px;">
+          <div class="header-badge"><i class="ri-building-line"></i> Patria</div>
+          <div class="header-badge"><i class="ri-calendar-line"></i> Abril 2026</div>
+        </div>
+      </div>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span class="badge-version">v01.00</span>
+        <button class="theme-toggle" onclick="toggleTheme()"><i id="themeIcon" class="ri-moon-line"></i></button>
+      </div>
+    </div>
+    <div class="tabs-nav">
+      <button class="tab-btn active" data-tab="macro"><i class="ri-eye-line"></i> Visão Macro</button>
+      <button class="tab-btn" data-tab="contexto"><i class="ri-file-text-line"></i> Detalhes do Projeto</button>
+      <button class="tab-btn" data-tab="cen-principal"><i class="ri-star-fill"></i> Cenário Principal</button>
+      <button class="tab-btn" data-tab="cen-enxuto"><i class="ri-leaf-line"></i> Cenário Enxuto</button>
+      <button class="tab-btn" data-tab="cen-robusto"><i class="ri-shield-star-line"></i> Cenário Robusto</button>
+    </div>
+  </div>
+</header>
+
+<div class="doc-container">
+
+<!-- ═══════════════════════ TAB: VISÃO MACRO ═══════════════════════ -->
+<div class="tab-pane active" id="tab-macro">
+
+  <!-- TL;DR + Recommendation -->
+  <div class="tldr-box">
+    <div class="tldr-label">TL;DR — Resumo executivo</div>
+    <div class="tldr-content">
+      Plataforma SaaS para automatizar a consolidação financeira mensal de 12 filiais. Hoje analistas gastam <strong>12h/semana</strong> em planilhas — o projeto reduz para <strong>2h/semana</strong>, elimina retrabalhos e libera o time para análise.
+    </div>
+    <div class="tldr-recommend">
+      <div class="tldr-recommend-badge"><i class="ri-star-fill"></i> Recomendado: Cenário Principal</div>
+      <div class="tldr-recommend-text">Melhor equilíbrio entre escopo, risco e custo. Entrega o ROI esperado em 14 meses.</div>
+    </div>
+  </div>
+
+  <!-- KPI Strip -->
+  <div class="kpi-strip">
+    <div class="kpi"><div class="kpi-label">Investimento (Principal)</div><div class="kpi-value" style="color:var(--primary)">R$ 850K</div><div class="kpi-sub">TCO 1º ano</div></div>
+    <div class="kpi"><div class="kpi-label">Duração</div><div class="kpi-value" style="color:var(--info)">6 meses</div><div class="kpi-sub">2.040 horas totais</div></div>
+    <div class="kpi"><div class="kpi-label">Equipe</div><div class="kpi-value" style="color:var(--success)">8 pessoas</div><div class="kpi-sub">interna + 2 pleitos</div></div>
+    <div class="kpi"><div class="kpi-label">Confiança</div><div class="kpi-value" style="color:var(--warning)">94/100</div><div class="kpi-sub">Auditor 96 · 10th 92</div></div>
+  </div>
+
+  <!-- Comparativo dense cards -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon bg-primary"><i class="ri-scales-3-line"></i></div>
+      <div class="section-title">Comparativo de Cenários</div>
+      <span class="section-count">3 opções</span>
+    </div>
+
+    <div class="scenario-grid">
+
+      <!-- Cenário Enxuto -->
+      <div class="scenario-card">
+        <div class="scenario-card-header">
+          <div class="scenario-card-icon bg-success"><i class="ri-leaf-line"></i></div>
+          <div>
+            <div class="scenario-card-title">Cenário Enxuto</div>
+            <div class="scenario-card-tag">MVP — go-to-market rápido</div>
+          </div>
+        </div>
+        <div class="scenario-metrics">
+          <div class="scenario-metric"><div class="scenario-metric-label">Investimento</div><div class="scenario-metric-value" style="color:var(--success)">R$ 520K</div><div class="scenario-metric-sub">-39% vs principal</div></div>
+          <div class="scenario-metric"><div class="scenario-metric-label">Duração</div><div class="scenario-metric-value">3 meses</div><div class="scenario-metric-sub">1.200 horas</div></div>
+          <div class="scenario-metric"><div class="scenario-metric-label">Equipe</div><div class="scenario-metric-value">4 pessoas</div><div class="scenario-metric-sub">interna</div></div>
+          <div class="scenario-metric"><div class="scenario-metric-label">ROI</div><div class="scenario-metric-value">9 meses</div><div class="scenario-metric-sub">payback rápido</div></div>
+        </div>
+        <div class="scenario-scope">
+          <div class="scenario-scope-line in"><i class="ri-check-line"></i> Consolidação automática (12 filiais)</div>
+          <div class="scenario-scope-line in"><i class="ri-check-line"></i> Dashboard P&L básico</div>
+          <div class="scenario-scope-line out"><i class="ri-close-line"></i> Trilha de auditoria SOX</div>
+          <div class="scenario-scope-line out"><i class="ri-close-line"></i> Multi-moeda</div>
+          <div class="scenario-scope-line out"><i class="ri-close-line"></i> Integração SAP automática</div>
+        </div>
+        <div class="scenario-risk-row">
+          <strong>Risco:</strong>
+          <span class="scenario-risk-dot dot-med"></span> Médio
+          <span style="margin-left:auto; color:var(--text-muted); font-size:0.72rem;">Compliance pendente</span>
+        </div>
+      </div>
+
+      <!-- Cenário Principal -->
+      <div class="scenario-card recommended">
+        <div class="scenario-card-header">
+          <div class="scenario-card-icon bg-primary"><i class="ri-star-fill"></i></div>
+          <div>
+            <div class="scenario-card-title">Cenário Principal</div>
+            <div class="scenario-card-tag">Equilíbrio recomendado</div>
+          </div>
+        </div>
+        <div class="scenario-metrics">
+          <div class="scenario-metric"><div class="scenario-metric-label">Investimento</div><div class="scenario-metric-value" style="color:var(--primary)">R$ 850K</div><div class="scenario-metric-sub">TCO 1º ano</div></div>
+          <div class="scenario-metric"><div class="scenario-metric-label">Duração</div><div class="scenario-metric-value">6 meses</div><div class="scenario-metric-sub">2.040 horas</div></div>
+          <div class="scenario-metric"><div class="scenario-metric-label">Equipe</div><div class="scenario-metric-value">8 pessoas</div><div class="scenario-metric-sub">interna + 2</div></div>
+          <div class="scenario-metric"><div class="scenario-metric-label">ROI</div><div class="scenario-metric-value">14 meses</div><div class="scenario-metric-sub">payback médio</div></div>
+        </div>
+        <div class="scenario-scope">
+          <div class="scenario-scope-line in"><i class="ri-check-line"></i> Consolidação automática (12 filiais)</div>
+          <div class="scenario-scope-line in"><i class="ri-check-line"></i> Dashboard P&L + DRE completo</div>
+          <div class="scenario-scope-line in"><i class="ri-check-line"></i> Trilha de auditoria SOX</div>
+          <div class="scenario-scope-line in"><i class="ri-check-line"></i> Integração SAP via API</div>
+          <div class="scenario-scope-line out"><i class="ri-close-line"></i> Planejamento orçamentário</div>
+        </div>
+        <div class="scenario-risk-row">
+          <strong>Risco:</strong>
+          <span class="scenario-risk-dot dot-low"></span> Baixo
+          <span style="margin-left:auto; color:var(--text-muted); font-size:0.72rem;">Equipe disponível</span>
+        </div>
+      </div>
+
+      <!-- Cenário Robusto -->
+      <div class="scenario-card">
+        <div class="scenario-card-header">
+          <div class="scenario-card-icon bg-purple"><i class="ri-shield-star-line"></i></div>
+          <div>
+            <div class="scenario-card-title">Cenário Robusto</div>
+            <div class="scenario-card-tag">Plataforma corporativa</div>
+          </div>
+        </div>
+        <div class="scenario-metrics">
+          <div class="scenario-metric"><div class="scenario-metric-label">Investimento</div><div class="scenario-metric-value" style="color:var(--purple)">R$ 1.4M</div><div class="scenario-metric-sub">+65% vs principal</div></div>
+          <div class="scenario-metric"><div class="scenario-metric-label">Duração</div><div class="scenario-metric-value">9 meses</div><div class="scenario-metric-sub">3.200 horas</div></div>
+          <div class="scenario-metric"><div class="scenario-metric-label">Equipe</div><div class="scenario-metric-value">12 pessoas</div><div class="scenario-metric-sub">interna + 5 contrat.</div></div>
+          <div class="scenario-metric"><div class="scenario-metric-label">ROI</div><div class="scenario-metric-value">22 meses</div><div class="scenario-metric-sub">payback longo</div></div>
+        </div>
+        <div class="scenario-scope">
+          <div class="scenario-scope-line in"><i class="ri-check-line"></i> Tudo do Cenário Principal</div>
+          <div class="scenario-scope-line in"><i class="ri-check-line"></i> Multi-moeda + multi-país</div>
+          <div class="scenario-scope-line in"><i class="ri-check-line"></i> Planejamento orçamentário</div>
+          <div class="scenario-scope-line in"><i class="ri-check-line"></i> ML para forecast</div>
+          <div class="scenario-scope-line in"><i class="ri-check-line"></i> Mobile app executivo</div>
+        </div>
+        <div class="scenario-risk-row">
+          <strong>Risco:</strong>
+          <span class="scenario-risk-dot dot-high"></span> Alto
+          <span style="margin-left:auto; color:var(--text-muted); font-size:0.72rem;">Contratações + escopo</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Top Risks -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon bg-warning"><i class="ri-alarm-warning-line"></i></div>
+      <div class="section-title">Top 5 Riscos Críticos</div>
+    </div>
+    <div class="risk-list">
+      <div class="risk-item">
+        <div class="risk-level bg-danger"></div>
+        <div class="risk-content">
+          <div class="risk-title">Indisponibilidade de dados históricos consolidados</div>
+          <div class="risk-desc">Filiais 7 e 11 não têm histórico digitalizado dos últimos 24 meses — pode atrasar a fase 2.</div>
+        </div>
+        <span class="risk-impact pill-danger">Impacto Alto</span>
+      </div>
+      <div class="risk-item">
+        <div class="risk-level bg-warning"></div>
+        <div class="risk-content">
+          <div class="risk-title">Dependência da API SAP S/4HANA</div>
+          <div class="risk-desc">Acesso à API depende de aprovação do comitê SAP — janela típica de 6-8 semanas.</div>
+        </div>
+        <span class="risk-impact pill-warning">Impacto Médio</span>
+      </div>
+      <div class="risk-item">
+        <div class="risk-level bg-warning"></div>
+        <div class="risk-content">
+          <div class="risk-title">Compliance LGPD para dados de funcionários nas folhas</div>
+          <div class="risk-desc">DPO precisa validar as bases legais antes do go-live. Sem isso, lançamento pode ser bloqueado.</div>
+        </div>
+        <span class="risk-impact pill-warning">Impacto Médio</span>
+      </div>
+      <div class="risk-item">
+        <div class="risk-level bg-warning"></div>
+        <div class="risk-content">
+          <div class="risk-title">Bus factor = 1 no conhecimento contábil</div>
+          <div class="risk-desc">Apenas o controller sênior conhece todas as regras de consolidação atuais. Documentar é prioridade.</div>
+        </div>
+        <span class="risk-impact pill-warning">Impacto Médio</span>
+      </div>
+      <div class="risk-item">
+        <div class="risk-level bg-success"></div>
+        <div class="risk-content">
+          <div class="risk-title">Adoção pelos analistas</div>
+          <div class="risk-desc">Mudança cultural — analistas estão acostumados com Excel. Mitigado com treinamento e migração gradual.</div>
+        </div>
+        <span class="risk-impact pill-success">Impacto Baixo</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pré-requisitos + Próximos passos -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon bg-info"><i class="ri-flag-line"></i></div>
+      <div class="section-title">Pré-requisitos & Próximos Passos</div>
+    </div>
+    <div class="scope-grid">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-header-icon bg-warning"><i class="ri-alert-line"></i></div>
+          <div class="card-title">Antes do kickoff (bloqueantes)</div>
+        </div>
+        <div class="card-body">
+          <ul style="margin:0; padding-left:18px; font-size:0.88rem; line-height:1.8;">
+            <li>Aprovação do comitê SAP para acesso à API</li>
+            <li>Validação do DPO sobre tratamento de dados de RH</li>
+            <li>Contratação de 2 desenvolvedores Python pleno</li>
+            <li>Levantamento e digitalização dos dados das filiais 7 e 11</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-header-icon bg-success"><i class="ri-rocket-line"></i></div>
+          <div class="card-title">Se aprovado, próximos 30 dias</div>
+        </div>
+        <div class="card-body">
+          <ul style="margin:0; padding-left:18px; font-size:0.88rem; line-height:1.8;">
+            <li>Kickoff com sponsors + formalização do PO</li>
+            <li>Setup do time + ambientes (dev/staging/prod)</li>
+            <li>Sprint 0 — arquitetura técnica detalhada</li>
+            <li>Início da Sprint 1 — módulo de ingestão</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════ TAB: DETALHES DO PROJETO ═══════════════════════ -->
+<div class="tab-pane" id="tab-contexto">
+
+  <div class="intro-text">
+    <strong>Sobre este projeto.</strong> A Patria opera 12 filiais com sistemas financeiros heterogêneos. A consolidação mensal é manual, demorada e sujeita a erros que já causaram 3 reapresentações ao conselho nos últimos 2 trimestres.
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon bg-danger"><i class="ri-error-warning-line"></i></div>
+      <div class="section-title">Problemas Atuais</div>
+    </div>
+    <div class="card"><div class="card-body">
+      <ul style="font-size:0.88rem; line-height:1.8; margin:0; padding-left:20px;">
+        <li><strong>12h/semana por analista</strong> consolidando dados em Excel manualmente</li>
+        <li><strong>3 reapresentações ao conselho</strong> nos últimos 2 trimestres por erros de consolidação</li>
+        <li><strong>Fechamento mensal em D+8</strong> — atrasa decisões executivas e auditoria</li>
+        <li><strong>Trilha de auditoria fragmentada</strong> em emails, planilhas e prints</li>
+        <li><strong>Falta de visibilidade unificada</strong> — cada filial usa template próprio</li>
+      </ul>
+    </div></div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon bg-success"><i class="ri-check-double-line"></i></div>
+      <div class="section-title">O Que Queremos Resolver</div>
+    </div>
+    <div class="card"><div class="card-body">
+      <ul style="font-size:0.88rem; line-height:1.8; margin:0; padding-left:20px;">
+        <li>Reduzir consolidação para <strong>2h/semana</strong> (-83%)</li>
+        <li><strong>Zero erros materiais</strong> em relatórios ao conselho</li>
+        <li>Fechamento mensal em <strong>D+2</strong> (vs D+8 hoje)</li>
+        <li>Trilha de auditoria <strong>completa e SOX-compliant</strong></li>
+        <li>Dashboard executivo com <strong>P&L consolidado em tempo real</strong></li>
+      </ul>
+    </div></div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon bg-primary"><i class="ri-flag-2-line"></i></div>
+      <div class="section-title">Métricas de Sucesso (OKRs)</div>
+    </div>
+    <div class="card"><div class="card-body">
+      <div class="table-wrapper"><table>
+        <thead><tr><th>Objetivo</th><th>Métrica</th><th>Baseline</th><th>Meta</th></tr></thead>
+        <tbody>
+          <tr><td>Reduzir esforço de consolidação</td><td>Horas/semana por analista</td><td class="num">12h</td><td class="num"><strong style="color:var(--success)">2h</strong></td></tr>
+          <tr><td>Acelerar fechamento</td><td>Dias para fechamento mensal</td><td class="num">D+8</td><td class="num"><strong style="color:var(--success)">D+2</strong></td></tr>
+          <tr><td>Eliminar retrabalho</td><td>Reapresentações ao conselho/ano</td><td class="num">6</td><td class="num"><strong style="color:var(--success)">0</strong></td></tr>
+          <tr><td>Compliance</td><td>Auditoria SOX aprovada</td><td>Parcial</td><td><strong style="color:var(--success)">100%</strong></td></tr>
+        </tbody>
+      </table></div>
+    </div></div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon bg-purple"><i class="ri-team-line"></i></div>
+      <div class="section-title">Stakeholders</div>
+    </div>
+    <div class="card"><div class="card-body">
+      <div class="table-wrapper"><table>
+        <thead><tr><th>Pessoa / Papel</th><th>Função no projeto</th><th>Decisão</th><th>Disponibilidade</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Maria Silva</strong> · CFO</td><td>Patrocinadora</td><td>Aprova orçamento</td><td>Quinzenal</td></tr>
+          <tr><td><strong>João Santos</strong> · Controller</td><td>Product Owner</td><td>Define prioridades</td><td>Semanal</td></tr>
+          <tr><td><strong>Ana Costa</strong> · Tech Lead</td><td>Líder técnico</td><td>Decide arquitetura</td><td>Diário</td></tr>
+          <tr><td><strong>Carlos Lima</strong> · DPO</td><td>Compliance LGPD</td><td>Veto privacidade</td><td>Mensal</td></tr>
+        </tbody>
+      </table></div>
+    </div></div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════ TAB: CENÁRIO PRINCIPAL ═══════════════════════ -->
+<div class="tab-pane" id="tab-cen-principal">
+
+  <div class="tldr-box">
+    <div class="tldr-label"><i class="ri-star-fill"></i> Cenário Principal — Recomendado</div>
+    <div class="tldr-content">
+      Plataforma SaaS multi-tenant com integração SAP, dashboard executivo e trilha SOX. Equilíbrio entre escopo, prazo e risco — entrega o ROI esperado em 14 meses.
+    </div>
+    <div class="tldr-recommend">
+      <div style="display:flex; gap:24px; flex-wrap:wrap;">
+        <div><div style="font-size:0.7rem; opacity:0.7; text-transform:uppercase;">Investimento</div><div style="font-size:1.4rem; font-weight:800; color:var(--primary);">R$ 850K</div></div>
+        <div><div style="font-size:0.7rem; opacity:0.7; text-transform:uppercase;">Duração</div><div style="font-size:1.4rem; font-weight:800;">6 meses</div></div>
+        <div><div style="font-size:0.7rem; opacity:0.7; text-transform:uppercase;">Horas totais</div><div style="font-size:1.4rem; font-weight:800;">2.040h</div></div>
+        <div><div style="font-size:0.7rem; opacity:0.7; text-transform:uppercase;">Equipe</div><div style="font-size:1.4rem; font-weight:800;">8 pessoas</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="detail-h"><i class="ri-checkbox-multiple-line"></i> Escopo</div>
+    <div class="scope-grid">
+      <div class="scope-box">
+        <div class="scope-box-title in">✓ DENTRO DO ESCOPO</div>
+        <ul>
+          <li>Consolidação automática de dados das 12 filiais</li>
+          <li>Dashboard executivo com P&L e DRE</li>
+          <li>Trilha de auditoria completa (SOX-compliant)</li>
+          <li>Integração com SAP S/4HANA via API</li>
+          <li>Alertas de inconsistência em tempo real</li>
+          <li>Exportação para Excel, PDF e XBRL</li>
+          <li>RBAC com perfis: analista, gestor, auditor</li>
+          <li>Treinamento e documentação operacional</li>
+        </ul>
+      </div>
+      <div class="scope-box">
+        <div class="scope-box-title out">✗ FORA DO ESCOPO</div>
+        <ul>
+          <li>Planejamento orçamentário (orçado vs realizado)</li>
+          <li>Multi-moeda / multi-país</li>
+          <li>Forecast com ML</li>
+          <li>App mobile</li>
+          <li>Integração com sistema de RH (Phase 2)</li>
+          <li>White-label para outras empresas</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="detail-h"><i class="ri-team-fill"></i> Composição da Equipe</div>
+    <div class="card"><div class="card-body" style="padding:0;">
+      <div class="table-wrapper"><table>
+        <thead><tr><th>Role</th><th>Quantidade</th><th>Origem</th><th class="num">Horas alocadas</th><th class="num">% do projeto</th></tr></thead>
+        <tbody>
+          <tr><td>Tech Lead</td><td>1</td><td><span class="pill pill-success">Interno</span></td><td class="num">240h</td><td class="num">12%</td></tr>
+          <tr><td>Product Owner</td><td>1</td><td><span class="pill pill-success">Interno</span></td><td class="num">180h</td><td class="num">9%</td></tr>
+          <tr><td>Dev Back-end Sr (Python)</td><td>2</td><td><span class="pill pill-warning">Contratar</span></td><td class="num">720h</td><td class="num">35%</td></tr>
+          <tr><td>Dev Front-end (React)</td><td>1</td><td><span class="pill pill-success">Interno</span></td><td class="num">320h</td><td class="num">16%</td></tr>
+          <tr><td>QA</td><td>1</td><td><span class="pill pill-success">Interno</span></td><td class="num">280h</td><td class="num">14%</td></tr>
+          <tr><td>DevOps / SRE</td><td>1</td><td><span class="pill pill-success">Interno</span></td><td class="num">160h</td><td class="num">8%</td></tr>
+          <tr><td>Designer UX</td><td>1</td><td><span class="pill pill-info">Freelancer</span></td><td class="num">140h</td><td class="num">7%</td></tr>
+          <tr style="background:var(--th-bg);"><td><strong>Total</strong></td><td><strong>8</strong></td><td>—</td><td class="num"><strong>2.040h</strong></td><td class="num"><strong>100%</strong></td></tr>
+        </tbody>
+      </table></div>
+    </div></div>
+  </div>
+
+  <div class="section">
+    <div class="detail-h"><i class="ri-flow-chart"></i> Planejamento Macro (sem datas)</div>
+    <div class="phase-flow">
+      <div class="phase-card" style="border-left: 3px solid var(--primary);">
+        <div class="phase-card-num">FASE 1</div>
+        <div class="phase-card-name">Setup & Arquitetura</div>
+        <div class="phase-card-hours">240h</div>
+        <div class="phase-card-team">Tech Lead, PO, DevOps</div>
+      </div>
+      <div class="phase-card" style="border-left: 3px solid var(--info);">
+        <div class="phase-card-num">FASE 2</div>
+        <div class="phase-card-name">Ingestão & Consolidação</div>
+        <div class="phase-card-hours">720h</div>
+        <div class="phase-card-team">2 Devs Back, QA</div>
+      </div>
+      <div class="phase-card" style="border-left: 3px solid var(--success);">
+        <div class="phase-card-num">FASE 3</div>
+        <div class="phase-card-name">Dashboard & UX</div>
+        <div class="phase-card-hours">560h</div>
+        <div class="phase-card-team">Dev Front, Designer, QA</div>
+      </div>
+      <div class="phase-card" style="border-left: 3px solid var(--warning);">
+        <div class="phase-card-num">FASE 4</div>
+        <div class="phase-card-name">SOX & Auditoria</div>
+        <div class="phase-card-hours">320h</div>
+        <div class="phase-card-team">Tech Lead, Dev Back, QA</div>
+      </div>
+      <div class="phase-card" style="border-left: 3px solid var(--purple);">
+        <div class="phase-card-num">FASE 5</div>
+        <div class="phase-card-name">Go-live & Treinamento</div>
+        <div class="phase-card-hours">200h</div>
+        <div class="phase-card-team">PO, Tech Lead, Dev Front</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="detail-h"><i class="ri-shield-check-line"></i> Riscos Específicos</div>
+    <div class="alert alert-warning"><i class="ri-error-warning-line"></i> <strong>Acesso à API SAP:</strong> aprovação do comitê SAP necessária. Atraso típico 6-8 semanas — bloqueia Fase 2.</div>
+    <div class="alert alert-warning"><i class="ri-error-warning-line"></i> <strong>Validação SOX:</strong> auditor externo precisa validar trilha antes do go-live. Janela típica 4 semanas — planejar Fase 4 com folga.</div>
+    <div class="alert alert-info"><i class="ri-information-line"></i> <strong>Contratação de 2 devs Python:</strong> mercado aquecido. Risco de atraso no início. Mitigação: começar processo seletivo agora.</div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════ TAB: CENÁRIO ENXUTO ═══════════════════════ -->
+<div class="tab-pane" id="tab-cen-enxuto">
+
+  <div class="tldr-box" style="background: linear-gradient(135deg, #2E2D32 0%, #1f3520 50%, #1A1923 100%);">
+    <div class="tldr-label"><i class="ri-leaf-line" style="color:var(--success)"></i> Cenário Enxuto — MVP rápido</div>
+    <div class="tldr-content">
+      Versão minimalista focada em <strong>resolver 80% do problema com 50% do investimento</strong>. Entrega valor em 3 meses, mas posterga compliance SOX e integração SAP automática para Fase 2.
+    </div>
+    <div class="tldr-recommend">
+      <div style="display:flex; gap:24px; flex-wrap:wrap;">
+        <div><div style="font-size:0.7rem; opacity:0.7; text-transform:uppercase;">Investimento</div><div style="font-size:1.4rem; font-weight:800; color:var(--success);">R$ 520K</div></div>
+        <div><div style="font-size:0.7rem; opacity:0.7; text-transform:uppercase;">Duração</div><div style="font-size:1.4rem; font-weight:800;">3 meses</div></div>
+        <div><div style="font-size:0.7rem; opacity:0.7; text-transform:uppercase;">Horas totais</div><div style="font-size:1.4rem; font-weight:800;">1.200h</div></div>
+        <div><div style="font-size:0.7rem; opacity:0.7; text-transform:uppercase;">Equipe</div><div style="font-size:1.4rem; font-weight:800;">4 pessoas</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="detail-h"><i class="ri-checkbox-multiple-line"></i> Escopo</div>
+    <div class="scope-grid">
+      <div class="scope-box">
+        <div class="scope-box-title in">✓ DENTRO DO ESCOPO</div>
+        <ul>
+          <li>Consolidação automática (12 filiais, ingestão CSV/Excel)</li>
+          <li>Dashboard P&L básico</li>
+          <li>Exportação Excel</li>
+          <li>RBAC simples (2 perfis: analista, gestor)</li>
+        </ul>
+      </div>
+      <div class="scope-box">
+        <div class="scope-box-title out">✗ FORA DO ESCOPO</div>
+        <ul>
+          <li>Trilha de auditoria SOX</li>
+          <li>Integração SAP automática (manual via export)</li>
+          <li>Multi-moeda / DRE</li>
+          <li>Alertas em tempo real</li>
+          <li>Exportação PDF / XBRL</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="detail-h"><i class="ri-team-fill"></i> Composição da Equipe</div>
+    <div class="card"><div class="card-body" style="padding:0;">
+      <div class="table-wrapper"><table>
+        <thead><tr><th>Role</th><th>Qtd</th><th>Origem</th><th class="num">Horas</th></tr></thead>
+        <tbody>
+          <tr><td>Tech Lead</td><td>1</td><td><span class="pill pill-success">Interno</span></td><td class="num">160h</td></tr>
+          <tr><td>Dev Full-stack Sr</td><td>2</td><td><span class="pill pill-success">Interno</span></td><td class="num">720h</td></tr>
+          <tr><td>QA</td><td>1</td><td><span class="pill pill-success">Interno</span></td><td class="num">320h</td></tr>
+          <tr style="background:var(--th-bg);"><td><strong>Total</strong></td><td><strong>4</strong></td><td>—</td><td class="num"><strong>1.200h</strong></td></tr>
+        </tbody>
+      </table></div>
+    </div></div>
+  </div>
+
+  <div class="section">
+    <div class="detail-h"><i class="ri-flow-chart"></i> Planejamento Macro</div>
+    <div class="phase-flow">
+      <div class="phase-card" style="border-left: 3px solid var(--primary);"><div class="phase-card-num">FASE 1</div><div class="phase-card-name">Setup</div><div class="phase-card-hours">120h</div><div class="phase-card-team">Tech Lead</div></div>
+      <div class="phase-card" style="border-left: 3px solid var(--info);"><div class="phase-card-num">FASE 2</div><div class="phase-card-name">Ingestão & Consolidação</div><div class="phase-card-hours">560h</div><div class="phase-card-team">2 Devs, QA</div></div>
+      <div class="phase-card" style="border-left: 3px solid var(--success);"><div class="phase-card-num">FASE 3</div><div class="phase-card-name">Dashboard básico</div><div class="phase-card-hours">400h</div><div class="phase-card-team">2 Devs, QA</div></div>
+      <div class="phase-card" style="border-left: 3px solid var(--purple);"><div class="phase-card-num">FASE 4</div><div class="phase-card-name">Go-live</div><div class="phase-card-hours">120h</div><div class="phase-card-team">Tech Lead, QA</div></div>
+    </div>
+  </div>
+
+  <div class="alert alert-danger"><i class="ri-alert-line"></i> <strong>Atenção:</strong> sem trilha SOX, este cenário NÃO é elegível para auditoria externa. Compliance precisa ser endereçado em fase posterior.</div>
+</div>
+
+<!-- ═══════════════════════ TAB: CENÁRIO ROBUSTO ═══════════════════════ -->
+<div class="tab-pane" id="tab-cen-robusto">
+
+  <div class="tldr-box" style="background: linear-gradient(135deg, #2E2D32 0%, #2a1f3d 50%, #1A1923 100%);">
+    <div class="tldr-label"><i class="ri-shield-star-line" style="color:var(--purple)"></i> Cenário Robusto — Plataforma Corporativa</div>
+    <div class="tldr-content">
+      Plataforma completa multi-país, com ML para forecast, app mobile e planejamento orçamentário. <strong>Vai além das necessidades atuais</strong> — recomendado se há plano de expansão internacional ou white-label.
+    </div>
+    <div class="tldr-recommend">
+      <div style="display:flex; gap:24px; flex-wrap:wrap;">
+        <div><div style="font-size:0.7rem; opacity:0.7; text-transform:uppercase;">Investimento</div><div style="font-size:1.4rem; font-weight:800; color:var(--purple);">R$ 1.4M</div></div>
+        <div><div style="font-size:0.7rem; opacity:0.7; text-transform:uppercase;">Duração</div><div style="font-size:1.4rem; font-weight:800;">9 meses</div></div>
+        <div><div style="font-size:0.7rem; opacity:0.7; text-transform:uppercase;">Horas totais</div><div style="font-size:1.4rem; font-weight:800;">3.200h</div></div>
+        <div><div style="font-size:0.7rem; opacity:0.7; text-transform:uppercase;">Equipe</div><div style="font-size:1.4rem; font-weight:800;">12 pessoas</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="detail-h"><i class="ri-checkbox-multiple-line"></i> Escopo</div>
+    <div class="scope-grid">
+      <div class="scope-box">
+        <div class="scope-box-title in">✓ DENTRO DO ESCOPO</div>
+        <ul>
+          <li>Tudo do Cenário Principal</li>
+          <li>Multi-moeda + multi-país (USD, EUR)</li>
+          <li>Planejamento orçamentário (orçado vs realizado)</li>
+          <li>Forecast com ML (3-12 meses)</li>
+          <li>App mobile executivo (iOS + Android)</li>
+          <li>Integração com sistema de RH</li>
+          <li>White-label preparado</li>
+          <li>API pública para parceiros</li>
+        </ul>
+      </div>
+      <div class="scope-box">
+        <div class="scope-box-title out">✗ FORA DO ESCOPO</div>
+        <ul>
+          <li>Marketplace de plugins</li>
+          <li>Suporte 24/7 dedicado</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="detail-h"><i class="ri-team-fill"></i> Composição da Equipe</div>
+    <div class="card"><div class="card-body" style="padding:0;">
+      <div class="table-wrapper"><table>
+        <thead><tr><th>Role</th><th>Qtd</th><th>Origem</th><th class="num">Horas</th></tr></thead>
+        <tbody>
+          <tr><td>Arquiteto de Solução</td><td>1</td><td><span class="pill pill-warning">Contratar</span></td><td class="num">320h</td></tr>
+          <tr><td>Tech Lead</td><td>1</td><td><span class="pill pill-success">Interno</span></td><td class="num">280h</td></tr>
+          <tr><td>Product Owner</td><td>1</td><td><span class="pill pill-success">Interno</span></td><td class="num">240h</td></tr>
+          <tr><td>Dev Back-end Sr</td><td>3</td><td><span class="pill pill-warning">2 contratar</span></td><td class="num">960h</td></tr>
+          <tr><td>Dev Front-end</td><td>2</td><td><span class="pill pill-success">Interno</span></td><td class="num">480h</td></tr>
+          <tr><td>Dev Mobile (iOS+Android)</td><td>1</td><td><span class="pill pill-info">Freelancer</span></td><td class="num">320h</td></tr>
+          <tr><td>ML Engineer</td><td>1</td><td><span class="pill pill-warning">Contratar</span></td><td class="num">280h</td></tr>
+          <tr><td>QA Senior</td><td>1</td><td><span class="pill pill-success">Interno</span></td><td class="num">240h</td></tr>
+          <tr><td>DevOps / SRE</td><td>1</td><td><span class="pill pill-success">Interno</span></td><td class="num">200h</td></tr>
+          <tr style="background:var(--th-bg);"><td><strong>Total</strong></td><td><strong>12</strong></td><td>—</td><td class="num"><strong>3.200h</strong></td></tr>
+        </tbody>
+      </table></div>
+    </div></div>
+  </div>
+
+  <div class="section">
+    <div class="detail-h"><i class="ri-flow-chart"></i> Planejamento Macro</div>
+    <div class="phase-flow">
+      <div class="phase-card" style="border-left: 3px solid var(--primary);"><div class="phase-card-num">FASE 1</div><div class="phase-card-name">Arquitetura & Setup</div><div class="phase-card-hours">400h</div><div class="phase-card-team">Arquiteto, Tech Lead, DevOps</div></div>
+      <div class="phase-card" style="border-left: 3px solid var(--info);"><div class="phase-card-num">FASE 2</div><div class="phase-card-name">Core + Multi-moeda</div><div class="phase-card-hours">880h</div><div class="phase-card-team">3 Devs Back, QA</div></div>
+      <div class="phase-card" style="border-left: 3px solid var(--success);"><div class="phase-card-num">FASE 3</div><div class="phase-card-name">Dashboard + Mobile</div><div class="phase-card-hours">720h</div><div class="phase-card-team">2 Front, Mobile, Designer</div></div>
+      <div class="phase-card" style="border-left: 3px solid var(--warning);"><div class="phase-card-num">FASE 4</div><div class="phase-card-name">ML Forecast</div><div class="phase-card-hours">480h</div><div class="phase-card-team">ML Eng, 1 Dev Back, QA</div></div>
+      <div class="phase-card" style="border-left: 3px solid var(--danger);"><div class="phase-card-num">FASE 5</div><div class="phase-card-name">SOX + Compliance</div><div class="phase-card-hours">400h</div><div class="phase-card-team">Tech Lead, Dev Back, QA</div></div>
+      <div class="phase-card" style="border-left: 3px solid var(--purple);"><div class="phase-card-num">FASE 6</div><div class="phase-card-name">Go-live multi-país</div><div class="phase-card-hours">320h</div><div class="phase-card-team">PO, Tech Lead, todos</div></div>
+    </div>
+  </div>
+
+  <div class="alert alert-danger"><i class="ri-alert-line"></i> <strong>Risco alto:</strong> escopo grande + 5 contratações + ML Engineer raro no mercado. Probabilidade de atraso significativa. Recomendado apenas se houver plano confirmado de expansão internacional.</div>
+
+</div>
+
+</div><!-- /.doc-container -->
+
+<footer class="footer">
+  <div class="footer-content">
+    <div>
+      <div class="footer-author-name">Patria — Plataforma de Consolidação Financeira</div>
+      <div class="footer-author-role">Discovery-to-Go · Executive Report</div>
+    </div>
+    <div style="text-align:right;">
+      <div class="footer-doc-title">Discovery completo · Run #1</div>
+      <div class="footer-doc-detail">Auditor: 96/100 · 10th-man: 92/100 · Confiança: ±15%</div>
+    </div>
+  </div>
+  <div class="footer-seal"><i class="ri-shield-check-line"></i> Documento gerado automaticamente pelo Discovery-to-Go pipeline</div>
+</footer>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const next = html.getAttribute('data-theme-mode') === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme-mode', next);
+  document.getElementById('themeIcon').className = next === 'dark' ? 'ri-moon-line' : 'ri-sun-line';
+}
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+});
+</script>
+</body>
+</html>

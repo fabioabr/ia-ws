@@ -1,0 +1,925 @@
+================================================================
+ PATRIA - ENVIRONMENT DISCOVERY
+ FORMULARIO DE LEVANTAMENTO (APENAS LACUNAS)
+================================================================
+
+ Versao: 1.0
+ Data:   Abr/2026
+ Autor:  Fabio Rodrigues (fabio.rodrigues.consult@patria.com)
+ Base:   Mapa DataLake Patria v1.1 (Fabio A. B. Rodrigues)
+         + Terraform IaC DataLake
+ Escopo: Somente lacunas. O que ja sabemos nao esta aqui -
+         veja a secao "JA SABEMOS - SO CONFIRME" abaixo.
+
+
+================================================================
+ COMO PREENCHER
+================================================================
+
+ 1. Leia primeiro a secao "JA SABEMOS". Se houver divergencia,
+    escreva em "CORRECOES" ao final.
+
+ 2. Para perguntas com opcoes:
+       [X]  = sim / selecionado
+       [ ]  = nao / nao aplicavel
+       [?]  = nao sei (prefira isto do que chutar)
+
+ 3. Para campos abertos, substitua "_____" pela resposta.
+    Use "N/A" para nao aplica, "NAO SEI" para desconhecer.
+
+ 4. Nao precisa preencher tudo. O que ficar em branco vira
+    pauta de entrevista.
+
+ Emojis: 🎯 objetivo  💡 dica  ⚠️ atencao  ❓ pendente
+
+
+================================================================
+ IDENTIFICACAO DO RESPONDENTE
+================================================================
+
+ Nome:           ____________________________________________
+ Email:          ____________________________________________
+ Area:           ____________________________________________
+ Cargo:          ____________________________________________
+ Data:           ____/____/______
+ Dominios que voce preencheu (1 a 10): ______________________
+
+
+================================================================
+ JA SABEMOS - SO CONFIRME (nao reescreva)
+================================================================
+
+ Jurisdicoes: Brasil (BR), Chile (CH), Cayman (CA).
+
+ INFRA / CLOUD:
+   - Cloud publica GCP (multi-projeto: dev, hml, prd + rede)
+   - Regiao us-central1 (zone us-central1-b)
+   - Ambientes: dev + hml (UAT) + prd (sem staging)
+   - IaC: Terraform 1.9.0 + google provider >= 5.0
+   - Containers: Docker + Cloud Composer (PRD) / Docker Compose (DEV/HML)
+   - VMs sem IP externo (so via VPC)
+   - Orquestracao dados: Apache Airflow (Composer 2.13.7 / Airflow 2.10.5)
+
+ SISTEMAS (existencia confirmada):
+   Oracle (HCM, SCM, AP, Financials, Common, AuditTemp, Fusion GL Cayman),
+   iLevel, Efront, Geneva (CH), Derivados CH, Remuneraciones CH,
+   TPAs BR (Iliquidos + Real Estate), SplitC BR/CH, Nexxus BR/CH,
+   Snowflake, Active Directory, GPI, Artikos, Pentaho (legado),
+   BluePrism (RPA), Veeam (backup), Thycotic/Delinea (PAM),
+   N8N, Sensedia (API Gateway), Incorta (middleware ETL), BICC,
+   Power BI, GA4, SharePoint, Azure DevOps, GitHub, Azure Key Vault.
+
+ DESENVOLVIMENTO:
+   - Stack conhecida: Python + Airflow (back-end), Bash + HCL (scripts)
+   - Repo: GitHub + Azure DevOps (coexistencia)
+   - Branching: GitFlow (feature/development/homologation/production)
+   - Registry: Google Artifact Registry (Docker)
+   - Bancos: BigQuery, Snowflake, Oracle DB/Fusion, Dataplex, GCS
+   - Mensageria: Google Pub/Sub
+
+ DEVOPS:
+   - CI/CD: GitHub Actions + Azure Pipelines (coexistencia)
+   - Pipeline: validate -> plan -> apply em 6 fases + safety checks VM
+   - Deploy automatico em push/merge + GitHub Environments
+   - Rollback: nenhum (redeploy manual)
+   - Secrets: Azure Key Vault + GitHub Secrets (Workload Identity Federation)
+
+ SEGURANCA:
+   - Compliance confirmado: SOX, BACEN, CVM, CMF
+   - Least privilege parcial (IAM granular por dataset/zone)
+   - Segregacao ambientes (3 projetos GCP separados + SAs distintos)
+   - TLS 1.2+ (default GCP) | AES-256 at rest (default GCP)
+   - KMS: Cloud KMS (CMEK preparado)
+   - PAM: Thycotic/Delinea
+
+ DADOS:
+   - Arquitetura medallion: Bronze (GCS) / Prata (BQ) / Ouro (BQ)
+   - Stack ingestao: Airflow, N8N, Sensedia, Incorta, Python+Selenium,
+     BICC, Pub/Sub, Pentaho (SOX), BluePrism (SOX)
+   - Backup VMs/infra: Veeam
+   - Gap confirmado: "Liquidos BR - NAO EXISTE NO AS-IS"
+   - PDF AI Processing: Vertex AI / Gemini (CMF NoBanks)
+
+ GOVERNANCA:
+   - Trilha auditoria obrigatoria (SOX)
+   - Google Cloud Audit Logs
+   - Arquitetura de referencia: Mapa DataLake Patria v1.1
+     (autor: Fabio A. B. Rodrigues)
+   - Documentacao corporativa: SharePoint
+
+ BI / ANALYTICS:
+   - Power BI (principal), Excel (camada semantica), GA4BigQuery,
+     Pentaho (legado)
+
+ EMAIL INSTITUCIONAL:
+   - Usado para aprovacoes formais e comunicacao com clientes
+   - Canal de ingestao (E-mails + Anexos na ingestao do DataLake)
+
+ PESSOAS IDENTIFICADAS:
+   - Fabio A. B. Rodrigues (Arquitetura e Produtividade Corporativa)
+   - Lucas Barreto, Guillermo Carbone, Daniela Benavides
+     (acessos a datasets BACEN/COSIF)
+   - Mailbox: datalake.gcp@patria.com
+
+
+ CORRECOES (se algo acima esta errado ou divergente):
+
+   __________________________________________________________
+   __________________________________________________________
+   __________________________________________________________
+   __________________________________________________________
+
+
+
+================================================================
+ DOMINIO 01 - INFRAESTRUTURA E CLOUD  (lacunas)
+================================================================
+
+ Billing GCP:
+   [X] Pay-as-you-go
+   [ ] Committed Use Discounts
+   [ ] Enterprise Agreement
+   [ ] Outro: _______________________________________
+   [ ] Nao sei
+
+ Budget alerts e cost tags configurados:
+   [ ] Sim
+   [X] Nao
+   [ ] Nao sei
+
+ ❓ cost_center atualmente "not_defined" no IaC.
+    Qual deveria ser? _____________________________________
+
+ Existem outras clouds alem do GCP (Azure infra, AWS, on-prem)?
+   [X] So GCP
+   [ ] GCP + Azure (qual workload?): ______________________
+   [ ] GCP + AWS (qual workload?): ________________________
+   [ ] GCP + on-premise (qual workload?): _________________
+   [ ] Nao sei
+
+ Rede:
+   VPN site-to-site?       [ ] Sim - destino: _____________
+                           [ ] Nao  [?] Nao sei
+   Direct Connect/Interconnect? [ ] Sim  [ ] Nao  [?] Nao sei
+   Restricoes de firewall para registries/APIs externas:
+     _______________________________________________________
+
+ ⚠️ Dados regulatorios (BACEN/CVM/CMF) estao em us-central1. Ha requisito de residencia em BR ou CL?
+   [ ] Sim, urgente     [ ] Sim, planejado
+   [X] Nao, ok manter   [ ] Nao sei
+
+ Disaster recovery:
+   [X] Multi-AZ         	[ ] Multi-region
+   [ ] Nenhum           [ ] Nao sei
+   RPO alvo: ______________   RTO alvo: ______________
+
+ Cobertura da IaC:
+   [X] Somente DataLake     [ ] DataLake + outros sistemas
+   Quais outros: __________________________________________
+
+ Observabilidade de infra (alem das APIs GCP habilitadas):
+   Ferramenta principal:
+   [X] Google Cloud Monitoring + Logging (uso ativo)
+   [ ] Datadog      [ ] Grafana+Prometheus     [ ] Zabbix
+   [ ] Outra: _____________________   [?] Nao sei
+
+   Alertas configurados:      [ ] Sim  [ ] Nao  [?] Nao sei
+   Dashboards operacionais:   [ ] Sim  [ ] Nao  [?] Nao sei
+
+ Alem do DataLake, ha Kubernetes/GKE em uso corporativo?
+   [ ] Sim - contexto: ____________________________________
+   [X] Nao     [ ] Nao sei
+
+ Notas adicionais:
+   __________________________________________________________
+   __________________________________________________________
+
+
+
+================================================================
+ DOMINIO 02 - SISTEMAS CONTRATADOS E SAAS  (lacunas)
+================================================================
+
+ Para CADA sistema abaixo preencha apenas:
+   Custo/mes:    em R$ ou USD
+   Contrato ate: MM/AAAA
+   SSO:          Sim / Nao
+   Obs:          (opcional)
+
+ Oracle Fusion GL (Cayman):
+     Custo/mes: ______________  Contrato ate: ______________
+     SSO: ______  Obs: _______________________________________
+
+ Oracle ERP on-prem (HCM/SCM/AP/Financials/Common/AuditTemp):
+     Custo/mes: ______________  Contrato ate: ______________
+     SSO: ______  Obs: _______________________________________
+
+ iLevel:
+     Custo/mes: ______________  Contrato ate: ______________
+     SSO: ______  Obs: _______________________________________
+
+ Efront:
+     Custo/mes: ______________  Contrato ate: ______________
+     SSO: ______  Obs: _______________________________________
+
+ Geneva (SS&C - Chile):
+     Custo/mes: ______________  Contrato ate: ______________
+     SSO: ______  Obs: _______________________________________
+
+ Sistema Derivados (Chile):
+     Fornecedor: __________________________________________
+     Custo/mes: ______________  Contrato ate: ______________
+     SSO: ______
+
+ Sistema Remuneraciones (Chile):
+     Fornecedor: __________________________________________
+     Custo/mes: ______________  Contrato ate: ______________
+     SSO: ______
+
+ TPA Iliquidos (BR):
+     Fornecedor: __________________________________________
+     Custo/mes: ______________  Contrato ate: ______________
+     SSO: ______
+
+ TPA Real Estate (BR):
+     Fornecedor: __________________________________________
+     Custo/mes: ______________  Contrato ate: ______________
+     SSO: ______
+
+ SplitC BR / SplitC CH (interno):
+     Time mantenedor: ____________________________________
+     Stack: ______________________________________________
+
+ Nexxus BR / CH / LimitsCtl (interno):
+     Time mantenedor: ____________________________________
+     Stack: ______________________________________________
+
+ Snowflake:
+     Custo/mes: ______________  Contrato ate: ______________
+     Escopo vs BigQuery: _________________________________
+
+ Active Directory:
+     Versao: _____________________________________________
+     On-prem / Azure AD DS / Hibrido: ____________________
+     Federado com Entra ID (AAD Connect/Sync): ___________
+
+ GPI:         O que e / fornecedor / uso: _________________
+ Artikos:     O que e / fornecedor / uso: _________________
+ Pentaho:     [ ] legado ativo  [ ] descomissionando  [ ] desativado Quando sai do ar (se aplicavel): _____________
+ BluePrism:   Custo/mes: ______  Bots ativos: ______________
+ Veeam:       Custo/mes: ______  O que cobre: _______________
+ Thycotic:    Custo/mes: ______  Cobertura: ________________
+ N8N:         Self-hosted ou SaaS: ___  Quem mantem: ________
+ Sensedia:    Custo/mes: ______  Contrato ate: ____________
+ Incorta:     Custo/mes: ______  Contrato ate: ____________
+ BICC:        Custo/mes: ______
+
+ Power BI:    Licencas/tier: _______  Qtd usuarios: ________
+ GA4:         Sites rastreados: ______________________
+ SharePoint:  Tier/plano: _____________  Sites principais: __
+ Azure DevOps: Tier: _____________  Qtd usuarios: ____
+ GitHub:      Tier: _____________  Qtd usuarios: ____
+ Azure Key Vault: Qtd cofres ativos: ____
+
+ Custo GCP mensal (DEV/HML/PRD):
+   DEV: ___________  HML: ___________  PRD: ___________
+
+ Outros sistemas nao listados:
+   1. _________________________________________________
+   2. _________________________________________________
+   3. _________________________________________________
+
+
+ --- SSO: federacao e cobertura ---
+
+ Protocolo usado:
+   [ ] SAML   [ ] OIDC   [ ] Ambos   [?] Nao sei
+
+ Sistemas INTEGRADOS ao SSO corporativo:
+   __________________________________________________________
+   __________________________________________________________
+
+ Sistemas com LOGIN SEPARADO (ainda nao no SSO):
+   __________________________________________________________
+   __________________________________________________________
+
+
+ --- Sistemas legados com risco (alem de Pentaho/Fusion/Geneva) ---
+
+ Sistema 1: Nome / tecnologia / risco:
+   __________________________________________________________
+ Sistema 2: Nome / tecnologia / risco:
+   __________________________________________________________
+
+
+ --- Shadow IT identificado ---
+
+ Ferramenta 1: Nome / quem usa / por que nao o oficial:
+   __________________________________________________________
+ Ferramenta 2: Nome / quem usa / por que nao o oficial:
+   __________________________________________________________
+
+
+ Notas adicionais:
+   __________________________________________________________
+
+
+
+================================================================
+ DOMINIO 03 - STACK DE DESENVOLVIMENTO  (lacunas)
+================================================================
+
+ Front-end:
+     Linguagem: ________________  Framework: ________________
+
+ Mobile:
+     Linguagem: ________________  Framework: ________________
+
+ Back-end (alem de Python/Airflow - outras linguagens?):
+     _________________________________________________________
+
+ Plano/tier GitHub:      [ ] Free  [ ] Team  [ ] Enterprise  [?]
+ Plano/tier Azure DevOps: [ ] Basic [ ] Basic+TestPlans  [ ] Ent [?]
+
+ PRs obrigatorios:        [ ] Sim  [ ] Nao  [?] Nao sei
+ Aprovacoes minimas/PR:   [ ] 0    [ ] 1    [ ] 2+   [?]
+
+ Style guide documentado: [ ] Sim - onde: ____________
+                          [ ] Nao  [?] Nao sei
+
+ Linting automatizado:
+   [ ] ESLint   [ ] Prettier   [ ] Ruff/Black (Python)
+   [ ] SonarLint   [ ] Outro: ___________   [ ] Nenhum  [?]
+
+ Padrao de API:
+   [ ] REST   [ ] GraphQL   [ ] gRPC   [ ] Ambos   [ ] Nenhum  [?]
+
+ Versionamento API:
+   [ ] URL (/v1, /v2)   [ ] Header   [ ] Nenhum   [?]
+
+ Packages internos compartilhados (bibliotecas):
+   1. _________________________________________________
+   2. _________________________________________________
+
+ Alem dos bancos ja confirmados, existem outros (Redis, Mongo,
+ Postgres, etc)?
+   1. _________________________________________________
+   2. _________________________________________________
+
+ Debito tecnico conhecido (principais):
+   1. _________________________________________________
+   2. _________________________________________________
+   3. _________________________________________________
+
+ Notas adicionais:
+   _________________________________________________________
+
+
+
+================================================================
+ DOMINIO 04 - DEVOPS E ENTREGA CONTINUA  (lacunas)
+================================================================
+
+ ⚠️ GitHub Actions E Azure Pipelines coexistem. Qual e oficial?
+   [ ] GitHub Actions    [ ] Azure Pipelines
+   [ ] Depende do projeto (qual logica?): __________________
+
+ Cobertura CI/CD:
+   [ ] Todos os projetos  [ ] Apenas alguns  [ ] Nenhum  [?]
+
+ Ha security scan (SAST/DAST/SCA) em algum pipeline?
+   [ ] Sim - ferramenta: ___________________________________
+   [ ] Nao
+   [?] Nao sei
+
+ Frequencia media de deploy em producao:
+   [ ] Diario+  [ ] Semanal  [ ] Mensal  [ ] Trimestral  [?]
+
+ Lead time (merge ate producao):
+   [ ] Minutos  [ ] Horas  [ ] Dias  [ ] Semanas  [?]
+
+ Rotacao de secrets (Azure Key Vault / GitHub Secrets):
+   [ ] Automatica  [ ] Manual  [ ] Nao rotaciona  [?]
+
+ APM (Application Performance Monitoring):
+   [ ] Datadog  [ ] New Relic  [ ] Dynatrace  [ ] AppInsights
+   [ ] Google Cloud Trace  [ ] Outra: _________  [ ] Nenhuma  [?]
+
+ Logging de aplicacoes (uso real, nao so API habilitada):
+   [ ] Google Cloud Logging ativo
+   [ ] ELK / Loki / Splunk
+   [ ] Outro: _________   [ ] Nenhum   [?] Nao sei
+
+ Tracing distribuido:
+   [ ] OpenTelemetry  [ ] Jaeger  [ ] Zipkin  [ ] Nenhum  [?]
+
+ Gestao de incidentes:
+   Ferramenta on-call:
+     [ ] PagerDuty  [ ] Opsgenie  [ ] Grafana OnCall
+     [ ] Teams manual  [ ] Nenhuma  [?] Nao sei
+   Escalation policy:    [ ] Sim  [ ] Nao  [?]
+   Post-mortems:         [ ] Sim  [ ] Nao  [?]
+   Runbooks:             [ ] Sim - onde: ______________  [ ] Nao  [?]
+
+ Notas adicionais:
+   _________________________________________________________
+
+
+
+================================================================
+ DOMINIO 05 - SEGURANCA E COMPLIANCE  (lacunas)
+================================================================
+
+ Politica de seguranca da informacao documentada:
+   [ ] Sim - onde: ___________________________  [ ] Nao  [?]
+
+ Classificacao de dados (publico/interno/confidencial/restrito):
+   [ ] Sim, implementada
+   [ ] Sim, apenas documentada
+   [ ] Nao   [?] Nao sei
+
+ Regulamentacoes aplicaveis ALEM das ja confirmadas
+ (SOX, BACEN, CVM, CMF):
+   [ ] LGPD   [ ] GDPR   [ ] PCI-DSS   [ ] HIPAA
+   [ ] Marco Civil   [ ] ISO 27001   [ ] SOC 2
+   [ ] Outras: _______________________________________
+   [?] Nao sei
+
+ Certificacoes obtidas:
+   [ ] ISO 27001 - ano: ____
+   [ ] SOC 2 Type I - ano: ____
+   [ ] SOC 2 Type II - ano: ____
+   [ ] Outras: _______________________________________
+   [ ] Nenhuma   [?] Nao sei
+
+ DPO nomeado (LGPD/GDPR):
+   [ ] Sim - nome: ___________________________  [ ] Nao  [?]
+
+ ROPA (Record of Processing Activities) mantido:
+   [ ] Sim   [ ] Nao   [?]
+
+ Processo para direitos de titulares:
+   [ ] Sim, automatizado   [ ] Sim, manual   [ ] Nao   [?]
+
+ MFA obrigatorio:
+   [ ] Para todos   [ ] So admin/producao   [ ] Nao   [?]
+
+ Offboarding automatico revoga acessos:
+   [ ] Sim   [ ] Nao   [?]
+
+ Tempo medio para revogar acesso apos desligamento:
+   [ ] Imediato (automatizado)   [ ] Mesmo dia
+   [ ] Ate 7 dias                [ ] Mais de 7 dias   [?]
+
+ Scan de vulnerabilidades automatizado:
+   [ ] Snyk   [ ] Dependabot   [ ] SonarQube   [ ] Trivy
+   [ ] Outro: _______________  [ ] Nenhum  [?]
+
+ Pen test periodico:
+   [ ] Anual   [ ] Semestral   [ ] Nunca   [?]
+
+ SLA correcao CVEs criticos:
+   [ ] 24h   [ ] 7 dias   [ ] 30 dias   [ ] Sem SLA   [?]
+
+ CMEK (Customer Managed Encryption Keys) em uso:
+   [ ] Sim - em quais servicos: _______________________
+   [ ] Nao (usa encryption default Google)   [?]
+
+ Cobertura do PAM (Thycotic):
+   [ ] Acessos a producao
+   [ ] Acessos administrativos cloud
+   [ ] Acessos a bancos de dados
+   [ ] Acessos a fornecedores (terceiros)
+   [?] Nao sei
+
+ Notas adicionais:
+   _________________________________________________________
+
+
+
+================================================================
+ DOMINIO 06 - DADOS E INTEGRACOES  (lacunas)
+================================================================
+
+ --- Fontes autoritativas (confirmar sistema dono) ---
+
+ Cliente / Investidor:         ____________________________
+ Produto (fundos/ativos):      ____________________________
+ Pedido / Transacao:           ____________________________
+
+ Outras entidades criticas nao mapeadas:
+   1. _____________________  Dono: ________________________
+   2. _____________________  Dono: ________________________
+
+
+ --- Qualidade dos dados ---
+
+ Duplicacao entre sistemas:
+   [ ] Frequente   [ ] Rara   [ ] Nao   [?]
+
+ Encoding inconsistente (UTF-8 x Latin1):
+   [ ] Sim   [ ] Nao   [?]
+
+ Campos vazios em entidades criticas:
+   [ ] Sim   [ ] Nao   [?]
+
+ Area responsavel por data quality:
+     Nome: __________________  Email: ______________________
+
+
+ --- Integracoes: volume, monitoramento, responsavel, SLA ---
+
+ Para cada uma, preencha (deixe em branco as que nao souber):
+   Vol = volume aproximado (ex: 500 reg/dia, 2GB/dia)
+   Mon = monitoramento (ex: alerta Airflow, manual, Grafana)
+   Resp = area/pessoa responsavel
+   SLA = tempo maximo aceitavel de atraso
+
+ 1) Oracle Fusion GL (Cayman) -> BigQuery (Incorta/Airflow/BICC):
+    Vol: _________ Mon: _________ Resp: _________ SLA: _________
+
+ 2) SOX Controls (HCM/Snowflake/Efront/Geneva/GPI/AD/Artikos/
+    BluePrism/Pentaho/Veeam/Thycotic) -> BigQuery:
+    Vol: _________ Mon: _________ Resp: _________ SLA: _________
+
+ 3) SharePoint (FPA) -> BigQuery:
+    Vol: _________ Mon: _________ Resp: _________ SLA: _________
+
+ 4) iLevel -> BigQuery:
+    Vol: _________ Mon: _________ Resp: _________ SLA: _________
+
+ 5) Iliquidos BR -> SplitC BR + Bronze (N8N):
+    Vol: _________ Mon: _________ Resp: _________ SLA: _________
+
+ 6) Real Estate BR -> Nexxus BR + Bronze (Sensedia+N8N):
+    Vol: _________ Mon: _________ Resp: _________ SLA: _________
+
+ 7) Geneva CH -> Nexxus CH + SplitC CH (N8N+Sensedia+Pub/Sub):
+    Vol: _________ Mon: _________ Resp: _________ SLA: _________
+
+ 8) Derivados CH -> Nexxus CH + Bronze:
+    Vol: _________ Mon: _________ Resp: _________ SLA: _________
+
+ 9) Remuneraciones CH -> SplitC CH + Bronze:
+    Vol: _________ Mon: _________ Resp: _________ SLA: _________
+
+ 10) CMF (Chile) webscraping -> BigQuery:
+     Vol: _________ Mon: _________ Resp: _________ SLA: _________
+
+ 11) CVM (Brasil) -> BigQuery:
+     Vol: _________ Mon: _________ Resp: _________ SLA: _________
+
+ 12) BACEN (Brasil) webscraping -> BigQuery:
+     Vol: _________ Mon: _________ Resp: _________ SLA: _________
+
+ 13) BigQuery Ouro -> Excel (camada semantica):
+     Vol: _________ Mon: _________ Resp: _________
+
+ 14) BigQuery Ouro -> Power BI:
+     Vol: _________ Mon: _________ Resp: _________
+
+ 15) BigQuery Ouro -> GA4BigQuery:
+     Vol: _________ Mon: _________ Resp: _________
+
+ 16) GCS lake_export_azure -> Azure:
+     Qual servico Azure? ___________________________________
+     Vol: _________ Mon: _________ Resp: _________
+
+ Integracoes NOVAS nao listadas:
+   1. _________________________________________________
+   2. _________________________________________________
+
+
+ --- Gap "Liquidos BR" ---
+
+ ⚠️ Mapa v1.1 marca "Liquidos BR - NAO EXISTE NO AS-IS".
+    Plano para essa fonte?
+   [ ] Em roadmap 2026     [ ] Priorizado (prazo: _______)
+   [ ] Sem plano           [?] Nao sei
+
+
+ --- Frequencia de atualizacao Data Lake ---
+
+ Bronze:  [ ] Real-time/stream  [ ] Horario  [ ] Diario  [ ] Semanal  [?]
+ Prata:   [ ] Real-time/stream  [ ] Horario  [ ] Diario  [ ] Semanal  [?]
+ Ouro:    [ ] Real-time/stream  [ ] Horario  [ ] Diario  [ ] Semanal  [?]
+
+
+ --- Custo mensal aproximado do Data Lake ---
+
+ BigQuery:        _______________________________________
+ GCS:             _______________________________________
+ Dataplex:        _______________________________________
+ Cloud Composer:  _______________________________________
+ Snowflake:       _______________________________________
+
+ Estrategia BigQuery + Snowflake:
+   [ ] Consolidar em BigQuery
+   [ ] Consolidar em Snowflake
+   [ ] Manter ambos com escopos distintos
+   [ ] Ainda em definicao   [?]
+
+
+ --- Backup e recuperacao ---
+
+ Frequencia de backup (Veeam):
+   [ ] Continuo  [ ] Horario  [ ] Diario  [ ] Semanal  [?]
+
+ Retencao:
+   [ ] 7 dias  [ ] 30 dias  [ ] 90 dias  [ ] 1 ano+  [?]
+
+ Ultimo teste de restore (data): ____________________
+ RPO definido: ______________   RTO definido: ______________
+
+ Cobertura Veeam:
+   [ ] VMs on-premise   [ ] VMs cloud   [ ] Bancos de dados
+   [ ] Arquivos         [ ] SharePoint   [?]
+
+ Notas adicionais:
+   _________________________________________________________
+
+
+
+================================================================
+ DOMINIO 07 - GESTAO E METODOLOGIA  (lacunas)
+================================================================
+
+ Metodo de trabalho:
+   [ ] Scrum   [ ] Kanban   [ ] SAFe   [ ] XP
+   [ ] Waterfall   [ ] Sem processo definido
+   [ ] Outro: _______________________________________   [?]
+
+ Adocao real:
+   [ ] Rigorosa   [ ] Adaptada   [ ] No papel, nao na pratica   [?]
+
+ Duracao da sprint (se Scrum):
+   [ ] 1 sem  [ ] 2 sem  [ ] 3 sem  [ ] 4 sem  [ ] N/A  [?]
+
+ Ferramenta de gestao de projetos:
+   [ ] Jira   [ ] Linear   [ ] ClickUp   [ ] Azure Boards
+   [ ] Asana  [ ] Monday   [ ] Trello    [ ] Planilha
+   [ ] Outra: _______________________________________   [?]
+
+ Integrada com repo de codigo:
+   [ ] Sim   [ ] Nao   [?]
+
+ Documentacao (alem de SharePoint):
+   [ ] Confluence   [ ] Notion   [ ] Google Docs
+   [ ] Wiki no repo   [ ] Outra: ______________   [?]
+
+ Cerimonias praticadas:
+   [ ] Daily standup   [ ] Sprint planning
+   [ ] Sprint review/demo   [ ] Retrospectiva
+   [ ] Grooming/refinement   [ ] Nenhuma   [?]
+
+ Stakeholders participam das demos:
+   [ ] Sim   [ ] Nao   [?]
+
+ Canal principal de comunicacao:
+   [ ] Microsoft Teams   [ ] Slack   [ ] Google Chat
+   [ ] Outro: _______________   [?]
+
+ WhatsApp usado para:
+   [ ] Nada relevante   [ ] Informal   [ ] Processos de negocio   [?]
+
+ Canais por projeto/time:  [ ] Sim  [ ] Nao  [?]
+
+ Quem aprova escopo de projeto:
+   [ ] PM/PO   [ ] Diretoria   [ ] Comite
+   [ ] Sem processo definido   [ ] Outro: ____________   [?]
+
+ Quem aprova mudancas tecnicas (arquitetura, stack):
+   [ ] Tech Lead   [ ] Comite de Arquitetura
+   [ ] Autonomia do time   [ ] Outro: _____________   [?]
+
+ Tempo medio para aprovacao:
+   [ ] Horas   [ ] Dias   [ ] Semanas   [?]
+
+ Notas adicionais:
+   _________________________________________________________
+
+
+
+================================================================
+ DOMINIO 08 - EQUIPE E CAPACIDADES  (lacunas)
+================================================================
+
+ Para cada papel abaixo preencha (se 0, escreva "0"):
+   Qtd / Interno ou Terceiro / Senioridade predominante
+
+ Dev Front-end:    Qtd: ___  Int/Ter: ___  Sr/Pl/Jr: ___
+ Dev Back-end:     Qtd: ___  Int/Ter: ___  Sr/Pl/Jr: ___
+ Dev Full-stack:   Qtd: ___  Int/Ter: ___  Sr/Pl/Jr: ___
+ Dev Mobile:       Qtd: ___  Int/Ter: ___  Sr/Pl/Jr: ___
+ DevOps/SRE:       Qtd: ___  Int/Ter: ___  Sr/Pl/Jr: ___
+ QA:               Qtd: ___  Int/Ter: ___  Sr/Pl/Jr: ___
+ Designer UX/UI:   Qtd: ___  Int/Ter: ___  Sr/Pl/Jr: ___
+ Product Manager:  Qtd: ___  Int/Ter: ___  Sr/Pl/Jr: ___
+ Data/Analytics:   Qtd: ___  Int/Ter: ___  Sr/Pl/Jr: ___
+ Seguranca/InfoSec:Qtd: ___  Int/Ter: ___  Sr/Pl/Jr: ___
+ Arquitetura corp: Qtd: ___  Int/Ter: ___  Sr/Pl/Jr: ___
+
+ Especialistas disponiveis internamente:
+   [ ] InfoSec   [ ] Mobile nativo   [ ] Cloud   [ ] Dados/ML
+   [ ] Acessibilidade   [ ] Performance   [ ] UX Research
+   [ ] Outro: _______________________________________   [?]
+
+ Bus factor = 1 (areas com 1 so responsavel critico):
+   1. _____________________________________________________
+   2. _____________________________________________________
+   3. _____________________________________________________
+
+ Turnover ultimos 12 meses:
+   [ ] <5%   [ ] 5-15%   [ ] 15-30%   [ ] >30%   [?]
+
+ Principais causas de saida:
+   [ ] Salario/beneficios   [ ] Cultura/gestao
+   [ ] Burnout   [ ] Mercado aquecido
+   [ ] Outro: _______________________________   [?]
+
+ Capacidade ociosa para projeto novo:
+   [ ] >50% do time   [ ] 20-50%   [ ] <20%
+   [ ] Zero (100% alocado)   [?]
+
+ Modelo de trabalho:
+   [ ] 100% remoto   [ ] Hibrido   [ ] 100% presencial   [?]
+
+ Gaps de skills conhecidos:
+   1. Skill: _______________  Nivel atual: _______  Plano: _______
+   2. Skill: _______________  Nivel atual: _______  Plano: _______
+   3. Skill: _______________  Nivel atual: _______  Plano: _______
+
+ Notas adicionais:
+   _________________________________________________________
+
+
+
+================================================================
+ DOMINIO 09 - FINANCEIRO (OPEX / CAPEX / TCO)  (lacunas)
+================================================================
+
+ Budget anual de TI: _______________________________________
+
+ Distribuicao (%):
+   Operacao/manutencao:  ____%
+   Projetos novos:       ____%
+   Inovacao/R&D:         ____%
+
+ Ja comprometido este ano:
+   [ ] <50%   [ ] 50-80%   [ ] >80%   [?]
+
+ Billing GCP mensal (ja pedido no Dominio 02 tambem):
+   DEV: ___________  HML: ___________  PRD: ___________
+
+ Maiores componentes de custo GCP:
+   [ ] Compute (VMs, Cloud Run)
+   [ ] Storage (GCS, discos)
+   [ ] BigQuery (queries + storage)
+   [ ] Cloud Composer
+   [ ] Dataplex
+   [ ] Data transfer   [ ] Licencas marketplace   [?]
+
+ Committed Use Discounts ja contratados:
+   _________________________________________________________
+
+ Rastreamento de custos por projeto/time:
+   [ ] Sim, com tags   [ ] Nao   [?]
+
+ --- Custos recorrentes por fornecedor ---
+
+ Google Cloud (GCP):
+   Custo/mes: _________  Contrato ate: ______  Multa: _______
+
+ Microsoft (Azure DevOps + Key Vault + Entra + SharePoint + Office):
+   Custo/mes: _________  Contrato ate: ______  Multa: _______
+
+ Oracle (Fusion GL + ERP on-prem):
+   Custo/mes: _________  Contrato ate: ______  Multa: _______
+
+ iLevel (S&P):
+   Custo/mes: _________  Contrato ate: ______  Multa: _______
+
+ GitHub:
+   Custo/mes: _________  Contrato ate: ______  Multa: _______
+
+ Snowflake:
+   Custo/mes: _________  Contrato ate: ______  Multa: _______
+
+ Efront (BlackRock):
+   Custo/mes: _________  Contrato ate: ______  Multa: _______
+
+ Geneva (SS&C):
+   Custo/mes: _________  Contrato ate: ______  Multa: _______
+
+ Sensedia:
+   Custo/mes: _________  Contrato ate: ______  Multa: _______
+
+ Incorta:
+   Custo/mes: _________  Contrato ate: ______  Multa: _______
+
+ BluePrism (SS&C):
+   Custo/mes: _________  Contrato ate: ______  Multa: _______
+
+ Veeam:
+   Custo/mes: _________  Contrato ate: ______  Multa: _______
+
+ Thycotic (Delinea):
+   Custo/mes: _________  Contrato ate: ______  Multa: _______
+
+ Pentaho (Hitachi Vantara):
+   Custo/mes: _________  Contrato ate: ______  Multa: _______
+
+ Outros fornecedores:
+   Nome: __________  Custo/mes: _________  Ate: __________
+   Nome: __________  Custo/mes: _________  Ate: __________
+   Nome: __________  Custo/mes: _________  Ate: __________
+
+ --- Aprovacao financeira ---
+
+ Thresholds por nivel:
+   Gerente ate R$:     ____________________
+   Diretor ate R$:     ____________________
+   Board acima de R$:  ____________________
+
+ Tempo medio de aprovacao:
+   [ ] Dias   [ ] Semanas   [ ] Meses   [?]
+
+ ROI/payback esperado para projetos de TI:
+   [ ] Sim - ate ____ meses
+   [ ] Nao definido   [?]
+
+ Notas adicionais:
+   _________________________________________________________
+
+
+
+================================================================
+ DOMINIO 10 - GOVERNANCA, NORMAS E BOAS PRATICAS  (lacunas)
+================================================================
+
+ Catalogo de tecnologias aprovadas:
+   [ ] Sim - onde: _______________________   [ ] Nao   [?]
+
+ Processo de homologacao para tecnologia nova:
+   [ ] Comite de arquitetura   [ ] RFC
+   [ ] Avaliacao de seguranca  [ ] Nao tem processo
+   [ ] Outro: _______________________________   [?]
+
+ Tempo medio de homologacao:
+   [ ] Dias   [ ] Semanas   [ ] Meses   [?]
+
+ CAB (Change Advisory Board) existe:
+   [ ] Sim   [ ] Nao   [?]
+
+ Frequencia do CAB:
+   [ ] Semanal  [ ] Quinzenal  [ ] Mensal  [ ] Sob demanda  [ ] N/A  [?]
+
+ Janela de manutencao definida:
+   [ ] Sim - quando: _______________________   [ ] Nao   [?]
+
+ Aprovacao de emergencia para hotfixes:
+   [ ] Sim - quem aprova: ___________________   [ ] Nao   [?]
+
+ Auditoria SOX - periodicidade:
+   [ ] Anual  [ ] Semestral  [ ] Trimestral  [ ] Continua  [?]
+
+ SLA de disponibilidade definido:
+   [ ] Sim - valor: _____% (ex.: 99.9%)   [ ] Nao   [?]
+
+ SLOs internos para latencia/performance:
+   [ ] Sim - detalhar: ____________________   [ ] Nao   [?]
+
+ Error budget policy:
+   [ ] Sim   [ ] Nao   [?]
+
+ Codigo de projetos terceirizados pertence a:
+   [ ] Patria  [ ] Software house/fornecedor
+   [ ] Depende do contrato  [ ] Nao definido   [?]
+
+ Politica de open source:
+   [ ] GPL bloqueado   [ ] AGPL bloqueado
+   [ ] Sem restricao   [ ] Nao definido   [?]
+
+ Existe arquitetura corporativa ALEM do Mapa DataLake v1.1
+ (aplicacoes, endpoints, APIs corporativas)?
+   [ ] Sim - onde: ____________________________________
+   [ ] Nao   [?]
+
+ Notas adicionais:
+   _________________________________________________________
+
+
+
+================================================================
+ FIM DO FORMULARIO
+================================================================
+
+ ✅ Obrigado!
+
+ Proximos passos:
+   1. Salve o arquivo preenchido
+   2. Envie para: fabio.rodrigues.consult@patria.com
+   3. Sera consolidado no environment.md (base RAG do discovery)
+   4. Campos em branco viram pautas de entrevistas
+
+================================================================

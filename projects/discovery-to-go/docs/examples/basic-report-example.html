@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme-mode="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Hub — Relatório Basic de Discovery</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet">
+<style>
+:root {
+  --primary: #4DA8DA; --primary-dark: #3A8BB8; --primary-light: rgba(77,168,218,0.12);
+  --secondary: #B9B7BD;
+  --success: #0ED145; --success-light: rgba(14,209,69,0.12); --success-border: rgba(14,209,69,0.3);
+  --warning: #F4AC00; --warning-light: rgba(244,172,0,0.12); --warning-border: rgba(244,172,0,0.3);
+  --danger: #8B1A1A; --danger-light: rgba(139,26,26,0.15); --danger-border: rgba(139,26,26,0.35);
+  --info: #2EB5F5; --info-light: rgba(46,181,245,0.12); --info-border: rgba(46,181,245,0.3);
+  --bg: #141414; --card-bg: #2E2D32; --text: #E0DFE3; --text-muted: #88878C; --border: #3E3D44;
+  --purple: #9B96FF; --purple-light: rgba(155,150,255,0.12); --orange: #FF9473; --teal: #2DD4BF;
+  --card-header-bg: #252428; --th-bg: #252428;
+  --card-shadow: 0 2px 12px rgba(46,181,245,0.06), 0 1px 4px rgba(0,0,0,0.4);
+  --alert-warning-text: #f0c040; --alert-danger-text: #E85D54; --alert-info-text: #5FC8F8; --alert-success-text: #3DE06A;
+  --pill-success-text: #3DE06A; --pill-info-text: #5FC8F8; --pill-warning-text: #f0c040;
+}
+[data-theme-mode=light] {
+  --primary: #4DA8DA; --primary-dark: #3A8BB8; --primary-light: rgba(77,168,218,0.1);
+  --secondary: #88878C;
+  --success: #0A9E35; --success-light: rgba(10,158,53,0.08); --success-border: rgba(10,158,53,0.25);
+  --warning: #E67E22; --warning-light: rgba(230,126,34,0.12); --warning-border: rgba(230,126,34,0.35);
+  --danger: #E74C3C; --danger-light: rgba(231,76,60,0.10); --danger-border: rgba(231,76,60,0.30);
+  --info: #1E95CC; --info-light: rgba(30,149,204,0.08); --info-border: rgba(30,149,204,0.25);
+  --bg: #F3F3F6; --card-bg: #ffffff; --text: #1A1923; --text-muted: #88878C; --border: #B9B7BD;
+  --purple: #7B76FE; --purple-light: rgba(123,118,254,0.08); --orange: #FE7C58; --teal: #00D8D8;
+  --card-header-bg: rgba(77,168,218,0.12); --th-bg: rgba(77,168,218,0.12);
+  --card-shadow: 0 2px 8px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.06);
+  --alert-warning-text: #C0392B; --alert-danger-text: #C0392B; --alert-info-text: #1670A0; --alert-success-text: #087A28;
+  --pill-success-text: #087A28; --pill-info-text: #1670A0; --pill-warning-text: #C0392B;
+}
+* { box-sizing: border-box; }
+html { font-size: 15px; }
+body { font-family: 'Poppins','Segoe UI',sans-serif; background: var(--bg); color: var(--text); margin: 0; font-size: 13px; line-height: 1.6; }
+
+.header { background: linear-gradient(135deg, #2E2D32 0%, #252428 50%, #1A1923 100%); color: white; position: relative; overflow: hidden; }
+.doc-container { max-width: 1400px; margin: 0 auto; padding: 24px 32px; position: relative; z-index: 1; }
+.header-top { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; padding-top: 28px; }
+.header h1 { color: #fff; font-size: 22px; font-weight: 600; margin: 0; }
+.header h1 i { margin-right: 10px; color: var(--primary); }
+.subtitle { color: rgba(255,255,255,0.5); font-size: 13px; margin-top: 4px; }
+.header-badge { background: rgba(255,255,255,0.15); padding: 6px 14px; border-radius: 8px; font-size: 0.78rem; display: inline-flex; align-items: center; gap: 6px; color: white; }
+.badge-version { background: rgba(77,168,218,0.2); color: var(--primary); padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 500; }
+.theme-toggle { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; border-radius: 6px; padding: 6px 12px; cursor: pointer; font-size: 14px; margin-left: 8px; font-family: 'Poppins'; }
+
+.tabs-nav { display: flex; gap: 4px; margin-top: 36px; overflow-x: auto; }
+.tab-btn { padding: 10px 24px; background: rgba(255,255,255,0.1); border: none; border-radius: 10px 10px 0 0; color: rgba(255,255,255,0.7); font-family: 'Poppins'; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+.tab-btn:hover { background: rgba(255,255,255,0.18); color: white; }
+.tab-btn.active { background: var(--bg); color: var(--text); font-weight: 600; }
+[data-theme-mode=light] .tab-btn.active { color: #1A1923; }
+.tab-btn i { font-size: 1.1rem; }
+.tab-pane { display: none; padding: 24px 0 32px; }
+.tab-pane.active { display: block; }
+
+.section { margin-top: 32px; }
+.section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid var(--border); cursor: pointer; user-select: none; }
+.section-header:hover .section-toggle { color: var(--primary); }
+.section-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+.section-title { font-size: 1.15rem; font-weight: 600; }
+.section-count { background: var(--bg); padding: 4px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 600; color: var(--text-muted); }
+.section-toggle { margin-left: auto; background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 1.25rem; padding: 4px 8px; border-radius: 6px; transition: transform 0.2s, color 0.2s; display: inline-flex; align-items: center; }
+.section.collapsed .section-toggle { transform: rotate(-90deg); }
+.section.collapsed > *:not(.section-header) { display: none; }
+.section.collapsed .section-header { margin-bottom: 0; padding-bottom: 12px; border-bottom: 1px dashed var(--border); }
+
+.card { background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 2px 8px rgba(0,0,0,0.03); margin-bottom: 20px; transition: box-shadow 0.2s, border-color 0.2s; }
+.card:hover { box-shadow: var(--card-shadow); border-color: var(--primary); }
+.card-header { display: flex; align-items: center; gap: 10px; padding: 14px 18px; border-bottom: 1px solid var(--border); background: var(--card-header-bg); border-radius: 12px 12px 0 0; }
+.card-header-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+.card-title { font-weight: 600; font-size: 0.95rem; flex: 1; }
+.card-body { padding: 18px; opacity: 0.95; }
+
+.alert { padding: 12px 16px; border-radius: 8px; font-size: 0.82rem; display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; border: 1px solid; }
+.alert i { font-size: 1.1rem; flex-shrink: 0; margin-top: 2px; }
+.alert-success { background: var(--success-light); border-color: var(--success-border); color: var(--alert-success-text); }
+.alert-warning { background: var(--warning-light); border-color: var(--warning-border); color: var(--alert-warning-text); }
+.alert-danger { background: var(--danger-light); border-color: var(--danger-border); color: var(--alert-danger-text); }
+.alert-info { background: var(--info-light); border-color: var(--info-border); color: var(--alert-info-text); }
+
+.pill { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: 600; }
+.pill-success { background: var(--success-light); color: var(--pill-success-text); border: 1px solid var(--success-border); }
+.pill-info { background: var(--info-light); color: var(--pill-info-text); border: 1px solid var(--info-border); }
+.pill-warning { background: var(--warning-light); color: var(--pill-warning-text); border: 1px solid var(--warning-border); }
+.pill-danger { background: var(--danger-light); color: var(--alert-danger-text); border: 1px solid var(--danger-border); }
+.pill-purple { background: var(--purple-light); color: var(--purple); border: 1px solid rgba(155,150,255,0.3); }
+
+.bg-primary { background: var(--primary); color: #1A1923 !important; }
+.bg-success { background: var(--success); color: #1A1923 !important; }
+.bg-warning { background: var(--warning); color: #1A1923 !important; }
+.bg-info { background: var(--info); color: white !important; }
+.bg-danger { background: var(--danger); color: white !important; }
+.bg-purple { background: var(--purple); color: white !important; }
+.bg-teal { background: var(--teal); color: #1A1923 !important; }
+.bg-orange { background: var(--orange); color: #1A1923 !important; }
+[data-theme-mode=light] .bg-danger, [data-theme-mode=light] .bg-info, [data-theme-mode=light] .bg-purple { color: #1A1923 !important; }
+
+table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+th { text-align: left; padding: 10px 14px; background: var(--th-bg); font-weight: 600; border-bottom: 2px solid var(--border); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.3px; color: var(--text-muted); }
+td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+tr:hover { background: var(--primary-light); }
+.num { text-align: right; font-family: 'Consolas',monospace; font-variant-numeric: tabular-nums; }
+
+/* Stat cards (KPI row) */
+.stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.stat-card { background: var(--card-bg); border: 1px solid var(--border); border-left: 3px solid var(--primary); border-radius: 10px; padding: 16px 18px; box-shadow: var(--card-shadow); }
+.stat-card-label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); font-weight: 600; display: flex; align-items: center; gap: 6px; }
+.stat-card-value { font-size: 1.7rem; font-weight: 800; margin: 6px 0 2px; }
+.stat-card-sub { font-size: 0.72rem; color: var(--text-muted); }
+
+/* Scope grid (IN/OUT) */
+.scope-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.scope-box { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 18px; }
+.scope-box-title { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.scope-box-title.in { color: var(--alert-success-text); }
+.scope-box-title.out { color: var(--alert-danger-text); }
+.scope-list { margin: 0; padding-left: 4px; list-style: none; }
+.scope-list > li { padding: 6px 0; font-size: 0.88rem; font-weight: 500; }
+.scope-list ol { margin: 4px 0 8px 20px; padding-left: 16px; font-size: 0.82rem; font-weight: 400; color: var(--text); opacity: 0.88; }
+.scope-list ol li { padding: 3px 0; list-style: lower-alpha; }
+
+/* Phase cards */
+.phase-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px; }
+.phase-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 14px; }
+.phase-card-num { font-size: 0.7rem; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.5px; }
+.phase-card-name { font-size: 0.92rem; font-weight: 700; margin: 4px 0; }
+.phase-card-hours { font-size: 1.3rem; font-weight: 800; color: var(--info); }
+.phase-card-dur { font-size: 0.72rem; color: var(--text-muted); margin-top: 2px; }
+
+/* Planning table roles × hours */
+.plan-table th.role-col { text-align: right; }
+.plan-table td.role-val { text-align: right; font-family: 'Consolas',monospace; font-variant-numeric: tabular-nums; }
+.plan-table tfoot td { font-weight: 700; background: var(--card-header-bg); border-top: 2px solid var(--border); }
+
+/* Gantt */
+.gantt { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 16px; overflow-x: auto; }
+.gantt-table { width: 100%; border-collapse: collapse; min-width: 1180px; }
+.gantt-table th, .gantt-table td { padding: 3px 1px; font-size: 0.68rem; border: none; vertical-align: middle; }
+.gantt-table thead th { background: var(--th-bg); font-weight: 600; text-align: center; border-bottom: 1px solid var(--border); }
+.gantt-table th.label-col { text-align: left; width: 340px; padding: 4px 8px; }
+.gantt-table th:not(.label-col) { width: 32px; }
+.gantt-epic td, tr.gantt-epic td.week { background: rgba(0,0,0,0.14); font-weight: 700; }
+.gantt-story td { background: transparent; }
+.gantt-story td:first-child { padding-left: 26px; font-weight: 400; opacity: 0.85; }
+.gantt-bar { height: 16px; border-radius: 4px; display: inline-block; width: 100%; vertical-align: middle; }
+.gantt-bar.epic { background: var(--primary); }
+.gantt-bar.story { background: rgba(77,168,218,0.45); }
+.gantt-table td.week { text-align: center; background: transparent; border-right: 1px solid var(--border); vertical-align: middle; padding: 4px 2px; }
+.gantt-table th:nth-child(11), .gantt-table td:nth-child(11) { background: var(--success-light); }
+.gantt-table thead th:nth-child(11) { color: var(--alert-success-text); font-weight: 800; position: relative; }
+.gantt-table thead th:nth-child(11)::after { content: '⚡'; position: absolute; top: 0px; right: 1px; font-size: 0.58rem; }
+.gantt-epic td:nth-child(11), tr.gantt-epic td.week:nth-child(11) { background-color: rgba(0,0,0,0.14); background-image: linear-gradient(var(--success-light), var(--success-light)); }
+.gantt-milestone td, tr.gantt-milestone td.week { background: rgba(14,209,69,0.18); font-weight: 700; color: var(--alert-success-text); }
+.gantt-milestone td:first-child { font-size: 0.82rem; }
+.gantt-milestone .gantt-diamond { display: inline-block; width: 14px; height: 14px; background: var(--success); transform: rotate(45deg); border: 2px solid var(--card-bg); box-shadow: 0 0 0 1px var(--success); }
+.gantt-table td.week { position: relative; }
+.gantt-star { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 0.9rem; z-index: 2; pointer-events: none; line-height: 1; }
+.gantt-bar.qw { background: var(--success); }
+
+/* Quick Win */
+.qw-card { background: var(--card-bg); border: 2px solid var(--success); border-radius: 14px; padding: 22px 24px; position: relative; box-shadow: 0 4px 14px rgba(14,209,69,0.14); }
+.qw-pill { position: absolute; top: -14px; left: 20px; background: var(--success); color: #1A1923; padding: 5px 14px; border-radius: 8px; font-size: 0.72rem; font-weight: 800; letter-spacing: 0.5px; display: inline-flex; align-items: center; gap: 6px; }
+.qw-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 14px; margin-top: 4px; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px dashed var(--border); }
+.qw-head-marco { font-size: 1.05rem; font-weight: 700; color: var(--alert-success-text); }
+.qw-head-meta { font-size: 0.8rem; color: var(--text-muted); }
+.qw-head-meta strong { color: var(--text); }
+.qw-timeline { display: flex; align-items: center; gap: 0; height: 38px; margin-bottom: 18px; position: relative; }
+.qw-timeline-bar { flex: 1; height: 8px; background: var(--border); border-radius: 4px; position: relative; overflow: visible; }
+.qw-timeline-done { position: absolute; top: 0; left: 0; height: 100%; background: linear-gradient(90deg, var(--success) 0%, var(--primary) 100%); border-radius: 4px; }
+.qw-timeline-marker { position: absolute; top: -8px; width: 22px; height: 22px; border-radius: 50%; background: var(--success); color: #1A1923; display: flex; align-items: center; justify-content: center; font-size: 0.78rem; font-weight: 800; border: 2px solid var(--card-bg); transform: translateX(-50%); }
+.qw-timeline-label { position: absolute; top: 28px; transform: translateX(-50%); font-size: 0.68rem; font-weight: 700; white-space: nowrap; color: var(--text-muted); }
+.qw-timeline-label.end { right: 0; transform: none; color: var(--text-muted); }
+.qw-timeline-label.start { left: 0; transform: none; color: var(--text-muted); }
+.qw-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.qw-col-title { font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+.qw-col-title.in { color: var(--alert-success-text); }
+.qw-col-title.out { color: var(--text-muted); }
+.qw-col ul { margin: 0; padding-left: 18px; font-size: 0.82rem; }
+.qw-col ul li { padding: 3px 0; }
+.qw-col.out ul li { opacity: 0.75; }
+.qw-value-box { background: var(--success-light); border: 1px solid var(--success-border); border-radius: 10px; padding: 14px 16px; margin-bottom: 14px; }
+.qw-value-label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--alert-success-text); font-weight: 700; margin-bottom: 4px; }
+.qw-value-text { font-size: 0.9rem; font-style: italic; }
+.qw-benef { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.qw-benef .pill { font-size: 0.7rem; }
+.qw-criteria th { background: var(--card-header-bg); }
+
+/* Risk list */
+.risk-list { display: flex; flex-direction: column; gap: 10px; }
+.risk-item { display: flex; align-items: center; gap: 14px; padding: 14px 16px; background: var(--card-bg); border-radius: 10px; border: 1px solid var(--border); }
+.risk-level { width: 6px; height: 48px; border-radius: 3px; flex-shrink: 0; }
+.risk-content { flex: 1; }
+.risk-title { font-weight: 600; font-size: 0.92rem; display: flex; align-items: center; gap: 8px; }
+.risk-desc { font-size: 0.8rem; color: var(--text-muted); margin-top: 3px; }
+.risk-meta { display: flex; gap: 8px; align-items: center; flex-shrink: 0; }
+.risk-impact { padding: 4px 10px; border-radius: 6px; font-size: 0.7rem; font-weight: 700; white-space: nowrap; }
+.dot-low { background: var(--success); }
+.dot-med { background: var(--warning); }
+.dot-high { background: var(--danger); }
+
+/* Stakeholders list */
+.stake-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.stake-item { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; display: flex; align-items: center; gap: 12px; }
+.stake-avatar { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.85rem; flex-shrink: 0; }
+.stake-info { flex: 1; min-width: 0; }
+.stake-name { font-weight: 600; font-size: 0.88rem; }
+.stake-role { font-size: 0.76rem; color: var(--text-muted); }
+
+/* Metric bullet */
+.metric-row { display: flex; align-items: center; gap: 14px; padding: 10px 0; border-bottom: 1px dashed var(--border); }
+.metric-row:last-child { border-bottom: none; }
+.metric-ico { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.metric-body { flex: 1; }
+.metric-title { font-weight: 600; font-size: 0.88rem; }
+.metric-target { font-size: 0.78rem; color: var(--text-muted); }
+.metric-val { font-size: 1.05rem; font-weight: 800; }
+
+/* Next steps numbered list */
+.steps-list { list-style: none; padding: 0; margin: 0; counter-reset: step; }
+.steps-list li { position: relative; padding: 14px 16px 14px 56px; background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; margin-bottom: 10px; font-size: 0.88rem; }
+.steps-list li::before { counter-increment: step; content: counter(step); position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 30px; height: 30px; border-radius: 50%; background: var(--primary); color: #1A1923; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.85rem; }
+.steps-list .step-meta { display: block; font-size: 0.75rem; color: var(--text-muted); margin-top: 4px; }
+
+.footer { background: linear-gradient(135deg, #2E2D32 0%, #252428 50%, #1A1923 100%); color: white; padding: 36px 0; margin-top: 40px; }
+.footer-content { max-width: 1400px; margin: 0 auto; padding: 0 32px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 24px; }
+.footer-author-name { font-size: 0.95rem; font-weight: 600; }
+.footer-author-role { font-size: 0.78rem; opacity: 0.7; }
+.footer-doc-title { font-size: 0.85rem; opacity: 0.9; }
+.footer-doc-detail { font-size: 0.72rem; opacity: 0.6; margin-top: 2px; }
+.footer-seal { max-width: 1400px; margin: 20px auto 0; padding: 16px 32px 0; border-top: 1px solid rgba(255,255,255,0.12); font-size: 0.7rem; opacity: 0.5; text-align: center; }
+
+@media (max-width: 900px) {
+  .stat-grid, .phase-row { grid-template-columns: 1fr 1fr; }
+  .scope-grid, .stake-list { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  .stat-grid, .phase-row { grid-template-columns: 1fr; }
+}
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-thumb { background: rgba(77,168,218,0.3); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="doc-container" style="padding-top: 0; padding-bottom: 0;">
+    <div class="header-top">
+      <div>
+        <h1><i class="ri-database-2-line"></i>Data Hub — Consolidação Multi-Sistema</h1>
+        <div class="subtitle">Relatório Basic de Discovery — Cenário Recomendado</div>
+        <div style="display:flex; gap:8px; margin-top:10px;">
+          <div class="header-badge"><i class="ri-building-line"></i> Cliente Hipotético</div>
+          <div class="header-badge"><i class="ri-calendar-line"></i> Abril 2026</div>
+          <div class="header-badge"><i class="ri-cloud-line"></i> GCP</div>
+        </div>
+      </div>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span class="badge-version">v01.00</span>
+        <button class="theme-toggle" onclick="toggleTheme()"><i id="themeIcon" class="ri-moon-line"></i></button>
+      </div>
+    </div>
+    <div class="tabs-nav">
+      <button class="tab-btn active" data-tab="visao"><i class="ri-eye-line"></i> Visão do Projeto</button>
+      <button class="tab-btn" data-tab="cen-rec"><i class="ri-star-fill"></i> Cenário Recomendado</button>
+    </div>
+  </div>
+</header>
+
+<div class="doc-container">
+
+<!-- ═══════════════════════ TAB: VISÃO DO PROJETO ═══════════════════════ -->
+<div class="tab-pane active" id="tab-visao">
+
+  <!-- REG-EXEC-02 — Descritivo -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon bg-primary"><i class="ri-file-text-line"></i></div>
+      <div class="section-title">Descritivo</div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <p>O <strong>Data Hub</strong> é uma plataforma de dados que centraliza a extração, higienização e consolidação de informações oriundas de <strong>15 sistemas transacionais distintos</strong> — entre ERPs legados, APIs de parceiros, planilhas e bancos relacionais espalhados por unidades de negócio. O objetivo é eliminar a fragmentação que hoje impede análises comparativas consistentes e atrasa decisões estratégicas.</p>
+        <p>A solução adota stack <strong>100% Google Cloud Platform</strong>: o <strong>Sensedia API Gateway</strong> orquestra a extração dos dados nos sistemas-origem; os arquivos brutos aterrissam no <strong>Google Cloud Storage</strong> em formato raw (JSON/CSV/Parquet); o <strong>Cloud Pub/Sub</strong> atua como trigger para disparar o <strong>Apache Airflow (Cloud Composer)</strong>, responsável pela limpeza, normalização e consolidação em uma tabela unificada na <strong>camada prata do BigQuery</strong>; em seguida o mesmo Airflow promove a consolidação para a <strong>camada ouro</strong>, onde 2 dashboards de consulta permitirão aos times de negócio explorar e filtrar os dados com autonomia.</p>
+        <div class="alert alert-info">
+          <i class="ri-information-line"></i>
+          <div><strong>Por que agora:</strong> a diretoria definiu consolidação de indicadores como OKR do semestre. Sem o Data Hub, o fechamento trimestral segue dependendo de planilhas manuais e ETLs ad-hoc mantidos por um único analista.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REG-PROD-01 — Problemas Atuais -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon bg-danger"><i class="ri-error-warning-line"></i></div>
+      <div class="section-title">Problemas Atuais</div>
+      <span class="section-count">5 dores mapeadas</span>
+    </div>
+    <div class="alert alert-danger"><i class="ri-time-line"></i><div><strong>Tempo de ciclo de dados:</strong> relatórios mensais consolidados demoram em média <strong>8 dias úteis</strong> após o fechamento, com retrabalho recorrente por inconsistências entre fontes.</div></div>
+    <div class="alert alert-danger"><i class="ri-file-damage-line"></i><div><strong>Fragmentação de fontes:</strong> os 15 sistemas transacionais não se comunicam; cada extração é manual, via export de CSV, consulta SQL direta ou API sem padronização. Não há catálogo unificado.</div></div>
+    <div class="alert alert-warning"><i class="ri-user-unfollow-line"></i><div><strong>Bus factor crítico:</strong> a consolidação depende de <strong>1 analista sênior</strong> que mantém scripts Python em laptop pessoal. Férias ou saída geram risco operacional alto.</div></div>
+    <div class="alert alert-warning"><i class="ri-bar-chart-box-line"></i><div><strong>Dashboards desatualizados:</strong> os paineis de BI existentes apontam para bases paralelas que divergem entre si — duas áreas olham o mesmo KPI e encontram valores diferentes.</div></div>
+    <div class="alert alert-warning"><i class="ri-shield-cross-line"></i><div><strong>Falta de trilha de auditoria:</strong> não há histórico versionado das transformações aplicadas aos dados; reprocessar um mês anterior exige reengenharia manual.</div></div>
+  </div>
+
+  <!-- REG-PROD-04 — O Que Queremos Resolver -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon bg-success"><i class="ri-target-line"></i></div>
+      <div class="section-title">O Que Queremos Resolver</div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <p>Estabelecer uma <strong>fonte única de verdade</strong> para os dados consolidados das 15 fontes, com atualização incremental automática, trilha versionada e acesso self-service para as áreas de negócio. Ao final do projeto, o fechamento consolidado deve sair de 8 dias úteis para <strong>até 24 horas</strong>, e o tempo de montagem de uma nova análise comparativa deve cair de 3 dias para menos de 30 minutos — sem depender de um único analista.</p>
+        <div class="alert alert-success"><i class="ri-check-line"></i><div><strong>Tese de valor:</strong> governança de dados + velocidade analítica + redução de risco operacional. A escolha por GCP gerenciado (BigQuery, Cloud Composer, Pub/Sub) maximiza ROI ao evitar operar infraestrutura proprietária.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REG-PROD-05 — Métricas de Sucesso -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon bg-info"><i class="ri-pulse-line"></i></div>
+      <div class="section-title">Métricas de Sucesso</div>
+      <span class="section-count">4 KRs</span>
+    </div>
+    <div class="card">
+      <div class="card-body" style="padding: 8px 18px;">
+        <div class="metric-row">
+          <div class="metric-ico bg-primary"><i class="ri-timer-flash-line"></i></div>
+          <div class="metric-body">
+            <div class="metric-title">Tempo de consolidação do fechamento mensal</div>
+            <div class="metric-target">Baseline: 8 dias úteis · Meta: ≤ 24h · Prazo: 60 dias após go-live</div>
+          </div>
+          <div class="metric-val" style="color:var(--primary)">-96%</div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-ico bg-success"><i class="ri-database-line"></i></div>
+          <div class="metric-body">
+            <div class="metric-title">% de fontes consumidas via pipeline automatizado</div>
+            <div class="metric-target">Baseline: 0 de 15 · Meta: 15 de 15 (100%) · Prazo: ao fim da Fase 3 (Escala)</div>
+          </div>
+          <div class="metric-val" style="color:var(--success)">100%</div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-ico bg-warning"><i class="ri-user-star-line"></i></div>
+          <div class="metric-body">
+            <div class="metric-title">Usuários ativos nos dashboards (mensal)</div>
+            <div class="metric-target">Baseline: 4 analistas de TI · Meta: ≥ 35 usuários de negócio · Prazo: 90 dias após go-live</div>
+          </div>
+          <div class="metric-val" style="color:var(--warning)">≥35</div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-ico bg-info"><i class="ri-shield-check-line"></i></div>
+          <div class="metric-body">
+            <div class="metric-title">SLA de disponibilidade da camada ouro</div>
+            <div class="metric-target">Baseline: N/A · Meta: 99,5% (medido mensalmente) · Prazo: a partir do go-live</div>
+          </div>
+          <div class="metric-val" style="color:var(--info)">99,5%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REG-ORG-01 — Stakeholders -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon bg-purple"><i class="ri-group-line"></i></div>
+      <div class="section-title">Stakeholders</div>
+      <span class="section-count">6 chave</span>
+    </div>
+    <div class="stake-list">
+      <div class="stake-item">
+        <div class="stake-avatar bg-primary">CT</div>
+        <div class="stake-info"><div class="stake-name">CTO</div><div class="stake-role">Patrocinador executivo · Aprovação de orçamento</div></div>
+        <span class="pill pill-info">Sponsor</span>
+      </div>
+      <div class="stake-item">
+        <div class="stake-avatar bg-success">CD</div>
+        <div class="stake-info"><div class="stake-name">Head de Dados</div><div class="stake-role">Owner técnico · Define prioridades de backlog</div></div>
+        <span class="pill pill-success">Owner</span>
+      </div>
+      <div class="stake-item">
+        <div class="stake-avatar bg-warning">CF</div>
+        <div class="stake-info"><div class="stake-name">Controller Financeiro</div><div class="stake-role">Principal consumidor dos dashboards · Valida KPIs</div></div>
+        <span class="pill pill-warning">Consumer</span>
+      </div>
+      <div class="stake-item">
+        <div class="stake-avatar bg-info">AE</div>
+        <div class="stake-info"><div class="stake-name">Arquiteto Cloud (GCP)</div><div class="stake-role">Co-design da arquitetura · Revisões técnicas</div></div>
+        <span class="pill pill-info">Contributor</span>
+      </div>
+      <div class="stake-item">
+        <div class="stake-avatar bg-danger">DP</div>
+        <div class="stake-info"><div class="stake-name">DPO / Compliance</div><div class="stake-role">Validação LGPD · Políticas de retenção</div></div>
+        <span class="pill pill-danger">Reviewer</span>
+      </div>
+      <div class="stake-item">
+        <div class="stake-avatar bg-purple">PO</div>
+        <div class="stake-info"><div class="stake-name">Product Owner (Dados)</div><div class="stake-role">Backlog, cerimônias ágeis, facilitação</div></div>
+        <span class="pill pill-purple">Facilitator</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Linha de 4 indicadores: FIN-06 | FIN-01:total | ORG-02:count | QUAL-01:score -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon bg-teal"><i class="ri-dashboard-3-line"></i></div>
+      <div class="section-title">Indicadores do Projeto</div>
+      <span class="section-count">4 KPIs</span>
+    </div>
+    <div class="stat-grid">
+      <div class="stat-card" style="border-left-color: var(--primary)">
+        <div class="stat-card-label"><i class="ri-money-dollar-circle-line"></i> Investimento Estimado</div>
+        <div class="stat-card-value" style="color:var(--primary)">R$ 720K</div>
+        <div class="stat-card-sub">TCO ano 1 · inclui licenças + squad</div>
+      </div>
+      <div class="stat-card" style="border-left-color: var(--info)">
+        <div class="stat-card-label"><i class="ri-time-line"></i> Total de Horas</div>
+        <div class="stat-card-value" style="color:var(--info)">1.860h</div>
+        <div class="stat-card-sub">4 fases · distribuídas por papel</div>
+      </div>
+      <div class="stat-card" style="border-left-color: var(--success)">
+        <div class="stat-card-label"><i class="ri-team-line"></i> Tamanho da Equipe</div>
+        <div class="stat-card-value" style="color:var(--success)">7 pessoas</div>
+        <div class="stat-card-sub">1 PO · 1 arquiteto · 3 devs · 2 analistas</div>
+      </div>
+      <div class="stat-card" style="border-left-color: var(--warning)">
+        <div class="stat-card-label"><i class="ri-medal-line"></i> Score do Auditor</div>
+        <div class="stat-card-value" style="color:var(--warning)">87/100</div>
+        <div class="stat-card-sub">Auditor 89 · 10th-man 85 · gate OK</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<!-- ═══════════════════════ FIM TAB: VISÃO ═══════════════════════ -->
+
+<!-- ═══════════════════════ TAB: CENÁRIO RECOMENDADO ═══════════════════════ -->
+<div class="tab-pane" id="tab-cen-rec">
+
+  <!-- SUB-SCENARIO:recomendado → Descritivo do Cenário (REG-FIN-07:recomendado) -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon bg-primary"><i class="ri-star-fill"></i></div>
+      <div class="section-title">Descritivo do Cenário Recomendado</div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-header-icon bg-primary"><i class="ri-rocket-2-line"></i></div>
+        <div class="card-title">Entrega completa — 4 fases · Quick Win na Semana 10 · 24 semanas · 1.860h</div>
+        <span class="pill pill-success"><i class="ri-check-line"></i> Recomendado</span>
+      </div>
+      <div class="card-body">
+        <p>Este cenário entrega o <strong>Data Hub end-to-end</strong>: pipeline automatizado das 15 fontes até a camada ouro no BigQuery, com 2 dashboards publicados em Power BI (consulta e filtros interativos). A arquitetura é 100% gerenciada em GCP, o que reduz carga operacional e concentra investimento em engenharia de dados.</p>
+        <p>Adota-se <strong>modelo medallion</strong> (raw → silver → gold) para separar responsabilidades: o GCS preserva o dado bruto (replay/auditoria), o Airflow aplica regras de limpeza e unificação na prata, e a camada ouro é modelada para consumo analítico. O Pub/Sub desacopla extração e processamento — cada arquivo novo no GCS dispara a DAG correspondente.</p>
+        <div class="alert alert-success"><i class="ri-shield-star-line"></i><div><strong>Por que é o cenário recomendado:</strong> cobre os 15 sistemas sem cortes, elimina o bus factor operacional, e deixa a base pronta para futuras extensões (ML, forecasting) sem reengenharia. A relação custo/risco/valor é a mais favorável das 3 opções avaliadas.</div></div>
+        <div class="stat-grid" style="margin-top: 16px;">
+          <div class="stat-card" style="border-left-color: var(--primary)"><div class="stat-card-label">Investimento</div><div class="stat-card-value" style="color:var(--primary)">R$ 720K</div><div class="stat-card-sub">TCO 1º ano</div></div>
+          <div class="stat-card" style="border-left-color: var(--info)"><div class="stat-card-label">Duração</div><div class="stat-card-value" style="color:var(--info)">24 sem</div><div class="stat-card-sub">~6 meses</div></div>
+          <div class="stat-card" style="border-left-color: var(--success)"><div class="stat-card-label">Equipe</div><div class="stat-card-value" style="color:var(--success)">7 pess.</div><div class="stat-card-sub">squad dedicado</div></div>
+          <div class="stat-card" style="border-left-color: var(--warning)"><div class="stat-card-label">Risco</div><div class="stat-card-value" style="color:var(--warning)">Médio</div><div class="stat-card-sub">dependência Sensedia</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CUSTOM-1 — Escopo Detalhado (IN/OUT com bullets a/b/c) -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon bg-success"><i class="ri-list-check-2"></i></div>
+      <div class="section-title">Escopo Detalhado</div>
+      <span class="section-count">IN · OUT</span>
+    </div>
+    <div class="scope-grid">
+      <div class="scope-box">
+        <div class="scope-box-title in"><i class="ri-check-double-line"></i> O Que Será Feito</div>
+        <ul class="scope-list">
+          <li>Extração automatizada dos 15 sistemas via Sensedia
+            <ol>
+              <li>Catálogo de conectores por tipo (SOAP, REST, JDBC, SFTP)</li>
+              <li>Schedules e retentativas parametrizáveis no gateway</li>
+              <li>Monitoramento centralizado de falhas de extração</li>
+            </ol>
+          </li>
+          <li>Armazenamento raw no GCS
+            <ol>
+              <li>Bucket por ambiente (dev/hml/prod) com lifecycle policy</li>
+              <li>Particionamento por data de extração (yyyy/MM/dd)</li>
+              <li>Criptografia em repouso (CMEK gerenciada)</li>
+            </ol>
+          </li>
+          <li>Consolidação na camada prata (Airflow + BigQuery)
+            <ol>
+              <li>DAGs disparadas por Pub/Sub (evento por arquivo novo)</li>
+              <li>Regras de limpeza, deduplicação e normalização</li>
+              <li>Tabela unificada com lineage e versionamento de schema</li>
+            </ol>
+          </li>
+          <li>Modelagem da camada ouro
+            <ol>
+              <li>Tabelas dimensionais (fato + dimensões conformadas)</li>
+              <li>Views materializadas para consultas recorrentes</li>
+              <li>Controle de acesso por área de negócio (IAM + row-level)</li>
+            </ol>
+          </li>
+          <li>2 dashboards em Power BI
+            <ol>
+              <li>Dashboard Operacional — volumetria e qualidade por fonte</li>
+              <li>Dashboard Analítico — KPIs consolidados com drill-down</li>
+              <li>Treinamento e documentação de uso para 35+ usuários</li>
+            </ol>
+          </li>
+        </ul>
+      </div>
+      <div class="scope-box">
+        <div class="scope-box-title out"><i class="ri-close-circle-line"></i> O Que Não Será Feito</div>
+        <ul class="scope-list">
+          <li>Modelos de Machine Learning
+            <ol>
+              <li>Forecasting de séries temporais (forecast engine)</li>
+              <li>Classificação/clusterização automatizada</li>
+              <li>Anomalia detection em tempo real</li>
+            </ol>
+          </li>
+          <li>Write-back para os sistemas de origem
+            <ol>
+              <li>Não há gravação reversa nos 15 sistemas</li>
+              <li>Correções aplicadas permanecem na camada prata/ouro</li>
+            </ol>
+          </li>
+          <li>Plataforma de Self-Service Analytics
+            <ol>
+              <li>Editor de queries para usuário final (ex: workspace próprio)</li>
+              <li>Workspace individualizado de análise</li>
+            </ol>
+          </li>
+          <li>Data Lake para dados não-estruturados
+            <ol>
+              <li>Ingestão de imagens, PDFs, áudio</li>
+              <li>OCR ou extração de documentos</li>
+            </ol>
+          </li>
+          <li>Migração do BI legado atual
+            <ol>
+              <li>Paineis Power BI existentes permanecem isolados</li>
+              <li>Descontinuação acontece em projeto posterior</li>
+            </ol>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- CUSTOM-2 — Planejamento Macro por Fase -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon bg-info"><i class="ri-calendar-schedule-line"></i></div>
+      <div class="section-title">Planejamento Macro por Fase</div>
+      <span class="section-count">4 fases · 1.860h</span>
+    </div>
+
+    <div class="phase-row">
+      <div class="phase-card" style="border-left: 3px solid var(--primary)"><div class="phase-card-num">Fase 1</div><div class="phase-card-name">Fundação + Contratos</div><div class="phase-card-hours">280h</div><div class="phase-card-dur">4 semanas · S1-4</div></div>
+      <div class="phase-card" style="border-left: 3px solid var(--success)"><div class="phase-card-num">Fase 2</div><div class="phase-card-name">Quick Win Vertical (SAP Fin)</div><div class="phase-card-hours">450h</div><div class="phase-card-dur">6 semanas · S5-10</div></div>
+      <div class="phase-card" style="border-left: 3px solid var(--info)"><div class="phase-card-num">Fase 3</div><div class="phase-card-name">Escala Horizontal + Gold</div><div class="phase-card-hours">680h</div><div class="phase-card-dur">8 semanas · S11-18</div></div>
+      <div class="phase-card" style="border-left: 3px solid var(--warning)"><div class="phase-card-num">Fase 4</div><div class="phase-card-name">Analytics & Handover</div><div class="phase-card-hours">450h</div><div class="phase-card-dur">6 semanas · S19-24</div></div>
+    </div>
+
+    <div class="card" style="margin-top: 16px;">
+      <div class="card-header">
+        <div class="card-header-icon bg-info"><i class="ri-table-line"></i></div>
+        <div class="card-title">Papéis × Horas por Fase</div>
+      </div>
+      <div class="card-body" style="padding: 0; overflow-x: auto;">
+        <table class="plan-table">
+          <thead>
+            <tr>
+              <th>Papel</th>
+              <th class="role-col">F1 Fundação</th>
+              <th class="role-col">F2 Quick Win</th>
+              <th class="role-col">F3 Escala + Gold</th>
+              <th class="role-col">F4 Analytics</th>
+              <th class="role-col">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Arquiteto GCP</td><td class="role-val">80</td><td class="role-val">80</td><td class="role-val">120</td><td class="role-val">80</td><td class="role-val"><strong>360</strong></td></tr>
+            <tr><td>Data Engineer Sr</td><td class="role-val">80</td><td class="role-val">140</td><td class="role-val">200</td><td class="role-val">160</td><td class="role-val"><strong>580</strong></td></tr>
+            <tr><td>Data Engineer Pl</td><td class="role-val">60</td><td class="role-val">100</td><td class="role-val">200</td><td class="role-val">100</td><td class="role-val"><strong>460</strong></td></tr>
+            <tr><td>Analista BI</td><td class="role-val">20</td><td class="role-val">60</td><td class="role-val">80</td><td class="role-val">60</td><td class="role-val"><strong>220</strong></td></tr>
+            <tr><td>DevOps / SRE</td><td class="role-val">30</td><td class="role-val">40</td><td class="role-val">40</td><td class="role-val">20</td><td class="role-val"><strong>130</strong></td></tr>
+            <tr><td>PO / Scrum Master</td><td class="role-val">10</td><td class="role-val">30</td><td class="role-val">40</td><td class="role-val">30</td><td class="role-val"><strong>110</strong></td></tr>
+          </tbody>
+          <tfoot>
+            <tr><td><strong>Total</strong></td><td class="role-val">280</td><td class="role-val">450</td><td class="role-val">680</td><td class="role-val">450</td><td class="role-val" style="color:var(--primary)"><strong>1.860h</strong></td></tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- REG-PROD-10 — Quick Win -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon bg-success"><i class="ri-flashlight-line"></i></div>
+      <div class="section-title">Quick Win</div>
+      <span class="section-count">entrega intermediária</span>
+    </div>
+    <div class="qw-card">
+      <span class="qw-pill"><i class="ri-flashlight-fill"></i> Quick Win</span>
+
+      <div class="qw-head">
+        <div class="qw-head-marco"><i class="ri-map-pin-time-line"></i> Semana 10 · fim da Fase 2 (Vertical Slice)</div>
+        <div class="qw-head-meta"><strong>Investimento acumulado:</strong> 730h · ~R$ 265K · <strong>39%</strong> do esforço total</div>
+      </div>
+
+      <div class="qw-timeline">
+        <div class="qw-timeline-bar">
+          <div class="qw-timeline-done" style="width: 41.6%;"></div>
+          <div class="qw-timeline-marker" style="left: 41.6%;" title="Semana 10">10</div>
+          <span class="qw-timeline-label start">Início · S1</span>
+          <span class="qw-timeline-label" style="left: 41.6%;">Quick Win</span>
+          <span class="qw-timeline-label end">Go-live · S24</span>
+        </div>
+      </div>
+
+      <div class="qw-grid">
+        <div class="qw-col">
+          <div class="qw-col-title in"><i class="ri-checkbox-circle-line"></i> Entregue cedo (Quick Win)</div>
+          <ul>
+            <li><strong>Stack completa em produção</strong> — Sensedia + GCS + BigQuery + Power BI provisionados, integrados e operando</li>
+            <li><strong>SAP Financeiro end-to-end</strong> — conector Sensedia → raw GCS → Bronze BQ → <strong>Silver conformado</strong> em BigQuery</li>
+            <li><strong>1 dashboard Power BI sobre Silver</strong> — KPIs financeiros operacionais (fechamento, contas a pagar/receber, posição diária)</li>
+            <li>Padrões reutilizáveis — template de DAG, convenção de schema Silver, CI/CD para pipeline de dados</li>
+          </ul>
+        </div>
+        <div class="qw-col out">
+          <div class="qw-col-title out"><i class="ri-time-line"></i> Fica para o projeto completo</div>
+          <ul>
+            <li>14 fontes restantes — TOTVS, Oracle EBS, 6 APIs REST, 4 SQL Server, 2 SFTP (Fase 3)</li>
+            <li>Camada Gold com modelagem dimensional (fato + dimensões conformadas) — Fase 3</li>
+            <li>Dashboard Analítico com drill-down completo sobre Gold — Fase 4</li>
+            <li>Treinamento em ondas para 35+ usuários de negócio — Fase 4</li>
+            <li>UAT com Controladoria e cutover definitivo — Fase 4</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="qw-value-box">
+        <div class="qw-value-label"><i class="ri-hand-coin-line"></i> Valor entregue no marco</div>
+        <div class="qw-value-text">"A Controladoria passa a acompanhar os <strong>KPIs financeiros do SAP em Power BI com atualização diária</strong> — saindo do ciclo de fechamento mensal em planilhas manuais para visibilidade quase em tempo real. Ganho imediato: <strong>3 dias úteis/semana liberados para 2 analistas</strong>. Ganho estratégico: a arquitetura inteira (Sensedia + GCS + BQ + Power BI) é validada em produção com 14 semanas de antecedência antes da escala para as 14 fontes restantes."</div>
+        <div class="qw-benef">
+          <span class="pill pill-success">Controladoria (2 analistas)</span>
+          <span class="pill pill-success">Head de Dados</span>
+          <span class="pill pill-success">CFO (patrocinador)</span>
+          <span class="pill pill-success">Time de TI</span>
+        </div>
+      </div>
+
+      <div class="alert alert-info" style="margin-bottom: 14px;"><i class="ri-lightbulb-flash-line"></i><div><strong>Hipótese validada no Quick Win:</strong> a arquitetura Sensedia → GCS → BigQuery Silver → Power BI funciona em produção para uma fonte crítica com atualização diária automatizada por 4 semanas consecutivas — prova que o padrão pode ser replicado para as 14 fontes restantes com confiança técnica e sem retrabalho arquitetural.</div></div>
+
+      <div style="margin-bottom: 14px;">
+        <div class="qw-col-title" style="color: var(--text-muted);"><i class="ri-shield-check-line"></i> Critérios de aceite</div>
+        <div style="overflow-x: auto;">
+          <table class="qw-criteria">
+            <thead>
+              <tr><th>Critério</th><th>Alvo</th><th>Como medir</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Pipeline SAP Financeiro automatizado</td><td>End-to-end até Silver · sem intervenção manual</td><td>DAG Airflow com 28 execuções consecutivas bem-sucedidas</td></tr>
+              <tr><td>Silver conformado e versionado</td><td>Tabela unificada · lineage + DQ ativos</td><td>Data Catalog + testes de DQ verdes</td></tr>
+              <tr><td>Dashboard Power BI em Silver</td><td>Publicado · ≥ 3 usuários ativos/semana</td><td>Workspace Power BI + telemetria de uso</td></tr>
+              <tr><td>Frequência de atualização</td><td>Diária sem intervenção manual</td><td>Log de execuções (últimos 28 dias)</td></tr>
+              <tr><td>Padrões reutilizáveis</td><td>Template DAG + schema Silver documentados</td><td>Repositório + ADR aprovados</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="qw-col-title" style="color: var(--text-muted);"><i class="ri-shield-flash-line"></i> Riscos do projeto que o Quick Win reduz</div>
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <div class="alert alert-success" style="margin:0;"><i class="ri-arrow-down-circle-line"></i><div><strong>Arquitetura end-to-end não validada</strong> — a stack inteira (Sensedia → GCS → BQ Silver → Power BI) roda em produção com uma fonte antes de replicar para 14.</div></div>
+        <div class="alert alert-success" style="margin:0;"><i class="ri-arrow-down-circle-line"></i><div><strong>Padrão de modelagem Silver incerto</strong> — template de DAG, convenção de schema e DQ são validados com SAP Financeiro e viram padrão para a escala.</div></div>
+        <div class="alert alert-success" style="margin:0;"><i class="ri-arrow-down-circle-line"></i><div><strong>Baixa adoção de Power BI</strong> — Controladoria usa o dashboard operacional 14 semanas antes do Analítico completo, indicando apetite real.</div></div>
+        <div class="alert alert-success" style="margin:0;"><i class="ri-arrow-down-circle-line"></i><div><strong>Custos BigQuery acima do estimado</strong> — consumo real aparece 14 semanas antes do go-live, permitindo ajuste de reservas/quotas.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CUSTOM-3 — Gantt Expandido (Épico → Estória) -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon bg-warning"><i class="ri-calendar-line"></i></div>
+      <div class="section-title">Cronograma Detalhado (Épico → Estória)</div>
+      <span class="section-count">24 semanas</span>
+    </div>
+    <div class="gantt">
+      <table class="gantt-table">
+        <thead>
+          <tr>
+            <th class="label-col">Épico / Estória</th>
+            <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th class="qw-col" title="Marco do Quick Win">10</th><th>11</th><th>12</th><th>13</th><th>14</th><th>15</th><th>16</th><th>17</th><th>18</th><th>19</th><th>20</th><th>21</th><th>22</th><th>23</th><th>24</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Marco Quick Win (linha-guia) -->
+          <tr class="gantt-milestone">
+            <td><i class="ri-flashlight-fill"></i> ⚡ Marco 1 · Release do Quick Win (Semana 10)</td>
+            <td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week qw-col" style="text-align:center;"><span class="gantt-star">⭐</span></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td>
+          </tr>
+
+          <!-- Épico 1 · Fundação + Contratos (S1-4) -->
+          <tr class="gantt-epic">
+            <td><i class="ri-folder-5-line"></i> Épico 1 — Fundação + Contratos</td>
+            <td class="week"><span class="gantt-bar epic"></span></td><td class="week"><span class="gantt-bar epic"></span></td><td class="week"><span class="gantt-bar epic"></span></td><td class="week"><span class="gantt-bar epic"></span></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week qw-col"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td>
+          </tr>
+          <tr class="gantt-story"><td>Provisionamento GCP · IAM · VPC · CMEK</td><td class="week"><span class="gantt-bar story"></span></td><td class="week"><span class="gantt-bar story"></span></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week qw-col"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td></tr>
+          <tr class="gantt-story"><td>Sensedia instalado · Cloud Composer · BigQuery</td><td class="week"><span class="gantt-bar story"></span></td><td class="week"><span class="gantt-bar story"></span></td><td class="week"><span class="gantt-bar story"></span></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week qw-col"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td></tr>
+          <tr class="gantt-story"><td>CI/CD para pipeline de dados · templates base</td><td class="week"></td><td class="week"></td><td class="week"><span class="gantt-bar story"></span></td><td class="week"><span class="gantt-bar story"></span></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week qw-col"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td></tr>
+          <tr class="gantt-story"><td>Contratos de dados · SAP Financeiro (fonte-piloto)</td><td class="week"></td><td class="week"></td><td class="week"><span class="gantt-bar story"></span></td><td class="week"><span class="gantt-bar story"></span></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week qw-col"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td></tr>
+
+          <!-- Épico 2 · Quick Win Vertical (S5-10) -->
+          <tr class="gantt-epic">
+            <td><i class="ri-folder-5-line"></i> Épico 2 — Quick Win Vertical (SAP Financeiro end-to-end)</td>
+            <td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"><span class="gantt-bar epic"></span></td><td class="week"><span class="gantt-bar epic"></span></td><td class="week"><span class="gantt-bar epic"></span></td><td class="week"><span class="gantt-bar epic"></span></td><td class="week"><span class="gantt-bar epic"></span></td><td class="week qw-col"><span class="gantt-bar epic"></span></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td>
+          </tr>
+          <tr class="gantt-story"><td>Conector Sensedia · SAP Financeiro</td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"><span class="gantt-bar story"></span></td><td class="week"><span class="gantt-bar story"></span></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week qw-col"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td></tr>
+          <tr class="gantt-story"><td>Raw GCS + Bronze BigQuery (SAP Fin)</td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"><span class="gantt-bar story"></span></td><td class="week"><span class="gantt-bar story"></span></td><td class="week"><span class="gantt-bar story"></span></td><td class="week"></td><td class="week"></td><td class="week qw-col"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td></tr>
+          <tr class="gantt-story"><td>DAG Bronze → Silver conformado (SAP Fin)</td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"><span class="gantt-bar story"></span></td><td class="week"><span class="gantt-bar story"></span></td><td class="week"><span class="gantt-bar story"></span></td><td class="week qw-col"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td></tr>
+          <tr class="gantt-story"><td>Dashboard Power BI sobre Silver · KPIs Financeiros</td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"><span class="gantt-bar story"></span></td><td class="week qw-col"><span class="gantt-bar story"></span><span class="gantt-star">⭐</span></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td></tr>
+
+          <!-- Épico 3 · Escala Horizontal + Gold (S11-18) -->
+          <tr class="gantt-epic">
+            <td><i class="ri-folder-5-line"></i> Épico 3 — Escala Horizontal + Gold (14 fontes + modelagem)</td>
+            <td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week qw-col"></td><td class="week"><span class="gantt-bar epic"></span></td><td class="week"><span class="gantt-bar epic"></span></td><td class="week"><span class="gantt-bar epic"></span></td><td class="week"><span class="gantt-bar epic"></span></td><td class="week"><span class="gantt-bar epic"></span></td><td class="week"><span class="gantt-bar epic"></span></td><td class="week"><span class="gantt-bar epic"></span></td><td class="week"><span class="gantt-bar epic"></span></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td>
+          </tr>
+          <tr class="gantt-story"><td>Bloco 1 — TOTVS + Oracle EBS (conectores + Silver)</td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week qw-col"></td><td class="week"><span class="gantt-bar story"></span></td><td class="week"><span class="gantt-bar story"></span></td><td class="week"><span class="gantt-bar story"></span></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td></tr>
+          <tr class="gantt-story"><td>Bloco 2 — 6 APIs REST (conectores + Silver)</td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week qw-col"></td><td class="week"></td><td class="week"></td><td class="week"><span class="gantt-bar story"></span></td><td class="week"><span class="gantt-bar story"></span></td><td class="week"><span class="gantt-bar story"></span></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td></tr>
+          <tr class="gantt-story"><td>Bloco 3 — 4 SQL Server + 2 SFTP (conectores + Silver)</td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week qw-col"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"><span class="gantt-bar story"></span></td><td class="week"><span class="gantt-bar story"></span></td><td class="week"><span class="gantt-bar story"></span></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td></tr>
+          <tr class="gantt-story"><td>Camada Gold · modelagem dimensional (fato + dims)</td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week qw-col"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"><span class="gantt-bar story"></span></td><td class="week"><span class="gantt-bar story"></span></td><td class="week"><span class="gantt-bar story"></span></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td></tr>
+          <tr class="gantt-story"><td>DQ + lineage · views materializadas · IAM row-level</td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week qw-col"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"><span class="gantt-bar story"></span></td><td class="week"><span class="gantt-bar story"></span></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td></tr>
+
+          <!-- Épico 4 · Analytics & Handover (S19-24) -->
+          <tr class="gantt-epic">
+            <td><i class="ri-folder-5-line"></i> Épico 4 — Analytics & Handover</td>
+            <td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week qw-col"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"><span class="gantt-bar epic"></span></td><td class="week"><span class="gantt-bar epic"></span></td><td class="week"><span class="gantt-bar epic"></span></td><td class="week"><span class="gantt-bar epic"></span></td><td class="week"><span class="gantt-bar epic"></span></td><td class="week"><span class="gantt-bar epic"></span></td>
+          </tr>
+          <tr class="gantt-story"><td>Dashboard Analítico com drill-down (sobre Gold)</td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week qw-col"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"><span class="gantt-bar story"></span></td><td class="week"><span class="gantt-bar story"></span></td><td class="week"><span class="gantt-bar story"></span></td><td class="week"></td><td class="week"></td><td class="week"></td></tr>
+          <tr class="gantt-story"><td>Dashboard Operacional · refinamento sobre Gold</td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week qw-col"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"><span class="gantt-bar story"></span></td><td class="week"><span class="gantt-bar story"></span></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td></tr>
+          <tr class="gantt-story"><td>Treinamento de 35+ usuários · ondas</td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week qw-col"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"><span class="gantt-bar story"></span></td><td class="week"><span class="gantt-bar story"></span></td><td class="week"></td><td class="week"></td></tr>
+          <tr class="gantt-story"><td>UAT com Controladoria + demais áreas</td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week qw-col"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"><span class="gantt-bar story"></span></td><td class="week"><span class="gantt-bar story"></span></td><td class="week"></td><td class="week"></td></tr>
+          <tr class="gantt-story"><td>Cutover · hypercare · handover operacional</td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week qw-col"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"></td><td class="week"><span class="gantt-bar story"></span></td><td class="week"><span class="gantt-bar story"></span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- REG-RISK-01:top5 — Top 5 Riscos Críticos -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon bg-danger"><i class="ri-alarm-warning-line"></i></div>
+      <div class="section-title">Top 5 Riscos Críticos</div>
+      <span class="section-count">prob · impacto</span>
+    </div>
+    <div class="risk-list">
+      <div class="risk-item">
+        <div class="risk-level bg-danger"></div>
+        <div class="risk-content">
+          <div class="risk-title"><span class="scenario-risk-dot dot-high" style="width:10px;height:10px;border-radius:50%;display:inline-block;background:var(--danger)"></span> Dependência de Sensedia como ponto único de extração</div>
+          <div class="risk-desc">Falha ou indisponibilidade do gateway bloqueia todas as 15 extrações. Mitigação: DR ativo-passivo + replay via GCS.</div>
+        </div>
+        <div class="risk-meta"><span class="pill pill-danger">Alto</span><span class="risk-impact bg-danger">R$ 150K</span></div>
+      </div>
+      <div class="risk-item">
+        <div class="risk-level bg-warning"></div>
+        <div class="risk-content">
+          <div class="risk-title"><span style="width:10px;height:10px;border-radius:50%;display:inline-block;background:var(--warning)"></span> Schemas dos 15 sistemas mudarem durante o projeto</div>
+          <div class="risk-desc">Evolução de sistemas legados sem aviso quebra DAGs. Mitigação: contratos de dados + schema registry.</div>
+        </div>
+        <div class="risk-meta"><span class="pill pill-warning">Médio</span><span class="risk-impact bg-warning">R$ 80K</span></div>
+      </div>
+      <div class="risk-item">
+        <div class="risk-level bg-warning"></div>
+        <div class="risk-content">
+          <div class="risk-title"><span style="width:10px;height:10px;border-radius:50%;display:inline-block;background:var(--warning)"></span> Custos BigQuery acima do estimado por consultas mal otimizadas</div>
+          <div class="risk-desc">Scans de tabelas enormes em dashboards podem estourar budget. Mitigação: particionamento + clustering + quotas por projeto.</div>
+        </div>
+        <div class="risk-meta"><span class="pill pill-warning">Médio</span><span class="risk-impact bg-warning">R$ 60K</span></div>
+      </div>
+      <div class="risk-item">
+        <div class="risk-level bg-warning"></div>
+        <div class="risk-content">
+          <div class="risk-title"><span style="width:10px;height:10px;border-radius:50%;display:inline-block;background:var(--warning)"></span> Baixa adoção dos dashboards pelos usuários de negócio</div>
+          <div class="risk-desc">Se os 35 usuários-alvo não migrarem, ROI fica comprometido. Mitigação: treinamento em ondas + champions por área.</div>
+        </div>
+        <div class="risk-meta"><span class="pill pill-warning">Médio</span><span class="risk-impact bg-warning">R$ 40K</span></div>
+      </div>
+      <div class="risk-item">
+        <div class="risk-level bg-success"></div>
+        <div class="risk-content">
+          <div class="risk-title"><span style="width:10px;height:10px;border-radius:50%;display:inline-block;background:var(--success)"></span> Compliance LGPD em campos sensíveis (CPF, e-mail)</div>
+          <div class="risk-desc">Dados pessoais atravessam várias camadas. Mitigação: mascaramento na prata + IAM row-level + revisão DPO antes do go-live.</div>
+        </div>
+        <div class="risk-meta"><span class="pill pill-success">Baixo</span><span class="risk-impact bg-success">R$ 20K</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REG-NARR-02 — Pré-requisitos / Condições para Prosseguir -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon bg-info"><i class="ri-shield-check-line"></i></div>
+      <div class="section-title">Pré-requisitos</div>
+      <span class="section-count">condições para prosseguir</span>
+    </div>
+    <div class="alert alert-info"><i class="ri-key-2-line"></i><div><strong>Licenças & contratos:</strong> contrato Sensedia em tier compatível com 15 conectores ativos, billing GCP aprovado com budget mensal provisionado, licenças Power BI Pro (ou Premium per User) provisionadas para os 35+ consumidores e para os autores dos dashboards.</div></div>
+    <div class="alert alert-info"><i class="ri-team-line"></i><div><strong>Equipe disponível:</strong> squad de 7 pessoas alocado em tempo integral durante 24 semanas, sem compartilhamento com outros projetos críticos concorrentes.</div></div>
+    <div class="alert alert-info"><i class="ri-file-list-3-line"></i><div><strong>Acesso aos 15 sistemas:</strong> credenciais de service account do <strong>SAP Financeiro</strong> homologadas pelo time de segurança antes do início da Fase 2 (Quick Win); as 14 credenciais restantes antes do início da Fase 3 (Escala).</div></div>
+    <div class="alert alert-info"><i class="ri-scales-2-line"></i><div><strong>Aprovação do DPO:</strong> revisão LGPD concluída e documentada (classificação de dados, base legal, política de retenção) antes do primeiro carregamento em prod.</div></div>
+    <div class="alert alert-info"><i class="ri-git-branch-line"></i><div><strong>Ambientes segregados:</strong> projetos GCP dev/hml/prod provisionados com redes VPC separadas e CMEK ativo em prod desde o go-live da Fase 1.</div></div>
+  </div>
+
+  <!-- REG-EXEC-04 — Próximos Passos -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon bg-success"><i class="ri-flag-2-line"></i></div>
+      <div class="section-title">Próximos Passos</div>
+      <span class="section-count">7 ações imediatas</span>
+    </div>
+    <ol class="steps-list">
+      <li><strong>Aprovação formal do orçamento de R$ 720K pela Diretoria Financeira</strong><span class="step-meta"><i class="ri-user-line"></i> Responsável: CTO · <i class="ri-time-line"></i> Prazo: 7 dias</span></li>
+      <li><strong>Assinatura do contrato Sensedia (tier 15 conectores + SLA 99,9%)</strong><span class="step-meta"><i class="ri-user-line"></i> Responsável: Procurement + Jurídico · <i class="ri-time-line"></i> Prazo: 15 dias</span></li>
+      <li><strong>Kickoff com o squad e alocação oficial das 7 pessoas em tempo integral</strong><span class="step-meta"><i class="ri-user-line"></i> Responsável: PO · <i class="ri-time-line"></i> Prazo: D+1 após aprovação</span></li>
+      <li><strong>Provisionamento dos 3 projetos GCP (dev/hml/prod) com IAM baseline</strong><span class="step-meta"><i class="ri-user-line"></i> Responsável: DevOps / SRE · <i class="ri-time-line"></i> Prazo: 5 dias úteis</span></li>
+      <li><strong>Mapeamento técnico detalhado dos 15 sistemas (tipo de conector, volumetria, janela)</strong><span class="step-meta"><i class="ri-user-line"></i> Responsável: Arquiteto GCP + Data Engineer Sr · <i class="ri-time-line"></i> Prazo: 10 dias úteis</span></li>
+      <li><strong>Sessão de revisão LGPD com o DPO e classificação de dados sensíveis</strong><span class="step-meta"><i class="ri-user-line"></i> Responsável: DPO + Head de Dados · <i class="ri-time-line"></i> Prazo: antes da Fase 2</span></li>
+      <li><strong>Definição dos 35 usuários de negócio-alvo e plano de treinamento em ondas</strong><span class="step-meta"><i class="ri-user-line"></i> Responsável: PO + Controller Financeiro · <i class="ri-time-line"></i> Prazo: antes da Fase 4 (Analytics)</span></li>
+    </ol>
+  </div>
+
+</div>
+<!-- ═══════════════════════ FIM TAB: CENÁRIO ═══════════════════════ -->
+
+</div>
+<!-- /.doc-container -->
+
+<footer class="footer">
+  <div class="footer-content">
+    <div>
+      <div class="footer-author-name"><i class="ri-robot-2-line"></i> Discovery-to-Go · Basic Report</div>
+      <div class="footer-author-role">Gerado via template basic/template.md</div>
+    </div>
+    <div style="text-align: right;">
+      <div class="footer-doc-title">Data Hub — Consolidação Multi-Sistema</div>
+      <div class="footer-doc-detail">Versão 01.00 · Abril 2026 · Cenário Recomendado</div>
+    </div>
+  </div>
+  <div class="footer-seal">
+    Relatório hipotético para demonstração do template basic · Não representa cliente real
+  </div>
+</footer>
+
+<script>
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    const tabId = 'tab-' + btn.dataset.tab;
+    const pane = document.getElementById(tabId);
+    if (pane) pane.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+});
+
+document.querySelectorAll('.section').forEach(section => {
+  const header = section.querySelector('.section-header');
+  if (!header) return;
+  const toggle = document.createElement('button');
+  toggle.className = 'section-toggle';
+  toggle.type = 'button';
+  toggle.setAttribute('aria-label', 'Expandir/Recolher seção');
+  toggle.innerHTML = '<i class="ri-arrow-down-s-line"></i>';
+  header.appendChild(toggle);
+  header.addEventListener('click', (e) => {
+    e.stopPropagation();
+    section.classList.toggle('collapsed');
+  });
+});
+
+function toggleTheme() {
+  const html = document.documentElement;
+  const icon = document.getElementById('themeIcon');
+  const current = html.getAttribute('data-theme-mode');
+  const next = current === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme-mode', next);
+  icon.className = next === 'dark' ? 'ri-moon-line' : 'ri-sun-line';
+}
+</script>
+
+</body>
+</html>

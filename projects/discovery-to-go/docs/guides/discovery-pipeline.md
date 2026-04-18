@@ -19,6 +19,9 @@ created: 2026-04-10 12:00
 
 Guia completo que explica passo a passo como o pipeline de discovery conduz o levantamento de requisitos — desde o briefing inicial até o delivery report final.
 
+> [!info] Relação com a rule formal
+> Este guide é o **par operacional** da rule [base/behavior/rules/discovery/discovery.md](../../base/behavior/rules/discovery/discovery.md). Sobreposições (fases, skills, outputs, flags) devem permanecer sincronizadas — ver [Política de Sincronização Rule ↔ Guide](rule-guide-sync-policy.md).
+
 > [!info] Sobre este documento
 > Este é um **how-to** (guia operacional). As regras formais estão em `dtg-artifacts/rules/`. Os templates estão em `dtg-artifacts/templates/`. As skills dos agentes estão em `dtg-artifacts/skills/` (locais) e `.claude/skills/` (globais).
 
@@ -30,14 +33,19 @@ O pipeline opera em **3 fases sequenciais**, cada uma com um **Human Review** en
 
 ```mermaid
 flowchart LR
-    S[Setup] --> R1[Fase 1\nDiscovery]
+    PRE[Aprovação Global\nfora do pipeline] -.-> B[Briefing]
+    B --> S[Setup]
+    S --> R1[Fase 1\nDiscovery]
     R1 --> HR1[Human\nReview]
     HR1 --> R2[Fase 2\nChallenge]
     R2 --> HR2[Human\nReview]
-    HR2 --> R3[Fase 3\nDelivery]
+    HR2 --> R3[Fase 3\nDelivery DR]
     R3 --> HR3[Human\nReview]
-    HR3 --> END[Entrega]
+    HR3 --> END[Entrega DR]
+    END -.-> DIST[Destilação OP/EX\nopcional — ADR-001]
 
+    style PRE fill:#E4E4E9,color:#1A1923,stroke-dasharray: 5 5
+    style B fill:#88878C,color:#fff
     style S fill:#88878C,color:#fff
     style R1 fill:#2EB5F5,color:#1A1923
     style R2 fill:#F4AC00,color:#1A1923
@@ -46,7 +54,11 @@ flowchart LR
     style HR2 fill:#FFE600,color:#1A1923
     style HR3 fill:#FFE600,color:#1A1923
     style END fill:#9B96FF,color:#1A1923
+    style DIST fill:#E4E4E9,color:#1A1923,stroke-dasharray: 5 5
 ```
+
+> [!info] Caixas pontilhadas
+> **Aprovação Global** acontece **antes** do pipeline em organizações com governança corporativa (comitê libera o investimento antes do discovery começar). **Destilação OP/EX** é opcional — disparada quando `deliverables_scope` inclui `"OP"` ou `"EX"` (ver [[projects/patria/kb/adr-001-deliverables-model]]).
 
 | Fase | Nome | Agentes | Output |
 |------|------|---------|--------|
@@ -295,33 +307,42 @@ flowchart LR
     MW --> MD["Markdown\nDocuments"]
     MD --> CO["#3.2\nconsolidator"]
     CO --> DA["Delivery\nArtifacts"]
-    DA --> RP["#3.3\nreport-planner"]
+    DA --> DIST["#3.3\ndeliverable-distiller\nopcional"]
+    DA --> RP["#3.4\nreport-planner"]
+    DIST --> RP
     RP --> PL["Report\nLayout"]
-    PL --> HW["#3.4\nhtml-writer"]
+    PL --> HW["#3.5\nhtml-writer"]
     HW --> DR["Delivery\nReports"]
 
     style DD fill:#2EB5F5,color:#1A1923
     style CD fill:#F4AC00,color:#1A1923
     style MW fill:#9B96FF,color:#1A1923
     style CO fill:#9B96FF,color:#1A1923
+    style DIST fill:#9B96FF,color:#1A1923,stroke-dasharray: 5 5
     style RP fill:#9B96FF,color:#1A1923
     style HW fill:#0ED145,color:#1A1923
 ```
 
-| # | Sub-fase | Agente | Input | Output |
-|---|----------|--------|-------|--------|
-| 3.1 | Documents creation | pipeline-md-writer | Drafts aprovados | Markdown polido |
-| 3.2 | Consolidation | consolidator | Markdown documents | delivery-report.md |
-| 3.3 | Report planning | report-planner | delivery-report.md | Report layout (regions) |
-| 3.4 | Reports | html-writer | delivery-report.md + layout | delivery-report.html |
+> [!info] Sub-fase 3.3 (distillation) é condicional
+> O `deliverable-distiller` só roda quando `deliverables_scope` no briefing contém `"OP"` e/ou `"EX"`. Caixa pontilhada indica opcionalidade. Ver [ADR-001](../../projects/patria/kb/adr-001-deliverable-hierarchy.md) e [SKILL](../../base/behavior/skills/deliverable-distiller/SKILL.md).
+
+| # | Sub-fase | Agente | Input | Output | Condicional |
+|---|----------|--------|-------|--------|-------------|
+| 3.1 | Documents creation | pipeline-md-writer | Drafts aprovados | Markdown polido | sempre |
+| 3.2 | Consolidation | consolidator | Markdown documents | delivery-report.md | sempre |
+| 3.3 | Distillation | deliverable-distiller | delivery-report.md + layout | one-pager.md e/ou executive-report.md | `deliverables_scope` ⊇ `{OP,EX}` |
+| 3.4 | Report planning | report-planner | delivery-report.md + (distilled) | Report layout (regions) | sempre |
+| 3.5 | Reports | html-writer | .md + layout | .html auto-contidos | sempre |
 
 ### Outputs da Fase 3
 
-| Arquivo | Descrição |
-|---------|-----------|
-| `delivery/delivery-report.md` | Relatório consolidado com marcadores de region |
-| `delivery/report-plan.md` | Plano visual por region (gerado pelo report-planner) |
-| `delivery/delivery-report.html` | Versão HTML com regions visuais renderizadas |
+| Arquivo | Descrição | Condicional |
+|---------|-----------|-------------|
+| `delivery/delivery-report.md` | Relatório consolidado com marcadores de region | sempre |
+| `delivery/one-pager.md` | Destilação 1 página para decisores | `deliverables_scope` ⊇ `{OP}` |
+| `delivery/executive-report.md` | Destilação 5-15 pág para comitê | `deliverables_scope` ⊇ `{EX}` |
+| `delivery/report-plan.md` | Plano visual por region (gerado pelo report-planner) | sempre |
+| `delivery/*.html` | Versões HTML auto-contidas de cada `.md` do delivery | sempre (1+ arquivos) |
 
 ### State Snapshot
 
@@ -483,6 +504,7 @@ O orchestrator auto-detecta o pack a partir de sinais no briefing. Se ambíguo, 
 | auditor | 2 | Validação convergente (5 dimensões) |
 | pipeline-md-writer | 3 | Formata drafts em markdown polido |
 | consolidator | 3 | Consolida tudo no delivery report |
+| deliverable-distiller | 3 | Destila DR em OP/EX quando `deliverables_scope` pede (ADR-001) |
 | report-planner | 3 | Planeja visualização do HTML por regions |
 
 ### Globais (em `.claude/skills/`)

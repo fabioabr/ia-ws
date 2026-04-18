@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Narrative Regions Preview</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+/* ====== DESIGN TOKENS (dark — default) ====== */
+:root {
+    --primary: #4DA8DA;
+    --primary-dark: #3A8BB8;
+    --primary-light: rgba(77, 168, 218, 0.12);
+    --secondary: #B9B7BD;
+    --success: #0ED145;
+    --success-light: rgba(14, 209, 69, 0.12);
+    --success-border: rgba(14, 209, 69, 0.3);
+    --warning: #F4AC00;
+    --warning-light: rgba(244, 172, 0, 0.12);
+    --warning-border: rgba(244, 172, 0, 0.3);
+    --danger: #8B1A1A;
+    --danger-light: rgba(139, 26, 26, 0.15);
+    --danger-border: rgba(139, 26, 26, 0.35);
+    --info: #2EB5F5;
+    --info-light: rgba(46, 181, 245, 0.12);
+    --info-border: rgba(46, 181, 245, 0.3);
+    --bg: #141414;
+    --card-bg: #2E2D32;
+    --text: #E0DFE3;
+    --text-muted: #88878C;
+    --border: #3E3D44;
+    --purple: #9B96FF;
+    --purple-light: rgba(155, 150, 255, 0.12);
+    --orange: #FF9473;
+    --teal: #2DD4BF;
+    --header-bg: linear-gradient(135deg, #2E2D32 0%, #252428 50%, #1A1923 100%);
+    --card-header-bg: #252428;
+    --th-bg: #252428;
+    --th-bg-hover: #36353B;
+    --card-shadow: 0 2px 12px rgba(46, 181, 245, 0.06), 0 1px 4px rgba(0,0,0,0.4);
+    --progress-track: #3E3D44;
+    --alert-warning-text: #f0c040;
+    --danger-text: #E85D54;
+    --alert-danger-text: #E85D54;
+    --alert-info-text: #5FC8F8;
+    --alert-success-text: #3DE06A;
+    --pill-success-text: #3DE06A;
+    --pill-info-text: #5FC8F8;
+    --pill-warning-text: #f0c040;
+}
+
+[data-theme-mode=light] {
+    --primary: #4DA8DA;
+    --primary-dark: #3A8BB8;
+    --primary-light: rgba(77, 168, 218, 0.1);
+    --secondary: #88878C;
+    --success: #0A9E35;
+    --success-light: rgba(10, 158, 53, 0.08);
+    --success-border: rgba(10, 158, 53, 0.25);
+    --warning: #E67E22;
+    --warning-light: rgba(230, 126, 34, 0.12);
+    --warning-border: rgba(230, 126, 34, 0.35);
+    --danger: #E74C3C;
+    --danger-light: rgba(231, 76, 60, 0.10);
+    --danger-border: rgba(231, 76, 60, 0.30);
+    --info: #1E95CC;
+    --info-light: rgba(30, 149, 204, 0.08);
+    --info-border: rgba(30, 149, 204, 0.25);
+    --bg: #F3F3F6;
+    --card-bg: #ffffff;
+    --text: #1A1923;
+    --text-muted: #88878C;
+    --border: #B9B7BD;
+    --purple: #7B76FE;
+    --purple-light: rgba(123, 118, 254, 0.08);
+    --orange: #FE7C58;
+    --teal: #00D8D8;
+    --header-bg: linear-gradient(135deg, #2E2D32 0%, #252428 50%, #1A1923 100%);
+    --card-header-bg: rgba(77, 168, 218, 0.12);
+    --th-bg: rgba(77, 168, 218, 0.12);
+    --th-bg-hover: rgba(77, 168, 218, 0.22);
+    --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0,0,0,0.06);
+    --progress-track: #B9B7BD;
+    --alert-warning-text: #C0392B;
+    --alert-danger-text: #C0392B;
+    --alert-info-text: #1670A0;
+    --alert-success-text: #087A28;
+    --pill-success-text: #087A28;
+    --pill-info-text: #1670A0;
+    --pill-warning-text: #C0392B;
+    --hover-border: #4DA8DA;
+}
+[data-theme-mode=light] .card:hover { border-color: var(--hover-border); }
+
+/* ====== RESET ====== */
+html, body, div, span, h1, h2, h3, h4, h5, h6, p, a, ul, ol, li,
+header, footer, nav, section, article, aside, button, input, select, textarea,
+table, tr, td, th { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+/* ====== HEADER ====== */
+.header { background: linear-gradient(135deg, #2E2D32 0%, #252428 50%, #1A1923 100%); color: white; padding: 36px 0 28px; position: relative; overflow: hidden; }
+.header::before { content: ''; position: absolute; top: -50%; right: -10%; width: 500px; height: 500px; background: rgba(255,255,255,0.03); border-radius: 50%; z-index: 0; }
+.header-content { position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+.header h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.5px; }
+.header .subtitle { font-size: 0.88rem; opacity: 0.7; font-weight: 300; margin-top: 4px; }
+
+/* ====== THEME TOGGLE ====== */
+.theme-toggle { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; padding: 8px 14px; color: white; cursor: pointer; font-family: 'Poppins', sans-serif; font-size: 0.78rem; font-weight: 500; display: flex; align-items: center; gap: 6px; transition: all 0.2s; }
+.theme-toggle:hover { background: rgba(255,255,255,0.22); }
+
+/* ====== REGION ID BADGE ====== */
+.region-badge { display: inline-flex; align-items: center; gap: 6px; background: var(--primary-light); border: 1px solid rgba(77, 168, 218, 0.3); color: var(--primary); padding: 3px 12px; border-radius: 6px; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.5px; font-family: monospace; }
+
+/* ====== SECTION ====== */
+.section { margin-top: 36px; }
+.section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid var(--border); }
+.section-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+.section-title { font-size: 1.15rem; font-weight: 600; flex: 1; }
+
+/* ====== BG UTILITY ====== */
+.bg-primary { background: var(--primary); color: #1A1923 !important; }
+.bg-success { background: var(--success); color: #1A1923 !important; }
+.bg-warning { background: var(--warning); color: #1A1923 !important; }
+.bg-teal { background: var(--teal); color: #1A1923 !important; }
+.bg-orange { background: var(--orange); color: #1A1923 !important; }
+.bg-info { background: var(--info); color: white !important; }
+.bg-danger { background: var(--danger); color: white !important; }
+.bg-purple { background: var(--purple); color: white !important; }
+
+/* ====== PILLS ====== */
+.pill { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: 600; }
+.pill-success { background: var(--success-light); color: var(--pill-success-text); border: 1px solid var(--success-border); }
+.pill-info { background: var(--info-light); color: var(--pill-info-text); border: 1px solid var(--info-border); }
+.pill-warning { background: var(--warning-light); color: var(--pill-warning-text); border: 1px solid var(--warning-border); }
+.pill-danger { background: var(--danger-light); color: var(--alert-danger-text); border: 1px solid var(--danger-border); }
+.pill-secondary { background: rgba(136,135,140,0.15); color: var(--text-muted); border: 1px solid rgba(136,135,140,0.3); }
+
+/* ====== VERTICAL TIMELINE ====== */
+.vtimeline { position: relative; padding-left: 40px; margin: 0 0 24px; }
+.vtimeline::before { content: ''; position: absolute; left: 15px; top: 0; bottom: 0; width: 3px; background: var(--border); border-radius: 2px; }
+.vtimeline-item { position: relative; margin-bottom: 28px; }
+.vtimeline-item:last-child { margin-bottom: 0; }
+.vtimeline-dot { position: absolute; left: -40px; top: 4px; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; z-index: 1; border: 3px solid var(--bg); }
+.vtimeline-date { font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+.vtimeline-card { background: var(--card-bg); border-radius: 10px; border: 1px solid var(--border); padding: 16px 18px; box-shadow: var(--card-shadow); }
+.vtimeline-card:hover { border-color: var(--primary); }
+.vtimeline-title { font-size: 0.92rem; font-weight: 700; margin-bottom: 6px; }
+.vtimeline-desc { font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; }
+.vtimeline-type { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 8px; }
+
+/* ====== CHECKLIST ====== */
+.checklist-progress { margin-bottom: 20px; }
+.checklist-progress-label { font-size: 0.82rem; font-weight: 600; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between; }
+.checklist-progress-bar { height: 10px; background: var(--progress-track); border-radius: 5px; overflow: hidden; }
+.checklist-progress-fill { height: 100%; border-radius: 5px; transition: width 0.5s ease; }
+.checklist-items { list-style: none; }
+.checklist-item { display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px; background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; margin-bottom: 8px; transition: border-color 0.2s; }
+.checklist-item:hover { border-color: var(--primary); }
+.checklist-check { width: 24px; height: 24px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; flex-shrink: 0; margin-top: 1px; }
+.checklist-check.done { background: var(--success-light); color: var(--pill-success-text); border: 1px solid var(--success-border); }
+.checklist-check.in-progress { background: var(--warning-light); color: var(--pill-warning-text); border: 1px solid var(--warning-border); }
+.checklist-check.pending { background: rgba(136,135,140,0.15); color: var(--text-muted); border: 1px solid rgba(136,135,140,0.3); }
+.checklist-content { flex: 1; }
+.checklist-id { font-size: 0.72rem; font-weight: 700; color: var(--text-muted); }
+.checklist-text { font-size: 0.85rem; font-weight: 500; margin-top: 1px; }
+.checklist-meta { display: flex; align-items: center; gap: 12px; margin-top: 4px; font-size: 0.72rem; color: var(--text-muted); }
+
+/* ====== APPROVAL TABLE ====== */
+.approval-header { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 18px 20px; margin-bottom: 20px; box-shadow: var(--card-shadow); }
+.approval-doc { font-size: 0.95rem; font-weight: 700; margin-bottom: 4px; }
+.approval-ver { font-size: 0.78rem; color: var(--text-muted); }
+.approval-count { font-size: 0.82rem; color: var(--text-muted); margin-top: 8px; }
+.approval-count strong { color: var(--primary); }
+
+.table-wrapper { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+th { text-align: left; padding: 10px 14px; background: var(--th-bg); font-weight: 600; border-bottom: 2px solid var(--border); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.3px; color: var(--text-muted); }
+td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+tr:hover { background: var(--primary-light); }
+.sig-line { border-bottom: 1px dashed var(--border); min-width: 120px; display: inline-block; height: 18px; }
+
+/* ====== CONVERGENCE BOX ====== */
+.convergence-box { background: var(--card-bg); border: 1px solid var(--border); border-left: 3px solid var(--primary); border-radius: 10px; padding: 16px 20px; margin-top: 20px; box-shadow: var(--card-shadow); }
+.convergence-box p { font-size: 0.85rem; color: var(--text); line-height: 1.6; opacity: 0.85; }
+
+/* ====== FOOTER ====== */
+.footer { background: linear-gradient(135deg, #2E2D32 0%, #252428 50%, #1A1923 100%); color: white; padding: 28px 0; margin-top: 48px; position: relative; overflow: hidden; }
+.footer::before { content: ''; position: absolute; bottom: -50%; left: -10%; width: 500px; height: 500px; background: rgba(255,255,255,0.03); border-radius: 50%; z-index: 0; }
+.footer-content { position: relative; z-index: 1; text-align: center; }
+.footer-seal { display: flex; align-items: center; gap: 8px; justify-content: center; font-size: 0.72rem; opacity: 0.55; }
+.footer-seal i { font-size: 1rem; }
+
+/* ====== RESPONSIVE ====== */
+@media (max-width: 768px) {
+    .header-content { flex-direction: column; align-items: flex-start; }
+}
+    </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+    <div class="container header-content">
+        <div>
+            <h1><i class="ri-quill-pen-line"></i> Narrative Regions</h1>
+            <p class="subtitle">Preview — 3 regions | REG-NARR-01 to REG-NARR-03</p>
+        </div>
+        <button class="theme-toggle" onclick="toggleTheme()">
+            <i class="ri-moon-line" id="themeIcon"></i>
+            <span id="themeLabel">Light</span>
+        </button>
+    </div>
+</header>
+
+<main class="container">
+
+    <!-- ════════════════════════════════════════════════════════ -->
+    <!-- REG-NARR-01: How We Got Here                            -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <section class="section" id="how-we-got-here">
+        <div class="section-header">
+            <div class="section-icon bg-info"><i class="ri-history-line"></i></div>
+            <h2 class="section-title">How We Got Here</h2>
+            <span class="region-badge">REG-NARR-01</span>
+        </div>
+        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:8px;">
+            Narrative timeline of the discovery process. <strong style="color:var(--text);">Total duration: 3 days</strong> (automated pipeline). <strong style="color:var(--text);">2 iterations</strong> to converge.
+        </p>
+
+        <div class="vtimeline">
+            <!-- Event 1 -->
+            <div class="vtimeline-item">
+                <div class="vtimeline-dot bg-primary"><i class="ri-play-line" style="font-size:0.7rem;"></i></div>
+                <div class="vtimeline-date">Dia 1</div>
+                <div class="vtimeline-card">
+                    <div class="vtimeline-title">Execucao Inicial (Fase 1)</div>
+                    <div class="vtimeline-desc">Blocos #1 a #8 executados sequencialmente. Briefing processado, personas definidas, arquitetura desenhada, TCO calculado.</div>
+                    <span class="vtimeline-type" style="background:var(--info-light); color:var(--pill-info-text); border:1px solid var(--info-border);">Execution</span>
+                </div>
+            </div>
+
+            <!-- Event 2 -->
+            <div class="vtimeline-item">
+                <div class="vtimeline-dot" style="background:var(--alert-danger-text); color:white;"><i class="ri-close-line" style="font-size:0.7rem;"></i></div>
+                <div class="vtimeline-date">Dia 2</div>
+                <div class="vtimeline-card">
+                    <div class="vtimeline-title">Auditoria e 10th-man (Fase 2)</div>
+                    <div class="vtimeline-desc">Auditor atribuiu nota <strong>6.5/10</strong> para analise financeira (abaixo do piso de 7.0). 10th-man levantou 5 questoes, 2 criticas em aberto. Bloco #8 (financeiro) <strong style="color:var(--alert-danger-text);">reprovado</strong> e re-executado.</div>
+                    <span class="vtimeline-type" style="background:var(--danger-light); color:var(--alert-danger-text); border:1px solid var(--danger-border);">Rejection</span>
+                </div>
+            </div>
+
+            <!-- Event 3 -->
+            <div class="vtimeline-item">
+                <div class="vtimeline-dot" style="background:var(--warning); color:#1A1923;"><i class="ri-refresh-line" style="font-size:0.7rem;"></i></div>
+                <div class="vtimeline-date">Dia 2</div>
+                <div class="vtimeline-card">
+                    <div class="vtimeline-title">Segunda Iteracao</div>
+                    <div class="vtimeline-desc">TCO revisado com custos de CS e suporte incluidos. Nova nota do auditor: <strong style="color:var(--pill-success-text);">7.8/10</strong> — aprovado.</div>
+                    <span class="vtimeline-type" style="background:var(--warning-light); color:var(--pill-warning-text); border:1px solid var(--warning-border);">Re-execution</span>
+                </div>
+            </div>
+
+            <!-- Event 4 -->
+            <div class="vtimeline-item">
+                <div class="vtimeline-dot bg-success"><i class="ri-check-line" style="font-size:0.7rem;"></i></div>
+                <div class="vtimeline-date">Dia 2</div>
+                <div class="vtimeline-card">
+                    <div class="vtimeline-title">Aprovacao do Auditor</div>
+                    <div class="vtimeline-desc">Todos os blocos atingiram nota minima de 7.0. Pipeline aprovado para consolidacao.</div>
+                    <span class="vtimeline-type" style="background:var(--success-light); color:var(--pill-success-text); border:1px solid var(--success-border);">Approval</span>
+                </div>
+            </div>
+
+            <!-- Event 5 -->
+            <div class="vtimeline-item">
+                <div class="vtimeline-dot bg-purple"><i class="ri-flag-line" style="font-size:0.7rem;"></i></div>
+                <div class="vtimeline-date">Dia 3</div>
+                <div class="vtimeline-card">
+                    <div class="vtimeline-title">Consolidacao e Convergencia</div>
+                    <div class="vtimeline-desc">Consolidator gerou relatorio final. 2 questoes do 10th-man permanecem em aberto (aceitas como riscos conhecidos).</div>
+                    <span class="vtimeline-type" style="background:var(--purple-light); color:var(--purple); border:1px solid rgba(155,150,255,0.3);">Convergence</span>
+                </div>
+            </div>
+
+            <!-- Event 6 -->
+            <div class="vtimeline-item">
+                <div class="vtimeline-dot bg-teal"><i class="ri-file-check-line" style="font-size:0.7rem;"></i></div>
+                <div class="vtimeline-date">Dia 3</div>
+                <div class="vtimeline-card">
+                    <div class="vtimeline-title">Relatorio Final Publicado</div>
+                    <div class="vtimeline-desc">Relatorio de discovery publicado com 12 regions renderizadas. Pronto para coleta de assinaturas de aprovacao.</div>
+                    <span class="vtimeline-type" style="background:var(--info-light); color:var(--pill-info-text); border:1px solid var(--info-border);">Delivery</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="convergence-box">
+            <p><strong><i class="ri-lightbulb-line" style="color:var(--primary);"></i> Resumo:</strong> O discovery convergiu em 2 iteracoes. A principal correcao foi a inclusao de custos operacionais no TCO, identificada pelo auditor. As questoes abertas do 10th-man foram documentadas como hipoteses a validar.</p>
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════ -->
+    <!-- REG-NARR-02: Conditions to Proceed                      -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <section class="section" id="conditions-to-proceed">
+        <div class="section-header">
+            <div class="section-icon bg-warning"><i class="ri-checkbox-multiple-line"></i></div>
+            <h2 class="section-title">Conditions to Proceed</h2>
+            <span class="region-badge">REG-NARR-02</span>
+        </div>
+        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:16px;">
+            Mandatory prerequisites that must be met before project kickoff.
+        </p>
+
+        <div class="checklist-progress">
+            <div class="checklist-progress-label">
+                <span>Progress</span>
+                <span><strong style="color:var(--primary);">2</strong> / 6 conditions met</span>
+            </div>
+            <div class="checklist-progress-bar">
+                <div class="checklist-progress-fill" style="width:33%; background: linear-gradient(90deg, var(--success), var(--teal));"></div>
+            </div>
+        </div>
+
+        <ul class="checklist-items">
+            <!-- CTP-03 — Atendida -->
+            <li class="checklist-item">
+                <div class="checklist-check done"><i class="ri-check-line"></i></div>
+                <div class="checklist-content">
+                    <span class="checklist-id">CTP-03</span>
+                    <div class="checklist-text">Conta AWS dedicada provisionada com guardrails</div>
+                    <div class="checklist-meta">
+                        <span><i class="ri-tools-line"></i> Tecnica</span>
+                        <span><i class="ri-user-line"></i> DevOps Lead</span>
+                        <span class="pill pill-success">Atendida</span>
+                    </div>
+                </div>
+            </li>
+            <!-- CTP-06 — Atendida -->
+            <li class="checklist-item">
+                <div class="checklist-check done"><i class="ri-check-line"></i></div>
+                <div class="checklist-content">
+                    <span class="checklist-id">CTP-06</span>
+                    <div class="checklist-text">Acesso as APIs Open Finance (sandbox) obtido</div>
+                    <div class="checklist-meta">
+                        <span><i class="ri-tools-line"></i> Tecnica</span>
+                        <span><i class="ri-user-line"></i> Tech Lead</span>
+                        <span class="pill pill-success">Atendida</span>
+                    </div>
+                </div>
+            </li>
+            <!-- CTP-02 — Em andamento -->
+            <li class="checklist-item">
+                <div class="checklist-check in-progress"><i class="ri-time-line"></i></div>
+                <div class="checklist-content">
+                    <span class="checklist-id">CTP-02</span>
+                    <div class="checklist-text">Contratacao de 2 devs backend concluida</div>
+                    <div class="checklist-meta">
+                        <span><i class="ri-building-line"></i> Organizacional</span>
+                        <span><i class="ri-user-line"></i> Engineering Manager</span>
+                        <span><i class="ri-calendar-line"></i> 2 semanas</span>
+                        <span class="pill pill-warning">Em andamento</span>
+                    </div>
+                </div>
+            </li>
+            <!-- CTP-01 — Pendente -->
+            <li class="checklist-item">
+                <div class="checklist-check pending"><i class="ri-subtract-line"></i></div>
+                <div class="checklist-content">
+                    <span class="checklist-id">CTP-01</span>
+                    <div class="checklist-text">Budget de R$ 564.000 aprovado para o ano 1</div>
+                    <div class="checklist-meta">
+                        <span><i class="ri-money-dollar-circle-line"></i> Financeira</span>
+                        <span><i class="ri-user-line"></i> CFO</span>
+                        <span><i class="ri-calendar-line"></i> Antes do kickoff</span>
+                        <span class="pill pill-secondary">Pendente</span>
+                    </div>
+                </div>
+            </li>
+            <!-- CTP-04 — Pendente -->
+            <li class="checklist-item">
+                <div class="checklist-check pending"><i class="ri-subtract-line"></i></div>
+                <div class="checklist-content">
+                    <span class="checklist-id">CTP-04</span>
+                    <div class="checklist-text">Contrato com Auth0 (Business plan) assinado</div>
+                    <div class="checklist-meta">
+                        <span><i class="ri-money-dollar-circle-line"></i> Financeira</span>
+                        <span><i class="ri-user-line"></i> Procurement</span>
+                        <span><i class="ri-calendar-line"></i> 1 semana</span>
+                        <span class="pill pill-secondary">Pendente</span>
+                    </div>
+                </div>
+            </li>
+            <!-- CTP-05 — Pendente -->
+            <li class="checklist-item">
+                <div class="checklist-check pending"><i class="ri-subtract-line"></i></div>
+                <div class="checklist-content">
+                    <span class="checklist-id">CTP-05</span>
+                    <div class="checklist-text">DPO designado para acompanhar requisitos LGPD</div>
+                    <div class="checklist-meta">
+                        <span><i class="ri-scales-3-line"></i> Legal</span>
+                        <span><i class="ri-user-line"></i> Juridico</span>
+                        <span><i class="ri-calendar-line"></i> Antes do kickoff</span>
+                        <span class="pill pill-secondary">Pendente</span>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════ -->
+    <!-- REG-NARR-03: Approval Signatures                        -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <section class="section" id="approval-signatures">
+        <div class="section-header">
+            <div class="section-icon bg-purple"><i class="ri-quill-pen-line"></i></div>
+            <h2 class="section-title">Approval Signatures</h2>
+            <span class="region-badge">REG-NARR-03</span>
+        </div>
+        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:16px;">
+            Formal sign-off table for stakeholder approval.
+        </p>
+
+        <div class="approval-header">
+            <div class="approval-doc"><i class="ri-file-text-line" style="color:var(--primary);"></i> Relatorio de Discovery — FinTrack Pro SaaS</div>
+            <div class="approval-ver">Versao 1.2 (pos-auditoria)</div>
+            <div class="approval-count">Aprovacoes: <strong>0 de 5</strong> coletadas</div>
+        </div>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Role</th>
+                        <th>Name</th>
+                        <th>Signature</th>
+                        <th>Date</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Product Sponsor</strong></td>
+                        <td>Ana Silva</td>
+                        <td><span class="sig-line"></span></td>
+                        <td><span style="color:var(--text-muted); font-style:italic;">Pendente</span></td>
+                        <td>—</td>
+                    </tr>
+                    <tr>
+                        <td><strong>CTO</strong></td>
+                        <td>Carlos Mendes</td>
+                        <td><span class="sig-line"></span></td>
+                        <td><span style="color:var(--text-muted); font-style:italic;">Pendente</span></td>
+                        <td>—</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Engineering Manager</strong></td>
+                        <td>Rafael Costa</td>
+                        <td><span class="sig-line"></span></td>
+                        <td><span style="color:var(--text-muted); font-style:italic;">Pendente</span></td>
+                        <td><span style="font-size:0.78rem; color:var(--pill-warning-text);">Condicionado a contratacao dos 2 devs</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Product Owner</strong></td>
+                        <td>Juliana Ferreira</td>
+                        <td><span class="sig-line"></span></td>
+                        <td><span style="color:var(--text-muted); font-style:italic;">Pendente</span></td>
+                        <td>—</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Security Officer</strong></td>
+                        <td>Marcos Almeida</td>
+                        <td><span class="sig-line"></span></td>
+                        <td><span style="color:var(--text-muted); font-style:italic;">Pendente</span></td>
+                        <td><span style="font-size:0.78rem; color:var(--pill-warning-text);">Condicionado a designacao de DPO</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="container footer-content">
+        <div class="footer-seal">
+            <i class="ri-shield-check-line"></i>
+            <span>&copy; 2026 mAInd Tech</span>
+        </div>
+    </div>
+</footer>
+
+<script>
+function toggleTheme() {
+    const html = document.documentElement;
+    const icon = document.getElementById('themeIcon');
+    const label = document.getElementById('themeLabel');
+    if (html.getAttribute('data-theme-mode') === 'light') {
+        html.removeAttribute('data-theme-mode');
+        icon.className = 'ri-moon-line';
+        label.textContent = 'Light';
+    } else {
+        html.setAttribute('data-theme-mode', 'light');
+        icon.className = 'ri-sun-line';
+        label.textContent = 'Dark';
+    }
+}
+</script>
+</body>
+</html>

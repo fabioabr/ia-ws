@@ -173,22 +173,22 @@ Se você avançou, o orchestrator executa em sequência:
 3. **report-planner** — Planeja a visualização do HTML por regions
 4. **html-writer** — Gera a versão HTML do report
 
-> [!tip] Report Setup
-> O nível de detalhe dos HTMLs gerados é controlado pelo `report-setup` no `config.md` da run:
+> [!tip] Entregáveis (`deliverables_scope`)
+> O que é produzido é controlado pelo `deliverables_scope` no briefing (e propagado para `config.md`). O DR (Delivery Report) é sempre produzido; OP e EX são destilados do DR pelo `deliverable-distiller` quando declarados.
 >
-> | Setup | HTMLs gerados | Público |
-> |-------|--------------|---------|
-> | `essential` | `one-pager.html` (8 regions) | C-level, sponsor |
-> | `executive` | `one-pager.html` + `executive-report.html` (28 regions) | Diretoria, gestão |
-> | `complete` | `one-pager.html` + `executive-report.html` + `full-report.html` (90 regions) | Time técnico, PO |
+> | `deliverables_scope` | MDs produzidos | HTMLs produzidos | Público |
+> |---|---|---|---|
+> | `["DR"]` | `delivery-report.md` | `full-report.html` | Time técnico, PO |
+> | `["DR", "OP"]` | + `one-pager.md` | + `one-pager.html` | + C-level, sponsor |
+> | `["DR", "OP", "EX"]` | + `executive-report.md` | + `executive-report.html` | + Diretoria, gestão |
 >
-> Default: `complete`. Presets em `dtg-artifacts/templates/report-setups/`.
+> Default: `["DR", "OP", "EX"]`. Regions de cada entregável são definidas em `one-pager-layout.md` e `executive-layout.md` (em `base/starter-kit/client-template/templates/customization/`). Catálogo legacy de presets em `base/starter-kit/report-setups/` (consumido pelo html-writer).
 
-**Ao final da Fase 3 você terá:**
-- `delivery/delivery-report.md`
-- `delivery/one-pager.html` (sempre gerado)
-- `delivery/executive-report.html` (setup `executive` ou `complete`)
-- `delivery/full-report.html` (setup `complete`)
+**Ao final da Fase 3 você terá (conforme o `deliverables_scope`):**
+- `delivery/delivery-report.md` — sempre
+- `delivery/one-pager.md` + `one-pager.html` — se `OP` em scope
+- `delivery/executive-report.md` + `executive-report.html` — se `EX` em scope
+- `delivery/full-report.html` — gerado a partir do DR
 - State snapshot final appendado em `pipeline-state.md`
 
 ---
@@ -266,13 +266,13 @@ Se o projeto tem necessidades específicas, edite os arquivos em `custom-artifac
 | `report-templates/final-report-template.md` | Estrutura do relatório final |
 | `html-layout.md` | Quais regions aparecem no HTML, ordem e layout |
 
-### Report Setup
+### Deliverables scope
 
-O `report-setup` no `config.md` define quantos HTMLs são gerados e com qual profundidade. O cliente pode sobrescrever o setup default editando o `config.md` da run antes da Fase 3, ou mantendo um override em `custom-artifacts/{client}/report-setup.md`.
+O `deliverables_scope` no briefing (propagado ao `config.md`) define quais entregáveis são produzidos (DR, OP, EX). O cliente pode ajustar editando o briefing antes de iniciar a run. Legacy: a flag `report-setup: essential|executive|complete` ainda é aceita como alias (veja [report-setups/README.md](../../base/starter-kit/report-setups/README.md)), mas prefira `deliverables_scope`.
 
 ### Overrides por cliente
 
-Se o cliente já tem overrides definidos em `custom-artifacts/{client}/`, o orchestrator usa esses automaticamente no lugar dos defaults (incluindo `report-setup`).
+Se o cliente já tem overrides definidos em `custom-artifacts/{client}/`, o orchestrator usa esses automaticamente no lugar dos defaults (incluindo layouts `one-pager-layout.md` / `executive-layout.md` / `html-layout.md`).
 
 ---
 
@@ -300,6 +300,7 @@ Se o cliente já tem overrides definidos em `custom-artifacts/{client}/`, o orch
 |--------|------|-----------|
 | 01.00.000 | 2026-04-05 | Criação do documento |
 | 02.00.000 | 2026-04-05 | Reescrita para Pipeline v2 |
+| 03.03.000 | 2026-04-17 | Migração `report-setup` → `deliverables_scope` (task #18 + ADR-001). `report-setup` mantido como alias legacy. |
 | 03.02.000 | 2026-04-11 | Adicionado report-setup (essential/executive/complete) ao Passo 7, customização de html-layout e report-setup, e atualizado folder tree do delivery com os 3 HTMLs possíveis. |
 | 03.01.000 | 2026-04-11 | Adicionado report-planner à Fase 3 (passo 7). Atualizado folder tree do resultado final com sub-fase 3.3 (report-layout) e renumeração de html-writer para 3.4. |
 | 03.00.000 | 2026-04-10 | Reescrita completa para Pipeline v0.5 — guia passo a passo de ponta a ponta com scaffold de runs, 3 fases, Human Review com 4 opções de decisão, context-templates globais |

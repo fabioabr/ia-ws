@@ -1,0 +1,1923 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme-mode="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visual Conventions — Playground</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+    <style>
+
+/* ====== DESIGN TOKENS (dark — default) ====== */
+:root {
+    --primary: #4DA8DA;
+    --primary-dark: #3A8BB8;
+    --primary-light: rgba(77, 168, 218, 0.12);
+    --secondary: #B9B7BD;
+    --success: #0ED145;
+    --success-light: rgba(14, 209, 69, 0.12);
+    --success-border: rgba(14, 209, 69, 0.3);
+    --warning: #F4AC00;
+    --warning-light: rgba(244, 172, 0, 0.12);
+    --warning-border: rgba(244, 172, 0, 0.3);
+    --danger: #8B1A1A;
+    --danger-light: rgba(139, 26, 26, 0.15);
+    --danger-border: rgba(139, 26, 26, 0.35);
+    --info: #2EB5F5;
+    --info-light: rgba(46, 181, 245, 0.12);
+    --info-border: rgba(46, 181, 245, 0.3);
+    --bg: #141414;
+    --card-bg: #2E2D32;
+    --text: #E0DFE3;
+    --text-muted: #88878C;
+    --border: #3E3D44;
+    --purple: #9B96FF;
+    --purple-light: rgba(155, 150, 255, 0.12);
+    --orange: #FF9473;
+    --teal: #2DD4BF;
+    --chart-1: #4DA8DA;
+    --chart-2: #F4AC00;
+    --chart-3: #0ED145;
+    --chart-4: #FF6B6B;
+    --chart-5: #A78BFA;
+    --header-bg: linear-gradient(135deg, #2E2D32 0%, #252428 50%, #1A1923 100%);
+    --card-header-bg: #252428;
+    --th-bg: #252428;
+    --th-bg-hover: #36353B;
+    --card-shadow: 0 2px 12px rgba(46, 181, 245, 0.06), 0 1px 4px rgba(0,0,0,0.4);
+    --progress-track: #3E3D44;
+    --alert-warning-text: #f0c040;
+    --danger-text: #E85D54;
+    --alert-danger-text: #E85D54;
+    --alert-info-text: #5FC8F8;
+    --alert-success-text: #3DE06A;
+    --pill-success-text: #3DE06A;
+    --pill-info-text: #5FC8F8;
+    --pill-warning-text: #f0c040;
+}
+
+/* ====== LIGHT THEME ====== */
+[data-theme-mode=light] {
+    --primary: #4DA8DA;
+    --primary-dark: #3A8BB8;
+    --primary-light: rgba(77, 168, 218, 0.1);
+    --secondary: #88878C;
+    --success: #0A9E35;
+    --success-light: rgba(10, 158, 53, 0.08);
+    --success-border: rgba(10, 158, 53, 0.25);
+    --warning: #E67E22;
+    --warning-light: rgba(230, 126, 34, 0.12);
+    --warning-border: rgba(230, 126, 34, 0.35);
+    --danger: #E74C3C;
+    --danger-light: rgba(231, 76, 60, 0.10);
+    --danger-border: rgba(231, 76, 60, 0.30);
+    --info: #1E95CC;
+    --info-light: rgba(30, 149, 204, 0.08);
+    --info-border: rgba(30, 149, 204, 0.25);
+    --bg: #F3F3F6;
+    --card-bg: #ffffff;
+    --text: #1A1923;
+    --text-muted: #88878C;
+    --border: #B9B7BD;
+    --purple: #7B76FE;
+    --purple-light: rgba(123, 118, 254, 0.08);
+    --orange: #FE7C58;
+    --teal: #00D8D8;
+    --chart-1: #4DA8DA;
+    --chart-2: #E67E22;
+    --chart-3: #0A9E35;
+    --chart-4: #D44040;
+    --chart-5: #7C6BD4;
+    --header-bg: linear-gradient(135deg, #2E2D32 0%, #252428 50%, #1A1923 100%);
+    --card-header-bg: rgba(77, 168, 218, 0.12);
+    --th-bg: rgba(77, 168, 218, 0.12);
+    --th-bg-hover: rgba(77, 168, 218, 0.22);
+    --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0,0,0,0.06);
+    --progress-track: #B9B7BD;
+    --alert-warning-text: #C0392B;
+    --alert-danger-text: #C0392B;
+    --alert-info-text: #1670A0;
+    --alert-success-text: #087A28;
+    --pill-success-text: #087A28;
+    --pill-info-text: #1670A0;
+    --pill-warning-text: #C0392B;
+    --hover-border: #4DA8DA;
+}
+
+[data-theme-mode=light] .card:hover { border-color: var(--hover-border); }
+[data-theme-mode=light] .stat-card:hover { border-color: var(--hover-border); }
+[data-theme-mode=light] .stat-card { background: var(--card-bg); }
+[data-theme-mode=light] .intro-text { background: var(--card-bg); }
+
+/* ====== RESET ====== */
+* { box-sizing: border-box; }
+body {
+    font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* ====== HEADER ====== */
+.header { background: linear-gradient(135deg, #2E2D32 0%, #252428 50%, #1A1923 100%); color: white; position: relative; overflow: hidden; }
+.header::before { content: ''; position: absolute; top: -50%; right: -10%; width: 500px; height: 500px; background: rgba(255,255,255,0.03); border-radius: 50%; z-index: 0; }
+.header-left { display: flex; align-items: center; gap: 16px; }
+.header-badge { background: rgba(255,255,255,0.15); padding: 6px 14px; border-radius: 8px; font-size: 0.78rem; display: flex; align-items: center; gap: 6px; backdrop-filter: blur(10px); color: white; }
+.badge-version { background: rgba(77, 168, 218, 0.2); color: var(--primary); padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 500; }
+.theme-toggle {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fff;
+    border-radius: 6px;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: 12px;
+    transition: all 0.2s;
+    font-family: 'Poppins', sans-serif;
+}
+.theme-toggle:hover { background: rgba(255,255,255,0.2); }
+
+/* ====== MAIN CONTAINER ====== */
+.doc-container { max-width: 1400px; margin: 0 auto; padding: 24px 32px; }
+
+/* ====== TABS ====== */
+.tabs-nav { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.25) transparent; }
+.tabs-nav::-webkit-scrollbar { height: 4px; }
+.tabs-nav::-webkit-scrollbar-track { background: transparent; }
+.tabs-nav::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
+.tabs-nav::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.35); }
+.tab-btn { padding: 10px 24px; background: rgba(255,255,255,0.1); border: none; border-radius: 10px 10px 0 0; color: rgba(255,255,255,0.7); font-family: 'Poppins', sans-serif; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+.tab-btn:hover { background: rgba(255,255,255,0.18); color: white; }
+.tab-btn.active { background: var(--bg); color: var(--text); font-weight: 600; }
+.tab-btn i { font-size: 1.1rem; }
+.tab-count { background: rgba(255,255,255,0.2); padding: 1px 8px; border-radius: 10px; font-size: 0.68rem; font-weight: 600; color: inherit; }
+.tab-btn.active .tab-count { background: rgba(255,255,255,0.2); color: inherit; }
+[data-theme-mode=light] .tab-btn.active { color: #1A1923; }
+[data-theme-mode=light] .tab-count { background: rgba(0,0,0,0.08); }
+.tab-pane { display: none; }
+.tab-pane.active { display: block; }
+
+/* ====== STAT CARDS ====== */
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 28px; }
+.stat-card { background: var(--card-bg); border-radius: 12px; padding: 18px 20px; box-shadow: var(--card-shadow); border: 1px solid var(--border); display: flex; align-items: center; gap: 14px; transition: box-shadow 0.2s, border-color 0.2s, background 0.2s; }
+.stat-card:hover { box-shadow: var(--card-shadow); border-color: var(--primary); background: var(--th-bg-hover); }
+.stat-card-icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }
+.stat-card-info { flex: 1; }
+.stat-card-number { font-size: 1.12rem; font-weight: 700; line-height: 1.1; }
+.stat-card-label { font-size: 0.72rem; color: var(--text-muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.3px; }
+
+/* ====== INTRO TEXT ====== */
+.intro-text { font-size: 0.88rem; color: var(--text); line-height: 1.6; opacity: 0.85; margin-bottom: 24px; padding: 16px 20px; background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border); border-left: 3px solid var(--primary); box-shadow: var(--card-shadow); }
+
+/* ====== CARDS ====== */
+.card { background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 2px 8px rgba(0,0,0,0.03); overflow: hidden; margin-bottom: 20px; transition: box-shadow 0.2s, border-color 0.2s; }
+.card:hover { box-shadow: var(--card-shadow); border-color: var(--primary); }
+.card:hover > .card-header { background: var(--th-bg-hover); }
+.card-header { display: flex; align-items: center; gap: 10px; padding: 14px 18px; border-bottom: 1px solid var(--border); background: var(--card-header-bg); }
+.card-header-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+.card-title { font-weight: 600; font-size: 0.95rem; flex: 1; color: var(--text); }
+.card-badge { padding: 2px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: 600; white-space: nowrap; }
+.card-body { padding: 18px; color: var(--text); opacity: 0.85; }
+
+/* ====== ALERTS ====== */
+.alert { padding: 12px 16px; border-radius: 8px; font-size: 0.82rem; display: flex; align-items: center; gap: 10px; margin-bottom: 10px; border: 1px solid; }
+.alert i { font-size: 1.1rem; flex-shrink: 0; }
+.alert-warning { background: var(--warning-light); border-color: var(--warning-border); color: var(--alert-warning-text); }
+.alert-danger { background: var(--danger-light); border-color: var(--danger-border); color: var(--alert-danger-text); }
+.alert-info { background: var(--info-light); border-color: var(--info-border); color: var(--alert-info-text); }
+.alert-success { background: var(--success-light); border-color: var(--success-border); color: var(--alert-success-text); }
+
+/* ====== PILLS ====== */
+.pill { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: 600; }
+.pill-success { background: var(--success-light); color: var(--pill-success-text); border: 1px solid var(--success-border); }
+.pill-info { background: var(--info-light); color: var(--pill-info-text); border: 1px solid var(--info-border); }
+.pill-warning { background: var(--warning-light); color: var(--pill-warning-text); border: 1px solid var(--warning-border); }
+.pill-danger { background: var(--danger-light); color: var(--alert-danger-text); border: 1px solid var(--danger-border); }
+.pill-purple { background: var(--purple-light); color: var(--purple); border: 1px solid rgba(155, 150, 255, 0.3); }
+
+/* ====== TABLES ====== */
+.table-wrapper { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+th { text-align: left; padding: 10px 14px; background: var(--th-bg); font-weight: 600; border-bottom: 2px solid var(--border); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.3px; color: var(--text-muted); transition: background 0.2s; }
+thead tr:first-child th:first-child { border-radius: 8px 0 0 0; }
+thead tr:first-child th:last-child { border-radius: 0 8px 0 0; }
+td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+tr:hover { background: var(--primary-light); }
+code { background: var(--bg); padding: 2px 6px; border-radius: 4px; font-size: 0.78rem; border: 1px solid var(--border); font-family: 'Consolas', 'Courier New', monospace; }
+
+/* ====== PHASE FLOW ====== */
+.phase-flow { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 8px; padding: 24px 0; }
+.phase-box { padding: 14px 22px; border-radius: 10px; font-weight: 600; font-size: 0.85rem; text-align: center; min-width: 140px; }
+.phase-arrow { font-size: 1.4rem; color: var(--text-muted); }
+
+/* ====== SECTION HEADERS ====== */
+.section { margin-top: 32px; }
+.section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid var(--border); }
+.section-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+.section-title { font-size: 1.15rem; font-weight: 600; }
+.section-count { background: var(--bg); padding: 4px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 600; color: var(--text-muted); }
+
+/* ====== TIMELINE ====== */
+.timeline-container { position: relative; padding-left: 32px; }
+.timeline-container::before { content: ''; position: absolute; left: 12px; top: 0; bottom: 0; width: 2px; background: var(--border); }
+.timeline-item { position: relative; margin-bottom: 20px; }
+.timeline-dot { position: absolute; left: -26px; top: 4px; width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--card-bg); z-index: 1; }
+.timeline-dot.dot-primary { background: var(--primary); }
+.timeline-dot.dot-success { background: var(--success); }
+.timeline-dot.dot-warning { background: var(--warning); }
+.timeline-dot.dot-info { background: var(--info); }
+.timeline-dot.dot-danger { background: var(--danger); }
+.timeline-dot.dot-purple { background: var(--purple); }
+.timeline-dot.dot-orange { background: var(--orange); }
+.timeline-dot.dot-teal { background: var(--teal); }
+.timeline-time { font-size: 0.72rem; color: var(--text-muted); font-weight: 600; }
+.timeline-title { font-size: 0.82rem; font-weight: 600; color: var(--text); }
+.timeline-desc { font-size: 0.78rem; color: var(--text-muted); margin-top: 2px; }
+
+/* ====== CODE BLOCK ====== */
+.code-block { background: #1A1923; color: #E0DFE3; padding: 20px; border-radius: 10px; font-family: 'Consolas', 'Courier New', monospace; font-size: 0.78rem; line-height: 1.6; overflow-x: auto; border: 1px solid #3E3D44; white-space: pre; }
+
+/* ====== BG UTILITY CLASSES ====== */
+.bg-primary { background: var(--primary); color: #1A1923 !important; }
+.bg-success { background: var(--success); color: #1A1923 !important; }
+.bg-warning { background: var(--warning); color: #1A1923 !important; }
+.bg-teal { background: var(--teal); color: #1A1923 !important; }
+.bg-orange { background: var(--orange); color: #1A1923 !important; }
+.bg-info { background: var(--info); color: white !important; }
+.bg-danger { background: var(--danger); color: white !important; }
+.bg-secondary { background: var(--secondary); color: #1A1923 !important; }
+.bg-purple { background: var(--purple); color: white !important; }
+[data-theme-mode=light] .bg-danger { color: #1A1923 !important; }
+[data-theme-mode=light] .bg-info { color: #1A1923 !important; }
+[data-theme-mode=light] .bg-purple { color: #1A1923 !important; }
+
+/* ====== ACRONYM ====== */
+abbr.acronym { text-decoration: none; border-bottom: 1px dotted var(--primary); color: var(--primary); cursor: help; font-weight: 500; transition: color 0.2s, border-color 0.2s; }
+abbr.acronym:hover { color: var(--info); border-bottom-color: var(--info); }
+
+/* ====== FOOTER ====== */
+.footer { background: linear-gradient(135deg, #2E2D32 0%, #252428 50%, #1A1923 100%); color: white; padding: 36px 0; position: relative; overflow: hidden; }
+.footer::before { content: ''; position: absolute; bottom: -50%; left: -10%; width: 500px; height: 500px; background: rgba(255,255,255,0.03); border-radius: 50%; z-index: 0; }
+.footer-content { position: relative; z-index: 1; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 24px; max-width: 1400px; margin: 0 auto; padding: 0 32px; }
+.footer-left { display: flex; align-items: center; gap: 16px; }
+.footer-author-name { font-size: 0.95rem; font-weight: 600; }
+.footer-author-role { font-size: 0.78rem; opacity: 0.7; }
+.footer-right { text-align: right; }
+.footer-doc-title { font-size: 0.85rem; font-weight: 500; opacity: 0.9; }
+.footer-doc-detail { font-size: 0.72rem; opacity: 0.6; margin-top: 2px; }
+.footer-seal { display: flex; align-items: center; gap: 8px; margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.12); font-size: 0.7rem; opacity: 0.5; justify-content: center; max-width: 1400px; margin-left: auto; margin-right: auto; padding-left: 32px; padding-right: 32px; }
+.footer-seal i { font-size: 1rem; }
+
+/* ====== FLOATING MENU BUTTON ====== */
+.floating-menu-btn {
+    position: fixed;
+    bottom: 32px;
+    right: 84px;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: var(--primary);
+    color: #1A1923;
+    border: none;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    box-shadow: 0 4px 16px rgba(77, 168, 218, 0.35);
+    transition: background 0.2s, box-shadow 0.2s;
+    z-index: 999;
+}
+.floating-menu-btn:hover { background: var(--primary-dark); box-shadow: 0 6px 20px rgba(77, 168, 218, 0.5); }
+body.compact-mode .floating-menu-btn { display: flex; }
+body.compact-mode .tabs-nav { display: none !important; }
+body.compact-mode .theme-toggle { display: none !important; }
+body.compact-mode .badge-version { display: none !important; }
+
+/* ====== OFFCANVAS MENU ====== */
+.offcanvas-menu {
+    position: fixed;
+    top: 0;
+    right: -300px;
+    width: 280px;
+    height: 100vh;
+    background: var(--card-bg);
+    border-left: 1px solid var(--border);
+    z-index: 1050;
+    transition: right 0.3s ease;
+    overflow-y: auto;
+    box-shadow: -4px 0 24px rgba(0,0,0,0.3);
+}
+.offcanvas-menu.open { right: 0; }
+.offcanvas-menu-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    background: var(--card-header-bg);
+}
+.offcanvas-menu-header span { font-weight: 600; font-size: 14px; color: var(--primary); }
+.offcanvas-menu-close {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 6px;
+    transition: color 0.2s, background 0.2s;
+}
+.offcanvas-menu-close:hover { color: var(--text); background: rgba(255,255,255,0.1); }
+.offcanvas-menu-body { padding: 12px; }
+.offcanvas-menu-body .nav-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    font-family: 'Poppins', sans-serif;
+}
+.offcanvas-menu-body .nav-menu-item:hover { background: rgba(77, 168, 218, 0.08); color: var(--text); }
+.offcanvas-menu-body .nav-menu-item.active { background: rgba(77, 168, 218, 0.15); color: var(--primary); font-weight: 600; }
+.offcanvas-menu-body .nav-menu-item i { font-size: 1.1rem; width: 20px; text-align: center; }
+.offcanvas-menu-body .nav-menu-item .tab-count { margin-left: auto; background: rgba(77, 168, 218, 0.15); color: var(--primary); }
+.offcanvas-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 1049;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+.offcanvas-backdrop.open { opacity: 1; visibility: visible; }
+
+/* ====== BACK TO TOP ====== */
+.back-to-top { position: fixed; bottom: 32px; right: 32px; width: 44px; height: 44px; border-radius: 12px; background: var(--info); color: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; box-shadow: 0 4px 16px rgba(46, 181, 245, 0.35); opacity: 0; visibility: hidden; transform: translateY(10px); transition: opacity 0.3s, visibility 0.3s, transform 0.3s, background 0.2s; z-index: 999; }
+.back-to-top.visible { opacity: 1; visibility: visible; transform: translateY(0); }
+.back-to-top:hover { background: #1E95CC; box-shadow: 0 6px 20px rgba(46, 181, 245, 0.5); }
+
+/* ====== PLAYGROUND-SPECIFIC ====== */
+.pg-label { font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); margin-bottom: 10px; padding: 4px 10px; background: var(--bg); display: inline-block; border-radius: 6px; border: 1px dashed var(--border); }
+.pg-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 12px; margin-bottom: 24px; }
+.pg-swatch { border-radius: 10px; overflow: hidden; border: 1px solid var(--border); background: var(--card-bg); }
+.pg-swatch-block { height: 52px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 600; }
+.pg-swatch-info { padding: 6px 10px; }
+.pg-swatch-name { font-size: 0.72rem; font-weight: 600; }
+.pg-swatch-hex { font-size: 0.62rem; color: var(--text-muted); font-family: 'Consolas', monospace; }
+.pg-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; align-items: center; }
+.pg-spacing-box { background: var(--primary-light); border: 1px solid var(--primary); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.68rem; font-weight: 600; color: var(--primary); }
+.pg-radius-box { width: 60px; height: 60px; background: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 0.62rem; font-weight: 600; color: #1A1923; }
+.pg-shadow-box { width: 120px; height: 80px; background: var(--card-bg); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 0.68rem; font-weight: 500; color: var(--text-muted); }
+.pg-type-row { margin-bottom: 8px; padding: 8px 0; border-bottom: 1px solid var(--border); display: flex; align-items: baseline; gap: 16px; }
+.pg-type-label { font-size: 0.72rem; color: var(--text-muted); min-width: 100px; font-weight: 500; }
+.pg-chart-container { max-width: 400px; margin-bottom: 24px; }
+.pg-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: stretch; }
+.pg-two-col > .section { display: flex; flex-direction: column; }
+.pg-two-col > .section > .card { flex: 1; margin-bottom: 0; }
+.pg-two-col > .card { margin-bottom: 0; }
+
+@media (max-width: 768px) {
+    .doc-container { padding: 16px; }
+    .tabs-nav { flex-wrap: wrap; }
+    .tab-btn { padding: 8px 14px; font-size: 0.78rem; }
+    .stats-grid { grid-template-columns: 1fr; }
+    .pg-two-col { grid-template-columns: 1fr; }
+    .phase-flow { flex-direction: column; }
+}
+
+/* ====== SCROLLBAR ====== */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(77, 168, 218, 0.3); border-radius: 3px; }
+
+/* ====== SEARCH / FILTER ====== */
+.search-container { position: relative; margin-bottom: 24px; }
+.search-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 1.1rem; }
+.search-input { width: 100%; padding: 12px 16px 12px 44px; background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; color: var(--text); font-family: 'Poppins', sans-serif; font-size: 0.88rem; outline: none; transition: border-color 0.2s; }
+.search-input:focus { border-color: var(--primary); }
+.search-input::placeholder { color: var(--text-muted); }
+[data-theme-mode=light] .search-input { background: #F0EFF2; }
+
+/* ====== NO RESULTS ====== */
+.no-results { text-align: center; padding: 48px 24px; color: var(--text-muted); font-size: 0.9rem; }
+.no-results i { font-size: 2.5rem; display: block; margin-bottom: 12px; }
+
+/* ====== GROUP TOGGLE ====== */
+.card-body.collapsed { display: none; }
+.group-toggle { transition: transform 0.2s; }
+
+/* ====== PLAYGROUND SECTION ====== */
+.pg-section { margin-bottom: 36px; }
+
+/* ====== GRID-2 ====== */
+.pg-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+@media (max-width: 768px) { .pg-grid-2 { grid-template-columns: 1fr; } }
+
+/* ====== DASHBOARD COMPONENTS ====== */
+.dash-kpi-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; }
+.dash-kpi { background: var(--card-bg); border-radius: 10px; padding: 14px 16px; box-shadow: var(--card-shadow); border: 1px solid var(--border); border-left: 3px solid var(--primary); }
+.dash-kpi.highlight { border-left-color: var(--info); background: var(--card-header-bg); }
+.dash-kpi-label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); font-weight: 600; }
+.dash-kpi-value { font-size: 1.6rem; font-weight: 800; color: var(--primary); margin: 4px 0; }
+.dash-kpi-sub { font-size: 0.72rem; color: var(--text-muted); }
+
+.dash-highlight-box { background: linear-gradient(135deg, #2E2D32 0%, #252428 50%, #1A1923 100%); color: white; border-radius: 12px; padding: 18px 24px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; border: 1px solid var(--border); }
+.dash-hl-main { font-size: 2rem; font-weight: 800; color: var(--info); }
+.dash-hl-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.8px; opacity: 0.7; }
+.dash-hl-detail { font-size: 0.82rem; opacity: 0.8; margin-top: 4px; }
+.dash-hl-divider { width: 1px; height: 50px; background: rgba(255,255,255,0.15); margin: 0 20px; flex-shrink: 0; }
+
+.dash-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+
+.dash-rank { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; font-weight: 700; font-size: 0.72rem; color: #1A1923; }
+.dash-rank-1 { background: var(--primary); }
+.dash-rank-2 { background: var(--info); }
+.dash-rank-3 { background: var(--secondary); }
+.dash-rank-4 { background: var(--teal); }
+.dash-rank-5 { background: var(--purple); color: white; }
+
+.dash-bar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.dash-bar-label { width: 90px; font-size: 0.75rem; font-weight: 600; color: var(--text); text-align: right; flex-shrink: 0; }
+.dash-bar-track { flex: 1; display: flex; height: 22px; border-radius: 6px; overflow: hidden; background: var(--bg); }
+.dash-bar-seg { height: 100%; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 700; color: #1A1923; }
+.dash-bar-val { font-size: 0.75rem; font-weight: 700; color: var(--text); margin-left: 6px; flex-shrink: 0; width: 55px; }
+
+.dash-progress-item { margin-bottom: 10px; }
+.dash-progress-header { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; font-size: 0.8rem; }
+.dash-progress-dot { width: 8px; height: 8px; border-radius: 3px; flex-shrink: 0; }
+.dash-progress-bar { height: 8px; background: var(--bg); border-radius: 4px; overflow: hidden; }
+.dash-progress-fill { height: 100%; border-radius: 4px; }
+
+.dash-dist-box { flex: 1; text-align: center; padding: 16px 14px; border-radius: 10px; border: 2px solid var(--border); background: var(--card-bg); }
+.dash-dist-box.active { border-color: var(--primary); background: var(--card-header-bg); }
+.dash-dist-label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 700; color: var(--text-muted); }
+.dash-dist-value { font-size: 1.8rem; font-weight: 800; color: var(--primary); }
+.dash-dist-amount { font-size: 0.82rem; color: var(--text-muted); font-weight: 600; }
+.dash-dist-detail { font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; }
+
+.dash-vbar-container { display: flex; align-items: flex-end; gap: 8px; height: 120px; padding-top: 4px; }
+.dash-vbar-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.dash-vbar-value { font-size: 0.68rem; font-weight: 700; color: var(--chart-1); }
+.dash-vbar-bar { width: 100%; border-radius: 4px 4px 0 0; }
+.dash-vbar-name { font-size: 0.65rem; color: var(--text-muted); font-weight: 600; text-align: center; }
+
+.dash-insights { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; }
+.dash-insight { background: var(--card-bg); border-radius: 10px; padding: 14px 16px; box-shadow: var(--card-shadow); border: 1px solid var(--border); border-left: 3px solid var(--primary); }
+.dash-insight-icon { font-size: 1.2rem; margin-bottom: 6px; }
+.dash-insight h4 { font-size: 0.78rem; font-weight: 700; color: var(--primary); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.3px; }
+.dash-insight p { font-size: 0.75rem; color: var(--text-muted); line-height: 1.5; margin: 0; }
+.dash-insight strong { color: var(--text); }
+.dash-insight.warn { border-left-color: var(--warning); }
+.dash-insight.warn h4 { color: var(--warning); }
+.dash-insight.ok { border-left-color: var(--success); }
+.dash-insight.ok h4 { color: var(--success); }
+
+.dash-status-badges { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+.dash-status { padding: 5px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; border: 1px solid; }
+.dash-status-success { background: var(--success-light); border-color: var(--success-border); color: var(--pill-success-text); }
+.dash-status-warning { background: var(--warning-light); border-color: var(--warning-border); color: var(--pill-warning-text); }
+.dash-status-danger { background: var(--danger-light); border-color: var(--danger-border); color: var(--alert-danger-text); }
+.dash-status-info { background: var(--info-light); border-color: var(--info-border); color: var(--pill-info-text); }
+
+.dash-num { text-align: right; font-variant-numeric: tabular-nums; font-family: 'Consolas', 'Courier New', monospace; font-size: 0.82rem; }
+
+.dash-callout { margin-top: 12px; padding: 8px 12px; background: var(--card-header-bg); border-radius: 8px; font-size: 0.75rem; color: var(--text-muted); border: 1px solid var(--border); }
+.dash-callout strong { color: var(--text); }
+
+@media (max-width: 768px) {
+    .dash-kpi-strip { grid-template-columns: 1fr 1fr; }
+    .dash-grid { grid-template-columns: 1fr; }
+    .dash-insights { grid-template-columns: 1fr 1fr; }
+}
+
+    </style>
+</head>
+<body>
+
+<!-- ════════════════ HEADER ════════════════ -->
+<header class="header">
+    <div class="doc-container" style="padding-top:0;padding-bottom:0;">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;padding:36px 0 0;">
+            <div>
+                <h1 style="font-size:1.5rem;font-weight:700;color:#fff;margin:0;"><i class="ri-palette-line" style="margin-right:8px;"></i>Visual Conventions Playground</h1>
+                <div class="subtitle" style="font-size:0.95rem;opacity:0.85;font-weight:300;margin-top:2px;color:white;">Catálogo interativo de todos os design tokens e componentes</div>
+                <div style="display:flex; gap:8px; align-items:center; margin-top:10px;">
+                    <div class="header-badge"><i class="ri-paint-brush-line"></i> Design System</div>
+                    <div class="header-badge"><i class="ri-file-text-line"></i> v02.00</div>
+                </div>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px;">
+                <span class="badge-version">Dark</span>
+                <button class="theme-toggle" onclick="toggleTheme()"><i class="ri-moon-line"></i></button>
+            </div>
+        </div>
+        <div class="tabs-nav" style="margin-top:36px;">
+            <button class="tab-btn active" data-tab="colors"><i class="ri-palette-line"></i> Colors <span class="tab-count">4</span></button>
+            <button class="tab-btn" data-tab="typography"><i class="ri-font-size-2"></i> Typography</button>
+            <button class="tab-btn" data-tab="spacing"><i class="ri-space"></i> Spacing <span class="tab-count">3</span></button>
+            <button class="tab-btn" data-tab="components"><i class="ri-layout-grid-line"></i> Components <span class="tab-count">7</span></button>
+            <button class="tab-btn" data-tab="header-nav"><i class="ri-layout-top-line"></i> Header & Nav</button>
+            <button class="tab-btn" data-tab="search-filters"><i class="ri-search-line"></i> Search & Filters</button>
+            <button class="tab-btn" data-tab="footer-preview"><i class="ri-layout-bottom-line"></i> Footer</button>
+            <button class="tab-btn" data-tab="charts"><i class="ri-bar-chart-2-line"></i> Charts <span class="tab-count">7</span></button>
+            <button class="tab-btn" data-tab="dashboards"><i class="ri-dashboard-3-line"></i> Dashboards <span class="tab-count">8</span></button>
+            <button class="tab-btn" data-tab="misc"><i class="ri-more-line"></i> Misc</button>
+        </div>
+    </div>
+</header>
+
+<div class="doc-container">
+
+<!-- ═══════════ TAB: COLORS ═══════════ -->
+<div class="tab-pane active" id="tab-colors">
+
+    <!-- Semantic Colors -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-icon bg-primary"><i class="ri-drop-line"></i></div>
+            <div class="section-title">Semantic Colors</div>
+        </div>
+        <div class="pg-grid">
+            <div class="pg-swatch"><div class="pg-swatch-block" style="background:#4DA8DA;color:#1A1923;">Aa</div><div class="pg-swatch-info"><div class="pg-swatch-name">Primary</div><div class="pg-swatch-hex">#4DA8DA</div></div></div>
+            <div class="pg-swatch"><div class="pg-swatch-block" style="background:#3A8BB8;color:#1A1923;">Aa</div><div class="pg-swatch-info"><div class="pg-swatch-name">Primary Dark</div><div class="pg-swatch-hex">#3A8BB8</div></div></div>
+            <div class="pg-swatch"><div class="pg-swatch-block" style="background:#0ED145;color:#1A1923;">Aa</div><div class="pg-swatch-info"><div class="pg-swatch-name">Success</div><div class="pg-swatch-hex">#0ED145</div></div></div>
+            <div class="pg-swatch"><div class="pg-swatch-block" style="background:#F4AC00;color:#1A1923;">Aa</div><div class="pg-swatch-info"><div class="pg-swatch-name">Warning</div><div class="pg-swatch-hex">#F4AC00</div></div></div>
+            <div class="pg-swatch"><div class="pg-swatch-block" style="background:#8B1A1A;color:#fff;">Aa</div><div class="pg-swatch-info"><div class="pg-swatch-name">Danger</div><div class="pg-swatch-hex">#8B1A1A</div></div></div>
+            <div class="pg-swatch"><div class="pg-swatch-block" style="background:#2EB5F5;color:#fff;">Aa</div><div class="pg-swatch-info"><div class="pg-swatch-name">Info</div><div class="pg-swatch-hex">#2EB5F5</div></div></div>
+            <div class="pg-swatch"><div class="pg-swatch-block" style="background:#B9B7BD;color:#1A1923;">Aa</div><div class="pg-swatch-info"><div class="pg-swatch-name">Secondary</div><div class="pg-swatch-hex">#B9B7BD</div></div></div>
+        </div>
+    </div>
+
+    <!-- Accent Colors -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-icon bg-purple"><i class="ri-contrast-2-line"></i></div>
+            <div class="section-title">Accent Colors</div>
+        </div>
+        <div class="pg-grid">
+            <div class="pg-swatch"><div class="pg-swatch-block" style="background:#9B96FF;color:#fff;">Aa</div><div class="pg-swatch-info"><div class="pg-swatch-name">Purple</div><div class="pg-swatch-hex">#9B96FF</div></div></div>
+            <div class="pg-swatch"><div class="pg-swatch-block" style="background:#FF9473;color:#1A1923;">Aa</div><div class="pg-swatch-info"><div class="pg-swatch-name">Orange</div><div class="pg-swatch-hex">#FF9473</div></div></div>
+            <div class="pg-swatch"><div class="pg-swatch-block" style="background:#2DD4BF;color:#1A1923;">Aa</div><div class="pg-swatch-info"><div class="pg-swatch-name">Teal</div><div class="pg-swatch-hex">#2DD4BF</div></div></div>
+        </div>
+    </div>
+
+    <!-- Surface & Text -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-icon bg-info"><i class="ri-layout-line"></i></div>
+            <div class="section-title">Surface & Text</div>
+        </div>
+        <div class="pg-grid">
+            <div class="pg-swatch"><div class="pg-swatch-block" style="background:#1A1923;color:#E0DFE3;border-bottom:1px solid #3E3D44;">Aa</div><div class="pg-swatch-info"><div class="pg-swatch-name">--bg</div><div class="pg-swatch-hex">#1A1923</div></div></div>
+            <div class="pg-swatch"><div class="pg-swatch-block" style="background:#2E2D32;color:#E0DFE3;">Aa</div><div class="pg-swatch-info"><div class="pg-swatch-name">--card-bg</div><div class="pg-swatch-hex">#2E2D32</div></div></div>
+            <div class="pg-swatch"><div class="pg-swatch-block" style="background:#E0DFE3;color:#1A1923;">Aa</div><div class="pg-swatch-info"><div class="pg-swatch-name">--text</div><div class="pg-swatch-hex">#E0DFE3</div></div></div>
+            <div class="pg-swatch"><div class="pg-swatch-block" style="background:#88878C;color:#fff;">Aa</div><div class="pg-swatch-info"><div class="pg-swatch-name">--text-muted</div><div class="pg-swatch-hex">#88878C</div></div></div>
+            <div class="pg-swatch"><div class="pg-swatch-block" style="background:#3E3D44;color:#E0DFE3;">Aa</div><div class="pg-swatch-info"><div class="pg-swatch-name">--border</div><div class="pg-swatch-hex">#3E3D44</div></div></div>
+            <div class="pg-swatch"><div class="pg-swatch-block" style="background:#252428;color:#E0DFE3;">Aa</div><div class="pg-swatch-info"><div class="pg-swatch-name">--card-header-bg</div><div class="pg-swatch-hex">#252428</div></div></div>
+        </div>
+    </div>
+
+    <!-- Sequential Palette -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-icon bg-warning"><i class="ri-order-play-line"></i></div>
+            <div class="section-title">Sequential Palette</div>
+            <span class="section-count">8 positions</span>
+        </div>
+        <div class="phase-flow">
+            <div class="phase-box bg-primary">1. Primary</div><div class="phase-arrow"><i class="ri-arrow-right-s-line"></i></div>
+            <div class="phase-box bg-success">2. Success</div><div class="phase-arrow"><i class="ri-arrow-right-s-line"></i></div>
+            <div class="phase-box bg-warning">3. Warning</div><div class="phase-arrow"><i class="ri-arrow-right-s-line"></i></div>
+            <div class="phase-box bg-danger">4. Danger</div><div class="phase-arrow"><i class="ri-arrow-right-s-line"></i></div>
+            <div class="phase-box bg-purple">5. Purple</div><div class="phase-arrow"><i class="ri-arrow-right-s-line"></i></div>
+            <div class="phase-box bg-orange">6. Orange</div><div class="phase-arrow"><i class="ri-arrow-right-s-line"></i></div>
+            <div class="phase-box bg-teal">7. Teal</div><div class="phase-arrow"><i class="ri-arrow-right-s-line"></i></div>
+            <div class="phase-box bg-info">8. Info</div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════ TAB: TYPOGRAPHY ═══════════ -->
+<div class="tab-pane" id="tab-typography">
+    <div class="section">
+        <div class="section-header">
+            <div class="section-icon bg-primary"><i class="ri-font-size-2"></i></div>
+            <div class="section-title">Type Scale</div>
+        </div>
+        <div class="card"><div class="card-body">
+            <div class="pg-type-row"><span class="pg-type-label">Display</span><span style="font-size:22px;font-weight:600;">The quick brown fox jumps over the lazy dog</span></div>
+            <div class="pg-type-row"><span class="pg-type-label">H1 (1.15rem)</span><span style="font-size:1.15rem;font-weight:600;">The quick brown fox jumps over the lazy dog</span></div>
+            <div class="pg-type-row"><span class="pg-type-label">H2 (0.95rem)</span><span style="font-size:0.95rem;font-weight:600;">The quick brown fox jumps over the lazy dog</span></div>
+            <div class="pg-type-row"><span class="pg-type-label">Body (0.88rem)</span><span style="font-size:0.88rem;">The quick brown fox jumps over the lazy dog</span></div>
+            <div class="pg-type-row"><span class="pg-type-label">Small (0.82rem)</span><span style="font-size:0.82rem;">The quick brown fox jumps over the lazy dog</span></div>
+            <div class="pg-type-row"><span class="pg-type-label">Caption (0.72rem)</span><span style="font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.3px;">The quick brown fox jumps over the lazy dog</span></div>
+            <div class="pg-type-row"><span class="pg-type-label">Code (0.78rem)</span><span style="font-size:0.78rem;font-family:'Consolas','Courier New',monospace;">const greeting = "Hello, World!";</span></div>
+            <div class="pg-type-row"><span class="pg-type-label">Micro (0.7rem)</span><span style="font-size:0.7rem;font-weight:600;">BADGE TEXT</span></div>
+        </div></div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <div class="section-icon bg-success"><i class="ri-text"></i></div>
+            <div class="section-title">Font Families</div>
+        </div>
+        <div class="pg-two-col">
+            <div class="card"><div class="card-header"><div class="card-header-icon bg-primary"><i class="ri-font-size"></i></div><div class="card-title">Poppins (Interface)</div></div>
+                <div class="card-body">
+                    <div style="font-weight:300;">Light 300 — Smooth and elegant</div>
+                    <div style="font-weight:400;">Regular 400 — Default body text</div>
+                    <div style="font-weight:500;">Medium 500 — Labels and tabs</div>
+                    <div style="font-weight:600;">SemiBold 600 — Headings and titles</div>
+                    <div style="font-weight:700;">Bold 700 — Display and emphasis</div>
+                </div>
+            </div>
+            <div class="card"><div class="card-header"><div class="card-header-icon bg-info"><i class="ri-code-line"></i></div><div class="card-title">Consolas (Code)</div></div>
+                <div class="card-body" style="font-family:'Consolas','Courier New',monospace;">
+                    <div>Regular 400 — <code>var(--primary)</code></div>
+                    <div style="margin-top:8px;">Code block:</div>
+                    <div class="code-block" style="margin-top:8px;">function greet(name) {
+    return `Hello, ${name}!`;
+}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════ TAB: SPACING ═══════════ -->
+<div class="tab-pane" id="tab-spacing">
+    <!-- Spacing Tokens -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-icon bg-primary"><i class="ri-space"></i></div>
+            <div class="section-title">Spacing Scale</div>
+            <span class="section-count">base 4px</span>
+        </div>
+        <div class="pg-row">
+            <div class="pg-spacing-box" style="width:4px;height:40px;" title="xs: 4px"></div><span style="font-size:0.72rem;color:var(--text-muted);">xs 4px</span>
+            <div class="pg-spacing-box" style="width:8px;height:40px;" title="sm: 8px"></div><span style="font-size:0.72rem;color:var(--text-muted);">sm 8px</span>
+            <div class="pg-spacing-box" style="width:16px;height:40px;" title="md: 16px"></div><span style="font-size:0.72rem;color:var(--text-muted);">md 16px</span>
+            <div class="pg-spacing-box" style="width:24px;height:40px;" title="lg: 24px"></div><span style="font-size:0.72rem;color:var(--text-muted);">lg 24px</span>
+            <div class="pg-spacing-box" style="width:32px;height:40px;" title="xl: 32px"></div><span style="font-size:0.72rem;color:var(--text-muted);">xl 32px</span>
+            <div class="pg-spacing-box" style="width:48px;height:40px;" title="2xl: 48px"></div><span style="font-size:0.72rem;color:var(--text-muted);">2xl 48px</span>
+        </div>
+    </div>
+
+    <!-- Border Radius -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-icon bg-success"><i class="ri-rounded-corner"></i></div>
+            <div class="section-title">Border Radius</div>
+        </div>
+        <div class="pg-row">
+            <div class="pg-radius-box" style="border-radius:4px;">4px</div>
+            <div class="pg-radius-box" style="border-radius:6px;">6px</div>
+            <div class="pg-radius-box" style="border-radius:8px;">8px</div>
+            <div class="pg-radius-box" style="border-radius:10px;">10px</div>
+            <div class="pg-radius-box" style="border-radius:12px;">12px</div>
+            <div class="pg-radius-box" style="border-radius:20px;">20px</div>
+            <div class="pg-radius-box" style="border-radius:9999px;">full</div>
+        </div>
+    </div>
+
+    <!-- Shadows -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-icon bg-warning"><i class="ri-shadow-line"></i></div>
+            <div class="section-title">Box Shadows</div>
+        </div>
+        <div class="pg-row">
+            <div class="pg-shadow-box" style="box-shadow:0 2px 8px rgba(0,0,0,0.03);">Default</div>
+            <div class="pg-shadow-box" style="box-shadow:var(--card-shadow);">Card Hover</div>
+            <div class="pg-shadow-box" style="box-shadow:0 4px 16px rgba(46,181,245,0.35);background:var(--info);color:white;border-radius:12px;">Back-to-top</div>
+            <div class="pg-shadow-box" style="box-shadow:-4px 0 24px rgba(0,0,0,0.3);">Offcanvas</div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════ TAB: COMPONENTS ═══════════ -->
+<div class="tab-pane" id="tab-components">
+
+    <!-- Alerts -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-icon bg-primary"><i class="ri-alarm-warning-line"></i></div>
+            <div class="section-title">Alerts</div>
+        </div>
+        <div class="alert alert-success"><i class="ri-checkbox-circle-line"></i>Success — Operação concluída com sucesso.</div>
+        <div class="alert alert-info"><i class="ri-information-line"></i>Info — Informação adicional relevante.</div>
+        <div class="alert alert-warning"><i class="ri-error-warning-line"></i>Warning — Atenção a este ponto importante.</div>
+        <div class="alert alert-danger"><i class="ri-close-circle-line"></i>Danger — Erro crítico encontrado.</div>
+    </div>
+
+    <!-- Pills & Badges -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-icon bg-success"><i class="ri-price-tag-3-line"></i></div>
+            <div class="section-title">Pills & Badges</div>
+        </div>
+        <div class="card"><div class="card-body">
+            <div class="pg-label">Pills</div>
+            <div class="pg-row">
+                <span class="pill pill-success">Success</span>
+                <span class="pill pill-info">Info</span>
+                <span class="pill pill-warning">Warning</span>
+                <span class="pill pill-danger">Danger</span>
+                <span class="pill pill-purple">Purple</span>
+            </div>
+            <div class="pg-label" style="margin-top:16px;">Header Badges</div>
+            <div class="pg-row" style="background:linear-gradient(135deg, #2E2D32, #1A1923);padding:16px;border-radius:10px;">
+                <div class="header-badge"><i class="ri-calendar-line"></i> Abril 2026</div>
+                <div class="header-badge"><i class="ri-file-text-line"></i> Brainstorming</div>
+                <span class="badge-version">v02.00</span>
+            </div>
+        </div></div>
+    </div>
+
+    <!-- Cards -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-icon bg-warning"><i class="ri-layout-card-line"></i></div>
+            <div class="section-title">Cards</div>
+        </div>
+        <div class="pg-two-col">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-header-icon bg-primary"><i class="ri-settings-3-line"></i></div>
+                    <div class="card-title">Card Title</div>
+                    <span class="card-badge pill-info">Badge</span>
+                </div>
+                <div class="card-body">Card body com <code>opacity: 0.85</code> e padding de 18px. Hover ativa shadow e border color.</div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-header-icon bg-success"><i class="ri-check-double-line"></i></div>
+                    <div class="card-title">Card with Table</div>
+                    <span class="card-badge pill-success">3 items</span>
+                </div>
+                <div class="card-body" style="padding:0;">
+                    <div class="table-wrapper">
+                        <table>
+                            <thead><tr><th>Token</th><th>Value</th><th>Usage</th></tr></thead>
+                            <tbody>
+                                <tr><td><code>--primary</code></td><td style="color:var(--primary);">#4DA8DA</td><td>Links, borders</td></tr>
+                                <tr><td><code>--success</code></td><td style="color:var(--success);">#0ED145</td><td>Confirmations</td></tr>
+                                <tr><td><code>--warning</code></td><td style="color:var(--warning);">#F4AC00</td><td>Cautions</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stat Cards -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-icon bg-danger"><i class="ri-bar-chart-box-line"></i></div>
+            <div class="section-title">Stat Cards</div>
+        </div>
+        <div class="stats-grid">
+            <div class="stat-card"><div class="stat-card-icon bg-primary"><i class="ri-palette-line"></i></div><div class="stat-card-info"><div class="stat-card-number" style="color:var(--primary);">58</div><div class="stat-card-label">Color Tokens</div></div></div>
+            <div class="stat-card"><div class="stat-card-icon bg-success"><i class="ri-layout-grid-line"></i></div><div class="stat-card-info"><div class="stat-card-number" style="color:var(--success);">7</div><div class="stat-card-label">Components</div></div></div>
+            <div class="stat-card"><div class="stat-card-icon bg-warning"><i class="ri-font-size-2"></i></div><div class="stat-card-info"><div class="stat-card-number" style="color:var(--warning);">8</div><div class="stat-card-label">Type Tokens</div></div></div>
+            <div class="stat-card"><div class="stat-card-icon bg-info"><i class="ri-space"></i></div><div class="stat-card-info"><div class="stat-card-number" style="color:var(--info);">6</div><div class="stat-card-label">Spacing Scale</div></div></div>
+        </div>
+    </div>
+
+    <!-- Table -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-icon bg-purple"><i class="ri-table-line"></i></div>
+            <div class="section-title">Table</div>
+        </div>
+        <div class="card"><div class="card-body" style="padding:0;">
+            <div class="table-wrapper">
+                <table>
+                    <thead><tr><th>Component</th><th>Padding</th><th>Border Radius</th><th>Font Size</th></tr></thead>
+                    <tbody>
+                        <tr><td>Card header</td><td><code>14px 18px</code></td><td>—</td><td><code>0.95rem</code></td></tr>
+                        <tr><td>Card body</td><td><code>18px</code></td><td>—</td><td><code>0.88rem</code></td></tr>
+                        <tr><td>Alert</td><td><code>12px 16px</code></td><td><code>8px</code></td><td><code>0.82rem</code></td></tr>
+                        <tr><td>Pill</td><td><code>2px 10px</code></td><td><code>12px</code></td><td><code>0.7rem</code></td></tr>
+                        <tr><td>Stat card</td><td><code>18px 20px</code></td><td><code>12px</code></td><td><code>1.12rem</code></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div></div>
+    </div>
+
+    <!-- Timeline -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-icon bg-teal"><i class="ri-git-commit-line"></i></div>
+            <div class="section-title">Timeline Dots</div>
+        </div>
+        <div class="card"><div class="card-body">
+            <div class="timeline-container">
+                <div class="timeline-item"><div class="timeline-dot dot-primary"></div><div class="timeline-time">Position 1</div><div class="timeline-title">Primary</div><div class="timeline-desc">dot-primary — #4DA8DA</div></div>
+                <div class="timeline-item"><div class="timeline-dot dot-success"></div><div class="timeline-time">Position 2</div><div class="timeline-title">Success</div><div class="timeline-desc">dot-success — #0ED145</div></div>
+                <div class="timeline-item"><div class="timeline-dot dot-warning"></div><div class="timeline-time">Position 3</div><div class="timeline-title">Warning</div><div class="timeline-desc">dot-warning — #F4AC00</div></div>
+                <div class="timeline-item"><div class="timeline-dot dot-danger"></div><div class="timeline-time">Position 4</div><div class="timeline-title">Danger</div><div class="timeline-desc">dot-danger — #8B1A1A</div></div>
+                <div class="timeline-item"><div class="timeline-dot dot-purple"></div><div class="timeline-time">Position 5</div><div class="timeline-title">Purple</div><div class="timeline-desc">dot-purple — #9B96FF</div></div>
+                <div class="timeline-item"><div class="timeline-dot dot-orange"></div><div class="timeline-time">Position 6</div><div class="timeline-title">Orange</div><div class="timeline-desc">dot-orange — #FF9473</div></div>
+                <div class="timeline-item"><div class="timeline-dot dot-teal"></div><div class="timeline-time">Position 7</div><div class="timeline-title">Teal</div><div class="timeline-desc">dot-teal — #2DD4BF</div></div>
+                <div class="timeline-item"><div class="timeline-dot dot-info"></div><div class="timeline-time">Position 8</div><div class="timeline-title">Info</div><div class="timeline-desc">dot-info — #2EB5F5</div></div>
+            </div>
+        </div></div>
+    </div>
+
+    <!-- Intro Text -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-icon bg-orange"><i class="ri-chat-quote-line"></i></div>
+            <div class="section-title">Intro Text</div>
+        </div>
+        <div class="intro-text">
+            Este é o componente <strong>intro-text</strong> — usado para contexto introdutório de seções. Tem border-left de 3px em <code>var(--primary)</code>, fundo <code>var(--card-bg)</code> e <code>opacity: 0.85</code>.
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════ TAB: CHARTS ═══════════ -->
+<div class="tab-pane" id="tab-charts">
+    <div class="section">
+        <div class="section-header">
+            <div class="section-icon bg-primary"><i class="ri-bar-chart-2-line"></i></div>
+            <div class="section-title">Chart Color Palette</div>
+            <span class="section-count">5 colors</span>
+        </div>
+        <div class="pg-grid" style="grid-template-columns:repeat(5,1fr);">
+            <div class="pg-swatch"><div class="pg-swatch-block" style="background:var(--chart-1);color:#1A1923;">1</div><div class="pg-swatch-info"><div class="pg-swatch-name">chart-1</div><div class="pg-swatch-hex">#4DA8DA</div></div></div>
+            <div class="pg-swatch"><div class="pg-swatch-block" style="background:var(--chart-2);color:#1A1923;">2</div><div class="pg-swatch-info"><div class="pg-swatch-name">chart-2</div><div class="pg-swatch-hex">#F4AC00</div></div></div>
+            <div class="pg-swatch"><div class="pg-swatch-block" style="background:var(--chart-3);color:#1A1923;">3</div><div class="pg-swatch-info"><div class="pg-swatch-name">chart-3</div><div class="pg-swatch-hex">#0ED145</div></div></div>
+            <div class="pg-swatch"><div class="pg-swatch-block" style="background:var(--chart-4);color:#1A1923;">4</div><div class="pg-swatch-info"><div class="pg-swatch-name">chart-4</div><div class="pg-swatch-hex">#FF6B6B</div></div></div>
+            <div class="pg-swatch"><div class="pg-swatch-block" style="background:var(--chart-5);color:#1A1923;">5</div><div class="pg-swatch-info"><div class="pg-swatch-name">chart-5</div><div class="pg-swatch-hex">#A78BFA</div></div></div>
+        </div>
+    </div>
+
+    <div class="pg-two-col">
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon bg-success"><i class="ri-bar-chart-line"></i></div>
+                <div class="section-title">Bar Chart</div>
+            </div>
+            <div class="card"><div class="card-body"><div class="pg-chart-container" style="max-width:100%;"><canvas id="barChart"></canvas></div></div></div>
+        </div>
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon bg-warning"><i class="ri-donut-chart-line"></i></div>
+                <div class="section-title">Doughnut Chart</div>
+            </div>
+            <div class="card"><div class="card-body"><div class="pg-chart-container" style="max-width:100%;max-height:250px;margin:0 auto;"><canvas id="doughnutChart"></canvas></div></div></div>
+        </div>
+    </div>
+
+    <div class="pg-two-col" style="margin-top:20px;">
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon bg-info"><i class="ri-bar-chart-horizontal-line"></i></div>
+                <div class="section-title">Horizontal Bar Chart</div>
+            </div>
+            <div class="card"><div class="card-body"><div class="pg-chart-container" style="max-width:100%;"><canvas id="chartBarH"></canvas></div></div></div>
+        </div>
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon bg-purple"><i class="ri-pie-chart-2-line"></i></div>
+                <div class="section-title">Pie Chart</div>
+            </div>
+            <div class="card"><div class="card-body"><div class="pg-chart-container" style="max-width:100%;max-height:250px;margin:0 auto;"><canvas id="chartPie"></canvas></div></div></div>
+        </div>
+    </div>
+
+    <div class="pg-two-col" style="margin-top:20px;">
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon bg-info"><i class="ri-line-chart-line"></i></div>
+                <div class="section-title">Line Chart</div>
+            </div>
+            <div class="card"><div class="card-body"><div class="pg-chart-container" style="max-width:100%;"><canvas id="lineChart"></canvas></div></div></div>
+        </div>
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon bg-warning"><i class="ri-bar-chart-grouped-line"></i></div>
+                <div class="section-title">Stacked Bar Chart</div>
+            </div>
+            <div class="card"><div class="card-body"><div class="pg-chart-container" style="max-width:100%;"><canvas id="chartStacked"></canvas></div></div></div>
+        </div>
+    </div>
+
+    <div class="section" style="margin-top:20px;">
+        <div class="section-header">
+            <div class="section-icon bg-purple"><i class="ri-radar-line"></i></div>
+            <div class="section-title">Radar Chart</div>
+        </div>
+        <div class="card"><div class="card-body" style="display:flex;justify-content:center;padding:24px;"><div style="max-width:400px;max-height:320px;width:100%;"><canvas id="radarChart"></canvas></div></div></div>
+    </div>
+</div>
+
+<!-- ═══════════ TAB: MISC ═══════════ -->
+<div class="tab-pane" id="tab-misc">
+
+    <!-- Icons -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-icon bg-primary"><i class="ri-remixicon-line"></i></div>
+            <div class="section-title">Remix Icon Sizes</div>
+        </div>
+        <div class="card"><div class="card-body">
+            <div class="pg-row">
+                <div style="text-align:center;"><i class="ri-settings-3-line" style="font-size:1rem;color:var(--primary);"></i><div style="font-size:0.65rem;color:var(--text-muted);margin-top:4px;">1rem<br>Card header</div></div>
+                <div style="text-align:center;"><i class="ri-settings-3-line" style="font-size:1.1rem;color:var(--success);"></i><div style="font-size:0.65rem;color:var(--text-muted);margin-top:4px;">1.1rem<br>Tabs / Section</div></div>
+                <div style="text-align:center;"><i class="ri-settings-3-line" style="font-size:1.3rem;color:var(--warning);"></i><div style="font-size:0.65rem;color:var(--text-muted);margin-top:4px;">1.3rem<br>Stat card / FAB</div></div>
+                <div style="text-align:center;"><i class="ri-settings-3-line" style="font-size:1.4rem;color:var(--info);"></i><div style="font-size:0.65rem;color:var(--text-muted);margin-top:4px;">1.4rem<br>Phase arrows</div></div>
+            </div>
+        </div></div>
+    </div>
+
+    <!-- Acronym -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-icon bg-success"><i class="ri-translate-2"></i></div>
+            <div class="section-title">Acronym Tooltip</div>
+        </div>
+        <div class="card"><div class="card-body">
+            Exemplo de uso de <abbr class="acronym" title="Application Programming Interface">API</abbr> com tooltip e de <abbr class="acronym" title="Software as a Service">SaaS</abbr> no contexto de discovery.
+        </div></div>
+    </div>
+
+    <!-- Code Block -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-icon bg-warning"><i class="ri-code-s-slash-line"></i></div>
+            <div class="section-title">Code Block</div>
+        </div>
+        <div class="code-block">/* ====== DESIGN TOKENS (dark — default) ====== */
+:root {
+    --primary: #4DA8DA;
+    --primary-dark: #3A8BB8;
+    --success: #0ED145;
+    --warning: #F4AC00;
+    --danger: #8B1A1A;
+    --info: #2EB5F5;
+    --bg: #141414;
+    --card-bg: #2E2D32;
+    --text: #E0DFE3;
+}</div>
+    </div>
+
+    <!-- Contrast Rules -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-icon bg-danger"><i class="ri-contrast-line"></i></div>
+            <div class="section-title">Contrast Rules (bg-* classes)</div>
+        </div>
+        <div class="pg-grid" style="grid-template-columns:repeat(auto-fill,minmax(140px,1fr));">
+            <div style="padding:14px;border-radius:10px;text-align:center;font-size:0.78rem;font-weight:600;" class="bg-primary">bg-primary<br><span style="font-weight:400;font-size:0.68rem;">#1A1923</span></div>
+            <div style="padding:14px;border-radius:10px;text-align:center;font-size:0.78rem;font-weight:600;" class="bg-success">bg-success<br><span style="font-weight:400;font-size:0.68rem;">#1A1923</span></div>
+            <div style="padding:14px;border-radius:10px;text-align:center;font-size:0.78rem;font-weight:600;" class="bg-warning">bg-warning<br><span style="font-weight:400;font-size:0.68rem;">#1A1923</span></div>
+            <div style="padding:14px;border-radius:10px;text-align:center;font-size:0.78rem;font-weight:600;" class="bg-teal">bg-teal<br><span style="font-weight:400;font-size:0.68rem;">#1A1923</span></div>
+            <div style="padding:14px;border-radius:10px;text-align:center;font-size:0.78rem;font-weight:600;" class="bg-orange">bg-orange<br><span style="font-weight:400;font-size:0.68rem;">#1A1923</span></div>
+            <div style="padding:14px;border-radius:10px;text-align:center;font-size:0.78rem;font-weight:600;" class="bg-secondary">bg-secondary<br><span style="font-weight:400;font-size:0.68rem;">#1A1923</span></div>
+            <div style="padding:14px;border-radius:10px;text-align:center;font-size:0.78rem;font-weight:600;" class="bg-info">bg-info<br><span style="font-weight:400;font-size:0.68rem;">#FFFFFF</span></div>
+            <div style="padding:14px;border-radius:10px;text-align:center;font-size:0.78rem;font-weight:600;" class="bg-danger">bg-danger<br><span style="font-weight:400;font-size:0.68rem;">#FFFFFF</span></div>
+            <div style="padding:14px;border-radius:10px;text-align:center;font-size:0.78rem;font-weight:600;" class="bg-purple">bg-purple<br><span style="font-weight:400;font-size:0.68rem;">#FFFFFF</span></div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════ TAB: HEADER & NAV ═══════════ -->
+<div class="tab-pane" id="tab-header-nav">
+
+    <!-- Header Anatomy -->
+    <div class="pg-section">
+        <div class="pg-label">Component: Header (anatomy)</div>
+        <div class="intro-text">
+            O header utiliza <code>--header-bg</code> (gradiente), contem o titulo (<code>h1</code>), subtitulo (<code>.subtitle</code>),
+            badges (<code>.header-badge</code>), seletor de idioma (<code>.lang-btn</code>) e tabs (<code>.tab-btn</code>) com contadores (<code>.tab-count</code>).
+            O circulo decorativo usa <code>::before</code> com <code>rgba(255,255,255,0.03)</code>.
+        </div>
+    </div>
+
+    <!-- Header Badges -->
+    <div class="pg-section">
+        <div class="pg-label">Component: Header Badges</div>
+        <div class="card">
+            <div class="card-body" style="display:flex;gap:12px;flex-wrap:wrap;background:#2E2D32;border-radius:8px;">
+                <div class="header-badge" style="color:white"><i class="ri-flow-chart"></i> Badge com icone</div>
+                <div class="header-badge" style="color:white"><i class="ri-file-list-3-line"></i> Versao 2.0</div>
+                <div class="header-badge" style="color:white"><i class="ri-calendar-line"></i> Abril 2026</div>
+                <div class="header-badge" style="color:white;border:none;cursor:pointer"><i class="ri-sun-line"></i></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabs Component -->
+    <div class="pg-section">
+        <div class="pg-label">Component: Tabs (.tab-btn + .tab-count)</div>
+        <div class="card">
+            <div class="card-body" style="background:linear-gradient(135deg, #2E2D32 0%, #252428 50%, #1A1923 100%);display:flex;gap:4px;flex-wrap:wrap;border-radius:8px;padding:36px 12px 0 12px;">
+                <button class="tab-btn active" style="pointer-events:none;"><i class="ri-information-line"></i> Aba Ativa</button>
+                <button class="tab-btn" style="pointer-events:none;"><i class="ri-book-2-line"></i> Modulo <span class="tab-count">27</span></button>
+                <button class="tab-btn" style="pointer-events:none;"><i class="ri-money-dollar-circle-line"></i> Financeiro <span class="tab-count">58</span></button>
+                <button class="tab-btn" style="pointer-events:none;"><i class="ri-team-line"></i> RH <span class="tab-count">925</span></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section Headers -->
+    <div class="pg-section">
+        <div class="pg-label">Component: Section Headers</div>
+        <div class="section" style="margin-top: 0;">
+            <div class="section-header">
+                <div class="section-icon bg-primary"><i class="ri-dashboard-3-line"></i></div>
+                <div class="section-title">Secao com icone Primary</div>
+                <div class="section-count">12 itens</div>
+            </div>
+        </div>
+        <div class="section" style="margin-top: 16px;">
+            <div class="section-header">
+                <div class="section-icon bg-warning"><i class="ri-error-warning-line"></i></div>
+                <div class="section-title">Secao com icone Warning</div>
+                <div class="section-count">5 pendencias</div>
+            </div>
+        </div>
+        <div class="section" style="margin-top: 16px;">
+            <div class="section-header">
+                <div class="section-icon bg-danger"><i class="ri-bug-line"></i></div>
+                <div class="section-title">Secao com icone Danger</div>
+                <div class="section-count">2 criticos</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════ TAB: SEARCH & FILTERS ═══════════ -->
+<div class="tab-pane" id="tab-search-filters">
+
+    <!-- Search Input -->
+    <div class="pg-section">
+        <div class="pg-label">Component: Search (.search-container)</div>
+        <div class="search-container">
+            <i class="ri-search-line search-icon"></i>
+            <input type="text" class="search-input" placeholder="Buscar PVO, tabela ou descricao..." oninput="filterPlayground(this.value)" id="search-playground">
+        </div>
+    </div>
+
+    <!-- Group Cards (expandable) -->
+    <div class="pg-section" id="playground-groups">
+        <div class="pg-label">Component: Group Card (.group-card) &mdash; expandable</div>
+
+        <div class="card group-card" data-group="Lancamentos Contabeis">
+            <div class="card-header" onclick="toggleGroup(this)" style="cursor:pointer">
+                <div class="card-header-icon bg-primary"><i class="ri-folder-3-line"></i></div>
+                <div class="card-title">Lancamentos Contabeis</div>
+                <div class="card-badge" style="background:var(--primary-light);color:var(--primary)">8 PVOs</div>
+                <i class="ri-arrow-down-s-line group-toggle" style="color:var(--text-muted);font-size:1.2rem;"></i>
+            </div>
+            <div class="card-body">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width:30%">View Object (PVO)</th>
+                                <th style="width:40%">Descricao</th>
+                                <th style="width:10%">Conf.</th>
+                                <th style="width:20%">Tabelas</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="vo-row" data-vo="JournalBatchPVO" data-tables="GL_JE_BATCHES" data-desc="Lotes de lancamentos contabeis">
+                                <td><div style="font-weight:600;color:var(--info);font-size:0.85rem">JournalBatchPVO</div></td>
+                                <td style="font-size:0.82rem">Lotes de lancamentos contabeis</td>
+                                <td style="text-align:center"><span class="pill pill-success">90%</span></td>
+                                <td><span style="font-size:0.72rem;color:var(--text-muted);font-family:monospace">GL_JE_BATCHES</span></td>
+                            </tr>
+                            <tr class="vo-row" data-vo="JournalHeaderPVO" data-tables="GL_JE_HEADERS" data-desc="Cabecalho de lancamentos">
+                                <td><div style="font-weight:600;color:var(--info);font-size:0.85rem">JournalHeaderPVO</div></td>
+                                <td style="font-size:0.82rem">Cabecalho de lancamentos</td>
+                                <td style="text-align:center"><span class="pill pill-success">88%</span></td>
+                                <td><span style="font-size:0.72rem;color:var(--text-muted);font-family:monospace">GL_JE_HEADERS</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="card group-card" data-group="Plano de Contas">
+            <div class="card-header" onclick="toggleGroup(this)" style="cursor:pointer">
+                <div class="card-header-icon bg-success"><i class="ri-folder-3-line"></i></div>
+                <div class="card-title">Plano de Contas</div>
+                <div class="card-badge" style="background:var(--success-light);color:var(--success)">4 PVOs</div>
+                <i class="ri-arrow-down-s-line group-toggle" style="color:var(--text-muted);font-size:1.2rem;transform:rotate(-90deg)"></i>
+            </div>
+            <div class="card-body collapsed">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width:30%">View Object (PVO)</th>
+                                <th style="width:40%">Descricao</th>
+                                <th style="width:10%">Conf.</th>
+                                <th style="width:20%">Tabelas</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="vo-row" data-vo="ChartOfAccountsPVO" data-tables="GL_CODE_COMBINATIONS" data-desc="Estrutura do plano de contas">
+                                <td><div style="font-weight:600;color:var(--info);font-size:0.85rem">ChartOfAccountsPVO</div></td>
+                                <td style="font-size:0.82rem">Estrutura do plano de contas</td>
+                                <td style="text-align:center"><span class="pill pill-info">75%</span></td>
+                                <td><span style="font-size:0.72rem;color:var(--text-muted);font-family:monospace">GL_CODE_COMBINATIONS</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="card group-card" data-group="Lookups e Configuracao">
+            <div class="card-header" onclick="toggleGroup(this)" style="cursor:pointer">
+                <div class="card-header-icon bg-warning"><i class="ri-folder-3-line"></i></div>
+                <div class="card-title">Lookups e Configuracao</div>
+                <div class="card-badge" style="background:var(--warning-light);color:var(--warning)">2 PVOs</div>
+                <i class="ri-arrow-down-s-line group-toggle" style="color:var(--text-muted);font-size:1.2rem;transform:rotate(-90deg)"></i>
+            </div>
+            <div class="card-body collapsed">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width:30%">View Object (PVO)</th>
+                                <th style="width:40%">Descricao</th>
+                                <th style="width:10%">Conf.</th>
+                                <th style="width:20%">Tabelas</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="vo-row" data-vo="SetupLookupPVO" data-tables="FND_LOOKUPS" data-desc="Tabela de lookups genericos">
+                                <td><div style="font-weight:600;color:var(--info);font-size:0.85rem">SetupLookupPVO</div></td>
+                                <td style="font-size:0.82rem">Tabela de lookups genericos</td>
+                                <td style="text-align:center"><span class="pill pill-danger">45%</span></td>
+                                <td><span style="font-size:0.72rem;color:var(--text-muted);font-family:monospace">FND_LOOKUPS</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- No Results -->
+    <div class="pg-section">
+        <div class="pg-label">Component: No Results (.no-results)</div>
+        <div class="no-results" id="no-results-playground" style="display:none">
+            <i class="ri-search-line"></i>
+            <div>Nenhum resultado encontrado</div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <p style="font-size:0.82rem">O componente <code>.no-results</code> aparece quando a busca nao retorna resultados. Digite algo na busca acima que nao exista para ve-lo em acao.</p>
+                <div class="no-results" style="border:1px dashed var(--border);border-radius:12px;margin-top:12px">
+                    <i class="ri-search-line"></i>
+                    <div>Nenhum resultado encontrado (preview estatico)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════ TAB: FOOTER PREVIEW ═══════════ -->
+<div class="tab-pane" id="tab-footer-preview">
+
+    <div class="pg-section">
+        <div class="pg-label">Component: Footer (.footer + .footer-content + .footer-seal)</div>
+        <div class="intro-text">
+            O footer utiliza o mesmo gradiente do header (<code>--header-bg</code>) e possui tres areas: <code>.footer-left</code> (avatar + autor),
+            <code>.footer-right</code> (titulo do doc + detalhes) e <code>.footer-seal</code> (linha inferior com selo).
+        </div>
+    </div>
+
+    <div class="pg-section">
+        <div class="pg-label">Preview: Footer completo</div>
+        <div class="footer" style="border-radius:12px;overflow:hidden;">
+            <div class="footer-content">
+                <div class="footer-left">
+                    <div>
+                        <div class="footer-author-name">Visual Conventions</div>
+                        <div class="footer-author-role">Discovery-to-Go &mdash; Base Standards</div>
+                    </div>
+                </div>
+                <div class="footer-right">
+                    <div class="footer-doc-title">playground.html</div>
+                    <div class="footer-doc-detail">v02.00 &mdash; Abril 2026</div>
+                </div>
+            </div>
+            <div class="footer-seal">
+                <i class="ri-shield-check-line"></i>
+                <span>Documento gerado automaticamente &mdash; Visual Conventions</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════ TAB: DASHBOARDS ═══════════ -->
+<div class="tab-pane" id="tab-dashboards">
+
+    <div class="intro-text">
+        <strong>Dashboards</strong> &mdash; Componentes especializados para relatorios e dashboards: KPI Strips, Highlight Boxes, Ranking Tables, Bar Charts,
+        Progress Bars, Distribution Cards e Insight Cards. Todos compativeis com os temas Dark e Light.
+    </div>
+
+    <!-- KPI Strip -->
+    <div class="pg-section">
+        <div class="pg-label">Component: KPI Strip (.dash-kpi-strip)</div>
+        <div class="dash-kpi-strip">
+            <div class="dash-kpi highlight">
+                <div class="dash-kpi-label">Receita Top 5</div>
+                <div class="dash-kpi-value" style="color:var(--info)">$977,7K</div>
+                <div class="dash-kpi-sub">faturamento consolidado</div>
+            </div>
+            <div class="dash-kpi">
+                <div class="dash-kpi-label">Unidades Vendidas</div>
+                <div class="dash-kpi-value">3.900</div>
+                <div class="dash-kpi-sub">total dos 5 produtos</div>
+            </div>
+            <div class="dash-kpi">
+                <div class="dash-kpi-label">Total de Pedidos</div>
+                <div class="dash-kpi-value">3.867</div>
+                <div class="dash-kpi-sub">pedidos realizados</div>
+            </div>
+            <div class="dash-kpi">
+                <div class="dash-kpi-label">Desconto Medio</div>
+                <div class="dash-kpi-value" style="color:var(--warning)">11,3%</div>
+                <div class="dash-kpi-sub">taxa media sobre bruto</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Highlight Box -->
+    <div class="pg-section">
+        <div class="pg-label">Component: Highlight Box (.dash-highlight-box)</div>
+        <div class="dash-highlight-box">
+            <div>
+                <div class="dash-hl-label">Linha Ines Pump (2 variantes)</div>
+                <div class="dash-hl-main">$425.376</div>
+                <div class="dash-hl-detail">43,5% da receita &middot; 1.567 unidades vendidas</div>
+            </div>
+            <div class="dash-hl-divider"></div>
+            <div>
+                <div class="dash-hl-label">Linha Dolly (2 variantes)</div>
+                <div class="dash-hl-main" style="font-size:1.4rem;">$364.041</div>
+                <div class="dash-hl-detail">37,2% da receita &middot; 1.622 unidades</div>
+            </div>
+            <div class="dash-hl-divider"></div>
+            <div style="text-align:right;">
+                <div class="dash-hl-label">Tipo Dominante</div>
+                <div class="dash-hl-main" style="font-size:1.4rem;">56,5%</div>
+                <div class="dash-hl-detail">3 de 5 produtos &middot; categoria principal</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ranking Table + Stacked Bar Chart -->
+    <div class="pg-section">
+        <div class="pg-label">Component: Ranking Table + Stacked Bar Chart (.dash-rank + .dash-bar-*)</div>
+        <div class="dash-grid">
+            <!-- Ranking Table -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-header-icon bg-primary"><i class="ri-trophy-line"></i></div>
+                    <div class="card-title">Ranking de Produtos</div>
+                    <div class="card-badge" style="background:var(--primary-light);color:var(--primary)">Top 5</div>
+                </div>
+                <div class="card-body">
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th style="width:30px">#</th>
+                                    <th>Produto</th>
+                                    <th class="dash-num">Qtd.</th>
+                                    <th class="dash-num">Valor</th>
+                                    <th class="dash-num">%</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span class="dash-rank dash-rank-1">1</span></td>
+                                    <td><div style="font-weight:600">Produto Alpha</div><div style="font-size:0.68rem;color:var(--text-muted)">Categoria A</div></td>
+                                    <td class="dash-num">786</td>
+                                    <td class="dash-num" style="font-weight:700">$217.484</td>
+                                    <td class="dash-num">22,2%</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="dash-rank dash-rank-2">2</span></td>
+                                    <td><div style="font-weight:600">Produto Beta</div><div style="font-size:0.68rem;color:var(--text-muted)">Categoria A</div></td>
+                                    <td class="dash-num">781</td>
+                                    <td class="dash-num" style="font-weight:700">$207.892</td>
+                                    <td class="dash-num">21,3%</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="dash-rank dash-rank-3">3</span></td>
+                                    <td><div style="font-weight:600">Produto Gamma</div><div style="font-size:0.68rem;color:var(--text-muted)">Categoria B</div></td>
+                                    <td class="dash-num">642</td>
+                                    <td class="dash-num" style="font-weight:700">$191.202</td>
+                                    <td class="dash-num">19,6%</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="dash-rank dash-rank-4">4</span></td>
+                                    <td><div style="font-weight:600">Produto Delta</div><div style="font-size:0.68rem;color:var(--text-muted)">Categoria B</div></td>
+                                    <td class="dash-num">711</td>
+                                    <td class="dash-num" style="font-weight:700">$188.244</td>
+                                    <td class="dash-num">19,2%</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="dash-rank dash-rank-5">5</span></td>
+                                    <td><div style="font-weight:600">Produto Epsilon</div><div style="font-size:0.68rem;color:var(--text-muted)">Categoria B</div></td>
+                                    <td class="dash-num">980</td>
+                                    <td class="dash-num" style="font-weight:700">$172.839</td>
+                                    <td class="dash-num">17,7%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stacked Bar Chart (CSS) -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-header-icon bg-info"><i class="ri-bar-chart-horizontal-line"></i></div>
+                    <div class="card-title">Composicao do Faturamento</div>
+                </div>
+                <div class="card-body">
+                    <div style="display:flex; gap:12px; margin-bottom:12px; font-size:0.72rem; color:var(--text-muted);">
+                        <span><span style="display:inline-block;width:12px;height:8px;background:var(--chart-1);border-radius:2px;"></span> Fat. Liquido</span>
+                        <span><span style="display:inline-block;width:12px;height:8px;background:var(--chart-4);border-radius:2px;"></span> Descontos</span>
+                    </div>
+                    <div class="dash-bar-row">
+                        <div class="dash-bar-label">Alpha</div>
+                        <div class="dash-bar-track" style="width:100%">
+                            <div class="dash-bar-seg" style="width:87%;background:var(--chart-1)">87%</div>
+                            <div class="dash-bar-seg" style="width:13%;background:var(--chart-4)">13%</div>
+                        </div>
+                        <div class="dash-bar-val">$250K</div>
+                    </div>
+                    <div class="dash-bar-row">
+                        <div class="dash-bar-label">Beta</div>
+                        <div class="dash-bar-track" style="width:100%">
+                            <div class="dash-bar-seg" style="width:81%;background:var(--chart-1)">81%</div>
+                            <div class="dash-bar-seg" style="width:19%;background:var(--chart-4)">19%</div>
+                        </div>
+                        <div class="dash-bar-val">$256K</div>
+                    </div>
+                    <div class="dash-bar-row">
+                        <div class="dash-bar-label">Gamma</div>
+                        <div class="dash-bar-track" style="width:82%">
+                            <div class="dash-bar-seg" style="width:91%;background:var(--chart-1)">91%</div>
+                            <div class="dash-bar-seg" style="width:9%;background:var(--chart-4)">9%</div>
+                        </div>
+                        <div class="dash-bar-val">$209K</div>
+                    </div>
+                    <div class="dash-bar-row">
+                        <div class="dash-bar-label">Delta</div>
+                        <div class="dash-bar-track" style="width:80%">
+                            <div class="dash-bar-seg" style="width:92%;background:var(--chart-1)">92%</div>
+                            <div class="dash-bar-seg" style="width:8%;background:var(--chart-4)">8%</div>
+                        </div>
+                        <div class="dash-bar-val">$204K</div>
+                    </div>
+                    <div class="dash-bar-row">
+                        <div class="dash-bar-label">Epsilon</div>
+                        <div class="dash-bar-track" style="width:72%">
+                            <div class="dash-bar-seg" style="width:94%;background:var(--chart-1)">94%</div>
+                            <div class="dash-bar-seg" style="width:6%;background:var(--chart-4)">6%</div>
+                        </div>
+                        <div class="dash-bar-val">$184K</div>
+                    </div>
+                    <div class="dash-callout">
+                        <strong>Produto Beta</strong> tem a maior taxa de desconto (19%) &mdash; quase o dobro da media dos demais (8,9%).
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Progress Bars + Distribution -->
+    <div class="pg-section">
+        <div class="pg-label">Component: Progress Bars + Distribution Cards (.dash-progress-* + .dash-dist-*)</div>
+        <div class="dash-grid">
+            <!-- Progress Bars -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-header-icon bg-success"><i class="ri-pie-chart-line"></i></div>
+                    <div class="card-title">Participacao na Receita</div>
+                </div>
+                <div class="card-body">
+                    <div class="dash-progress-item">
+                        <div class="dash-progress-header">
+                            <div class="dash-progress-dot" style="background:var(--chart-1)"></div>
+                            <div style="flex:1">Produto Alpha</div>
+                            <div style="font-weight:700">22,2%</div>
+                            <div style="font-size:0.72rem;color:var(--text-muted);width:60px;text-align:right">$217.484</div>
+                        </div>
+                        <div class="dash-progress-bar">
+                            <div class="dash-progress-fill" style="width:100%;background:var(--chart-1)"></div>
+                        </div>
+                    </div>
+                    <div class="dash-progress-item">
+                        <div class="dash-progress-header">
+                            <div class="dash-progress-dot" style="background:var(--chart-2)"></div>
+                            <div style="flex:1">Produto Beta</div>
+                            <div style="font-weight:700">21,3%</div>
+                            <div style="font-size:0.72rem;color:var(--text-muted);width:60px;text-align:right">$207.892</div>
+                        </div>
+                        <div class="dash-progress-bar">
+                            <div class="dash-progress-fill" style="width:96%;background:var(--chart-2)"></div>
+                        </div>
+                    </div>
+                    <div class="dash-progress-item">
+                        <div class="dash-progress-header">
+                            <div class="dash-progress-dot" style="background:var(--chart-3)"></div>
+                            <div style="flex:1">Produto Gamma</div>
+                            <div style="font-weight:700">19,6%</div>
+                            <div style="font-size:0.72rem;color:var(--text-muted);width:60px;text-align:right">$191.202</div>
+                        </div>
+                        <div class="dash-progress-bar">
+                            <div class="dash-progress-fill" style="width:88%;background:var(--chart-3)"></div>
+                        </div>
+                    </div>
+                    <div class="dash-progress-item">
+                        <div class="dash-progress-header">
+                            <div class="dash-progress-dot" style="background:var(--chart-4)"></div>
+                            <div style="flex:1">Produto Delta</div>
+                            <div style="font-weight:700">19,2%</div>
+                            <div style="font-size:0.72rem;color:var(--text-muted);width:60px;text-align:right">$188.244</div>
+                        </div>
+                        <div class="dash-progress-bar">
+                            <div class="dash-progress-fill" style="width:87%;background:var(--chart-4)"></div>
+                        </div>
+                    </div>
+                    <div class="dash-progress-item">
+                        <div class="dash-progress-header">
+                            <div class="dash-progress-dot" style="background:var(--chart-5)"></div>
+                            <div style="flex:1">Produto Epsilon</div>
+                            <div style="font-weight:700">17,7%</div>
+                            <div style="font-size:0.72rem;color:var(--text-muted);width:60px;text-align:right">$172.839</div>
+                        </div>
+                        <div class="dash-progress-bar">
+                            <div class="dash-progress-fill" style="width:80%;background:var(--chart-5)"></div>
+                        </div>
+                    </div>
+                    <div style="margin-top:12px;padding-top:8px;border-top:1px solid var(--border);display:flex;justify-content:space-between;font-size:0.82rem;">
+                        <span style="font-weight:700">Total</span>
+                        <span style="font-weight:700">$977.661</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Distribution Cards -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-header-icon bg-purple"><i class="ri-layout-column-line"></i></div>
+                    <div class="card-title">Distribuicao por Categoria</div>
+                </div>
+                <div class="card-body">
+                    <div style="display:flex; gap:14px; margin-bottom:16px;">
+                        <div class="dash-dist-box active">
+                            <div class="dash-dist-label">Categoria A</div>
+                            <div class="dash-dist-value">43,5%</div>
+                            <div class="dash-dist-amount">$425.376</div>
+                            <div class="dash-dist-detail">1.567 unidades &middot; 2 SKUs</div>
+                        </div>
+                        <div class="dash-dist-box">
+                            <div class="dash-dist-label">Categoria B</div>
+                            <div class="dash-dist-value" style="color:var(--secondary)">56,5%</div>
+                            <div class="dash-dist-amount">$552.285</div>
+                            <div class="dash-dist-detail">2.333 unidades &middot; 3 SKUs</div>
+                        </div>
+                    </div>
+
+                    <!-- Vertical Bars -->
+                    <div style="font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-muted);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border);">Unidades por Produto</div>
+                    <div class="dash-vbar-container">
+                        <div class="dash-vbar-item">
+                            <div class="dash-vbar-value">980</div>
+                            <div class="dash-vbar-bar" style="height:96px;background:var(--chart-1)"></div>
+                            <div class="dash-vbar-name">Epsilon</div>
+                        </div>
+                        <div class="dash-vbar-item">
+                            <div class="dash-vbar-value">786</div>
+                            <div class="dash-vbar-bar" style="height:77px;background:var(--chart-2)"></div>
+                            <div class="dash-vbar-name">Alpha</div>
+                        </div>
+                        <div class="dash-vbar-item">
+                            <div class="dash-vbar-value">781</div>
+                            <div class="dash-vbar-bar" style="height:76px;background:var(--chart-3)"></div>
+                            <div class="dash-vbar-name">Beta</div>
+                        </div>
+                        <div class="dash-vbar-item">
+                            <div class="dash-vbar-value">711</div>
+                            <div class="dash-vbar-bar" style="height:69px;background:var(--chart-4)"></div>
+                            <div class="dash-vbar-name">Delta</div>
+                        </div>
+                        <div class="dash-vbar-item">
+                            <div class="dash-vbar-value">642</div>
+                            <div class="dash-vbar-bar" style="height:63px;background:var(--chart-5)"></div>
+                            <div class="dash-vbar-name">Gamma</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Insight Cards -->
+    <div class="pg-section">
+        <div class="pg-label">Component: Insight Cards (.dash-insights + .dash-insight)</div>
+        <div class="dash-insights">
+            <div class="dash-insight">
+                <div class="dash-insight-icon">&#x1F451;</div>
+                <h4>Carro-Chefe</h4>
+                <p>Produtos Alpha + Beta somam <strong>$425K em receita</strong> &mdash; <strong>43,5%</strong> do top 5.</p>
+            </div>
+            <div class="dash-insight ok">
+                <div class="dash-insight-icon">&#x1F4B0;</div>
+                <h4>Demanda Organica</h4>
+                <p>Produto Epsilon: maior volume (<strong>980 un.</strong>) com <strong>menor desconto (6%)</strong>.</p>
+            </div>
+            <div class="dash-insight warn">
+                <div class="dash-insight-icon">&#x26A0;&#xFE0F;</div>
+                <h4>Desconto Alto</h4>
+                <p>Produto Beta: taxa de <strong>18,7%</strong> &mdash; a mais alta do top 5 (media: 8,9%).</p>
+            </div>
+            <div class="dash-insight" style="border-left-color:var(--purple)">
+                <div class="dash-insight-icon">&#x1F4CA;</div>
+                <h4>Tendencia</h4>
+                <p>Categoria B domina com <strong>56,5%</strong> da receita e <strong>3 dos 5</strong> produtos no ranking.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Status Indicators -->
+    <div class="pg-section">
+        <div class="pg-label">Component: Status Indicators (.dash-status-*)</div>
+        <div class="card">
+            <div class="card-header">
+                <div class="card-header-icon bg-secondary"><i class="ri-checkbox-multiple-line"></i></div>
+                <div class="card-title">Indicadores de Status</div>
+            </div>
+            <div class="card-body">
+                <div class="dash-status-badges">
+                    <div class="dash-status dash-status-success"><i class="ri-checkbox-circle-line"></i> Positivo / Sucesso</div>
+                    <div class="dash-status dash-status-warning"><i class="ri-error-warning-line"></i> Alerta / Warning</div>
+                    <div class="dash-status dash-status-danger"><i class="ri-close-circle-line"></i> Erro / Negativo</div>
+                    <div class="dash-status dash-status-info"><i class="ri-information-line"></i> Info / Neutro</div>
+                </div>
+                <p style="font-size:0.78rem;margin-top:14px">
+                    Use <code>.dash-status</code> + variante (<code>.dash-status-success</code>, <code>.dash-status-warning</code>, <code>.dash-status-danger</code>, <code>.dash-status-info</code>) para indicadores visuais de estado em dashboards.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Callout -->
+    <div class="pg-section">
+        <div class="pg-label">Component: Callout (.dash-callout)</div>
+        <div class="card">
+            <div class="card-body">
+                <div class="dash-callout">
+                    <strong>Nota:</strong> O componente <code>.dash-callout</code> e usado dentro de cards para adicionar observacoes, notas explicativas ou alertas contextuais. Herda automaticamente as cores do tema ativo.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div><!-- /doc-container -->
+
+<!-- ════════════════ FOOTER ════════════════ -->
+<div class="footer">
+    <div class="footer-content">
+        <div class="footer-left">
+            <div><div class="footer-author-name">Visual Conventions</div><div class="footer-author-role">Discovery-to-Go &mdash; Base Standards</div></div>
+        </div>
+        <div class="footer-right">
+            <div class="footer-doc-title">playground.html</div>
+            <div class="footer-doc-detail">v02.00 &mdash; Abril 2026</div>
+        </div>
+    </div>
+    <div class="footer-seal"><i class="ri-shield-check-line"></i> Gerado a partir das convenções visuais documentadas em standards/conventions/visual/</div>
+</div>
+
+<!-- ════════════════ FLOATING MENU ════════════════ -->
+<button class="floating-menu-btn" id="floatingMenuBtn" onclick="toggleOffcanvas()"><i class="ri-menu-line"></i></button>
+<div class="offcanvas-backdrop" id="offcanvasBackdrop" onclick="closeOffcanvas()"></div>
+<div class="offcanvas-menu" id="offcanvasMenu">
+    <div class="offcanvas-menu-header">
+        <span><i class="ri-palette-line" style="margin-right:6px;"></i> Sections</span>
+        <button class="offcanvas-menu-close" onclick="closeOffcanvas()"><i class="ri-close-line"></i></button>
+    </div>
+    <div class="offcanvas-menu-body" id="offcanvasMenuBody"></div>
+    <div style="padding:12px;border-top:1px solid var(--border);display:flex;justify-content:center;">
+        <div style="display:flex;align-items:center;gap:8px;font-size:0.78rem;color:var(--text-muted);">
+            <i class="ri-sun-line" style="font-size:1.1rem;cursor:pointer;transition:color 0.2s;" onclick="if(document.documentElement.getAttribute('data-theme-mode')==='dark')toggleTheme()"></i>
+            <div id="offcanvasThemeTrack" onclick="toggleTheme()" style="width:40px;height:22px;border-radius:11px;background:var(--border);position:relative;cursor:pointer;transition:background 0.2s;">
+                <div id="offcanvasThemeDot" style="width:18px;height:18px;border-radius:50%;background:var(--primary);position:absolute;top:2px;left:20px;transition:left 0.2s;"></div>
+            </div>
+            <i class="ri-moon-line" style="font-size:1.1rem;cursor:pointer;transition:color 0.2s;" onclick="if(document.documentElement.getAttribute('data-theme-mode')==='light')toggleTheme()"></i>
+        </div>
+    </div>
+</div>
+
+<!-- ════════════════ BACK TO TOP ════════════════ -->
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="ri-arrow-up-line"></i></button>
+
+<script>
+// ====== THEME TOGGLE ======
+function toggleTheme() {
+    const html = document.documentElement;
+    const current = html.getAttribute('data-theme-mode');
+    const next = current === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme-mode', next);
+    document.querySelector('.badge-version').textContent = next.charAt(0).toUpperCase() + next.slice(1);
+    document.querySelector('.theme-toggle i').className = next === 'dark' ? 'ri-moon-line' : 'ri-sun-line';
+    var dot = document.getElementById('offcanvasThemeDot');
+    if (dot) dot.style.left = next === 'dark' ? '20px' : '2px';
+    buildCharts();
+}
+
+// ====== TABS ======
+document.querySelectorAll('.tabs-nav .tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.tabs-nav .tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+        if (btn.dataset.tab === 'charts' || btn.dataset.tab === 'dashboards') setTimeout(buildCharts, 100);
+    });
+});
+
+// ====== BACK TO TOP ======
+window.addEventListener('scroll', () => {
+    document.getElementById('backToTop').classList.toggle('visible', window.scrollY > 300);
+});
+
+// ====== COMPACT MODE (50% viewport or less) ======
+function checkCompactMode() {
+    const isCompact = window.innerWidth <= screen.width * 0.5;
+    document.body.classList.toggle('compact-mode', isCompact);
+}
+checkCompactMode();
+window.addEventListener('resize', checkCompactMode);
+
+// ====== OFFCANVAS MENU ======
+function buildOffcanvasMenu() {
+    const body = document.getElementById('offcanvasMenuBody');
+    body.innerHTML = '';
+    document.querySelectorAll('.tabs-nav .tab-btn').forEach(btn => {
+        const item = document.createElement('button');
+        item.className = 'nav-menu-item' + (btn.classList.contains('active') ? ' active' : '');
+        const icon = btn.querySelector('i');
+        const count = btn.querySelector('.tab-count');
+        item.innerHTML = (icon ? '<i class="' + icon.className + '"></i> ' : '') +
+            btn.dataset.tab.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) +
+            (count ? ' <span class="tab-count">' + count.textContent + '</span>' : '');
+        item.addEventListener('click', () => {
+            btn.click();
+            document.querySelectorAll('.nav-menu-item').forEach(m => m.classList.remove('active'));
+            item.classList.add('active');
+            closeOffcanvas();
+        });
+        body.appendChild(item);
+    });
+}
+buildOffcanvasMenu();
+
+function toggleOffcanvas() {
+    const menu = document.getElementById('offcanvasMenu');
+    const backdrop = document.getElementById('offcanvasBackdrop');
+    const btn = document.getElementById('floatingMenuBtn');
+    const isOpen = menu.classList.contains('open');
+    menu.classList.toggle('open');
+    backdrop.classList.toggle('open');
+    btn.querySelector('i').className = isOpen ? 'ri-menu-line' : 'ri-close-line';
+}
+function closeOffcanvas() {
+    document.getElementById('offcanvasMenu').classList.remove('open');
+    document.getElementById('offcanvasBackdrop').classList.remove('open');
+    document.getElementById('floatingMenuBtn').querySelector('i').className = 'ri-menu-line';
+}
+
+// ====== GROUP CARD TOGGLE ======
+function toggleGroup(headerEl) {
+    var body = headerEl.nextElementSibling;
+    body.classList.toggle('collapsed');
+    var icon = headerEl.querySelector('.group-toggle');
+    if (icon) icon.style.transform = body.classList.contains('collapsed') ? 'rotate(-90deg)' : 'rotate(0deg)';
+}
+
+// ====== SEARCH / FILTER (playground demo) ======
+function filterPlayground(query) {
+    var container = document.getElementById('playground-groups');
+    if (!container) return;
+    var q = query.toLowerCase().trim();
+    var cards = container.querySelectorAll('.group-card');
+    var anyVisible = false;
+
+    cards.forEach(function(card) {
+        var groupName = (card.getAttribute('data-group') || '').toLowerCase();
+        var rows = card.querySelectorAll('.vo-row');
+        var cardVisible = false;
+
+        if (!q) {
+            card.style.display = '';
+            rows.forEach(function(r) { r.style.display = ''; });
+            cardVisible = true;
+        } else if (groupName.indexOf(q) >= 0) {
+            card.style.display = '';
+            rows.forEach(function(r) { r.style.display = ''; });
+            card.querySelector('.card-body').classList.remove('collapsed');
+            var icon = card.querySelector('.group-toggle');
+            if (icon) icon.style.transform = 'rotate(0deg)';
+            cardVisible = true;
+        } else {
+            rows.forEach(function(row) {
+                var vo = (row.getAttribute('data-vo') || '').toLowerCase();
+                var tables = (row.getAttribute('data-tables') || '').toLowerCase();
+                var desc = (row.getAttribute('data-desc') || '').toLowerCase();
+                var match = vo.indexOf(q) >= 0 || tables.indexOf(q) >= 0 || desc.indexOf(q) >= 0;
+                row.style.display = match ? '' : 'none';
+                if (match) cardVisible = true;
+            });
+            card.style.display = cardVisible ? '' : 'none';
+            if (cardVisible) {
+                card.querySelector('.card-body').classList.remove('collapsed');
+                var icon = card.querySelector('.group-toggle');
+                if (icon) icon.style.transform = 'rotate(0deg)';
+            }
+        }
+        if (cardVisible) anyVisible = true;
+    });
+
+    var noResults = document.getElementById('no-results-playground');
+    if (noResults) noResults.style.display = (!anyVisible && q) ? '' : 'none';
+}
+
+// ====== CHARTS ======
+var chartInstances = {};
+function getCSSVar(name) {
+    return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+}
+function getChartColors() {
+    return {
+        c1: getCSSVar('--chart-1'),
+        c2: getCSSVar('--chart-2'),
+        c3: getCSSVar('--chart-3'),
+        c4: getCSSVar('--chart-4'),
+        c5: getCSSVar('--chart-5'),
+        text: getCSSVar('--text'),
+        muted: getCSSVar('--text-muted'),
+        border: getCSSVar('--border'),
+        cardBg: getCSSVar('--card-bg'),
+        bg: getCSSVar('--bg')
+    };
+}
+function destroyAllCharts() {
+    Object.keys(chartInstances).forEach(function(k) {
+        if (chartInstances[k]) chartInstances[k].destroy();
+    });
+    chartInstances = {};
+}
+function buildCharts() {
+    destroyAllCharts();
+    var c = getChartColors();
+    var gridColor = c.border;
+    var tickColor = c.muted;
+
+    var defaultScaleOpts = {
+        grid: { color: gridColor, drawBorder: false },
+        ticks: { color: tickColor, font: { family: "'Poppins', sans-serif", size: 11 } }
+    };
+
+    Chart.defaults.color = c.text;
+    Chart.defaults.font.family = "'Poppins', sans-serif";
+    Chart.defaults.plugins.tooltip.backgroundColor = c.cardBg;
+    Chart.defaults.plugins.tooltip.titleColor = c.text;
+    Chart.defaults.plugins.tooltip.bodyColor = c.muted;
+    Chart.defaults.plugins.tooltip.borderColor = c.border;
+    Chart.defaults.plugins.tooltip.borderWidth = 1;
+    Chart.defaults.plugins.tooltip.cornerRadius = 8;
+    Chart.defaults.plugins.tooltip.padding = 10;
+    Chart.defaults.plugins.legend.labels.color = c.text;
+    Chart.defaults.plugins.legend.labels.usePointStyle = true;
+    Chart.defaults.plugins.legend.labels.pointStyle = 'circle';
+    Chart.defaults.plugins.legend.labels.padding = 16;
+
+    var labels5 = ['Alpha', 'Beta', 'Gamma', 'Delta', 'Epsilon'];
+    var colors5 = [c.c1, c.c2, c.c3, c.c4, c.c5];
+
+    // 1. Bar Chart (Vertical)
+    var barEl = document.getElementById('barChart');
+    if (barEl) {
+        chartInstances.bar = new Chart(barEl, {
+            type: 'bar',
+            data: { labels: labels5, datasets: [{ label: 'Faturamento ($K)', data: [217, 208, 191, 188, 173], backgroundColor: colors5, borderRadius: 6, borderSkipped: false }] },
+            options: { responsive: true, animation: { duration: 1200, easing: 'easeOutQuart' }, plugins: { legend: { display: false } }, scales: { x: defaultScaleOpts, y: Object.assign({}, defaultScaleOpts, { beginAtZero: true }) } }
+        });
+    }
+
+    // 2. Doughnut
+    var doughEl = document.getElementById('doughnutChart');
+    if (doughEl) {
+        chartInstances.doughnut = new Chart(doughEl, {
+            type: 'doughnut',
+            data: { labels: labels5, datasets: [{ data: [22.2, 21.3, 19.6, 19.2, 17.7], backgroundColor: colors5, borderColor: c.cardBg, borderWidth: 3, hoverOffset: 12 }] },
+            options: { responsive: true, cutout: '55%', maintainAspectRatio: false, animation: { animateRotate: true, duration: 1400, easing: 'easeOutQuart' }, plugins: { legend: { position: 'right', labels: { boxWidth: 10, padding: 10, font: { size: 10 } } } } }
+        });
+    }
+
+    // 3. Horizontal Bar
+    var barHEl = document.getElementById('chartBarH');
+    if (barHEl) {
+        chartInstances.barH = new Chart(barHEl, {
+            type: 'bar',
+            data: { labels: labels5, datasets: [{ label: 'Unidades', data: [786, 781, 642, 711, 980], backgroundColor: colors5, borderRadius: 6, borderSkipped: false }] },
+            options: { indexAxis: 'y', responsive: true, animation: { duration: 1200, easing: 'easeOutQuart' }, plugins: { legend: { display: false } }, scales: { x: Object.assign({}, defaultScaleOpts, { beginAtZero: true }), y: defaultScaleOpts } }
+        });
+    }
+
+    // 4. Pie
+    var pieEl = document.getElementById('chartPie');
+    if (pieEl) {
+        chartInstances.pie = new Chart(pieEl, {
+            type: 'pie',
+            data: { labels: ['Categoria A', 'Categoria B'], datasets: [{ data: [43.5, 56.5], backgroundColor: [c.c1, c.c2], borderColor: c.cardBg, borderWidth: 3, hoverOffset: 12 }] },
+            options: { responsive: true, maintainAspectRatio: false, animation: { animateRotate: true, duration: 1400, easing: 'easeOutQuart' }, plugins: { legend: { position: 'right', labels: { boxWidth: 10, padding: 10, font: { size: 10 } } } } }
+        });
+    }
+
+    // 5. Line Chart
+    var lineEl = document.getElementById('lineChart');
+    if (lineEl) {
+        chartInstances.line = new Chart(lineEl, {
+            type: 'line',
+            data: { labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'], datasets: [
+                { label: 'Alpha', data: [12, 15, 18, 16, 20, 22, 19, 24, 21, 25, 23, 28], borderColor: c.c1, backgroundColor: c.c1 + '22', fill: true, tension: 0.4, pointRadius: 4, pointHoverRadius: 7 },
+                { label: 'Beta', data: [10, 13, 14, 15, 17, 19, 18, 20, 22, 21, 24, 26], borderColor: c.c2, backgroundColor: c.c2 + '22', fill: true, tension: 0.4, pointRadius: 4, pointHoverRadius: 7 },
+                { label: 'Gamma', data: [8, 9, 12, 11, 14, 15, 16, 17, 15, 18, 20, 19], borderColor: c.c3, backgroundColor: c.c3 + '22', fill: true, tension: 0.4, pointRadius: 4, pointHoverRadius: 7 }
+            ] },
+            options: { responsive: true, animation: { duration: 1500, easing: 'easeOutQuart' }, interaction: { intersect: false, mode: 'index' }, plugins: { legend: { position: 'top' } }, scales: { x: defaultScaleOpts, y: Object.assign({}, defaultScaleOpts, { beginAtZero: true }) } }
+        });
+    }
+
+    // 6. Stacked Bar
+    var stackedEl = document.getElementById('chartStacked');
+    if (stackedEl) {
+        chartInstances.stacked = new Chart(stackedEl, {
+            type: 'bar',
+            data: { labels: labels5, datasets: [
+                { label: 'Fat. Liquido', data: [217, 208, 191, 188, 173], backgroundColor: c.c1, borderRadius: { topLeft: 6, topRight: 6 }, borderSkipped: false },
+                { label: 'Descontos', data: [33, 48, 18, 16, 11], backgroundColor: c.c4, borderRadius: { topLeft: 6, topRight: 6 }, borderSkipped: false }
+            ] },
+            options: { responsive: true, animation: { duration: 1200, easing: 'easeOutQuart' }, plugins: { legend: { position: 'top' } }, scales: { x: Object.assign({}, defaultScaleOpts, { stacked: true }), y: Object.assign({}, defaultScaleOpts, { stacked: true, beginAtZero: true }) } }
+        });
+    }
+
+    // 7. Radar
+    var radarEl = document.getElementById('radarChart');
+    if (radarEl) {
+        chartInstances.radar = new Chart(radarEl, {
+            type: 'radar',
+            data: { labels: ['Volume', 'Receita', 'Margem', 'Crescimento', 'Retencao'], datasets: [
+                { label: 'Alpha', data: [75, 90, 82, 70, 85], borderColor: c.c1, backgroundColor: c.c1 + '33', pointBackgroundColor: c.c1, pointBorderColor: c.c1 },
+                { label: 'Beta', data: [88, 78, 65, 85, 72], borderColor: c.c2, backgroundColor: c.c2 + '33', pointBackgroundColor: c.c2, pointBorderColor: c.c2 }
+            ] },
+            options: { responsive: true, animation: { duration: 1400, easing: 'easeOutQuart' }, plugins: { legend: { position: 'top' } }, scales: { r: { grid: { color: gridColor }, angleLines: { color: gridColor }, pointLabels: { color: c.text, font: { family: "'Poppins', sans-serif", size: 12 } }, ticks: { color: tickColor, backdropColor: 'transparent', font: { size: 10 } }, beginAtZero: true } } }
+        });
+    }
+}
+buildCharts();
+</script>
+</body>
+</html>
